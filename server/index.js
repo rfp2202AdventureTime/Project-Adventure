@@ -10,10 +10,24 @@ const app = express();
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
 
-// set up get method and post method
+// Set up get method and post method
 // route will handle all request and routes no matter destination
 // This might need to be refactored if we want to handle different destinations
 // in unique ways but good for the purpose of the current middle server
+
+// Get products use case:
+// Note: ******might not need to pre-pend localhost. Let us know.*******
+// axios.get('http://localhost:3000/products',(res, req) => {...})
+
+// REQUEST DOCUMENTATION
+// ------------------------------------------------------------------------------------------
+// To make request to middle server -->
+// provide entire route (incl. product_id, review_id, etc) after localhost:3000/xxxxx
+// Example: "http://localhost:3000/products/65623/" where "65623" is a dynamic url piece
+// Template literals might be considered the best way to handle dynamic request pieces
+// on the clientside
+// Be sure that you have configured your .env file to contain your personal GihHub token
+
 app.all('/*', (req, res) => {
   const { method, params, data } = req;
   const url = `https://app-hrsei-api.herokuapp.com/api/fec2/rfp${req.url}`;
@@ -24,9 +38,9 @@ app.all('/*', (req, res) => {
     data,
     headers: { Authorization: `${process.env.GITHUB_APIKEY}` },
   })
-    .then(({ data }) => {
-      console.log('data is', data);
-      res.send(data);
+    .then((result) => {
+      const newData = result.data;
+      res.send(newData);
     })
     .catch((err) => console.log(err));
 });
