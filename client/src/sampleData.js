@@ -9,7 +9,7 @@ const sampleData = {
       category: 'Jackets',
       default_price: '140.00',
       created_at: '2022-03-29T15:08:08.445Z',
-      updated_at: '2022-03-29T15:08:08.445Z'
+      updated_at: '2022-03-29T15:08:08.445Z',
     },
     {
       id: 65632,
@@ -20,7 +20,7 @@ const sampleData = {
       category: 'Accessories',
       default_price: '69.00',
       created_at: '2022-03-29T15:08:08.445Z',
-      updated_at: '2022-03-29T15:08:08.445Z'
+      updated_at: '2022-03-29T15:08:08.445Z',
     },
     {
       id: 65633,
@@ -31,7 +31,7 @@ const sampleData = {
       category: 'Pants',
       default_price: '40.00',
       created_at: '2022-03-29T15:08:08.445Z',
-      updated_at: '2022-03-29T15:08:08.445Z'
+      updated_at: '2022-03-29T15:08:08.445Z',
     },
     {
       id: 65634,
@@ -42,7 +42,7 @@ const sampleData = {
       category: 'Pants',
       default_price: '65.00',
       created_at: '2022-03-29T15:08:08.445Z',
-      updated_at: '2022-03-29T15:08:08.445Z'
+      updated_at: '2022-03-29T15:08:08.445Z',
     },
     {
       id: 65635,
@@ -53,7 +53,7 @@ const sampleData = {
       category: 'Kicks',
       default_price: '99.00',
       created_at: '2022-03-29T15:08:08.445Z',
-      updated_at: '2022-03-29T15:08:08.445Z'
+      updated_at: '2022-03-29T15:08:08.445Z',
     },
   ],
   // sample is for product_id = 2
@@ -67,7 +67,7 @@ const sampleData = {
       category: 'Jackets',
       default_price: '140.00',
       created_at: '2022-03-29T15:08:08.445Z',
-      updated_at: '2022-03-29T15:08:08.445Z'
+      updated_at: '2022-03-29T15:08:08.445Z',
     },
     {
       id: 65632,
@@ -78,7 +78,7 @@ const sampleData = {
       category: 'Accessories',
       default_price: '69.00',
       created_at: '2022-03-29T15:08:08.445Z',
-      updated_at: '2022-03-29T15:08:08.445Z'
+      updated_at: '2022-03-29T15:08:08.445Z',
     },
     {
       id: 65633,
@@ -89,7 +89,7 @@ const sampleData = {
       category: 'Pants',
       default_price: '40.00',
       created_at: '2022-03-29T15:08:08.445Z',
-      updated_at: '2022-03-29T15:08:08.445Z'
+      updated_at: '2022-03-29T15:08:08.445Z',
     },
     {
       id: 65634,
@@ -100,7 +100,7 @@ const sampleData = {
       category: 'Pants',
       default_price: '65.00',
       created_at: '2022-03-29T15:08:08.445Z',
-      updated_at: '2022-03-29T15:08:08.445Z'
+      updated_at: '2022-03-29T15:08:08.445Z',
     },
     {
       id: 65635,
@@ -111,9 +111,42 @@ const sampleData = {
       category: 'Kicks',
       default_price: '99.00',
       created_at: '2022-03-29T15:08:08.445Z',
-      updated_at: '2022-03-29T15:08:08.445Z'
+      updated_at: '2022-03-29T15:08:08.445Z',
     },
   ],
+  // sample is for product_id = 65632
+
+  questions: {
+    product_id: '65632',
+    results: [
+      {
+        question_id: 573876,
+        question_body: 'Where does this product ship from?',
+        question_date: '2018-01-06T00:00:00.000Z',
+        asker_name: 'jbilas',
+        question_helpfulness: 25,
+        reported: false,
+        answers: {
+          5361377: {
+            id: 5361377,
+            body: 'It ships from the facility in Tulsa',
+            date: '2018-01-06T00:00:00.000Z',
+            answerer_name: 'dschulman',
+            helpfulness: 25,
+            photos: [],
+          },
+          5361385: {
+            id: 5361385,
+            body: 'Mine was delivered from Oklahoma',
+            date: '2018-01-06T00:00:00.000Z',
+            answerer_name: 'dschulman',
+            helpfulness: 23,
+            photos: [],
+          },
+        },
+      },
+    ],
+  },
 
 };
 

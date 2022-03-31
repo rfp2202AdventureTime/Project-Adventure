@@ -11,12 +11,12 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
 
 // set up get method and post method
+// route will handle all request and routes no matter destination
+// This might need to be refactored if we want to handle different destinations
+// in unique ways but good for the purpose of the current middle server
 app.all('/*', (req, res) => {
   const { method, params, data } = req;
-  const url = req.headers.url.toString();
-  // "/products"
-  // https://app-hrsei-api.herokuapp.com/api/fec2/rfp/products
-  console.log('updated url ', url);
+  const url = `https://app-hrsei-api.herokuapp.com/api/fec2/rfp${req.url}`;
   axios({
     url,
     method,
