@@ -2,7 +2,7 @@
   "name": "project-adventure",
   "version": "1.0.0",
   "description": "FEC at Hack Reactor.",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "server-dev": "npx nodemon --watch server servers/index.js",
     "client-dev": "npx webpack --watch"
