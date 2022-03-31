@@ -147,7 +147,60 @@ const sampleData = {
       },
     ],
   },
+  // sample is for product_id = 65632
 
+  productStyles:
+  {
+    product_id: '65632',
+    results: [
+      {
+        style_id: 404880,
+        name: 'Black Lenses & Black Frame',
+        original_price: '69.00',
+        sale_price: null,
+        'default?': false,
+        photos: [
+          {
+            thumbnail_url: null,
+            url: null,
+          },
+        ],
+        skus: {
+          null: {
+            quantity: null,
+            size: null,
+          },
+        },
+      },
+      {
+        style_id: 404881,
+        name: 'Black Lenses & Gold Frame',
+        original_price: '69.00',
+        sale_price: null,
+        'default?': true,
+        photos: [
+          {
+            thumbnail_url: null,
+            url: null,
+          },
+        ],
+        skus: {
+          null: {
+            quantity: null,
+            size: null,
+          },
+        },
+      },
+    ],
+  },
+  // sample is for product_id = 65632
+
+  relatedProducts: [
+    65633,
+    65637,
+    65636,
+    65635,
+  ],
 };
 
 export default sampleData;

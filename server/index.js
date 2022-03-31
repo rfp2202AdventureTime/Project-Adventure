@@ -42,7 +42,10 @@ app.all('/*', (req, res) => {
       const newData = result.data;
       res.send(newData);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      res.status(404);
+      res.send(err);
+    });
 });
 
 app.listen(process.env.PORT);
