@@ -1,9 +1,16 @@
 import React from 'react';
+import styled from 'styled-components';
 
 function RelatedProducts() {
   return (
-    <h1>hello world: RelatedProducts</h1>
+    <RelatedProductsSection>
+      <h1>Related Products</h1>
+    </RelatedProductsSection>
   );
 }
+
+const RelatedProductsSection = styled.section`
+  background-color: ${(props) => props.theme.colors.light};
+`;
 
 export default RelatedProducts;
