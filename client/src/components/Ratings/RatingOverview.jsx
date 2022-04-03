@@ -1,12 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import RatingBreakdown from './RatingBreakdown';
+import Star from '../../Star';
 
 export default function Ratings() {
   return (
     <RatingsSection>
-      <h1>Ratings and Reviews for product id 2</h1>
-      <RatingBreakdown />
+      <h3>
+        Ratngs & Reviews
+      </h3>
+      <Star />
+      <div>
+        TBD% of reivews recommend this product
+      </div>
     </RatingsSection>
   );
 }

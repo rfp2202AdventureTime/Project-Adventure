@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import RatingBreakdown from './RatingBreakdown';
+import RatingOverview from './RatingOverview';
 
-export default function Ratings() {
+export default function RatingBreakdown() {
   return (
     <RatingsSection>
-      <h1>Ratings and Reviews for product id 2</h1>
-      <RatingBreakdown />
+      <RatingOverview />
+      {/* <RatingList />
+      <FactorList /> */}
     </RatingsSection>
   );
 }
