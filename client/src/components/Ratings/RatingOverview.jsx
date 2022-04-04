@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useTheme } from './ReviewContext';
+import { useMeta } from './ReviewContext';
 import Star from '../../Star';
 
 export default function RatingOverview() {
@@ -9,7 +9,7 @@ export default function RatingOverview() {
   let avgRating;
   let totalCT = 0;
   let helpfulness = 0;
-  const currentMeta = useTheme();
+  const currentMeta = useMeta();
   if (currentMeta) {
     const { ratings, recommended } = currentMeta;
     // Handle Rating
@@ -35,7 +35,7 @@ export default function RatingOverview() {
       <Star />
       <div>
         {helpfulness}
-        % of reivews recommend this product
+        % of reviews recommend this product
       </div>
     </RatingsSection>
   );

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const ReviewContext = React.createContext();
 
-export function useTheme() {
+export function useMeta() {
   return useContext(ReviewContext);
 }
 
@@ -21,7 +22,7 @@ export function ReviewProvider({ children }) {
       .then(({ data }) => {
         setReviewMeta(data);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -30,3 +31,7 @@ export function ReviewProvider({ children }) {
     </ReviewContext.Provider>
   );
 }
+
+ReviewProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+};
