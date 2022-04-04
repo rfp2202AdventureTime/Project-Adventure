@@ -4,12 +4,10 @@ import sampleData from './../../sampleData.js';
 
 const FavButton = styled.button`
   color: tomato;
-  display: grid
   position: relative;
   float: right;
-
-
 `;
+
 function ProductImg() {
   // console.log(sampleData.productStyles.results[0].photos[0].url);
   // console.log(sampleData, 'this is sampledata!')
@@ -36,3 +34,8 @@ function ProductImg() {
 }
 
 export default ProductImg;
+
+
+// color: tomato;
+  // position: relative;
+  // float: right;

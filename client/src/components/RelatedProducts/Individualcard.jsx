@@ -6,7 +6,8 @@ const IndCard = styled.div`
   border-style: solid;
   border-width: 2px;
   width: fit-content;
-  margin: 4px;
+  margin-right: 7px;
+  border-radius: 5px;
   &:hover {
     box-shadow: 0 8px 16px 0;
   }

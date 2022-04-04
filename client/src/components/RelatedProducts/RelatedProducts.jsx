@@ -6,7 +6,7 @@ import ProductImg from './ProductPhoto';
 
 const Layout = styled.div`
   display: flex;
-  width: 100%;
+  width: max-content;
 `;
 
 function RelatedProducts() {
