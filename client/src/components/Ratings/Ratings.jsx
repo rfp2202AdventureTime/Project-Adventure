@@ -1,17 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import RatingSection from '../Styles/RatingSection.styled';
+
 import RatingBreakdown from './RatingBreakdown';
 
 export default function Ratings() {
   return (
-    <RatingsSection>
+    <RatingSection>
       <h1>Ratings and Reviews for product id 65632</h1>
       <RatingBreakdown />
-    </RatingsSection>
+    </RatingSection>
   );
 }
-
-const RatingsSection = styled.section`
-  background-color: ${(props) => props.theme.colors.light};
-
-`;

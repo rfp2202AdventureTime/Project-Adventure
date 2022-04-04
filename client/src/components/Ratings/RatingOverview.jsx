@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import RatingSection from '../Styles/RatingSection.styled';
 import { useMeta } from './ReviewContext';
 import Star from '../../Star';
 
@@ -27,7 +27,7 @@ export default function RatingOverview() {
   }
 
   return (
-    <RatingsSection>
+    <RatingSection>
       <h3>
         Ratngs & Reviews
       </h3>
@@ -37,10 +37,6 @@ export default function RatingOverview() {
         {helpfulness}
         % of reviews recommend this product
       </div>
-    </RatingsSection>
+    </RatingSection>
   );
 }
-
-const RatingsSection = styled.section`
-  background-color: ${(props) => props.theme.colors.light};
-`;
