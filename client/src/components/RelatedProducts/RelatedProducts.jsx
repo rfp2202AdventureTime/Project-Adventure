@@ -6,13 +6,49 @@ import ProductImg from './ProductPhoto';
 
 const Layout = styled.div`
   display: flex;
+  width: 100%;
 `;
 
 function RelatedProducts() {
   return (
     <RelatedProductsSection>
       <h1>Related Products</h1>
+
       <Layout>
+
+        <IndCard>
+          <ProductImg />
+          <Individualcard />
+        </IndCard>
+
+        <IndCard>
+          <ProductImg />
+          <Individualcard />
+        </IndCard>
+
+        <IndCard>
+          <ProductImg />
+          <Individualcard />
+        </IndCard>
+
+        <IndCard>
+          <ProductImg />
+          <Individualcard />
+        </IndCard>
+
+      </Layout>
+
+      <h1>Your Outfits</h1>
+      <Layout>
+        <IndCard>
+          <ProductImg />
+          <Individualcard />
+        </IndCard>
+
+        <IndCard>
+          <ProductImg />
+          <Individualcard />
+        </IndCard>
 
         <IndCard>
           <ProductImg />
