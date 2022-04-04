@@ -1,32 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import RatingOverview from './RatingOverview';
+import { ReviewProvider } from './ReviewContext';
 
-export const ReviewMetaContext = React.createContext();
 export default function RatingBreakdown() {
-  const [reviewMeta, setReviewMeta] = useState('null');
-
-  useEffect(() => {
-    axios({
-      method: 'get',
-      url: 'http://localhost:3000/reviews/meta',
-      params: {
-        product_id: '65632',
-      },
-    })
-      .then(({ data }) => {
-        setReviewMeta(data);
-      });
-  }, []);
-
   return (
     <RatingsSection>
-      <ReviewMetaContext.Provider value={reviewMeta}>
+      <ReviewProvider>
         <RatingOverview />
         {/* <RatingList />
         <FactorList /> */}
-      </ReviewMetaContext.Provider>
+      </ReviewProvider>
     </RatingsSection>
   );
 }
