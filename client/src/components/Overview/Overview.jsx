@@ -3,9 +3,12 @@ import styled from 'styled-components';
 
 import ImageGallery from './ImageGallery';
 import ProductDetails from './ProductDetails';
-import StyleSelector from './StyleSelector';
+import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
+
+// Using dummy data for now
+import styleData from './StyleSelectorData';
 
 function Overview() {
   return (
@@ -18,7 +21,7 @@ function Overview() {
 
         <ProductInfo>
           <ProductDetails />
-          <StyleSelector />
+          <StyleSelector styles={styleData[0].results} />
           <AddToCart />
         </ProductInfo>
 
@@ -43,7 +46,7 @@ const DefaultImageGallery = styled.div`
 const ProductInfo = styled.div`
   background-color:${(props) => props.theme.colors.light};
   width: 32.5%;
-
+  padding: 10px;
 `;
 
 export default Overview;
