@@ -1,20 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
 import RatingOverview from './RatingOverview';
+import RatingSection from '../Styles/RatingSection.styled';
 import { ReviewProvider } from './ReviewContext';
 
 export default function RatingBreakdown() {
   return (
-    <RatingsSection>
+    <RatingSection>
       <ReviewProvider>
         <RatingOverview />
-        {/* <RatingList />
-        <FactorList /> */}
+        {/* <RatingList /> */}
+        {/* <FactorList /> */}
       </ReviewProvider>
-    </RatingsSection>
+    </RatingSection>
   );
 }
-
-const RatingsSection = styled.section`
-  background-color: ${(props) => props.theme.colors.light};
-`;
