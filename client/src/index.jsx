@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import styled from 'styled-components';
 
 import Theme from './Theme';
@@ -8,26 +7,30 @@ import Overview from './components/Overview/Overview';
 import QA from './components/QA/QA';
 import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
+import { ProductIDContext } from './ProductIDContext';
 
 function App() {
+  const defaultProductId = 65632;
+
   return (
     <Theme>
+      <ProductIDContext.Provider value={defaultProductId}>
+        <SiteHeader>
+          Adventure Time
+          <SiteSearch>
+            ________
+          </SiteSearch>
+        </SiteHeader>
 
-      <SiteHeader>
-        Adventure Time
-        <SiteSearch>
-          ________
-        </SiteSearch>
-      </SiteHeader>
+        <Banner>
+          SITE-WIDE ANNOUNCEMENT MESSAGE - SALE / DISCOUNT OFFER - NEW PRODUCT HIGHLIGHT
+        </Banner>
 
-      <Banner>
-        SITE-WIDE ANNOUNCEMENT MESSAGE - SALE / DISCOUNT OFFER - NEW PRODUCT HIGHLIGHT
-      </Banner>
-
-      <Overview />
-      <RelatedProducts />
-      <QA />
-      <Ratings />
+        <Overview />
+        <RelatedProducts />
+        <QA />
+        <Ratings />
+      </ProductIDContext.Provider>
     </Theme>
   );
 }

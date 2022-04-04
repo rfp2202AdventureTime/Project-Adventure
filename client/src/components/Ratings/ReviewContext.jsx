@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { ProductIDContext } from '../../ProductIDContext';
 
 const ReviewContext = React.createContext();
 ReviewContext.displayName = 'RatingData';
@@ -10,6 +11,7 @@ export function useMeta() {
 }
 
 export function ReviewProvider({ children }) {
+  const productId = useContext(ProductIDContext);
   const [reviewMeta, setReviewMeta] = useState(null);
 
   useEffect(() => {
@@ -17,7 +19,7 @@ export function ReviewProvider({ children }) {
       method: 'get',
       url: 'http://localhost:3000/reviews/meta',
       params: {
-        product_id: '65632',
+        product_id: productId,
       },
     })
       .then(({ data }) => {
