@@ -162,7 +162,7 @@ const sampleData = {
         photos: [
           {
             thumbnail_url: null,
-            url: null,
+            url: 'https://corrigia.com/media/image/02/6f/3d/Corrigia-Shefield-Jacket-grey-08_600x600.jpg', // sample photo
           },
         ],
         skus: {
