@@ -18,8 +18,21 @@ const Thumbnail = styled.span`
   background-position: center;
 `;
 
+// TODO: This needs to be replaced with an image of a checkmark.
+// It's a blank circle for now.
 const SelectedThumbnail = styled(Thumbnail)`
-  border-color: red;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    left: 75%;
+    width: 25%;
+    height: 25%;
+    background: ${(props) => props.theme.colors.light};
+    border: 1px solid ${(props) => props.theme.colors.secondary};
+  }
 `;
 
 StyleThumbnail.propTypes = {
