@@ -4,18 +4,26 @@ import { useTheme } from './ReviewContext';
 import Star from '../../Star';
 
 export default function RatingOverview() {
+  // Display Rating && helpfulness
   let totalRating;
   let avgRating;
   let totalCT = 0;
+  let helpfulness = 0;
   const currentMeta = useTheme();
   if (currentMeta) {
-    const { ratings } = currentMeta;
+    const { ratings, recommended } = currentMeta;
+    // Handle Rating
     Object.keys(ratings).forEach((key) => {
       const currentCT = Number(ratings[key]);
       totalRating = key * currentCT;
       totalCT += currentCT;
     });
     avgRating = Math.round((totalRating / totalCT) * 10) / 10;
+
+    // Handle helpfulness
+    const trueCT = Number(recommended.true);
+    const falseCT = Number(recommended.false);
+    helpfulness = Math.round((trueCT / (trueCT + falseCT)) * 100);
   }
 
   return (
@@ -26,7 +34,8 @@ export default function RatingOverview() {
       {avgRating}
       <Star />
       <div>
-        TBD% of reivews recommend this product
+        {helpfulness}
+        % of reivews recommend this product
       </div>
     </RatingsSection>
   );

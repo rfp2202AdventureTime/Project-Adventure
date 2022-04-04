@@ -5,7 +5,7 @@ import RatingBreakdown from './RatingBreakdown';
 export default function Ratings() {
   return (
     <RatingsSection>
-      <h1>Ratings and Reviews for product id 2</h1>
+      <h1>Ratings and Reviews for product id 65632</h1>
       <RatingBreakdown />
     </RatingsSection>
   );

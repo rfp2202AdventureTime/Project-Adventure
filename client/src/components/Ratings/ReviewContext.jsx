@@ -9,10 +9,8 @@ export function useTheme() {
 
 export function ReviewProvider({ children }) {
   const [reviewMeta, setReviewMeta] = useState(null);
-  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // setLoading(true);
     axios({
       method: 'get',
       url: 'http://localhost:3000/reviews/meta',
@@ -21,13 +19,8 @@ export function ReviewProvider({ children }) {
       },
     })
       .then(({ data }) => {
-        console.log('data is', data);
         setReviewMeta(data);
-        // console.log(reviewMeta);
       })
-      // .then(() => {
-      //   setLoading(false);
-      // })
       .catch((err) => console.error(err));
   }, []);
 
