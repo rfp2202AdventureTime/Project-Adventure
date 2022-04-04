@@ -13,4 +13,5 @@ export default function Ratings() {
 
 const RatingsSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
+
 `;

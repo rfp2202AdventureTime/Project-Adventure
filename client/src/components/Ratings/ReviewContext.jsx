@@ -3,6 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 
 const ReviewContext = React.createContext();
+ReviewContext.displayName = 'RatingData';
 
 export function useMeta() {
   return useContext(ReviewContext);
