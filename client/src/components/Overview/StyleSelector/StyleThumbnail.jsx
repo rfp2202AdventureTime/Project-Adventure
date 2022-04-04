@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function StyleThumbnail({ url }) {
-  return (
-    <Thumbnail thumbnail={url} />
-  );
+function StyleThumbnail({ url, isSelected }) {
+  return (isSelected)
+    ? <SelectedThumbnail thumbnail={url} />
+    : <Thumbnail thumbnail={url} />;
 }
 
 const Thumbnail = styled.span`
@@ -18,12 +18,18 @@ const Thumbnail = styled.span`
   background-position: center;
 `;
 
+const SelectedThumbnail = styled(Thumbnail)`
+  border-color: red;
+`;
+
 StyleThumbnail.propTypes = {
   url: PropTypes.string,
+  isSelected: PropTypes.bool,
 };
 
 StyleThumbnail.defaultProps = {
   url: null,
+  isSelected: false,
 };
 
 export default StyleThumbnail;

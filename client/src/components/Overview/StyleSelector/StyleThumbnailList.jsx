@@ -1,15 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import StyleThumbnail from './StyleThumbnail';
+import { CurrentStyles, ActiveStyle } from '../../../CurrentStylesContext';
 
-function StyleThumbnailList({ styles }) {
+function StyleThumbnailList() {
+  const currentStyles = useContext(CurrentStyles);
+  const activeStyle = useContext(ActiveStyle);
+
   return (
     <StyleThumbnails>
-      {styles.map((style) => (
+      {currentStyles.map((style) => (
         <StyleThumbnail
           url={style.photos[0].thumbnail_url}
+          isSelected={style.style_id === activeStyle}
           key={style.style_id}
         />
       ))}
@@ -25,9 +29,5 @@ const StyleThumbnails = styled.div`
   max-width: 350px;
   padding: 10px 0;
 `;
-
-StyleThumbnailList.propTypes = {
-  styles: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-};
 
 export default StyleThumbnailList;

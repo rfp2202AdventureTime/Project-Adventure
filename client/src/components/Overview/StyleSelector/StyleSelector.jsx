@@ -1,16 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import StyleThumbnailList from './StyleThumbnailList';
+import { CurrentStyles, ActiveStyle } from '../../../CurrentStylesContext';
 
-function StyleSelector({ styles }) {
+const getActiveStyle = (currentStyles, activeStyleID) => {
+  let activeStyle = currentStyles[0];
+  for (let i = 0; i < currentStyles.length; i += 1) {
+    if (currentStyles[i].style_id === activeStyleID) {
+      activeStyle = currentStyles[i];
+    }
+  }
+  return activeStyle;
+};
+
+function StyleSelector() {
+  const currentStyles = useContext(CurrentStyles);
+  const activeStyle = getActiveStyle(currentStyles, useContext(ActiveStyle));
+
   return (
     <StyleSelectorContainer>
       <strong>STYLE &gt; </strong>
-      SELECTED STYLE
+      {activeStyle.name.toUpperCase()}
 
-      { (styles.length > 1) && <StyleThumbnailList styles={styles} />}
+      { (currentStyles.length > 1) && <StyleThumbnailList />}
 
     </StyleSelectorContainer>
   );
@@ -19,9 +32,5 @@ function StyleSelector({ styles }) {
 const StyleSelectorContainer = styled.div`
   padding: 10px 0;
 `;
-
-StyleSelector.propTypes = {
-  styles: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-};
 
 export default StyleSelector;
