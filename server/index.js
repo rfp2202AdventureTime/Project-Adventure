@@ -40,6 +40,7 @@ app.all('/*', (req, res) => {
   })
     .then((result) => {
       const newData = result.data;
+      // console.log(newData);
       res.send(newData);
     })
     .catch((err) => {
