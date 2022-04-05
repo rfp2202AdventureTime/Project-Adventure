@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { ProductIDContext } from '../../ProductIDContext';
+import { ProductIDContext } from '../../contexts/ProductIDContext';
 
 const ReviewContext = React.createContext();
 ReviewContext.displayName = 'RatingData';

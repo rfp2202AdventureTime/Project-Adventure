@@ -7,7 +7,7 @@ import Overview from './components/Overview/Overview';
 import QA from './components/QA/QA';
 import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
-import { ProductIDContext } from './ProductIDContext';
+import { ProductIDContext } from './contexts/ProductIDContext';
 import { CurrentStylesProvider } from './contexts/CurrentStyles';
 
 function App() {
