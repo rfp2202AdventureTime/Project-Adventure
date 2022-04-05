@@ -7,7 +7,7 @@ import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
 
-import { ActiveStyleProvider } from '../../contexts/ActiveStyleId';
+import { ActiveStyleProvider } from '@Contexts/ActiveStyleId';
 
 function Overview() {
   return (
