@@ -42,7 +42,10 @@ export default function Individualcard() {
       <CardText>
         <p>{sampleData.products[1].category}</p>
         <p>{sampleData.products[1].name}</p>
-        <p>${sampleData.products[1].default_price}</p>
+        <p>
+          $
+          {sampleData.products[1].default_price}
+        </p>
         <span>CSS rating with stars</span>
       </CardText>
     </div>

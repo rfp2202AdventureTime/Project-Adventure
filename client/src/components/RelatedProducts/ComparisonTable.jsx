@@ -24,8 +24,7 @@ function Comparison() {
       </div>
 
     </div>
-  )
-};
+  );
+}
 
 export default Comparison;
-
