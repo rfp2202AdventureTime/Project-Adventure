@@ -26,7 +26,7 @@ export function ReviewProvider({ children }) {
         setReviewMeta(data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [productId]);
 
   return (
     <ReviewContext.Provider value={reviewMeta}>
