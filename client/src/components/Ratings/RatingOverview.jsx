@@ -34,7 +34,7 @@ export default function RatingOverview() {
       <Score>
         {avgRating}
       </Score>
-      <Star />
+      <Star score={avgRating} />
       <div>
         {helpfulness}
         % of reviews recommend this product
