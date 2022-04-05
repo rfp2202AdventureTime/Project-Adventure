@@ -1,5 +1,8 @@
-import React, { useContext } from 'react';
+import React, {
+  createContext, useContext, useEffect, useState,
+} from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import sampleData from '../../sampleData';
 
 // should retrieve all related products from initial product page
