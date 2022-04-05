@@ -6,16 +6,15 @@ import QAItem from './QAItem';
 
 export default function Feed() {
   const fullQAData = useData();
-  console.log(fullQAData);
   // filter passed down context of questions
   // base on product_id
   // let productQAList = xxx.filter((question) => { question.product_id === productID })
   return (
     <FeedSection>
-      {/* map every question an QA item */}
       <h1>Feed</h1>
-      <p>{fullQAData === null ? 'loading' : fullQAData[0].question_id}</p>
-      <QAItem />
+      <ul>
+        {fullQAData === null ? 'Loading...' : fullQAData.map((question) => <QAItem question={question} key={question.question_id} />)}
+      </ul>
     </FeedSection>
   );
 }

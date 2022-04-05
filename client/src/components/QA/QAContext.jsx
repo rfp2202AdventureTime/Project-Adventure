@@ -23,7 +23,6 @@ export function QADataProvider({ children }) {
       },
     })
       .then(({ data }) => {
-        // console.log(data);
         setQAData(data.results);
       })
       .catch((err) => {

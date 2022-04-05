@@ -6,7 +6,6 @@ import QAFeed from './QAFeed';
 import { QADataProvider } from './QAContext';
 
 export default function QA() {
-  // const qaData = useContext(QAContext);
   return (
     <QASection>
       <QADataProvider>
