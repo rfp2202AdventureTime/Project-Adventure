@@ -4,13 +4,23 @@ import styled from 'styled-components';
 import StyleThumbnail from './StyleThumbnail';
 import { CurrentStyles } from '../../../contexts/CurrentStyles';
 import { ActiveStyleId } from '../../../contexts/ActiveStyleId';
+import { PreviewStyleId } from '../../../contexts/PreviewStyleId';
 
 function StyleThumbnailList() {
   const [currentStyles] = useContext(CurrentStyles);
   const [activeStyleId, setActiveStyleId] = useContext(ActiveStyleId);
+  const [, setPreviewStyleId] = useContext(PreviewStyleId);
 
   const handleStyleThumbnailClick = (styleId) => {
     setActiveStyleId(styleId);
+  };
+
+  const handleStyleThumbnailMouseOver = (styleId) => {
+    setPreviewStyleId(styleId);
+  };
+
+  const handleStyleThumbnailMouseOut = () => {
+    setPreviewStyleId(activeStyleId);
   };
 
   return (
@@ -21,6 +31,8 @@ function StyleThumbnailList() {
           isSelected={style.style_id === activeStyleId}
           key={style.style_id}
           handleStyleThumbnailClick={() => handleStyleThumbnailClick(style.style_id)}
+          handleStyleThumbnailMouseOver={() => handleStyleThumbnailMouseOver(style.style_id)}
+          handleStyleThumbnailMouseOut={() => handleStyleThumbnailMouseOut()}
         />
       ))}
     </StyleThumbnails>

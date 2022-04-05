@@ -2,10 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function StyleThumbnail({ url, isSelected, handleStyleThumbnailClick }) {
-  return (isSelected)
-    ? <SelectedThumbnail thumbnail={url} onClick={handleStyleThumbnailClick} />
-    : <Thumbnail thumbnail={url} onClick={handleStyleThumbnailClick} />;
+function StyleThumbnail({
+  url,
+  isSelected,
+  handleStyleThumbnailClick,
+  handleStyleThumbnailMouseOut,
+  handleStyleThumbnailMouseOver,
+}) {
+  if (isSelected) {
+    return (
+      <SelectedThumbnail
+        thumbnail={url}
+        onClick={handleStyleThumbnailClick}
+        onMouseOver={handleStyleThumbnailMouseOver}
+        onMouseOut={handleStyleThumbnailMouseOut}
+      />
+    );
+  }
+  if (!isSelected) {
+    return (
+      <Thumbnail
+        thumbnail={url}
+        onClick={handleStyleThumbnailClick}
+        onMouseOver={handleStyleThumbnailMouseOver}
+        onMouseOut={handleStyleThumbnailMouseOut}
+      />
+    );
+  }
 }
 
 const Thumbnail = styled.span`
@@ -39,6 +62,8 @@ StyleThumbnail.propTypes = {
   url: PropTypes.string,
   isSelected: PropTypes.bool,
   handleStyleThumbnailClick: PropTypes.func.isRequired,
+  handleStyleThumbnailMouseOver: PropTypes.func.isRequired,
+  handleStyleThumbnailMouseOut: PropTypes.func.isRequired,
 };
 
 StyleThumbnail.defaultProps = {

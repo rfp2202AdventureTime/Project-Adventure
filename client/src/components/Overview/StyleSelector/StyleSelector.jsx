@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 import StyleThumbnailList from './StyleThumbnailList';
 import { CurrentStyles } from '../../../contexts/CurrentStyles';
-import { ActiveStyleId } from '../../../contexts/ActiveStyleId';
+import { PreviewStyleId } from '../../../contexts/PreviewStyleId';
 
-const getActiveStyle = (currentStyles, activeStyleID) => {
+const getStyle = (currentStyles, activeStyleID) => {
   let activeStyle = currentStyles[0];
   for (let i = 0; i < currentStyles.length; i += 1) {
     if (currentStyles[i].style_id === activeStyleID) {
@@ -17,13 +17,13 @@ const getActiveStyle = (currentStyles, activeStyleID) => {
 
 function StyleSelector() {
   const [currentStyles] = useContext(CurrentStyles);
-  const [activeStyleId] = useContext(ActiveStyleId);
-  const activeStyle = getActiveStyle(currentStyles, activeStyleId);
+  const [previewStyleId] = useContext(PreviewStyleId);
+  const previewStyle = getStyle(currentStyles, previewStyleId);
 
   return (
     <StyleSelectorContainer>
       <strong>STYLE &gt; </strong>
-      {activeStyle && activeStyle.name.toUpperCase()}
+      {previewStyle && previewStyle.name.toUpperCase()}
 
       { (currentStyles.length > 1) && <StyleThumbnailList />}
 
