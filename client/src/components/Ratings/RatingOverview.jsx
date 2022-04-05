@@ -10,15 +10,20 @@ export default function RatingOverview() {
   let totalCT = null;
   let helpfulness = null;
   const currentMeta = useMeta();
+  console.log('currentMeta', currentMeta);
   if (currentMeta) {
     const { ratings, recommended } = currentMeta;
     // Handle Rating
+    console.log('ratings ', ratings);
+
     Object.keys(ratings).forEach((key) => {
       const currentCT = Number(ratings[key]);
+      console.log('currentCT ', currentCT);
       totalRating = key * currentCT;
       totalCT += currentCT;
     });
     avgRating = Math.round((totalRating / totalCT) * 10) / 10;
+    console.log('avg rating ', avgRating);
 
     // Handle helpfulness
     const trueCT = Number(recommended.true);
