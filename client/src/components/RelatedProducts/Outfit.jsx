@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+// import IndCard from './Individualcard';
 
 const AddOutfit = styled.div`
   border-style: solid;
   border-width: 2px;
   width: fit-content;
-  margin-right: 7px;
-  margin-bottom: 2px;
+  margin-right: 30px;
+  margin-bottom: 5px;
   border-radius: 5px;
   &:hover {
     box-shadow: 0 8px 16px 0;
@@ -17,6 +18,10 @@ const OutfitText = styled.p`
   text-align: center;
 `;
 
+// const OutfitCard = styled(IndCard)`
+//   width:
+// `;
+
 // to check functionality of 'add to outfit'
 // will need to add current product to 'Your Outfit' list
 let outfitList = 0;
@@ -26,14 +31,14 @@ function clickCheck(e) {
   console.log(outfitList, 'this is outfitlist');
 }
 
-function Outfit() {
+export default function Outfit() {
   return (
     <AddOutfit>
       <img
         src={'https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg'}
         alt="plus sign"
-        width={290}
-        height={220}
+        width={280}
+        height={250}
         onClick={() => clickCheck()}
       />
 
@@ -43,4 +48,6 @@ function Outfit() {
   );
 }
 
-export default Outfit;
+export {
+  AddOutfit,
+};

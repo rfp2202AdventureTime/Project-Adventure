@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <p
+    className="Individualcard__CardText-gDdxCt bzZqqO"
+  >
+    <p>
+      Accessories
+    </p>
+    <p>
+      Bright Future Sunglasses
+    </p>
+    <p>
+      $
+      69.00
+    </p>
+    <span>
+      CSS rating with stars
+    </span>
+  </p>
+</div>
+`;

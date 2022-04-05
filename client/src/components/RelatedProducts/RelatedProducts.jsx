@@ -44,6 +44,10 @@ function RelatedProducts() {
       <h1>Your Outfit</h1>
       <Layout>
         <Outfit />
+        <IndCard>
+          <ProductImg />
+          <Individualcard />
+        </IndCard>
 
       </Layout>
 

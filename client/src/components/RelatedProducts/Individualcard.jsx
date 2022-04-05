@@ -35,8 +35,8 @@ import { ActiveStyleId } from './../../contexts/ActiveStyleId';
 
 // should retrieve all related products from initial product page
 // map each individual card with all the information
-console.log(sampleData, 'sample data');
-function Individualcard() {
+
+export default function Individualcard() {
   return (
     <div>
       <CardText>
@@ -54,6 +54,7 @@ const IndCard = styled.div`
   border-width: 2px;
   width: fit-content;
   margin-right: 30px;
+  margin-bottom: 5px;
   border-radius: 5px;
   padding: 0 15px 0 15px;
   &:hover {
@@ -69,16 +70,3 @@ export {
   Individualcard,
   IndCard,
 };
-
-{/* <p>{sampleData.products[1].category}</p>
-        <p>{sampleData.products[1].name}</p>
-        <p>${sampleData.products[1].default_price}</p> */}
-
-      //   <div>
-      //   <CardText>
-      //     <p>Test2</p>
-      //     <p>Test3</p>
-      //     <p>$69</p>
-      //     <span>CSS rating with stars</span>
-      //   </CardText>
-      // </div>

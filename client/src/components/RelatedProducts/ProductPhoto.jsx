@@ -22,8 +22,8 @@ function ProductImg() {
       <a href="http://google.com">
         <img
           src={sampleData.productStyles.results[0].photos[0].url}
-          width={350}
-          height={225}
+          width={250}
+          height={175}
           alt="this is a test"
         />
       </a>
