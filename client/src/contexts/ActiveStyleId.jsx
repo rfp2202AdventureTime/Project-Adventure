@@ -7,7 +7,7 @@ import { CurrentStyles } from './CurrentStyles';
 export const ActiveStyleId = createContext([undefined, undefined]);
 
 export function ActiveStyleProvider({ children }) {
-  const [currentStyles] = useContext(CurrentStyles);
+  const currentStyles = useContext(CurrentStyles);
   const [activeStyleId, setActiveStyleId] = useState();
 
   useEffect(() => {

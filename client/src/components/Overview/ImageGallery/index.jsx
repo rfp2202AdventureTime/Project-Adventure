@@ -8,14 +8,15 @@ import getStyle from '../helpers/getStyle';
 
 import GalleryCarousel from './GalleryCarousel';
 
-function ImageGallery({ galleryView }) {
-  const [currentStyles] = useContext(CurrentStyles);
+const carouselSize = 4;
+
+function ImageGallery({ view }) {
+  const currentStyles = useContext(CurrentStyles);
   const [activeStyleId] = useContext(ActiveStyleId);
-  const currentStyle = getStyle(currentStyles, activeStyleId);
+  const activeStyle = getStyle(currentStyles, activeStyleId);
 
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [viewportPosition, setViewportPosition] = useState(0);
-  const carouselSize = 4;
 
   const handleDownClick = (maxLength) => {
     if (mainImageIndex < (maxLength - 1)) {
@@ -33,20 +34,26 @@ function ImageGallery({ galleryView }) {
     }
   };
 
-  return (
-    <MainImage url={currentStyle ? currentStyle.photos[mainImageIndex].url : ''}>
-      { currentStyle && currentStyle.photos.length > 1 && galleryView && (
-        <GalleryCarousel
-          activeIndex={mainImageIndex}
-          photos={currentStyle.photos}
-          handleDownClick={() => handleDownClick(currentStyle.photos.length)}
-          handleUpClick={() => handleUpClick()}
-          viewportPosition={viewportPosition}
-          maxSize={carouselSize}
-        />
-      )}
-    </MainImage>
-  );
+  if (activeStyle) {
+    return (
+      <MainImage url={activeStyle.photos[mainImageIndex].url}>
+
+        {/* Render carousel only if there are more than one image */}
+        {activeStyle.photos.length > 1 && (
+          <GalleryCarousel
+            activeIndex={mainImageIndex}
+            photos={activeStyle.photos}
+            handleDownClick={() => handleDownClick(activeStyle.photos.length)}
+            handleUpClick={() => handleUpClick()}
+            viewportPosition={viewportPosition}
+            maxSize={carouselSize}
+            view={view}
+          />
+        )}
+
+      </MainImage>
+    );
+  }
 }
 
 const MainImage = styled.div`
@@ -60,11 +67,11 @@ const MainImage = styled.div`
 `;
 
 ImageGallery.propTypes = {
-  galleryView: PropTypes.string,
+  view: PropTypes.string,
 };
 
 ImageGallery.defaultProps = {
-  galleryView: 'default',
+  view: 'default',
 };
 
 export default ImageGallery;

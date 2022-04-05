@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import StyleThumbnail from './StyleThumbnail';
 import { CurrentStyles } from '@Contexts/CurrentStyles';
 import { ActiveStyleId } from '@Contexts/ActiveStyleId';
 import { PreviewStyleId } from '@Contexts/PreviewStyleId';
 
+import StyleThumbnail from './StyleThumbnail';
+
 function StyleThumbnailList() {
-  const [currentStyles] = useContext(CurrentStyles);
+  const currentStyles = useContext(CurrentStyles);
   const [activeStyleId, setActiveStyleId] = useContext(ActiveStyleId);
   const [, setPreviewStyleId] = useContext(PreviewStyleId);
 

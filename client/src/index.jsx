@@ -2,13 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
+import { ActiveStyleProvider } from '@Contexts/ActiveStyleId';
+import { CurrentStylesProvider } from '@Contexts/CurrentStyles';
+import { ProductIDContext } from '@Contexts/ProductIDContext';
+
 import Theme from './contexts/Theme';
 import Overview from './components/Overview/Overview';
 import QA from './components/QA/QA';
 import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
-import { ProductIDContext } from './contexts/ProductIDContext';
-import { CurrentStylesProvider } from './contexts/CurrentStyles';
 
 function App() {
   const defaultProductId = 65644;
@@ -28,8 +30,10 @@ function App() {
         </Banner>
 
         <CurrentStylesProvider>
-          <Overview />
-          <RelatedProducts />
+          <ActiveStyleProvider>
+            <Overview />
+            <RelatedProducts />
+          </ActiveStyleProvider>
         </CurrentStylesProvider>
         <QA />
         <Ratings />

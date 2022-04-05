@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
-import { ActiveStyleProvider } from '@Contexts/ActiveStyleId';
 import { PreviewStyleProvider } from '@Contexts/PreviewStyleId';
+
+import { CurrentStyles } from '@Contexts/CurrentStyles';
+import { ActiveStyleId } from '@Contexts/ActiveStyleId';
+import getStyle from './helpers/getStyle';
 
 import ImageGallery from './ImageGallery';
 import ProductDetails from './ProductDetails';
@@ -11,13 +14,21 @@ import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
 
 function Overview() {
-  return (
-    <ActiveStyleProvider>
+  const [galleryView] = useState('default');
+  const currentStyles = useContext(CurrentStyles);
+  const [activeStyleId] = useContext(ActiveStyleId);
+  const activeStyle = getStyle(currentStyles, activeStyleId);
+
+  // Only render the Overview component if there's an active style.
+  // Eventually, add more graceful loading.
+
+  if (activeStyle) {
+    return (
       <PreviewStyleProvider>
         <ExpandedImageGallery>
 
-          <DefaultImageGallery>
-            <ImageGallery />
+          <DefaultImageGallery view={galleryView}>
+            <ImageGallery view={galleryView} />
           </DefaultImageGallery>
 
           <ProductInfo>
@@ -30,8 +41,8 @@ function Overview() {
 
         <ProductDescription />
       </PreviewStyleProvider>
-    </ActiveStyleProvider>
-  );
+    );
+  }
 }
 
 const ExpandedImageGallery = styled.section`

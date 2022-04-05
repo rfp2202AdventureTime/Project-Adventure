@@ -8,7 +8,7 @@ import getStyle from '../helpers/getStyle';
 import StyleThumbnailList from './StyleThumbnailList';
 
 function StyleSelector() {
-  const [currentStyles] = useContext(CurrentStyles);
+  const currentStyles = useContext(CurrentStyles);
   const [previewStyleId] = useContext(PreviewStyleId);
   const previewStyle = getStyle(currentStyles, previewStyleId);
 

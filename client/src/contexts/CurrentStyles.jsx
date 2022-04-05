@@ -19,8 +19,8 @@ export function CurrentStylesProvider({ children }) {
   }, [productId]);
 
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <CurrentStyles.Provider value={[currentStyles, setCurrentStyles]}>
+
+    <CurrentStyles.Provider value={currentStyles}>
       { children }
     </CurrentStyles.Provider>
   );
