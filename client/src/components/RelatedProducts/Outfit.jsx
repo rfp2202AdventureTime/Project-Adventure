@@ -32,8 +32,8 @@ function Outfit() {
       <img
         src={'https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg'}
         alt="plus sign"
-        width={200}
-        height={200}
+        width={290}
+        height={220}
         onClick={() => clickCheck()}
       />
 

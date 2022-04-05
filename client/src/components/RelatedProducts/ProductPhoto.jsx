@@ -18,12 +18,12 @@ function ProductImg() {
 
   return (
     <div id="parent">
-      <FavButton as="a" href="http://bing.com">Test</FavButton>
+      <FavButton as="a" href="http://bing.com">Compare</FavButton>
       <a href="http://google.com">
         <img
           src={sampleData.productStyles.results[0].photos[0].url}
-          width={200}
-          height={150}
+          width={350}
+          height={225}
           alt="this is a test"
         />
       </a>
