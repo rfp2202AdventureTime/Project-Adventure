@@ -1,5 +1,5 @@
 import React from 'react';
-import { RatingBreakdownContainer, Score, StarContainer } from '../Styles/RatingSection.styled';
+import { ColumnContainer, Score, StarContainer } from '../Styles/RatingSection.styled';
 import { useMeta } from './ReviewContext';
 import Star from '../../Star';
 
@@ -28,7 +28,7 @@ export default function RatingOverview() {
   }
 
   return (
-    <RatingBreakdownContainer>
+    <ColumnContainer>
       <h3>
         RATINGS & REVIEWS
       </h3>
@@ -42,6 +42,6 @@ export default function RatingOverview() {
         {helpfulness}
         % of reviews recommend this product
       </div>
-    </RatingBreakdownContainer>
+    </ColumnContainer>
   );
 }

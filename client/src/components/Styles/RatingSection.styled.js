@@ -1,23 +1,32 @@
 import styled from 'styled-components';
 
-export const RatingSection = styled.section`
-  background-color: ${(props) => props.theme.colors.light};
 
-`;
 
-export const RatingBreakdownContainer = styled.div`
+// flexbox container
+export const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
+
 `;
 
-export const StarContainer = styled.div`
+export const RowContainer = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+export const StarContainer = styled(RowContainer)`
   align-items: center;
 `;
 
+
+// Specifc component
 export const Score = styled.div`
   padding-right: 1rem;
   font-size: 4rem;
   font-weight: bold
 `;
+
+export const progressBar = styled.div`
+
+`;
+

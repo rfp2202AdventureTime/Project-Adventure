@@ -1,5 +1,5 @@
 import React from 'react';
-import { RatingBreakdownContainer } from '../Styles/RatingSection.styled';
+import { ColumnContainer } from '../Styles/RatingSection.styled';
 import { useMeta } from './ReviewContext';
 
 export default function RatingList() {
@@ -32,8 +32,11 @@ export default function RatingList() {
   }
   const ratingBars = starPCTArray.map((pct) => <div>{pct}</div>);
   return (
-    <RatingBreakdownContainer>
+    <ColumnContainer>
       {/* {ratingBars} */}
-    </RatingBreakdownContainer>
+      <div className="w3-light-grey">
+        <div className="w3-green" style={{height:'2rem',width:'25%'}}></div>
+      </div>
+    </ColumnContainer>
   );
 }
