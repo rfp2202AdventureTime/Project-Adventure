@@ -14,10 +14,11 @@ import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
 
 function Overview() {
-  const [galleryView] = useState('default');
   const currentStyles = useContext(CurrentStyles);
   const [activeStyleId] = useContext(ActiveStyleId);
   const activeStyle = getStyle(currentStyles, activeStyleId);
+
+  const [galleryView] = useState('default');
 
   // Only render the Overview component if there's an active style.
   // Eventually, add more graceful loading.
@@ -56,7 +57,7 @@ const DefaultImageGallery = styled.div`
   width: 67.5%;
 `;
 
-const ProductInfo = styled.div`
+const ProductInfo = styled.section`
   background-color:${(props) => props.theme.colors.light};
   width: 32.5%;
   padding: 10px;

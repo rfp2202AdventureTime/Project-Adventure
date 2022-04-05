@@ -7,7 +7,7 @@ import { CurrentStylesProvider } from '@Contexts/CurrentStyles';
 import { ProductIDContext } from '@Contexts/ProductIDContext';
 
 import Theme from './contexts/Theme';
-import Overview from './components/Overview/Overview';
+import Overview from './components/Overview';
 import QA from './components/QA/QA';
 import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
