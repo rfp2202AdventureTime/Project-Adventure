@@ -1,18 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
+import { useData } from './QAContext';
 import QAItem from './QAItem';
-import QAContext from './QAContext';
 
 export default function Feed() {
+  const fullQAData = useData();
+  console.log(fullQAData);
   // filter passed down context of questions
   // base on product_id
   // let productQAList = xxx.filter((question) => { question.product_id === productID })
-  const dataOne = useContext(QAContext);
   return (
     <FeedSection>
-      {dataOne}
       {/* map every question an QA item */}
+      <h1>Feed</h1>
+      <p>{fullQAData === null ? 'loading' : fullQAData[0].question_id}</p>
       <QAItem />
     </FeedSection>
   );

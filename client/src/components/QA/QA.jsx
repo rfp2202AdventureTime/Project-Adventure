@@ -2,12 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Search from './QASearch';
+import QAFeed from './QAFeed';
+import { QADataProvider } from './QAContext';
 
-function QA() {
+export default function QA() {
+  // const qaData = useContext(QAContext);
   return (
     <QASection>
-      <h1>Questions and Answers</h1>
-      <Search />
+      <QADataProvider>
+        <>
+          <h1>Questions and Answers</h1>
+          <Search />
+          <QAFeed />
+        </>
+      </QADataProvider>
     </QASection>
   );
 }
@@ -15,5 +23,3 @@ function QA() {
 const QASection = styled.section`
   background-color: ${(props) => props.theme.colors.background};
 `;
-
-export default QA;
