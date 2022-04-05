@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
-import Theme from './Theme';
+import Theme from './contexts/Theme';
 import Overview from './components/Overview/Overview';
 import QA from './components/QA/QA';
 import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 import { ProductIDContext } from './ProductIDContext';
+import { CurrentStylesProvider } from './contexts/CurrentStyles';
 
 function App() {
-  const defaultProductId = 65632;
+  const defaultProductId = 65633;
 
   return (
     <Theme>
@@ -26,8 +27,10 @@ function App() {
           SITE-WIDE ANNOUNCEMENT MESSAGE - SALE / DISCOUNT OFFER - NEW PRODUCT HIGHLIGHT
         </Banner>
 
-        <Overview />
-        <RelatedProducts />
+        <CurrentStylesProvider>
+          <Overview />
+          <RelatedProducts />
+        </CurrentStylesProvider>
         <QA />
         <Ratings />
       </ProductIDContext.Provider>
