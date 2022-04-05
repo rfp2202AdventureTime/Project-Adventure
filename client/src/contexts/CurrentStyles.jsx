@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { ProductIDContext } from '../ProductIDContext';
+import { ProductIDContext } from './ProductIDContext';
 
 const CurrentStyles = createContext([undefined, undefined]);
 

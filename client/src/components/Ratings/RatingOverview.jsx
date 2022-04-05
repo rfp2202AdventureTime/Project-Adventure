@@ -13,6 +13,7 @@ export default function RatingOverview() {
   if (currentMeta) {
     const { ratings, recommended } = currentMeta;
     // Handle Rating
+
     Object.keys(ratings).forEach((key) => {
       const currentCT = Number(ratings[key]);
       totalRating = key * currentCT;
