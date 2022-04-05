@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import sampleData from './../../sampleData.js';
 import { Individualcard, IndCard } from './Individualcard';
 import ProductImg from './ProductPhoto';
+import Outfit from './Outfit';
 
 const Layout = styled.div`
   display: flex;
@@ -38,27 +39,9 @@ function RelatedProducts() {
 
       </Layout>
 
-      <h1>Your Outfits</h1>
+      <h1>Your Outfit</h1>
       <Layout>
-        <IndCard>
-          <ProductImg />
-          <Individualcard />
-        </IndCard>
-
-        <IndCard>
-          <ProductImg />
-          <Individualcard />
-        </IndCard>
-
-        <IndCard>
-          <ProductImg />
-          <Individualcard />
-        </IndCard>
-
-        <IndCard>
-          <ProductImg />
-          <Individualcard />
-        </IndCard>
+        <Outfit />
 
       </Layout>
 
