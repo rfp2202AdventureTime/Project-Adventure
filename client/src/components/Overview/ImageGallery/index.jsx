@@ -39,9 +39,7 @@ function ImageGallery() {
 
   if ((galleryView === 'default') && (currentStyles.length > 0)) {
     return (
-      <MainImage
-        url={currentStyle.photos[mainImageIndex].url}
-      >
+      <MainImage url={currentStyle.photos[mainImageIndex].url}>
         {currentStyle.photos.length > 1 && (
           <GalleryCarousel
             activeIndex={mainImageIndex}

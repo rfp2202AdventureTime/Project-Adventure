@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import StyleThumbnailList from './StyleThumbnailList';
 import { CurrentStyles } from '@Contexts/CurrentStyles';
 import { PreviewStyleId } from '@Contexts/PreviewStyleId';
 import getStyle from '../helpers/getStyle';
+
+import StyleThumbnailList from './StyleThumbnailList';
 
 function StyleSelector() {
   const [currentStyles] = useContext(CurrentStyles);
