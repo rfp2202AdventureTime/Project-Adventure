@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
-import Theme from './Theme';
+import Theme from './contexts/Theme';
 import Overview from './components/Overview/Overview';
 import QA from './components/QA/QA';
 import Ratings from './components/Ratings/Ratings';
