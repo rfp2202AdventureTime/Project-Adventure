@@ -34,13 +34,15 @@ function clickCheck(e) {
 export default function Outfit() {
   return (
     <AddOutfit>
-      <img
-        src={'https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg'}
-        alt="plus sign"
-        width={280}
-        height={250}
-        onClick={() => clickCheck()}
-      />
+      <div onClick={() => clickCheck()}>
+        <img
+          src="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
+          alt="plus sign"
+          width={280}
+          height={250}
+        />
+
+      </div>
 
       <OutfitText>Add to Outfit</OutfitText>
     </AddOutfit>

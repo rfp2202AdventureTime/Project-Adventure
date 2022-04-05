@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import sampleData from './../../sampleData.js';
+import sampleData from '../../sampleData';
 
 const FavButton = styled.button`
   color: tomato;

@@ -1,37 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import sampleData from '../../sampleData';
-// import StyleThumbnailList from './StyleThumbnailList';
-import { CurrentStyles } from './../../contexts/CurrentStyles';
-import { ActiveStyleId } from './../../contexts/ActiveStyleId';
-
-// const getActiveStyle = (currentStyles, activeStyleID) => {
-//   let activeStyle = currentStyles[0];
-//   for (let i = 0; i < currentStyles.length; i += 1) {
-//     if (currentStyles[i].style_id === activeStyleID) {
-//       activeStyle = currentStyles[i];
-//     }
-//   }
-//   return activeStyle;
-// };
-
-// function Individualcard() {
-//   const [currentStyles] = useContext(CurrentStyles);
-//   const [activeStyleId] = useContext(ActiveStyleId);
-//   const activeStyle = getActiveStyle(currentStyles, activeStyleId);
-//   console.log(currentStyles);
-
-//   return (
-//     <div>
-//       <CardText>
-//         <p>Test2</p>
-//         <p>Test3</p>
-//         <p>$69</p>
-//         <span>CSS rating with stars</span>
-//       </CardText>
-//     </div>
-//   );
-// }
 
 // should retrieve all related products from initial product page
 // map each individual card with all the information

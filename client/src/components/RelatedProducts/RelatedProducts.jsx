@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import sampleData from './../../sampleData.js';
+import sampleData from '../../sampleData';
 import { Individualcard, IndCard } from './Individualcard';
 import ProductImg from './ProductPhoto';
 import Outfit from './Outfit';
-import ComparisonTable from './ComparisonTable';
+// import ComparisonTable from './ComparisonTable';
 
 const Layout = styled.div`
   display: flex;
