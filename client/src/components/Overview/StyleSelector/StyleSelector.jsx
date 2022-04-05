@@ -4,16 +4,7 @@ import styled from 'styled-components';
 import StyleThumbnailList from './StyleThumbnailList';
 import { CurrentStyles } from '../../../contexts/CurrentStyles';
 import { PreviewStyleId } from '../../../contexts/PreviewStyleId';
-
-const getStyle = (currentStyles, activeStyleID) => {
-  let activeStyle = currentStyles[0];
-  for (let i = 0; i < currentStyles.length; i += 1) {
-    if (currentStyles[i].style_id === activeStyleID) {
-      activeStyle = currentStyles[i];
-    }
-  }
-  return activeStyle;
-};
+import getStyle from '../helpers/getStyle';
 
 function StyleSelector() {
   const [currentStyles] = useContext(CurrentStyles);
