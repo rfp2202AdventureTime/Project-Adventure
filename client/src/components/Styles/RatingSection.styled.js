@@ -6,37 +6,18 @@ export const RatingSection = styled.section`
 `;
 
 export const RatingBreakdownContainer = styled.div`
-  // display: flex;
-  // flex-direction: column;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StarContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 export const Score = styled.div`
+  padding-right: 1rem;
   font-size: 4rem;
   font-weight: bold
-`;
-
-export const StarRating = styled.div`
-  unicode-bidi: bidi-override;
-  color: #ccc;
-  font-size: 64px;
-  position: relative;
-  margin: 0;
-  padding: 0;
-`;
-
-export const StarFill = styled.div`
-  color: #e7711b;
-  padding: 0;
-  position: absolute;
-  z-index: 1;
-  display: block;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-`;
-
-export const StarEmpty = styled.div`
-  padding: 0;
-  display: block;
-  z-index: 0;
 `;
