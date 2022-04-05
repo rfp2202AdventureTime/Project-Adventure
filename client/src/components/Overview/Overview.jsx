@@ -1,32 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { ActiveStyleProvider } from '@Contexts/ActiveStyleId';
+import { PreviewStyleProvider } from '@Contexts/PreviewStyleId';
+
 import ImageGallery from './ImageGallery';
 import ProductDetails from './ProductDetails';
-import StyleSelector from './StyleSelector/StyleSelector';
+import StyleSelector from './StyleSelector';
 import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
-
-import { ActiveStyleProvider } from '@Contexts/ActiveStyleId';
 
 function Overview() {
   return (
     <ActiveStyleProvider>
-      <ExpandedImageGallery>
+      <PreviewStyleProvider>
+        <ExpandedImageGallery>
 
-        <DefaultImageGallery>
-          <ImageGallery />
-        </DefaultImageGallery>
+          <DefaultImageGallery>
+            <ImageGallery />
+          </DefaultImageGallery>
 
-        <ProductInfo>
-          <ProductDetails />
-          <StyleSelector />
-          <AddToCart />
-        </ProductInfo>
+          <ProductInfo>
+            <ProductDetails />
+            <StyleSelector />
+            <AddToCart />
+          </ProductInfo>
 
-      </ExpandedImageGallery>
+        </ExpandedImageGallery>
 
-      <ProductDescription />
+        <ProductDescription />
+      </PreviewStyleProvider>
     </ActiveStyleProvider>
   );
 }
