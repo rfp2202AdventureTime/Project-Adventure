@@ -1,5 +1,5 @@
 import React from 'react';
-import { RatingBreakdownContainer, Score } from '../Styles/RatingSection.styled';
+import { RatingBreakdownContainer, Score, StarContainer } from '../Styles/RatingSection.styled';
 import { useMeta } from './ReviewContext';
 import Star from '../../Star';
 
@@ -31,10 +31,12 @@ export default function RatingOverview() {
       <h3>
         RATINGS & REVIEWS
       </h3>
-      <Score>
-        {avgRating}
-      </Score>
-      <Star score={avgRating} />
+      <StarContainer>
+        <Score>
+          {avgRating}
+        </Score>
+        <Star score={avgRating} />
+      </StarContainer>
       <div>
         {helpfulness}
         % of reviews recommend this product
