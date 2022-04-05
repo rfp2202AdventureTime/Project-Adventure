@@ -1,18 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
+import { RatingBreakdownContainer, Score, StarContainer } from '../Styles/RatingSection.styled';
 import { useMeta } from './ReviewContext';
 import Star from '../../Star';
 
 export default function RatingOverview() {
   // Display Rating && helpfulness
   let totalRating;
-  let avgRating;
-  let totalCT = 0;
-  let helpfulness = 0;
+  let avgRating = 0;
+  let totalCT = null;
+  let helpfulness = null;
   const currentMeta = useMeta();
   if (currentMeta) {
     const { ratings, recommended } = currentMeta;
     // Handle Rating
+
     Object.keys(ratings).forEach((key) => {
       const currentCT = Number(ratings[key]);
       totalRating = key * currentCT;
@@ -27,20 +28,20 @@ export default function RatingOverview() {
   }
 
   return (
-    <RatingsSection>
+    <RatingBreakdownContainer>
       <h3>
-        Ratngs & Reviews
+        RATINGS & REVIEWS
       </h3>
-      {avgRating}
-      <Star />
+      <StarContainer>
+        <Score>
+          {avgRating}
+        </Score>
+        <Star score={avgRating} />
+      </StarContainer>
       <div>
         {helpfulness}
         % of reviews recommend this product
       </div>
-    </RatingsSection>
+    </RatingBreakdownContainer>
   );
 }
-
-const RatingsSection = styled.section`
-  background-color: ${(props) => props.theme.colors.light};
-`;
