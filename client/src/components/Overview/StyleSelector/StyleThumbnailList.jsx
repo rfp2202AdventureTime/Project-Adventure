@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import StyleThumbnail from './StyleThumbnail';
-import { CurrentStyles, ActiveStyleId } from '../../../CurrentStylesContext';
+import { CurrentStyles } from '../../../contexts/CurrentStyles';
+import { ActiveStyleId } from '../../../contexts/ActiveStyleId';
 
 function StyleThumbnailList() {
-  const currentStyles = useContext(CurrentStyles);
+  const [currentStyles] = useContext(CurrentStyles);
   const [activeStyleId, setActiveStyleId] = useContext(ActiveStyleId);
 
   const handleStyleThumbnailClick = (styleId) => {

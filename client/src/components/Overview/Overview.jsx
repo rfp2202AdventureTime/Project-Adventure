@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import ImageGallery from './ImageGallery';
@@ -7,19 +7,11 @@ import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
 
-import { ActiveStyleId } from '../../CurrentStylesContext';
-
-// Using dummy data for now.
-import styleData from './StyleSelectorData';
+import { ActiveStyleProvider } from '../../contexts/ActiveStyleId';
 
 function Overview() {
-  const [activeStyleId, setActiveStyleId] = useState(styleData[0].results[0].style_id);
-
   return (
-    // Refactor this so that we aren't passing the state hooks directly.
-    // It's throwing a linting warning but not sure why.
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <ActiveStyleId.Provider value={[activeStyleId, setActiveStyleId]}>
+    <ActiveStyleProvider>
       <ExpandedImageGallery>
 
         <DefaultImageGallery>
@@ -35,7 +27,7 @@ function Overview() {
       </ExpandedImageGallery>
 
       <ProductDescription />
-    </ActiveStyleId.Provider>
+    </ActiveStyleProvider>
   );
 }
 

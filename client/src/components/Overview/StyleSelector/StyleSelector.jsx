@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import StyleThumbnailList from './StyleThumbnailList';
-import { CurrentStyles, ActiveStyleId } from '../../../CurrentStylesContext';
+import { CurrentStyles } from '../../../contexts/CurrentStyles';
+import { ActiveStyleId } from '../../../contexts/ActiveStyleId';
 
 const getActiveStyle = (currentStyles, activeStyleID) => {
   let activeStyle = currentStyles[0];
@@ -15,14 +16,14 @@ const getActiveStyle = (currentStyles, activeStyleID) => {
 };
 
 function StyleSelector() {
-  const currentStyles = useContext(CurrentStyles);
+  const [currentStyles] = useContext(CurrentStyles);
   const [activeStyleId] = useContext(ActiveStyleId);
   const activeStyle = getActiveStyle(currentStyles, activeStyleId);
 
   return (
     <StyleSelectorContainer>
       <strong>STYLE &gt; </strong>
-      {activeStyle.name.toUpperCase()}
+      {activeStyle && activeStyle.name.toUpperCase()}
 
       { (currentStyles.length > 1) && <StyleThumbnailList />}
 
