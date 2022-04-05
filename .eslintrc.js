@@ -24,11 +24,15 @@ module.exports = {
   rules: {},
   settings: {
     'import/resolver': {
+      webpack: {
+        config: './webpack.config.js',
+      },
       alias: {
         map: [
           ['@Components', './client/src/components'],
-          ['@Contexts', './client/src/contexts']
-        ]
-      }
-    }
+          ['@Contexts', './client/src/contexts'],
+        ],
+      },
+    },
+  },
 };

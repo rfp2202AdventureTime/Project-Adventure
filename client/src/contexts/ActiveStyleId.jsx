@@ -4,7 +4,7 @@ import React, {
 import PropTypes from 'prop-types';
 import { CurrentStyles } from './CurrentStyles';
 
-const ActiveStyleId = createContext([undefined, undefined]);
+export const ActiveStyleId = createContext([undefined, undefined]);
 
 export function ActiveStyleProvider({ children }) {
   const [currentStyles] = useContext(CurrentStyles);
@@ -29,5 +29,3 @@ export function ActiveStyleProvider({ children }) {
 ActiveStyleProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-export { ActiveStyleId };
