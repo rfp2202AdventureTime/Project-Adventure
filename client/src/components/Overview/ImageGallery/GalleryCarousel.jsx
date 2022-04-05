@@ -10,9 +10,8 @@ function GalleryCarousel({
   maxSize,
   handleDownClick,
   handleUpClick,
+  viewportPosition,
 }) {
-  // const [viewportPosition, setViewportPosition] = useState(0);
-
   return (
     <Carousel>
       <UpArrow
@@ -22,7 +21,7 @@ function GalleryCarousel({
         UP
       </UpArrow>
       <CarouselViewport size={maxSize}>
-        <CarouselItems>
+        <CarouselItems viewportPosition={viewportPosition}>
           {photos.map((photo, i) => (
             <GalleryThumbnail
               // eslint-disable-next-line react/no-array-index-key
@@ -63,6 +62,7 @@ const DownArrow = styled(Arrow)`
 
 const CarouselItems = styled.div`
   width: 100%;
+  transform: translate(0, -${((props) => props.viewportPosition * 85)}px);
 `;
 
 const Carousel = styled.div`
@@ -85,11 +85,13 @@ GalleryCarousel.propTypes = {
   maxSize: PropTypes.number,
   handleDownClick: PropTypes.func.isRequired,
   handleUpClick: PropTypes.func.isRequired,
+  viewportPosition: PropTypes.number,
 };
 
 GalleryCarousel.defaultProps = {
   activeIndex: 0,
   maxSize: 3,
+  viewportPosition: 0,
 };
 
 export default GalleryCarousel;

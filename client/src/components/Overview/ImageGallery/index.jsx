@@ -14,10 +14,16 @@ function ImageGallery() {
 
   const [galleryView] = useState('default');
   const [mainImageIndex, setMainImageIndex] = useState(0);
+  const [viewportPosition, setViewportPosition] = useState(0);
+  const carouselSize = 4;
 
   const handleDownClick = (maxLength) => {
     if (mainImageIndex < (maxLength - 1)) {
       setMainImageIndex(mainImageIndex + 1);
+    }
+    // HAS A BUG.
+    if (viewportPosition > (carouselSize - mainImageIndex - 2)) {
+      setViewportPosition(viewportPosition + 1);
     }
   };
 
@@ -25,6 +31,10 @@ function ImageGallery() {
     if (mainImageIndex > 0) {
       setMainImageIndex(mainImageIndex - 1);
     }
+    // TODO:
+    // if (viewportPosition < (mainImageIndex - carouselSize)) {
+    //   setViewportPosition(viewportPosition - 1);
+    // }
   };
 
   if ((galleryView === 'default') && (currentStyles.length > 0)) {
@@ -36,6 +46,8 @@ function ImageGallery() {
             photos={currentStyle.photos}
             handleDownClick={() => handleDownClick(currentStyle.photos.length)}
             handleUpClick={() => handleUpClick()}
+            viewportPosition={viewportPosition}
+            maxSize={carouselSize}
           />
         )}
       </MainImage>
