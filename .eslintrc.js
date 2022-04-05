@@ -22,4 +22,13 @@ module.exports = {
     'react',
   ],
   rules: {},
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@Components', './client/src/components'],
+          ['@Contexts', './client/src/contexts']
+        ]
+      }
+    }
 };
