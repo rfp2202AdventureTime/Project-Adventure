@@ -1,8 +1,16 @@
 import styled from 'styled-components';
 
-const RatingSection = styled.section`
+export const RatingSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
 
 `;
 
-export default RatingSection;
+export const RatingBreakdownContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Score = styled.div`
+  font-size: 4rem;
+  font-weight: bold
+`;

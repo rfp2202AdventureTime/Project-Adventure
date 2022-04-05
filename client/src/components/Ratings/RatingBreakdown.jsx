@@ -1,16 +1,16 @@
 import React from 'react';
 import RatingOverview from './RatingOverview';
-import RatingSection from '../Styles/RatingSection.styled';
+import { RatingBreakdownContainer } from '../Styles/RatingSection.styled';
 import { ReviewProvider } from './ReviewContext';
 
 export default function RatingBreakdown() {
   return (
-    <RatingSection>
-      <ReviewProvider>
+    <ReviewProvider>
+      <RatingBreakdownContainer>
         <RatingOverview />
         {/* <RatingList /> */}
         {/* <FactorList /> */}
-      </ReviewProvider>
-    </RatingSection>
+      </RatingBreakdownContainer>
+    </ReviewProvider>
   );
 }
