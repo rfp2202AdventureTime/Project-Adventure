@@ -1,6 +1,7 @@
 import React from 'react';
-import { ColumnContainer } from '../Styles/RatingSection.styled';
-import { useMeta } from './ReviewContext';
+import styled from 'styled-components';
+
+import { useMeta } from '@Contexts/ReviewContext';
 
 export default function RatingList() {
   const starMap = new Map();
@@ -31,12 +32,19 @@ export default function RatingList() {
     });
   }
   const ratingBars = starPCTArray.map((pct) => <div>{pct}</div>);
+
   return (
-    <ColumnContainer>
+    <Ratings>
       {/* {ratingBars} */}
       <div className="w3-light-grey">
-        <div className="w3-green" style={{height:'2rem',width:'25%'}}></div>
+        <div className="w3-green" style={{ height: '2rem', width: '25%' }}>test </div>
       </div>
-    </ColumnContainer>
+    </Ratings>
   );
 }
+
+// Style components
+const Ratings = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

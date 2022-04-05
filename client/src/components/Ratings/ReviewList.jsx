@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReviewProvider } from './ReviewContext';
+import { ReviewProvider } from '@Contexts/ReviewContext';
 
 export default function ReviewList() {
   return (
     <RatingContainer>
-    <ReviewProvider>
-      ReviewList
-    </ReviewProvider>
+      <ReviewProvider>
+        ReviewList
+      </ReviewProvider>
     </RatingContainer>
   );
 }

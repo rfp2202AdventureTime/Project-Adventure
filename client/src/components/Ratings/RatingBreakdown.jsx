@@ -1,17 +1,25 @@
 import React from 'react';
-import RatingOverview from './RatingOverview';
-import RatingList from './RatingList';
-import { ColumnContainer } from '../Styles/RatingSection.styled';
-import { ReviewProvider } from './ReviewContext';
+import styled from 'styled-components';
+
+import { ReviewProvider } from '@Contexts/ReviewContext';
+import RatingOverview from './RatingBreakdown/RatingOverview';
+import RatingList from './RatingBreakdown/RatingList';
+import FactorList from './RatingBreakdown/FactorList';
 
 export default function RatingBreakdown() {
   return (
     <ReviewProvider>
-      <ColumnContainer>
+      <RatingContainer>
         <RatingOverview />
         <RatingList />
-        {/* <FactorList /> */}
-      </ColumnContainer>
+        <FactorList />
+      </RatingContainer>
     </ReviewProvider>
   );
 }
+
+// style components
+const RatingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { ProductIDContext } from '../../contexts/ProductIDContext';
+import { ProductIDContext } from './ProductIDContext';
 
 const ReviewContext = React.createContext();
 ReviewContext.displayName = 'RatingData';
@@ -25,7 +25,7 @@ export function ReviewProvider({ children }) {
       .then(({ data }) => {
         setReviewMeta(data);
       })
-      .catch((err) => console.log(err));
+      .catch(() => setReviewMeta(null));
   }, [productId]);
 
   return (

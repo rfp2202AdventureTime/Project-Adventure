@@ -1,7 +1,8 @@
 import React from 'react';
-import { ColumnContainer, Score, StarContainer } from '../Styles/RatingSection.styled';
-import { useMeta } from './ReviewContext';
-import Star from '../../Star';
+import styled from 'styled-components';
+
+import { useMeta } from '@Contexts/ReviewContext';
+import Star from '../../../Star';
 
 export default function RatingOverview() {
   // Display Rating && helpfulness
@@ -28,7 +29,7 @@ export default function RatingOverview() {
   }
 
   return (
-    <ColumnContainer>
+    <RatingOverviewContainer>
       <h3>
         RATINGS & REVIEWS
       </h3>
@@ -42,6 +43,24 @@ export default function RatingOverview() {
         {helpfulness}
         % of reviews recommend this product
       </div>
-    </ColumnContainer>
+    </RatingOverviewContainer>
   );
 }
+
+// Style componnets
+const RatingOverviewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StarContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+`;
+
+const Score = styled.div`
+  padding-right: 1rem;
+  font-size: 4rem;
+  font-weight: bold
+`;

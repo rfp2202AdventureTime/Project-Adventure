@@ -6,12 +6,10 @@ import ReviewList from './ReviewList';
 
 export default function Ratings() {
   return (
-    <>
-      <RatingSection>
-        <RatingBreakdown />
-        <ReviewList />
-      </RatingSection>
-    </>
+    <RatingSection>
+      <RatingBreakdown />
+      <ReviewList />
+    </RatingSection>
   );
 }
 
