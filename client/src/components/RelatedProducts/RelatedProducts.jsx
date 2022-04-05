@@ -4,10 +4,12 @@ import sampleData from './../../sampleData.js';
 import { Individualcard, IndCard } from './Individualcard';
 import ProductImg from './ProductPhoto';
 import Outfit from './Outfit';
+import ComparisonTable from './ComparisonTable';
 
 const Layout = styled.div`
   display: flex;
-  width: max-content;
+  width: 100%;
+  overflow: auto;
 `;
 
 function RelatedProducts() {

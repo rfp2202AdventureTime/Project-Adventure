@@ -12,16 +12,20 @@ const IndCard = styled.div`
     box-shadow: 0 8px 16px 0;
   }
 `;
-
+const CardText = styled.p`
+  padding-left: 2px;
+`;
 // should retrieve all related products from initial product page
 // map each individual card with all the information
 function Individualcard() {
   return (
     <div>
-      <p>{sampleData.products[1].category}</p>
-      <p>{sampleData.products[1].name}</p>
-      <p>${sampleData.products[1].default_price}</p>
-      <span>CSS rating with stars</span>
+      <CardText>
+        <p>{sampleData.products[1].category}</p>
+        <p>{sampleData.products[1].name}</p>
+        <p>${sampleData.products[1].default_price}</p>
+        <span>CSS rating with stars</span>
+      </CardText>
     </div>
   );
 }

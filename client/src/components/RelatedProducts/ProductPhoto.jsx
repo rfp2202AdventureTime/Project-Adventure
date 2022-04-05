@@ -34,8 +34,3 @@ function ProductImg() {
 }
 
 export default ProductImg;
-
-
-// color: tomato;
-  // position: relative;
-  // float: right;
