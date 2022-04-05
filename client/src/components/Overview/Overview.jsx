@@ -7,12 +7,8 @@ import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
 
-<<<<<<< HEAD
-import { ActiveStyleProvider } from '@Contexts/ActiveStyleId';
-=======
 import { ActiveStyleProvider } from '../../contexts/ActiveStyleId';
 import { PreviewStyleProvider } from '../../contexts/PreviewStyleId';
->>>>>>> 0b5af1f (Add hover preview to StyleSelector)
 
 function Overview() {
   return (
