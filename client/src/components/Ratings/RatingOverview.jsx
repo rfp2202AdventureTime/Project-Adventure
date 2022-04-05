@@ -1,5 +1,5 @@
 import React from 'react';
-import RatingSection from '../Styles/RatingSection.styled';
+import { RatingBreakdownContainer, Score } from '../Styles/RatingSection.styled';
 import { useMeta } from './ReviewContext';
 import Star from '../../Star';
 
@@ -7,8 +7,8 @@ export default function RatingOverview() {
   // Display Rating && helpfulness
   let totalRating;
   let avgRating;
-  let totalCT = 0;
-  let helpfulness = 0;
+  let totalCT = null;
+  let helpfulness = null;
   const currentMeta = useMeta();
   if (currentMeta) {
     const { ratings, recommended } = currentMeta;
@@ -27,16 +27,18 @@ export default function RatingOverview() {
   }
 
   return (
-    <RatingSection>
+    <RatingBreakdownContainer>
       <h3>
-        Ratngs & Reviews
+        RATINGS & REVIEWS
       </h3>
-      {avgRating}
+      <Score>
+        {avgRating}
+      </Score>
       <Star />
       <div>
         {helpfulness}
         % of reviews recommend this product
       </div>
-    </RatingSection>
+    </RatingBreakdownContainer>
   );
 }
