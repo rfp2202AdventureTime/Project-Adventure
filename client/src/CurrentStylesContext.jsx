@@ -1,9 +1,9 @@
-import React from 'react';
+import { createContext } from 'react';
 
 // Currently using dummy data.
 import styleData from './components/Overview/StyleSelectorData';
 
-const CurrentStyles = React.createContext(styleData[0].results);
-const ActiveStyle = React.createContext(styleData[0].results[0].style_id);
+const CurrentStyles = createContext(styleData[0].results);
+const ActiveStyleId = createContext();
 
-export { CurrentStyles, ActiveStyle };
+export { CurrentStyles, ActiveStyleId };

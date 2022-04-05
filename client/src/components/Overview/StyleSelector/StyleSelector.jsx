@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import StyleThumbnailList from './StyleThumbnailList';
-import { CurrentStyles, ActiveStyle } from '../../../CurrentStylesContext';
+import { CurrentStyles, ActiveStyleId } from '../../../CurrentStylesContext';
 
 const getActiveStyle = (currentStyles, activeStyleID) => {
   let activeStyle = currentStyles[0];
@@ -16,7 +16,8 @@ const getActiveStyle = (currentStyles, activeStyleID) => {
 
 function StyleSelector() {
   const currentStyles = useContext(CurrentStyles);
-  const activeStyle = getActiveStyle(currentStyles, useContext(ActiveStyle));
+  const [activeStyleId] = useContext(ActiveStyleId);
+  const activeStyle = getActiveStyle(currentStyles, activeStyleId);
 
   return (
     <StyleSelectorContainer>

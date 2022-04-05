@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import ImageGallery from './ImageGallery';
@@ -7,12 +7,18 @@ import StyleSelector from './StyleSelector/StyleSelector';
 import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
 
-// Using dummy data for now
+import { ActiveStyleId } from '../../CurrentStylesContext';
+
+// Using dummy data for now.
 import styleData from './StyleSelectorData';
 
 function Overview() {
+  const [activeStyleId, setActiveStyleId] = useState(styleData[0].results[0].style_id);
+
   return (
-    <>
+    // Refactor this so that we aren't passing the state hooks directly.
+    // It's throwing a linting warning but not sure why.
+    <ActiveStyleId.Provider value={[activeStyleId, setActiveStyleId]}>
       <ExpandedImageGallery>
 
         <DefaultImageGallery>
@@ -21,14 +27,14 @@ function Overview() {
 
         <ProductInfo>
           <ProductDetails />
-          <StyleSelector styles={styleData[0].results} />
+          <StyleSelector />
           <AddToCart />
         </ProductInfo>
 
       </ExpandedImageGallery>
 
       <ProductDescription />
-    </>
+    </ActiveStyleId.Provider>
   );
 }
 

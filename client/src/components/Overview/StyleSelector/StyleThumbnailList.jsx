@@ -2,19 +2,24 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import StyleThumbnail from './StyleThumbnail';
-import { CurrentStyles, ActiveStyle } from '../../../CurrentStylesContext';
+import { CurrentStyles, ActiveStyleId } from '../../../CurrentStylesContext';
 
 function StyleThumbnailList() {
   const currentStyles = useContext(CurrentStyles);
-  const activeStyle = useContext(ActiveStyle);
+  const [activeStyleId, setActiveStyleId] = useContext(ActiveStyleId);
+
+  const handleStyleThumbnailClick = (styleId) => {
+    setActiveStyleId(styleId);
+  };
 
   return (
     <StyleThumbnails>
       {currentStyles.map((style) => (
         <StyleThumbnail
           url={style.photos[0].thumbnail_url}
-          isSelected={style.style_id === activeStyle}
+          isSelected={style.style_id === activeStyleId}
           key={style.style_id}
+          handleStyleThumbnailClick={() => handleStyleThumbnailClick(style.style_id)}
         />
       ))}
     </StyleThumbnails>
