@@ -18,6 +18,7 @@ function Overview() {
   return (
     // Refactor this so that we aren't passing the state hooks directly.
     // It's throwing a linting warning but not sure why.
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <ActiveStyleId.Provider value={[activeStyleId, setActiveStyleId]}>
       <ExpandedImageGallery>
 
