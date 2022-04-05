@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import StyleThumbnailList from './StyleThumbnailList';
-import { CurrentStyles } from '../../../contexts/CurrentStyles';
-import { PreviewStyleId } from '../../../contexts/PreviewStyleId';
+import { CurrentStyles } from '@Contexts/CurrentStyles';
+import { PreviewStyleId } from '@Contexts/PreviewStyleId';
 import getStyle from '../helpers/getStyle';
 
 function StyleSelector() {

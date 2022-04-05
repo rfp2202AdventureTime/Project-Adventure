@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import StyleThumbnail from './StyleThumbnail';
-import { CurrentStyles } from '../../../contexts/CurrentStyles';
-import { ActiveStyleId } from '../../../contexts/ActiveStyleId';
-import { PreviewStyleId } from '../../../contexts/PreviewStyleId';
+import { CurrentStyles } from '@Contexts/CurrentStyles';
+import { ActiveStyleId } from '@Contexts/ActiveStyleId';
+import { PreviewStyleId } from '@Contexts/PreviewStyleId';
 
 function StyleThumbnailList() {
   const [currentStyles] = useContext(CurrentStyles);

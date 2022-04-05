@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 import ImageGallery from './ImageGallery';
 import ProductDetails from './ProductDetails';
-import StyleSelector from './StyleSelector/StyleSelector';
+import StyleSelector from './StyleSelector';
 import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
 
-import { ActiveStyleProvider } from '../../contexts/ActiveStyleId';
-import { PreviewStyleProvider } from '../../contexts/PreviewStyleId';
+import { ActiveStyleProvider } from '@Contexts/ActiveStyleId';
+import { PreviewStyleProvider } from '@Contexts/PreviewStyleId';
 
 function Overview() {
   return (

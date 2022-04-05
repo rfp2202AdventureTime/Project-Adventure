@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
-import { CurrentStyles } from '../../../contexts/CurrentStyles';
-import { ActiveStyleId } from '../../../contexts/ActiveStyleId';
+import { CurrentStyles } from '@Contexts/CurrentStyles';
+import { ActiveStyleId } from '@Contexts/ActiveStyleId';
 import getStyle from '../helpers/getStyle';
 
 import GalleryCarousel from './GalleryCarousel';
@@ -39,7 +39,9 @@ function ImageGallery() {
 
   if ((galleryView === 'default') && (currentStyles.length > 0)) {
     return (
-      <MainImage url={currentStyle.photos[mainImageIndex].url}>
+      <MainImage
+        url={currentStyle.photos[mainImageIndex].url}
+      >
         {currentStyle.photos.length > 1 && (
           <GalleryCarousel
             activeIndex={mainImageIndex}
