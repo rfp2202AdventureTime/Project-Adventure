@@ -6,7 +6,7 @@ import Star from '../../Star';
 export default function RatingOverview() {
   // Display Rating && helpfulness
   let totalRating;
-  let avgRating;
+  let avgRating = 0;
   let totalCT = null;
   let helpfulness = null;
   const currentMeta = useMeta();
