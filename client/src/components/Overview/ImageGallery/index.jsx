@@ -13,7 +13,19 @@ function ImageGallery() {
   const currentStyle = getStyle(currentStyles, activeStyleId);
 
   const [galleryView] = useState('default');
-  const [mainImageIndex] = useState(0);
+  const [mainImageIndex, setMainImageIndex] = useState(0);
+
+  const handleDownClick = (maxLength) => {
+    if (mainImageIndex < (maxLength - 1)) {
+      setMainImageIndex(mainImageIndex + 1);
+    }
+  };
+
+  const handleUpClick = () => {
+    if (mainImageIndex > 0) {
+      setMainImageIndex(mainImageIndex - 1);
+    }
+  };
 
   if ((galleryView === 'default') && (currentStyles.length > 0)) {
     return (
@@ -22,6 +34,8 @@ function ImageGallery() {
           <GalleryCarousel
             activeIndex={mainImageIndex}
             photos={currentStyle.photos}
+            handleDownClick={() => handleDownClick(currentStyle.photos.length)}
+            handleUpClick={() => handleUpClick()}
           />
         )}
       </MainImage>

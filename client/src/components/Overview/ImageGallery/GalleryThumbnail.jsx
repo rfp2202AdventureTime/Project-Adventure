@@ -24,6 +24,9 @@ const Thumbnail = styled.span`
   background-position: center;
   border: 1px solid ${(props) => props.theme.colors.secondary};
   margin: 5px 0;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const SelectedThumbnail = styled(Thumbnail)`
