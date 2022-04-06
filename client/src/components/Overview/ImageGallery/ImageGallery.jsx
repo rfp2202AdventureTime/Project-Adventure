@@ -8,15 +8,14 @@ import GalleryCarousel from './GalleryCarousel';
 import DotNavigation from './DotNavigation';
 
 function ImageGallery({ view, handleViewChange }) {
-  const { activeStyle: { photos } } = useActiveStyle();
   const [imgIdx, setImgIdx] = useState(0);
+  const { activeStyle: { photos } } = useActiveStyle();
 
-  const handleClick = (direction) => {
-    if (direction === 'up') {
-      if (imgIdx > 0) setImgIdx(imgIdx - 1);
-    } else if (direction === 'down') {
-      if (imgIdx < (photos.length - 1)) setImgIdx(imgIdx + 1);
-    }
+  const handlePhotoChange = (selection) => {
+    let newIdx = selection;
+    if (selection === 'prev') newIdx = imgIdx - 1;
+    if (selection === 'next') newIdx = imgIdx + 1;
+    if (photos[newIdx]) setImgIdx(newIdx);
   };
 
   if (photos) {
@@ -28,25 +27,37 @@ function ImageGallery({ view, handleViewChange }) {
         onClick={(e) => handleViewChange(e, 'expanded')}
       >
 
-        <ExitExpanded
+        <LeftArrow
+          visible={imgIdx > 0}
+          onClick={() => handlePhotoChange('prev')}
+        />
+
+        <RightArrow
+          visible={imgIdx < (photos.length - 1)}
+          onClick={() => handlePhotoChange('next')}
+        />
+
+        <Exit
           className={view}
           onClick={(e) => handleViewChange(e, 'default')}
         />
 
         {hasMultiplePhotos && (
-          <GalleryCarousel
-            activeIndex={imgIdx}
-            photos={photos}
-            handleClick={handleClick}
-            view={view}
-          />
-        )}
+          <>
+            <GalleryCarousel
+              activeIndex={imgIdx}
+              photos={photos}
+              handleClick={handlePhotoChange}
+              view={view}
+            />
 
-        {hasMultiplePhotos && (
-          <DotNavigation
-            activeIndex={imgIdx}
-            view={view}
-          />
+            <DotNavigation
+              activeIndex={imgIdx}
+              numItems={photos.length}
+              handleClick={handlePhotoChange}
+              view={view}
+            />
+          </>
         )}
 
       </MainImage>
@@ -54,17 +65,37 @@ function ImageGallery({ view, handleViewChange }) {
   }
 }
 
+const Arrow = styled.span`
+  position: absolute;
+  height: 50px;
+  width: 30px;
+  background-color: red;
+  ${(props) => (!props.visible && 'visibility: hidden;')}
+`;
+
+const LeftArrow = styled(Arrow)`
+  top: 50%;
+  left: 0px;
+  translate(0, -50%);
+`;
+
+const RightArrow = styled(Arrow)`
+  top 50%;
+  right: 0px;
+  translate(0, -50%);
+`;
+
 const MainImage = styled.div`
   background: url(${(props) => props.url});
   height: 100%;
   width: 100%;
-  background-size: contain;
+  background-size: auto 100%;
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
 `;
 
-const ExitExpanded = styled.span`
+const Exit = styled.span`
   background-color: ${(props) => props.theme.colors.primary};
   width: 50px;
   height: 50px;

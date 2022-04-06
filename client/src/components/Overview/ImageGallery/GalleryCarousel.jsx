@@ -2,54 +2,77 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import GalleryThumbnail from './GalleryThumbnail';
-
 function GalleryCarousel({
   photos,
   activeIndex,
   handleClick,
-  viewport,
   view,
 }) {
-  // const [viewport, setViewport] = useState(0);
-
-  // if (viewport > (carouselSize - mainImageIndex - 2)) {
-  //   setViewport(viewport + 1);
-  // }
-  // Carousel viewport
+  const [viewport, setViewport] = React.useState(0);
   const size = 4;
+
+  React.useEffect(() => {
+    const visiblePhotos = { min: viewport, max: viewport + size };
+    if (activeIndex >= visiblePhotos.max) setViewport(activeIndex - size + 1);
+    if (activeIndex < visiblePhotos.min) setViewport(activeIndex);
+  }, [activeIndex]);
 
   return (
     <Carousel className={view}>
       <UpArrow
         visible={activeIndex > 0}
-        // onClick={handleUpClick}
-        onClick={() => handleClick('up')}
+        onClick={() => handleClick('prev')}
       >
         UP
       </UpArrow>
       <CarouselViewport size={size}>
         <CarouselItems viewport={viewport}>
           {photos.map((photo, i) => (
-            <GalleryThumbnail
-              // eslint-disable-next-line react/no-array-index-key
-              key={i}
-              isSelected={(activeIndex === i)}
-              url={photo.url}
+            <Thumbnail
+              key={photo.thumbnail_url}
+              url={photo.thumbnail_url}
+              className={(activeIndex === i) && 'selected'}
+              onClick={() => handleClick(i)}
             />
           ))}
         </CarouselItems>
       </CarouselViewport>
       <DownArrow
         visible={activeIndex < (photos.length - 1)}
-        // onClick={handleDownClick}
-        onClick={() => handleClick('down')}
+        onClick={() => handleClick('next')}
       >
         DOWN
       </DownArrow>
     </Carousel>
   );
 }
+
+const Thumbnail = styled.span`
+  background: url(${(props) => props.url});
+  height: 70px;
+  width: 70px;
+  display: inline-block;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid ${(props) => props.theme.colors.secondary};
+  margin: 5px 0;
+  &:hover {
+    cursor: pointer;
+  }
+  position: relative;
+  &.selected {
+    &::after {
+      content: "";
+      position: absolute;
+      width: 70px;
+      height: 5px;
+      top: 71px;
+      left: -1px;
+      display: inline-block;
+      background: ${(props) => props.theme.colors.primary};
+    }
+  }
+`;
 
 const Arrow = styled.div`
   text-align: center;
@@ -97,13 +120,11 @@ GalleryCarousel.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   activeIndex: PropTypes.number,
   handleClick: PropTypes.func.isRequired,
-  viewport: PropTypes.number,
   view: PropTypes.string,
 };
 
 GalleryCarousel.defaultProps = {
   activeIndex: 0,
-  viewport: 0,
   view: 'default',
 };
 
