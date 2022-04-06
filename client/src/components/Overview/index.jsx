@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { ActiveStyleProvider } from '@Contexts/ActiveStyleId';
-import { PreviewStyleProvider } from '@Contexts/PreviewStyleId';
+import { useActiveStyle } from '@Contexts/ActiveStyleId';
 
 import ImageGallery from './ImageGallery';
 import ProductDetails from './ProductDetails';
@@ -11,13 +10,21 @@ import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
 
 function Overview() {
-  return (
-    <ActiveStyleProvider>
-      <PreviewStyleProvider>
-        <ExpandedImageGallery>
+  const { activeStyle } = useActiveStyle();
+  const [view, setView] = useState('default');
 
+  const handleViewChange = (e, newView) => {
+    if (e.target === e.currentTarget) setView(newView);
+  };
+
+  if (activeStyle) {
+    return (
+      <>
+        <ExpandedImageGallery>
           <DefaultImageGallery>
-            <ImageGallery />
+            <ImageGalleryViewport className={view}>
+              <ImageGallery view={view} handleViewChange={handleViewChange} />
+            </ImageGalleryViewport>
           </DefaultImageGallery>
 
           <ProductInfo>
@@ -25,29 +32,43 @@ function Overview() {
             <StyleSelector />
             <AddToCart />
           </ProductInfo>
-
         </ExpandedImageGallery>
 
         <ProductDescription />
-      </PreviewStyleProvider>
-    </ActiveStyleProvider>
-  );
+      </>
+    );
+  }
 }
 
 const ExpandedImageGallery = styled.section`
   background-color: ${(props) => props.theme.colors.light};
   display: flex;
-  min-height: 630px;
+  height: 630px;
 `;
 
 const DefaultImageGallery = styled.div`
-  background-color:${(props) => props.theme.colors.background};
-  width: 67.5%;
+  width: 800px;
+  overflow: visible;
+  z-index: 2;
 `;
 
-const ProductInfo = styled.div`
+const ImageGalleryViewport = styled.div`
+  background-color:${(props) => props.theme.colors.background};
+  width: 100%;
+  height: 100%;
+  &.expanded {
+    width: ${() => document.getElementById('main').offsetWidth}px;
+    transition: width 1s ease-in-out;
+  }
+  &.default {
+    width: 100%;
+    transition: width 1s ease-in-out;
+  }
+`;
+
+const ProductInfo = styled.section`
   background-color:${(props) => props.theme.colors.light};
-  width: 32.5%;
+  width: 480px;
   padding: 10px;
 `;
 

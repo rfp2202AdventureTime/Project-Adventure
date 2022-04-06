@@ -33,6 +33,11 @@ module.exports = {
           ['@Contexts', './client/src/contexts'],
         ],
       },
+      // There's a bug with the resolver settings.
+      // eslint-disable-next-line no-dupe-keys
+      webpack: {
+        config: './webpack.config.js',
+      },
     },
   },
 };

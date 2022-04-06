@@ -1,31 +1,75 @@
-import React, {
-  createContext, useContext, useEffect, useState,
-} from 'react';
+/* eslint-disable react/jsx-no-constructed-context-values */
+import React from 'react';
 import PropTypes from 'prop-types';
-import { CurrentStyles } from './CurrentStyles';
+import axios from 'axios';
+import { ProductIDContext } from './ProductIDContext';
 
-export const ActiveStyleId = createContext([undefined, undefined]);
+const CurrentStyles = React.createContext();
+const ActiveStyleId = React.createContext();
+const PreviewStyleId = React.createContext();
 
-export function ActiveStyleProvider({ children }) {
-  const [currentStyles] = useContext(CurrentStyles);
-  const [activeStyleId, setActiveStyleId] = useState();
+function getStyle(styles, id) {
+  return (styles) ? styles.find((i) => i.style_id === id) || styles[0] : null;
+}
 
-  useEffect(() => {
-    if (currentStyles[0] && currentStyles[0].style_id) {
+function useCurrentStyles() { return React.useContext(CurrentStyles); }
+
+function useActiveStyle() {
+  const [activeId, setActiveId] = React.useContext(ActiveStyleId);
+  const currStyles = React.useContext(CurrentStyles);
+
+  const [activeStyle, setActiveStyle] = [getStyle(currStyles, activeId), setActiveId];
+  return { activeStyle, setActiveStyle };
+}
+
+function usePreviewStyle() {
+  const [previewId, setPreviewId] = React.useContext(PreviewStyleId);
+  const currStyles = React.useContext(CurrentStyles);
+
+  const [previewStyle, setPreviewStyle] = [getStyle(currStyles, previewId), setPreviewId];
+  return { previewStyle, setPreviewStyle };
+}
+
+function StylesProvider({ children }) {
+  const [currentStyles, setCurrentStyles] = React.useState();
+  const [activeStyleId, setActiveStyleId] = React.useState();
+  const [previewStyleId, setPreviewStyleId] = React.useState();
+  const productId = React.useContext(ProductIDContext);
+
+  React.useEffect(() => {
+    axios({ method: 'get', url: `/products/${productId}/styles` })
+      .then(({ data }) => { setCurrentStyles(data.results); })
+      .catch(() => setCurrentStyles([]));
+  }, [productId]);
+
+  React.useEffect(() => {
+    if (currentStyles && currentStyles[0].style_id) {
       setActiveStyleId(currentStyles[0].style_id);
-    } else {
-      setActiveStyleId(null);
     }
   }, [currentStyles]);
 
+  React.useEffect(() => {
+    setPreviewStyleId(activeStyleId);
+  }, [activeStyleId]);
+
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <ActiveStyleId.Provider value={[activeStyleId, setActiveStyleId]}>
-      { children }
-    </ActiveStyleId.Provider>
+    <CurrentStyles.Provider value={currentStyles}>
+      <ActiveStyleId.Provider value={[activeStyleId, setActiveStyleId]}>
+        <PreviewStyleId.Provider value={[previewStyleId, setPreviewStyleId]}>
+          { children }
+        </PreviewStyleId.Provider>
+      </ActiveStyleId.Provider>
+    </CurrentStyles.Provider>
   );
 }
 
-ActiveStyleProvider.propTypes = {
+StylesProvider.propTypes = {
   children: PropTypes.node.isRequired,
+};
+
+export {
+  useActiveStyle,
+  usePreviewStyle,
+  useCurrentStyles,
+  StylesProvider,
 };
