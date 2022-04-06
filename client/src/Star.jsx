@@ -12,7 +12,7 @@ export default function Star({ score }) {
         <div
           className="full-stars"
           style={width}
-          />
+        />
       </div>
     </StarBlock>
   );

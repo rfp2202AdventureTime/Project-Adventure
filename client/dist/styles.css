@@ -70,7 +70,7 @@
 }
 .empty-stars::before, .full-stars::before {
   content:"\2605\2605\2605\2605\2605";
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .empty-stars::before {
   -webkit-text-stroke: 1px #848484;
