@@ -12,7 +12,7 @@ import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
-  const defaultProductId = 65632;
+  const defaultProductId = 65644;
 
   return (
     <Theme>

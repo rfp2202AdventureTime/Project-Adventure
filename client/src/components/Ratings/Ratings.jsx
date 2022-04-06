@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { RatingProvider } from '../../contexts/ReviewMeta';
 
 import RatingBreakdown from './RatingBreakdown';
 import ReviewList from './ReviewList';
@@ -7,12 +8,14 @@ import { ReviewProvider } from '../../contexts/ProductReview';
 
 export default function Ratings() {
   return (
-    <RatingSection>
-      <RatingBreakdown />
-      <ReviewProvider>
-        <ReviewList />
-      </ReviewProvider>
-    </RatingSection>
+    <RatingProvider>
+      <RatingSection>
+        <RatingBreakdown />
+        <ReviewProvider>
+          <ReviewList />
+        </ReviewProvider>
+      </RatingSection>
+    </RatingProvider>
   );
 }
 

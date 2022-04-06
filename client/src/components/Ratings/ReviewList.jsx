@@ -5,7 +5,7 @@ import { useReviews } from '../../contexts/ProductReview';
 
 export default function ReviewList() {
   const reviews = useReviews().results;
-  console.log(reviews);
+  // console.log(reviews);
   let reviewCollection = [];
   if (reviews) {
     reviewCollection = reviews.map(

@@ -21,6 +21,8 @@ export function ReviewProvider({ children }) {
       url: 'http://localhost:3000/reviews',
       params: {
         product_id: productId,
+        // page: 1,
+        count: 2,
       },
     })
       .then(({ data }) => {
