@@ -7,21 +7,29 @@ import GalleryThumbnail from './GalleryThumbnail';
 function GalleryCarousel({
   photos,
   activeIndex,
-  maxSize,
-  handleDownClick,
-  handleUpClick,
-  viewportPosition,
+  handleClick,
+  viewport,
+  view,
 }) {
+  // const [viewport, setViewport] = useState(0);
+
+  // if (viewport > (carouselSize - mainImageIndex - 2)) {
+  //   setViewport(viewport + 1);
+  // }
+  // Carousel viewport
+  const size = 4;
+
   return (
-    <Carousel>
+    <Carousel className={view}>
       <UpArrow
         visible={activeIndex > 0}
-        onClick={handleUpClick}
+        // onClick={handleUpClick}
+        onClick={() => handleClick('up')}
       >
         UP
       </UpArrow>
-      <CarouselViewport size={maxSize}>
-        <CarouselItems viewportPosition={viewportPosition}>
+      <CarouselViewport size={size}>
+        <CarouselItems viewport={viewport}>
           {photos.map((photo, i) => (
             <GalleryThumbnail
               // eslint-disable-next-line react/no-array-index-key
@@ -34,7 +42,8 @@ function GalleryCarousel({
       </CarouselViewport>
       <DownArrow
         visible={activeIndex < (photos.length - 1)}
-        onClick={handleDownClick}
+        // onClick={handleDownClick}
+        onClick={() => handleClick('down')}
       >
         DOWN
       </DownArrow>
@@ -62,7 +71,7 @@ const DownArrow = styled(Arrow)`
 
 const CarouselItems = styled.div`
   width: 100%;
-  transform: translate(0, -${((props) => props.viewportPosition * 85)}px);
+  transform: translate(0, -${((props) => props.viewport * 85)}px);
 `;
 
 const Carousel = styled.div`
@@ -71,6 +80,11 @@ const Carousel = styled.div`
   left: 20px;
   display: inline-block;
   width: 72px;
+  &.expanded {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
+  }
 `;
 
 const CarouselViewport = styled.div`
@@ -82,16 +96,15 @@ const CarouselViewport = styled.div`
 GalleryCarousel.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   activeIndex: PropTypes.number,
-  maxSize: PropTypes.number,
-  handleDownClick: PropTypes.func.isRequired,
-  handleUpClick: PropTypes.func.isRequired,
-  viewportPosition: PropTypes.number,
+  handleClick: PropTypes.func.isRequired,
+  viewport: PropTypes.number,
+  view: PropTypes.string,
 };
 
 GalleryCarousel.defaultProps = {
   activeIndex: 0,
-  maxSize: 3,
-  viewportPosition: 0,
+  viewport: 0,
+  view: 'default',
 };
 
 export default GalleryCarousel;

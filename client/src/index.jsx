@@ -1,14 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import styled from 'styled-components';
 
+import { StylesProvider } from '@Contexts/ActiveStyleId';
+import { ProductIDContext } from '@Contexts/ProductIDContext';
+
 import Theme from './contexts/Theme';
-import Overview from './components/Overview/Overview';
+import Overview from './components/Overview';
 import QA from './components/QA/QA';
 import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
-import { ProductIDContext } from './contexts/ProductIDContext';
-import { CurrentStylesProvider } from './contexts/CurrentStyles';
 
 function App() {
   const defaultProductId = 65631;
@@ -27,10 +28,10 @@ function App() {
           SITE-WIDE ANNOUNCEMENT MESSAGE - SALE / DISCOUNT OFFER - NEW PRODUCT HIGHLIGHT
         </Banner>
 
-        <CurrentStylesProvider>
+        <StylesProvider>
           <Overview />
           <RelatedProducts />
-        </CurrentStylesProvider>
+        </StylesProvider>
         <QA />
         <Ratings />
       </ProductIDContext.Provider>
@@ -59,4 +60,4 @@ const Banner = styled.div`
   padding: 10px 0;
 `;
 
-ReactDOM.render(<App />, document.getElementById('root'));
+createRoot(document.getElementById('root')).render(<App />);
