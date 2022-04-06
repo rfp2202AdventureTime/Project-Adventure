@@ -42,6 +42,11 @@ const DotNav = styled.nav`
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 0);
+  &.default {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
+  }
 `;
 
 DotNavigation.propTypes = {
