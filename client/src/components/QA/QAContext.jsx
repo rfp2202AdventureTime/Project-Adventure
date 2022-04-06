@@ -13,7 +13,8 @@ export function useData() {
 
 export function QADataProvider({ children }) {
   const productId = useContext(ProductIDContext);
-  const [qaData, setQAData] = useState(null);
+  const [qData, setQData] = useState(null);
+  const [aData, setAData] = useState([]);
 
   useEffect(() => {
     axios({
@@ -24,14 +25,28 @@ export function QADataProvider({ children }) {
       },
     })
       .then(({ data }) => {
-        setQAData(data.results);
+        setQData(data.results);
+        data.results.forEach((question) => {
+          axios({
+            method: 'get',
+            url: `http://localhost:3000/qa/questions/${question.question_id}/answers`,
+          })
+            // eslint-disable-next-line no-shadow
+            .then(({ data }) => {
+              setAData(aData.push(data));
+              console.log(aData);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   }, [productId]);
   return (
-    <QAContext.Provider value={qaData}>
+    <QAContext.Provider value={qData}>
       { children }
     </QAContext.Provider>
   );
