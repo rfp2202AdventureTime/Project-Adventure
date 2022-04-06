@@ -20,6 +20,10 @@ export default function ReviewList() {
   return (
     <ReviewContainer>
       {reviewCollection}
+      <ButtonBlock>
+        <Botton> MORE REVIEWS</Botton>
+        <Botton> ADD A REVIEW +</Botton>
+      </ButtonBlock>
     </ReviewContainer>
   );
 }
@@ -28,4 +32,19 @@ export default function ReviewList() {
 const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+const ButtonBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1.3rem 1rem 1.3rem 1rem;
+`;
+const Botton = styled.button`
+  border: 2px solid;
+  background: white;
+  text-align: center;
+  padding: 1.3rem 1rem 1.3rem 1rem;
+  font-size: medium;
+  font-weight: 700;
+
 `;
