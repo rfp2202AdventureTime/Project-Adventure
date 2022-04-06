@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-function StyleThumbnail({
+function ThumbnailItem({
   url,
   isSelected,
   handleStyleThumbnailClick,
@@ -58,7 +58,7 @@ const SelectedThumbnail = styled(Thumbnail)`
   }
 `;
 
-StyleThumbnail.propTypes = {
+ThumbnailItem.propTypes = {
   url: PropTypes.string,
   isSelected: PropTypes.bool,
   handleStyleThumbnailClick: PropTypes.func.isRequired,
@@ -66,9 +66,9 @@ StyleThumbnail.propTypes = {
   handleStyleThumbnailMouseOut: PropTypes.func.isRequired,
 };
 
-StyleThumbnail.defaultProps = {
+ThumbnailItem.defaultProps = {
   url: null,
   isSelected: false,
 };
 
-export default StyleThumbnail;
+export default ThumbnailItem;

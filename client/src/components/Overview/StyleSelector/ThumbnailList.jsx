@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { CurrentStyles } from '@Contexts/CurrentStyles';
 import { ActiveStyleId } from '@Contexts/ActiveStyleId';
 import { PreviewStyleId } from '@Contexts/PreviewStyleId';
 
-import StyleThumbnail from './StyleThumbnail';
+import ThumbnailItem from './ThumbnailItem';
 
-function StyleThumbnailList() {
-  const currentStyles = useContext(CurrentStyles);
+function ThumbnailList({ thumbnails }) {
+  const currentStyles = thumbnails;
   const [activeStyleId, setActiveStyleId] = useContext(ActiveStyleId);
   const [, setPreviewStyleId] = useContext(PreviewStyleId);
 
@@ -25,9 +25,9 @@ function StyleThumbnailList() {
   };
 
   return (
-    <StyleThumbnails>
+    <Thumbnails>
       {currentStyles.map((style) => (
-        <StyleThumbnail
+        <ThumbnailItem
           url={style.photos[0].thumbnail_url}
           isSelected={style.style_id === activeStyleId}
           key={style.style_id}
@@ -36,11 +36,11 @@ function StyleThumbnailList() {
           handleStyleThumbnailMouseOut={() => handleStyleThumbnailMouseOut()}
         />
       ))}
-    </StyleThumbnails>
+    </Thumbnails>
   );
 }
 
-const StyleThumbnails = styled.div`
+const Thumbnails = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -49,4 +49,8 @@ const StyleThumbnails = styled.div`
   padding: 10px 0;
 `;
 
-export default StyleThumbnailList;
+ThumbnailList.propTypes = {
+  thumbnails: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+};
+
+export default ThumbnailList;

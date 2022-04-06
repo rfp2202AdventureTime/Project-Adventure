@@ -5,7 +5,7 @@ import { CurrentStyles } from '@Contexts/CurrentStyles';
 import { PreviewStyleId } from '@Contexts/PreviewStyleId';
 import getStyle from '../helpers/getStyle';
 
-import StyleThumbnailList from './StyleThumbnailList';
+import ThumbnailList from './ThumbnailList';
 
 function StyleSelector() {
   const currentStyles = useContext(CurrentStyles);
@@ -17,13 +17,13 @@ function StyleSelector() {
       <strong>STYLE &gt; </strong>
       {previewStyle && previewStyle.name.toUpperCase()}
 
-      { (currentStyles.length > 1) && <StyleThumbnailList />}
-
+      {/* Only display the style selector if there is more than one style to choose from */}
+      {(currentStyles.length > 1) && <ThumbnailList thumbnails={currentStyles} />}
     </StyleSelectorContainer>
   );
 }
 
-const StyleSelectorContainer = styled.div`
+const StyleSelectorContainer = styled.section`
   padding: 10px 0;
 `;
 
