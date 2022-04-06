@@ -27,6 +27,16 @@ function ImageGallery({ view, handleViewChange }) {
         onClick={(e) => handleViewChange(e, 'expanded')}
       >
 
+        <LeftArrow
+          visible={imgIdx > 0}
+          onClick={() => handlePhotoChange('prev')}
+        />
+
+        <RightArrow
+          visible={imgIdx < (photos.length - 1)}
+          onClick={() => handlePhotoChange('next')}
+        />
+
         <Exit
           className={view}
           onClick={(e) => handleViewChange(e, 'default')}
@@ -54,6 +64,26 @@ function ImageGallery({ view, handleViewChange }) {
     );
   }
 }
+
+const Arrow = styled.span`
+  position: absolute;
+  height: 50px;
+  width: 30px;
+  background-color: red;
+  ${(props) => (!props.visible && 'visibility: hidden;')}
+`;
+
+const LeftArrow = styled(Arrow)`
+  top: 50%;
+  left: 0px;
+  translate(0, -50%);
+`;
+
+const RightArrow = styled(Arrow)`
+  top 50%;
+  right: 0px;
+  translate(0, -50%);
+`;
 
 const MainImage = styled.div`
   background: url(${(props) => props.url});
