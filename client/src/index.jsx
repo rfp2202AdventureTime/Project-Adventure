@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import styled from 'styled-components';
 
 import { ActiveStyleProvider } from '@Contexts/ActiveStyleId';
@@ -63,4 +63,4 @@ const Banner = styled.div`
   padding: 10px 0;
 `;
 
-ReactDOM.render(<App />, document.getElementById('root'));
+createRoot(document.getElementById('root')).render(<App />);
