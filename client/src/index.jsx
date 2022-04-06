@@ -2,8 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import styled from 'styled-components';
 
-import { ActiveStyleProvider } from '@Contexts/ActiveStyleId';
-import { CurrentStylesProvider } from '@Contexts/CurrentStyles';
+import { StylesProvider } from '@Contexts/ActiveStyleId';
 import { ProductIDContext } from '@Contexts/ProductIDContext';
 
 import Theme from './contexts/Theme';
@@ -29,12 +28,10 @@ function App() {
           SITE-WIDE ANNOUNCEMENT MESSAGE - SALE / DISCOUNT OFFER - NEW PRODUCT HIGHLIGHT
         </Banner>
 
-        <CurrentStylesProvider>
-          <ActiveStyleProvider>
-            <Overview />
-            <RelatedProducts />
-          </ActiveStyleProvider>
-        </CurrentStylesProvider>
+        <StylesProvider>
+          <Overview />
+          <RelatedProducts />
+        </StylesProvider>
         <QA />
         <Ratings />
       </ProductIDContext.Provider>
