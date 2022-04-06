@@ -2,21 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// import GalleryThumbnail from './GalleryThumbnail';
-
 function GalleryCarousel({
   photos,
   activeIndex,
   handleClick,
   view,
 }) {
-  const [viewport] = React.useState(0);
-
-  // if (viewport > (carouselSize - mainImageIndex - 2)) {
-  //   setViewport(viewport + 1);
-  // }
-  // Carousel viewport
+  const [viewport, setViewport] = React.useState(0);
   const size = 4;
+
+  React.useEffect(() => {
+    const visiblePhotos = { min: viewport, max: viewport + size };
+    if (activeIndex >= visiblePhotos.max) setViewport(activeIndex - size + 1);
+    if (activeIndex < visiblePhotos.min) setViewport(activeIndex);
+  }, [activeIndex]);
 
   return (
     <Carousel className={view}>
