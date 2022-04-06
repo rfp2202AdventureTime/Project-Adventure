@@ -10,7 +10,7 @@ import GalleryCarousel from './GalleryCarousel';
 
 const carouselSize = 4;
 
-function ImageGallery({ view, handleExpandedView }) {
+function ImageGallery({ view, handleExpandedView, handleDefaultView }) {
   const currentStyles = useContext(CurrentStyles);
   const [activeStyleId] = useContext(ActiveStyleId);
   const activeStyle = getStyle(currentStyles, activeStyleId);
@@ -41,6 +41,11 @@ function ImageGallery({ view, handleExpandedView }) {
         onClick={handleExpandedView}
       >
 
+        <ExitExpanded
+          className={view}
+          onClick={handleDefaultView}
+        />
+
         {/* Render carousel only if there are more than one image */}
         {activeStyle.photos.length > 1 && (
           <GalleryCarousel
@@ -69,9 +74,26 @@ const MainImage = styled.div`
   position: relative;
 `;
 
+const ExitExpanded = styled.span`
+  background-color: ${(props) => props.theme.colors.primary};
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  visibility: hidden;
+  opacity: 0;
+  &.expanded {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s linear;
+  }
+`;
+
 ImageGallery.propTypes = {
   view: PropTypes.string,
   handleExpandedView: PropTypes.func.isRequired,
+  handleDefaultView: PropTypes.func.isRequired,
 };
 
 ImageGallery.defaultProps = {

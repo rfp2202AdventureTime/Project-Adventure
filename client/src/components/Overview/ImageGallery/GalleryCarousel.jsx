@@ -11,9 +11,10 @@ function GalleryCarousel({
   handleDownClick,
   handleUpClick,
   viewportPosition,
+  view,
 }) {
   return (
-    <Carousel>
+    <Carousel className={view}>
       <UpArrow
         visible={activeIndex > 0}
         onClick={handleUpClick}
@@ -71,6 +72,11 @@ const Carousel = styled.div`
   left: 20px;
   display: inline-block;
   width: 72px;
+  &.expanded {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
+  }
 `;
 
 const CarouselViewport = styled.div`
@@ -86,12 +92,14 @@ GalleryCarousel.propTypes = {
   handleDownClick: PropTypes.func.isRequired,
   handleUpClick: PropTypes.func.isRequired,
   viewportPosition: PropTypes.number,
+  view: PropTypes.string,
 };
 
 GalleryCarousel.defaultProps = {
   activeIndex: 0,
   maxSize: 3,
   viewportPosition: 0,
+  view: 'default',
 };
 
 export default GalleryCarousel;

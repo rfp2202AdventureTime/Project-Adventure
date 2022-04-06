@@ -26,6 +26,12 @@ function Overview() {
     }
   };
 
+  const handleDefaultView = (e) => {
+    if (e.target === e.currentTarget && galleryView === 'expanded') {
+      setGalleryView('default');
+    }
+  };
+
   // Only render the Overview component if there's an active style.
   // Eventually, add more graceful loading.
 
@@ -39,6 +45,7 @@ function Overview() {
               <ImageGallery
                 view={galleryView}
                 handleExpandedView={handleExpandedView}
+                handleDefaultView={handleDefaultView}
               />
             </DefaultImageGalleryViewport>
           </DefaultImageGallery>
@@ -75,6 +82,10 @@ const DefaultImageGalleryViewport = styled.div`
   height: 100%;
   &.expanded {
     width: 1280px;
+    transition: width 1s ease-in-out;
+  }
+  &.default {
+    width: 100%;
     transition: width 1s ease-in-out;
   }
 `;
