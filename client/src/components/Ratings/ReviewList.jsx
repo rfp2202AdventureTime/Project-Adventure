@@ -1,24 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { ReviewProvider } from '@Contexts/ReviewContext';
-import RatingOverview from './RatingBreakdown/RatingOverview';
-import RatingList from './RatingBreakdown/RatingList';
-import FactorList from './RatingBreakdown/FactorList';
+import ReviewTile from './Review/ReviewTile';
 
-export default function RatingBreakdown() {
+export default function ReviewList() {
   return (
     <ReviewProvider>
       <RatingContainer>
-        <RatingOverview />
-        <RatingList />
-        <FactorList />
+        ReviewList
+        <ReviewTile />
       </RatingContainer>
     </ReviewProvider>
   );
 }
 
-// style components
+// Styled Container
 const RatingContainer = styled.div`
   display: flex;
   flex-direction: column;
