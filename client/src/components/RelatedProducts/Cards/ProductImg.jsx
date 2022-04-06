@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Comparison from './Comparison';
+// import Comparison from './Comparison';
 
 const FavButton = styled.button`
   color: tomato;
