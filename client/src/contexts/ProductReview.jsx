@@ -3,17 +3,17 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { ProductIDContext } from './ProductIDContext';
 
-const productReview = React.createContext();
-productReview.displayName = 'ReviewData';
+const ReviewContext = React.createContext();
+ReviewContext.displayName = 'ReviewData';
 
 // custome hook to return useContext
 export function useReviews() {
-  return useContext(productReview);
+  return useContext(ReviewContext);
 }
 
-export function PRProvider({ children }) {
+export function ReviewProvider({ children }) {
   const productId = useContext(ProductIDContext);
-  const [reviews, setReviews] = useState(null);
+  const [reviews, setReviews] = useState({});
 
   useEffect(() => {
     axios({
@@ -28,14 +28,13 @@ export function PRProvider({ children }) {
       })
       .catch(() => setReviews(null));
   }, [productId]);
-
   return (
-    <productReview.Provider value={reviews}>
+    <ReviewContext.Provider value={reviews}>
       { children }
-    </productReview.Provider>
+    </ReviewContext.Provider>
   );
 }
 
-PRProvider.propTypes = {
+ReviewProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };

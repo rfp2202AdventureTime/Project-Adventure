@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import ReviewTile from './Review/ReviewTile';
-import { ReviewProvider } from '../../contexts/ProductReview';
-import { ProductIDContext } from '../../contexts/ProductIDContext';
+import { useReviews } from '../../contexts/ProductReview';
 
 export default function ReviewList() {
-
+  const reviews = useReviews();
+  console.log(reviews);
+  // if (reviews) {
+  // }
 
   return (
     <ReviewContainer>
       ReviewList
-      {productReview.map((review) => <ReviewTile review={review} />)}
+      {/* {productReview.map((review) => <ReviewTile review={review} />)} */}
     </ReviewContainer>
   );
 }
