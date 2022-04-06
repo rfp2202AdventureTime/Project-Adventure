@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-function QA() {
+import Search from './QASearch';
+import QAFeed from './QAFeed';
+import { QADataProvider } from './QAContext';
+
+export default function QA() {
+  const [searchQuesitonBody, setSearchQuestionBody] = useState('');
+  const [submitSearchQuestionBody, setsubmitSearchQuestionBody] = useState('');
+
   return (
     <QASection>
-      <h1>Questions and Answers</h1>
+      <QADataProvider>
+        <>
+          <h1>Questions and Answers</h1>
+          <Search
+            searchQuesitonBody={searchQuesitonBody}
+            setSearchQuestionBody={setSearchQuestionBody}
+            submitSearchQuestionBody={submitSearchQuestionBody}
+            setsubmitSearchQuestionBody={setsubmitSearchQuestionBody}
+          />
+          <QAFeed submitSearchQuestionBody={submitSearchQuestionBody} />
+        </>
+      </QADataProvider>
     </QASection>
   );
 }
@@ -12,5 +30,3 @@ function QA() {
 const QASection = styled.section`
   background-color: ${(props) => props.theme.colors.background};
 `;
-
-export default QA;
