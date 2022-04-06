@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import sampleData from '../../sampleData';
-import { Individualcard, IndCard } from './Cards/Individualcard';
 import Outfit from './Outfit';
 import { RelatedProvider } from './RelatedContext';
-
 import AllCards from './Cards/AllCards';
 
 function RelatedProducts() {
@@ -20,10 +17,6 @@ function RelatedProducts() {
       <h1>Your Outfit</h1>
       <Layout>
         <Outfit />
-        {/* <IndCard>
-          <ProductImg />
-          <Individualcard />
-        </IndCard> */}
 
       </Layout>
     </RelatedProductsSection>
