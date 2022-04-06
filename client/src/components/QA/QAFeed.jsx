@@ -6,20 +6,27 @@ import { useData } from './QAContext';
 import QAItem from './QAItem';
 
 export default function Feed({ submitSearchQuestionBody }) {
-  const fullQAData = useData();
-  let filteredFullQAData = useData();
-  if (fullQAData !== null) {
-    filteredFullQAData = fullQAData.filter(
+  const questionData = useData().qData;
+  const answerData = useData().aData;
+  let filteredQData = questionData;
+
+  if (questionData !== null) {
+    filteredQData = questionData.filter(
       (question) => question.question_body.includes(submitSearchQuestionBody),
     );
   }
-  console.log(filteredFullQAData);
   return (
     <FeedSection>
       <h1>Feed</h1>
       <ul>
-        {filteredFullQAData === null ? 'Loading...' : filteredFullQAData.map(
-          (question) => <QAItem question={question} key={question.question_id} />,
+        {filteredQData === null ? 'Loading...' : filteredQData.map(
+          (question) => (
+            <QAItem
+              question={question}
+              allAnswers={answerData}
+              key={question.question_id}
+            />
+          ),
         )}
       </ul>
     </FeedSection>

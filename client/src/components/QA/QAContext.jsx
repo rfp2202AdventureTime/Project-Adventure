@@ -33,8 +33,8 @@ export function QADataProvider({ children }) {
           })
             // eslint-disable-next-line no-shadow
             .then(({ data }) => {
-              setAData(aData.push(data));
-              console.log(aData);
+              // eslint-disable-next-line no-shadow
+              setAData((aData) => [...aData, data]);
             })
             .catch((err) => {
               console.log(err);
@@ -45,8 +45,10 @@ export function QADataProvider({ children }) {
         console.log(err);
       });
   }, [productId]);
+  // const allQAData = useMemo(() => ({}))
   return (
-    <QAContext.Provider value={qData}>
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <QAContext.Provider value={{ qData, aData }}>
       { children }
     </QAContext.Provider>
   );
