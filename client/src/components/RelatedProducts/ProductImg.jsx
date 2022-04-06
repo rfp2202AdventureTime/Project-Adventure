@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import sampleData from '../../sampleData';
+import Comparison from './Comparison';
 
 const FavButton = styled.button`
   color: tomato;
@@ -9,12 +9,9 @@ const FavButton = styled.button`
 `;
 
 function ProductImg({ image }) {
-
   // link should take it to the product page (productID)
   // src should image of related products
-  // will need to find out the dimensions of thumbnail or use thumbnail
-// console.log(image.results[0].photos[0].thumbnail_url, 'IMAGE');
-const productThumbnail = image.results[0].photos[0].thumbnail_url
+  const productThumbnail = image.results[0].photos[0].thumbnail_url
 
   return (
     <div id="parent">
@@ -24,7 +21,7 @@ const productThumbnail = image.results[0].photos[0].thumbnail_url
           src={productThumbnail}
           width={250}
           height={175}
-          alt="this is a test"
+          alt="If you can see this, thumbnail not found"
         />
       </a>
 
