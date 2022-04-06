@@ -17,10 +17,11 @@ export default function Feed({ submitSearchQuestionBody }) {
     filteredQData = questionData.filter(
       (question) => question.question_body.includes(submitSearchQuestionBody),
     );
-    for (let i = 0; i < numQsToRender; i += 1) {
+    for (let i = 0; i < Math.min(numQsToRender, filteredQData.length); i += 1) {
       totalQsToRender.push(filteredQData[i]);
     }
   }
+  console.log(totalQsToRender);
 
   return (
     <FeedSection>
