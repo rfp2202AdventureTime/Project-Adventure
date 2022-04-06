@@ -1,11 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { PreviewStyleProvider } from '@Contexts/PreviewStyleId';
-
-import { CurrentStyles } from '@Contexts/CurrentStyles';
-import { ActiveStyleId } from '@Contexts/ActiveStyleId';
-import getStyle from './helpers/getStyle';
+import { useActiveStyle } from '@Contexts/ActiveStyleId';
 
 import ImageGallery from './ImageGallery';
 import ProductDetails from './ProductDetails';
@@ -14,10 +10,7 @@ import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
 
 function Overview() {
-  const currentStyles = useContext(CurrentStyles);
-  const [activeStyleId] = useContext(ActiveStyleId);
-  const activeStyle = getStyle(currentStyles, activeStyleId);
-
+  const { activeStyle } = useActiveStyle();
   const [galleryView, setGalleryView] = useState('default');
 
   const handleExpandedView = (e) => {
@@ -37,9 +30,8 @@ function Overview() {
 
   if (activeStyle) {
     return (
-      <PreviewStyleProvider>
+      <>
         <ExpandedImageGallery>
-
           <DefaultImageGallery>
             <DefaultImageGalleryViewport className={galleryView}>
               <ImageGallery
@@ -55,11 +47,10 @@ function Overview() {
             <StyleSelector />
             <AddToCart />
           </ProductInfo>
-
         </ExpandedImageGallery>
 
         <ProductDescription />
-      </PreviewStyleProvider>
+      </>
     );
   }
 }

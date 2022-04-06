@@ -1,27 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { useActiveStyle } from '@Contexts/ActiveStyleId';
-import { PreviewStyleId } from '@Contexts/PreviewStyleId';
+import { useActiveStyle, usePreviewStyle } from '@Contexts/ActiveStyleId';
 
 import ThumbnailItem from './ThumbnailItem';
 
 function ThumbnailList({ thumbnails }) {
   const currentStyles = thumbnails;
   const { activeStyle, setActiveStyle } = useActiveStyle();
-  const [, setPreviewStyleId] = useContext(PreviewStyleId);
+  const { setPreviewStyle } = usePreviewStyle();
 
   const handleStyleThumbnailClick = (styleId) => {
     setActiveStyle(styleId);
   };
 
   const handleStyleThumbnailMouseOver = (styleId) => {
-    setPreviewStyleId(styleId);
+    setPreviewStyle(styleId);
   };
 
   const handleStyleThumbnailMouseOut = () => {
-    setPreviewStyleId(activeStyle.style_id);
+    setPreviewStyle(activeStyle.style_id);
   };
 
   return (

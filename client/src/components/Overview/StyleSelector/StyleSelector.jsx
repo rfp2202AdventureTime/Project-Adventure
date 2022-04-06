@@ -2,15 +2,13 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import { CurrentStyles } from '@Contexts/CurrentStyles';
-import { PreviewStyleId } from '@Contexts/PreviewStyleId';
-import getStyle from '../helpers/getStyle';
+import { usePreviewStyle } from '@Contexts/ActiveStyleId';
 
 import ThumbnailList from './ThumbnailList';
 
 function StyleSelector() {
   const currentStyles = useContext(CurrentStyles);
-  const [previewStyleId] = useContext(PreviewStyleId);
-  const previewStyle = getStyle(currentStyles, previewStyleId);
+  const { previewStyle } = usePreviewStyle();
 
   return (
     <StyleSelectorContainer>
