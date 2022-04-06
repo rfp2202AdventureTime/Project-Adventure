@@ -9,28 +9,19 @@ function ThumbnailItem({
   handleStyleThumbnailMouseOut,
   handleStyleThumbnailMouseOver,
 }) {
-  if (isSelected) {
-    return (
-      <SelectedThumbnail
-        thumbnail={url}
-        onClick={handleStyleThumbnailClick}
-        onMouseOver={handleStyleThumbnailMouseOver}
-        onMouseOut={handleStyleThumbnailMouseOut}
-      />
-    );
-  }
-  if (!isSelected) {
-    return (
-      <Thumbnail
-        thumbnail={url}
-        onClick={handleStyleThumbnailClick}
-        onMouseOver={handleStyleThumbnailMouseOver}
-        onMouseOut={handleStyleThumbnailMouseOut}
-      />
-    );
-  }
+  return (
+    <Thumbnail
+      thumbnail={url}
+      className={isSelected && 'selected'}
+      onClick={handleStyleThumbnailClick}
+      onMouseOver={handleStyleThumbnailMouseOver}
+      onMouseOut={handleStyleThumbnailMouseOut}
+    />
+  );
 }
 
+// TODO: This needs to be replaced with an image of a checkmark.
+// It's a blank circle for now.
 const Thumbnail = styled.span`
   height: 75px;
   width: 75px;
@@ -39,13 +30,8 @@ const Thumbnail = styled.span`
   border: 1px solid ${(props) => props.theme.colors.secondary};
   background-size: cover;
   background-position: center;
-`;
-
-// TODO: This needs to be replaced with an image of a checkmark.
-// It's a blank circle for now.
-const SelectedThumbnail = styled(Thumbnail)`
   position: relative;
-  &::after {
+  &.selected::after {
     content: "";
     position: absolute;
     border-radius: 50%;
