@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
 export default function QAItem({ question, allAnswers }) {
+  const [numAsToRender, setNumAsToRender] = useState(2);
+  const [moreAsClicked, setMoreAsClicked] = useState(true);
   const filteredAnswers = allAnswers.filter(
     (answer) => answer.question === question.question_id.toString(),
   );
   let arrayOfAnswers;
+  const totalAsToRender = [];
   if (filteredAnswers.length > 0 && filteredAnswers[0].results.length > 0) {
     arrayOfAnswers = filteredAnswers[0].results;
+    for (let i = 0; i < numAsToRender; i += 1) {
+      totalAsToRender.push(arrayOfAnswers[i]);
+    }
   }
   return (
     <QAItemSection>
@@ -24,7 +30,7 @@ export default function QAItem({ question, allAnswers }) {
           <u onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
         </QAItemQuestionRight>
       </QAItemFullQuestion>
-      {arrayOfAnswers === undefined ? '' : arrayOfAnswers.map((answer) => (
+      {totalAsToRender === undefined ? '' : totalAsToRender.map((answer) => (
         <QAItemAnswer>
           <span>
             <strong>A: </strong>
@@ -40,6 +46,17 @@ export default function QAItem({ question, allAnswers }) {
           </span>
         </QAItemAnswer>
       ))}
+      {moreAsClicked && (
+        <button
+          type="submit"
+          onClick={() => {
+            setNumAsToRender(arrayOfAnswers.length);
+            setMoreAsClicked(false);
+          }}
+        >
+          Load More Answers
+        </button>
+      )}
       <br />
     </QAItemSection>
   );
