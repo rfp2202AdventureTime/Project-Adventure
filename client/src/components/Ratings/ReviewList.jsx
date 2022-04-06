@@ -41,7 +41,6 @@ const ButtonBlock = styled.div`
 `;
 const Botton = styled.button`
   border: 2px solid;
-  background: white;
   text-align: center;
   padding: 1.3rem 1rem 1.3rem 1rem;
   font-size: medium;

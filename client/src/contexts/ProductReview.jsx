@@ -18,7 +18,7 @@ export function ReviewProvider({ children }) {
   useEffect(() => {
     axios({
       method: 'get',
-      url: 'http://localhost:3000/reviews',
+      url: '/reviews',
       params: {
         product_id: productId,
         // page: 1,
