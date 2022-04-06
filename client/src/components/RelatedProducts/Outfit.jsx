@@ -3,12 +3,14 @@ import styled from 'styled-components';
 // import IndCard from './Individualcard';
 
 const AddOutfit = styled.div`
+  flex-direction: column;
   border-style: solid;
   border-width: 2px;
   width: fit-content;
   margin-right: 30px;
   margin-bottom: 5px;
   border-radius: 5px;
+  justify-content: space-evenly;
   &:hover {
     box-shadow: 0 8px 16px 0;
   }

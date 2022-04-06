@@ -3,28 +3,30 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { RelatedContext } from './RelatedContext';
+import { useRelated } from './RelatedContext';
 // import sampleData from '../../sampleData';
 
 // should retrieve all related products from initial product page
 // map each individual card with all the information
 
 export default function Individualcard() {
-  const productInfo = useContext(RelatedContext);
-  console.log(productInfo, 'info');
+  const productInfo = useRelated();
+  // console.log(productInfo, 'info');
 
   if (!productInfo) {
     console.log('waiting');
   } else {
+    console.log(productInfo.value, 'value');
+    console.log(productInfo.value2, 'value2');
     return (
       <div>
         <CardText>
-          <ul>{productInfo.category}</ul>
-          <ul>{productInfo.name}</ul>
-          <ul>
+          <p>{productInfo.category}</p>
+          <p>{productInfo.name}</p>
+          <p>
             $
             {productInfo.default_price}
-          </ul>
+          </p>
           <span>CSS rating with stars</span>
         </CardText>
       </div>

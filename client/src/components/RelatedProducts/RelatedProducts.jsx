@@ -4,7 +4,7 @@ import sampleData from '../../sampleData';
 import { Individualcard, IndCard } from './Individualcard';
 import ProductImg from './ProductPhoto';
 import Outfit from './Outfit';
-import { RelatedContext, RelatedProvider } from './RelatedContext';
+import { RelatedProvider } from './RelatedContext';
 
 const Layout = styled.div`
   display: flex;
@@ -15,7 +15,6 @@ const Layout = styled.div`
 function RelatedProducts() {
   return (
     <RelatedProductsSection>
-
 
       <h1>Related Products</h1>
       <RelatedProvider>
