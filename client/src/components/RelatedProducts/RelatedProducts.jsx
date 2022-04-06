@@ -4,7 +4,7 @@ import sampleData from '../../sampleData';
 import { Individualcard, IndCard } from './Individualcard';
 import ProductImg from './ProductPhoto';
 import Outfit from './Outfit';
-// import ComparisonTable from './ComparisonTable';
+import { RelatedContext, RelatedProvider } from './RelatedContext';
 
 const Layout = styled.div`
   display: flex;
@@ -15,7 +15,10 @@ const Layout = styled.div`
 function RelatedProducts() {
   return (
     <RelatedProductsSection>
+
+
       <h1>Related Products</h1>
+      <RelatedProvider>
 
       <Layout>
 
@@ -41,6 +44,7 @@ function RelatedProducts() {
 
       </Layout>
 
+      </RelatedProvider>
       <h1>Your Outfit</h1>
       <Layout>
         <Outfit />
@@ -50,7 +54,6 @@ function RelatedProducts() {
         </IndCard>
 
       </Layout>
-
     </RelatedProductsSection>
   );
 }

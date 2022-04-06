@@ -1,32 +1,24 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { ProductIDContext } from '../../ProductIDContext';
+import { ProductIDContext } from '../../contexts/ProductIDContext';
 
-const RelatedContext = React.createContext();
-RelatedContext.displayName = 'RelatedData';
-
-export function useMeta() {
-  return useContext(RelatedContext);
-}
+const RelatedContext = createContext();
 
 export function RelatedProvider({ children }) {
+  const [productInfo, setProductInfo] = useState();
   const productId = useContext(ProductIDContext);
-  const [productInfo, setProductInfo] = useState(null);
 
   useEffect(() => {
     axios({
       method: 'get',
-      url: 'http://localhost:3000/products',
-      params: {
-        product_id: productId,
-      },
+      url: `http://localhost:3000/products/${productId}`,
     })
       .then(({ data }) => {
         setProductInfo(data);
       })
       .catch((err) => console.log(err));
-  }, [productId]);
+  }, []);
 
   return (
     <RelatedContext.Provider value={productInfo}>
@@ -36,5 +28,7 @@ export function RelatedProvider({ children }) {
 }
 
 RelatedProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
+
+export { RelatedContext };

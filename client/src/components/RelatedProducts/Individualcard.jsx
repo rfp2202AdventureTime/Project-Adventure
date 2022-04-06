@@ -3,25 +3,33 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import sampleData from '../../sampleData';
+import { RelatedContext } from './RelatedContext';
+// import sampleData from '../../sampleData';
 
 // should retrieve all related products from initial product page
 // map each individual card with all the information
 
 export default function Individualcard() {
-  return (
-    <div>
-      <CardText>
-        <p>{sampleData.products[1].category}</p>
-        <p>{sampleData.products[1].name}</p>
-        <p>
-          $
-          {sampleData.products[1].default_price}
-        </p>
-        <span>CSS rating with stars</span>
-      </CardText>
-    </div>
-  );
+  const productInfo = useContext(RelatedContext);
+  console.log(productInfo, 'info');
+
+  if (!productInfo) {
+    console.log('waiting');
+  } else {
+    return (
+      <div>
+        <CardText>
+          <ul>{productInfo.category}</ul>
+          <ul>{productInfo.name}</ul>
+          <ul>
+            $
+            {productInfo.default_price}
+          </ul>
+          <span>CSS rating with stars</span>
+        </CardText>
+      </div>
+    );
+  }
 }
 
 const IndCard = styled.div`
@@ -37,8 +45,8 @@ const IndCard = styled.div`
   }
 `;
 
-const CardText = styled.p`
-  padding-left: 1px;
+const CardText = styled.ul`
+  align-item: left;
 `;
 
 export {
