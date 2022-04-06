@@ -1,21 +1,23 @@
-import React, { useContext } from 'react';
+import React, {
+  createContext, useContext, useEffect, useState,
+} from 'react';
 import styled from 'styled-components';
-import sampleData from '../../sampleData';
+
 
 // should retrieve all related products from initial product page
 // map each individual card with all the information
 
-export default function Individualcard() {
+export default function Individualcard({ product }) {
   return (
     <div>
       <CardText>
-        <p>{sampleData.products[1].category}</p>
-        <p>{sampleData.products[1].name}</p>
+        <p>{product.category}</p>
+        <p>{product.name}</p>
         <p>
           $
-          {sampleData.products[1].default_price}
+          {product.default_price}
         </p>
-        <span>CSS rating with stars</span>
+        <p>CSS rating with stars</p>
       </CardText>
     </div>
   );
@@ -34,7 +36,7 @@ const IndCard = styled.div`
   }
 `;
 
-const CardText = styled.ul`
+const CardText = styled.div`
   padding-left: 1px;
 `;
 
