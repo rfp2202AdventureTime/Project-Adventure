@@ -81,7 +81,7 @@ const DefaultImageGalleryViewport = styled.div`
   width: 100%;
   height: 100%;
   &.expanded {
-    width: 1280px;
+    width: ${() => document.getElementById('main').offsetWidth}px;
     transition: width 1s ease-in-out;
   }
   &.default {
@@ -92,7 +92,7 @@ const DefaultImageGalleryViewport = styled.div`
 
 const ProductInfo = styled.section`
   background-color:${(props) => props.theme.colors.light};
-  max-width: 480px;
+  width: 480px;
   padding: 10px;
 `;
 

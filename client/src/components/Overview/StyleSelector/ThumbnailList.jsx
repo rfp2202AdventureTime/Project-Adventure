@@ -2,18 +2,18 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { ActiveStyleId } from '@Contexts/ActiveStyleId';
+import { useActiveStyle } from '@Contexts/ActiveStyleId';
 import { PreviewStyleId } from '@Contexts/PreviewStyleId';
 
 import ThumbnailItem from './ThumbnailItem';
 
 function ThumbnailList({ thumbnails }) {
   const currentStyles = thumbnails;
-  const [activeStyleId, setActiveStyleId] = useContext(ActiveStyleId);
+  const { activeStyle, setActiveStyle } = useActiveStyle();
   const [, setPreviewStyleId] = useContext(PreviewStyleId);
 
   const handleStyleThumbnailClick = (styleId) => {
-    setActiveStyleId(styleId);
+    setActiveStyle(styleId);
   };
 
   const handleStyleThumbnailMouseOver = (styleId) => {
@@ -21,7 +21,7 @@ function ThumbnailList({ thumbnails }) {
   };
 
   const handleStyleThumbnailMouseOut = () => {
-    setPreviewStyleId(activeStyleId);
+    setPreviewStyleId(activeStyle.style_id);
   };
 
   return (
@@ -29,7 +29,7 @@ function ThumbnailList({ thumbnails }) {
       {currentStyles.map((style) => (
         <ThumbnailItem
           url={style.photos[0].thumbnail_url}
-          isSelected={style.style_id === activeStyleId}
+          isSelected={style.style_id === activeStyle.style_id}
           key={style.style_id}
           handleStyleThumbnailClick={() => handleStyleThumbnailClick(style.style_id)}
           handleStyleThumbnailMouseOver={() => handleStyleThumbnailMouseOver(style.style_id)}

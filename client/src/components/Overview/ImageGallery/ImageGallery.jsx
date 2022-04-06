@@ -1,43 +1,30 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { CurrentStyles } from '@Contexts/CurrentStyles';
-import { ActiveStyleId } from '@Contexts/ActiveStyleId';
-import getStyle from '../helpers/getStyle';
+import { useActiveStyle } from '@Contexts/ActiveStyleId';
 
 import GalleryCarousel from './GalleryCarousel';
-
-const carouselSize = 4;
+import DotNavigation from './DotNavigation';
 
 function ImageGallery({ view, handleExpandedView, handleDefaultView }) {
-  const currentStyles = useContext(CurrentStyles);
-  const [activeStyleId] = useContext(ActiveStyleId);
-  const activeStyle = getStyle(currentStyles, activeStyleId);
+  const { activeStyle: { photos } } = useActiveStyle();
+  const [imgIdx, setImgIdx] = useState(0);
 
-  const [mainImageIndex, setMainImageIndex] = useState(0);
-  const [viewportPosition, setViewportPosition] = useState(0);
-
-  const handleDownClick = (maxLength) => {
-    if (mainImageIndex < (maxLength - 1)) {
-      setMainImageIndex(mainImageIndex + 1);
-    }
-    // HAS A BUG.
-    if (viewportPosition > (carouselSize - mainImageIndex - 2)) {
-      setViewportPosition(viewportPosition + 1);
+  const handleClick = (direction) => {
+    if (direction === 'up') {
+      if (imgIdx > 0) setImgIdx(imgIdx - 1);
+    } else if (direction === 'down') {
+      if (imgIdx < (photos.length - 1)) setImgIdx(imgIdx + 1);
     }
   };
 
-  const handleUpClick = () => {
-    if (mainImageIndex > 0) {
-      setMainImageIndex(mainImageIndex - 1);
-    }
-  };
+  if (photos) {
+    const hasMultiplePhotos = photos.length > 1;
 
-  if (activeStyle) {
     return (
       <MainImage
-        url={activeStyle.photos[mainImageIndex].url}
+        url={photos[imgIdx].url}
         onClick={handleExpandedView}
       >
 
@@ -46,15 +33,18 @@ function ImageGallery({ view, handleExpandedView, handleDefaultView }) {
           onClick={handleDefaultView}
         />
 
-        {/* Render carousel only if there are more than one image */}
-        {activeStyle.photos.length > 1 && (
+        {hasMultiplePhotos && (
           <GalleryCarousel
-            activeIndex={mainImageIndex}
-            photos={activeStyle.photos}
-            handleDownClick={() => handleDownClick(activeStyle.photos.length)}
-            handleUpClick={() => handleUpClick()}
-            viewportPosition={viewportPosition}
-            maxSize={carouselSize}
+            activeIndex={imgIdx}
+            photos={photos}
+            handleClick={handleClick}
+            view={view}
+          />
+        )}
+
+        {hasMultiplePhotos && (
+          <DotNavigation
+            activeIndex={imgIdx}
             view={view}
           />
         )}
@@ -86,7 +76,12 @@ const ExitExpanded = styled.span`
   &.expanded {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.3s linear;
+    transition: opacity 0.5s linear;
+  }
+  &.default {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s 0.3s, opacity 0.3s linear;
   }
 `;
 

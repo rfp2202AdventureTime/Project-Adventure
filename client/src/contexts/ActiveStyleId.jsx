@@ -1,16 +1,15 @@
-import React, {
-  createContext, useContext, useEffect, useState,
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { CurrentStyles } from './CurrentStyles';
 
-export const ActiveStyleId = createContext([undefined, undefined]);
+const ActiveStyleId = React.createContext([undefined, undefined]);
 
-export function ActiveStyleProvider({ children }) {
-  const currentStyles = useContext(CurrentStyles);
-  const [activeStyleId, setActiveStyleId] = useState();
+function ActiveStyleProvider({ children }) {
+  const currentStyles = React.useContext(CurrentStyles);
+  const [activeStyleId, setActiveStyleId] = React.useState();
 
-  useEffect(() => {
+  // When the current styles change, reset the active style id.
+  React.useEffect(() => {
     if (currentStyles[0] && currentStyles[0].style_id) {
       setActiveStyleId(currentStyles[0].style_id);
     } else {
@@ -26,6 +25,36 @@ export function ActiveStyleProvider({ children }) {
   );
 }
 
+function useActiveStyleId() {
+  const [activeStyleId, setActiveStyleId] = React.useContext(ActiveStyleId);
+  return { activeStyleId, setActiveStyleId };
+}
+
+function useActiveStyle() {
+  const getStyle = (currentStyles, styleId) => {
+    let style = currentStyles[0];
+    for (let i = 0; i < currentStyles.length; i += 1) {
+      if (currentStyles[i].style_id === styleId) {
+        style = currentStyles[i];
+      }
+    }
+    return style;
+  };
+  const [activeStyleId, setActiveStyleId] = React.useContext(ActiveStyleId);
+  const currentStyles = React.useContext(CurrentStyles);
+
+  const [activeStyle, setActiveStyle] = [getStyle(currentStyles, activeStyleId), setActiveStyleId];
+  return { activeStyle, setActiveStyle };
+}
+
 ActiveStyleProvider.propTypes = {
   children: PropTypes.node.isRequired,
+};
+
+// Eventually we want to deprecate ActiveStyleId in favor of useActiveStyleId.
+export {
+  useActiveStyle,
+  useActiveStyleId,
+  ActiveStyleProvider,
+  ActiveStyleId,
 };
