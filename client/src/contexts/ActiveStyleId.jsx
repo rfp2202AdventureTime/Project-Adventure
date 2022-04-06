@@ -1,13 +1,33 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CurrentStyles } from './CurrentStyles';
+import { useCurrentStyles } from './CurrentStyles';
 
-const ActiveStyleId = React.createContext([undefined, undefined]);
-export const PreviewStyleId = React.createContext([undefined, undefined]);
+const ActiveStyleId = React.createContext();
+const PreviewStyleId = React.createContext();
+
+function getStyle(styles, id) {
+  return styles.find((i) => i.style_id === id) || styles[0];
+}
+
+function useActiveStyle() {
+  const [activeId, setActiveId] = React.useContext(ActiveStyleId);
+  const currStyles = useCurrentStyles();
+
+  const [activeStyle, setActiveStyle] = [getStyle(currStyles, activeId), setActiveId];
+  return { activeStyle, setActiveStyle };
+}
+
+function usePreviewStyle() {
+  const [previewId, setPreviewId] = React.useContext(PreviewStyleId);
+  const currStyles = useCurrentStyles();
+
+  const [previewStyle, setPreviewStyle] = [getStyle(currStyles, previewId), setPreviewId];
+  return { previewStyle, setPreviewStyle };
+}
 
 function ActiveStyleProvider({ children }) {
-  const currentStyles = React.useContext(CurrentStyles);
+  const currentStyles = useCurrentStyles();
   const [activeStyleId, setActiveStyleId] = React.useState();
   const [previewStyleId, setPreviewStyleId] = React.useState();
 
@@ -30,26 +50,6 @@ function ActiveStyleProvider({ children }) {
       </PreviewStyleId.Provider>
     </ActiveStyleId.Provider>
   );
-}
-
-function getStyle(styles, id) {
-  return styles.find((i) => i.style_id === id) || styles[0];
-}
-
-function useActiveStyle() {
-  const [activeId, setActiveId] = React.useContext(ActiveStyleId);
-  const currStyles = React.useContext(CurrentStyles);
-
-  const [activeStyle, setActiveStyle] = [getStyle(currStyles, activeId), setActiveId];
-  return { activeStyle, setActiveStyle };
-}
-
-function usePreviewStyle() {
-  const [previewId, setPreviewId] = React.useContext(PreviewStyleId);
-  const currStyles = React.useContext(CurrentStyles);
-
-  const [previewStyle, setPreviewStyle] = [getStyle(currStyles, previewId), setPreviewId];
-  return { previewStyle, setPreviewStyle };
 }
 
 ActiveStyleProvider.propTypes = {

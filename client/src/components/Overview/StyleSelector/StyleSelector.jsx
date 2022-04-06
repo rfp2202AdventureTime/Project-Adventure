@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-import { CurrentStyles } from '@Contexts/CurrentStyles';
+import { useCurrentStyles } from '@Contexts/CurrentStyles';
 import { usePreviewStyle } from '@Contexts/ActiveStyleId';
 
 import ThumbnailList from './ThumbnailList';
 
 function StyleSelector() {
-  const currentStyles = useContext(CurrentStyles);
+  const currentStyles = useCurrentStyles();
   const { previewStyle } = usePreviewStyle();
 
   return (

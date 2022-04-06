@@ -1,25 +1,26 @@
-import React, {
-  createContext, useContext, useEffect, useState,
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { ProductIDContext } from './ProductIDContext';
 
-const CurrentStyles = createContext([undefined, undefined]);
+const CurrentStyles = React.createContext([undefined, undefined]);
 
-export function CurrentStylesProvider({ children }) {
-  const [currentStyles, setCurrentStyles] = useState([]);
-  const productId = useContext(ProductIDContext);
+function useCurrentStyles() {
+  return React.useContext(CurrentStyles);
+}
+
+function CurrentStylesProvider({ children }) {
+  const [currentStyles, setCurrentStyles] = React.useState([]);
+  const productId = React.useContext(ProductIDContext);
 
   // Fetch new styles whenever the productId changes
-  useEffect(() => {
+  React.useEffect(() => {
     axios({ method: 'get', url: `/products/${productId}/styles` })
       .then(({ data }) => { setCurrentStyles(data.results); })
       .catch(() => setCurrentStyles([]));
   }, [productId]);
 
   return (
-
     <CurrentStyles.Provider value={currentStyles}>
       { children }
     </CurrentStyles.Provider>
@@ -30,4 +31,4 @@ CurrentStylesProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export { CurrentStyles };
+export { CurrentStylesProvider, useCurrentStyles };
