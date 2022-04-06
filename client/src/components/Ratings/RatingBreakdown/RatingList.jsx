@@ -5,15 +5,14 @@ import { useMeta } from '@Contexts/ReviewContext';
 
 export default function RatingList() {
   const starMap = new Map();
-  let totalCT = 0;
+  // let totalCT = 0;
   let starPCTArray = [];
 
   const currentMeta = useMeta();
   if (currentMeta) {
-    const { ratings } = currentMeta;
+    const { ratings, totalCT } = currentMeta;
     const starArray = [5, 4, 3, 2, 1];
 
-    // TODO: rating is partially shared with RatingOverview. Could refactor to lift state up
 
     // fist loop to get total count
     starArray.forEach((key) => {
@@ -22,7 +21,6 @@ export default function RatingList() {
         starMap.set(key, 0);
       } else {
         starMap.set(key, currentCT);
-        totalCT += currentCT;
       }
     });
 
@@ -37,7 +35,7 @@ export default function RatingList() {
     <Ratings>
       {/* {ratingBars} */}
       <div className="w3-light-grey">
-        <div className="w3-green" style={{ height: '2rem', width: '25%' }}>test </div>
+        <div className="w3-green" style={{ height: '2rem', width: '25%' }}> </div>
       </div>
     </Ratings>
   );

@@ -7,7 +7,7 @@ export default function FactorList() {
   return (
     <Factor>
       {/* {FactorBars} */}
-      This is FactorBar
+      This is FactorList
     </Factor>
   );
 }

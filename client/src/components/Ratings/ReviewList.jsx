@@ -5,12 +5,12 @@ import ReviewTile from './Review/ReviewTile';
 
 export default function ReviewList() {
   return (
-    <RatingContainer>
-      <ReviewProvider>
+    <ReviewProvider>
+      <RatingContainer>
         ReviewList
         <ReviewTile />
-      </ReviewProvider>
-    </RatingContainer>
+      </RatingContainer>
+    </ReviewProvider>
   );
 }
 

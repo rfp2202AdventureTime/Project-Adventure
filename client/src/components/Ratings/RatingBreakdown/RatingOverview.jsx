@@ -5,22 +5,13 @@ import { useMeta } from '@Contexts/ReviewContext';
 import Star from '../../../Star';
 
 export default function RatingOverview() {
-  // Display Rating && helpfulness
-  let totalRating;
-  let avgRating = 0;
-  let totalCT = null;
+  let score = 0;
   let helpfulness = null;
   const currentMeta = useMeta();
-  if (currentMeta) {
-    const { ratings, recommended } = currentMeta;
-    // Handle Rating
 
-    Object.keys(ratings).forEach((key) => {
-      const currentCT = Number(ratings[key]);
-      totalRating = key * currentCT;
-      totalCT += currentCT;
-    });
-    avgRating = Math.round((totalRating / totalCT) * 10) / 10;
+  if (currentMeta) {
+    const { recommended, avgRating } = currentMeta;
+    score = avgRating;
 
     // Handle helpfulness
     const trueCT = Number(recommended.true);
@@ -35,9 +26,9 @@ export default function RatingOverview() {
       </h3>
       <StarContainer>
         <Score>
-          {avgRating}
+          {score}
         </Score>
-        <Star score={avgRating} />
+        <Star score={score} />
       </StarContainer>
       <div>
         {helpfulness}
