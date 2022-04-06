@@ -16,8 +16,6 @@ export default function Individualcard() {
   if (!productInfo) {
     console.log('waiting');
   } else {
-    console.log(productInfo.value, 'value');
-    console.log(productInfo.value2, 'value2');
     return (
       <div>
         <CardText>

@@ -39,7 +39,7 @@ export function RelatedProvider({ children }) {
   }, []);
 
   return (
-    <RelatedContext.Provider value={{value: productInfo, value2: thumbnail}}>
+    <RelatedContext.Provider value={productInfo}>
       { children }
     </RelatedContext.Provider>
   );
