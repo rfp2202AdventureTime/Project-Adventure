@@ -11,7 +11,7 @@ import { ProductIDContext } from './contexts/ProductIDContext';
 import { CurrentStylesProvider } from './contexts/CurrentStyles';
 
 function App() {
-  const defaultProductId = 65632;
+  const defaultProductId = 65631;
 
   return (
     <Theme>
