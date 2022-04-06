@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useMeta } from '../../../contexts/ReviewContext';
+import { useMeta } from '../../../contexts/ReviewMeta';
 
 import RatingBar from './RatingBar';
 
