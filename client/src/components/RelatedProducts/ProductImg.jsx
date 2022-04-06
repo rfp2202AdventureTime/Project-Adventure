@@ -21,11 +21,8 @@ function ProductImg({ image }) {
           src={productThumbnail}
           width={250}
           height={175}
-<<<<<<< HEAD
-          alt="IMAGE NOT FOUND"
-=======
           alt="If you can see this, thumbnail not found"
->>>>>>> feat/relateditems
+
         />
       </a>
 
