@@ -11,35 +11,20 @@ import ProductDescription from './ProductDescription';
 
 function Overview() {
   const { activeStyle } = useActiveStyle();
-  const [galleryView, setGalleryView] = useState('default');
+  const [view, setView] = useState('default');
 
-  const handleExpandedView = (e) => {
-    if (e.target === e.currentTarget && galleryView === 'default') {
-      setGalleryView('expanded');
-    }
+  const handleViewChange = (e, newView) => {
+    if (e.target === e.currentTarget) setView(newView);
   };
-
-  const handleDefaultView = (e) => {
-    if (e.target === e.currentTarget && galleryView === 'expanded') {
-      setGalleryView('default');
-    }
-  };
-
-  // Only render the Overview component if there's an active style.
-  // Eventually, add more graceful loading.
 
   if (activeStyle) {
     return (
       <>
         <ExpandedImageGallery>
           <DefaultImageGallery>
-            <DefaultImageGalleryViewport className={galleryView}>
-              <ImageGallery
-                view={galleryView}
-                handleExpandedView={handleExpandedView}
-                handleDefaultView={handleDefaultView}
-              />
-            </DefaultImageGalleryViewport>
+            <ImageGalleryViewport className={view}>
+              <ImageGallery view={view} handleViewChange={handleViewChange} />
+            </ImageGalleryViewport>
           </DefaultImageGallery>
 
           <ProductInfo>
@@ -67,7 +52,7 @@ const DefaultImageGallery = styled.div`
   z-index: 2;
 `;
 
-const DefaultImageGalleryViewport = styled.div`
+const ImageGalleryViewport = styled.div`
   background-color:${(props) => props.theme.colors.background};
   width: 100%;
   height: 100%;

@@ -7,7 +7,7 @@ import { useActiveStyle } from '@Contexts/ActiveStyleId';
 import GalleryCarousel from './GalleryCarousel';
 import DotNavigation from './DotNavigation';
 
-function ImageGallery({ view, handleExpandedView, handleDefaultView }) {
+function ImageGallery({ view, handleViewChange }) {
   const { activeStyle: { photos } } = useActiveStyle();
   const [imgIdx, setImgIdx] = useState(0);
 
@@ -25,12 +25,12 @@ function ImageGallery({ view, handleExpandedView, handleDefaultView }) {
     return (
       <MainImage
         url={photos[imgIdx].url}
-        onClick={handleExpandedView}
+        onClick={(e) => handleViewChange(e, 'expanded')}
       >
 
         <ExitExpanded
           className={view}
-          onClick={handleDefaultView}
+          onClick={(e) => handleViewChange(e, 'default')}
         />
 
         {hasMultiplePhotos && (
@@ -87,8 +87,7 @@ const ExitExpanded = styled.span`
 
 ImageGallery.propTypes = {
   view: PropTypes.string,
-  handleExpandedView: PropTypes.func.isRequired,
-  handleDefaultView: PropTypes.func.isRequired,
+  handleViewChange: PropTypes.func.isRequired,
 };
 
 ImageGallery.defaultProps = {
