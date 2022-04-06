@@ -16,11 +16,13 @@ export default function ReviewTile(review) {
   // console.log(review.review.reviewer_name);
   return (
     <ReviewBlock>
-      <Star score={rating} />
-      <UserData>
-        {usernameDate}
-        {/* {reviewer_name.concat(date)} */}
-      </UserData>
+      <StarBlock>
+        <Star score={rating} />
+        <UserData>
+          {usernameDate}
+          {/* {reviewer_name.concat(date)} */}
+        </UserData>
+      </StarBlock>
       <ReviewHeading>
         {summary}
       </ReviewHeading>
@@ -35,13 +37,21 @@ const ReviewBlock = styled.div`
   display: flex;
   flex-direction: column;
   padding:1rem;
+  min-width:950px;
+  border-bottom: 0.2rem dotted rgba(221, 235, 223);
+`;
+const StarBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const UserData = styled.div`
-  padding:1rem;
+  justify-content: end
 `;
 
 const ReviewHeading = styled.p`
   font-weight:bold;
   font-size: medium;
+  padding: 1rem 0 1rem 0;
 `;
