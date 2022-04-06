@@ -46,16 +46,28 @@ export default function QAItem({ question, allAnswers }) {
           </span>
         </QAItemAnswer>
       ))}
-      {moreAsClicked && (
-        <button
-          type="submit"
-          onClick={() => {
-            setNumAsToRender(arrayOfAnswers.length);
-            setMoreAsClicked(false);
-          }}
-        >
-          Load More Answers
-        </button>
+      {moreAsClicked ? (
+        <span>
+          <strong
+            onClick={() => {
+              setNumAsToRender(arrayOfAnswers.length);
+              setMoreAsClicked(false);
+            }}
+          >
+            Load More Answers
+          </strong>
+        </span>
+      ) : (
+        <span>
+          <strong
+            onClick={() => {
+              setNumAsToRender(2);
+              setMoreAsClicked(true);
+            }}
+          >
+            Collapse Answers
+          </strong>
+        </span>
       )}
       <br />
     </QAItemSection>
