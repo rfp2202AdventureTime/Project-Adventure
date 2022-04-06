@@ -1,26 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import Star from '../../../Star';
 
-
-export default function ReviewTile({ review }) {
+export default function ReviewTile(review) {
   // TODO: display a photo; sort
-  console.log(review);
+  const {
+    review: {
+      rating, summary, recommend, response, date, reviewer_name, body,
+    },
+  } = review;
+// console.log(rating);
   return (
     <ReviewBlock>
-      This is one block of review
+      <Star score={4.2} />
+      <ReviewHeading>
+        {summary}
+      </ReviewHeading>
 
     </ReviewBlock>
   );
 }
-ReviewTile.propTypes = {
-  review: PropTypes.shape({
-
-  })
-};
 
 // Style components
 const ReviewBlock = styled.div`
   display: flex;
   flex-direction: column;
+`;
+const ReviewHeading = styled.h2`
 `;

@@ -4,15 +4,22 @@ import ReviewTile from './Review/ReviewTile';
 import { useReviews } from '../../contexts/ProductReview';
 
 export default function ReviewList() {
-  const reviews = useReviews();
+  const reviews = useReviews().results;
   console.log(reviews);
-  // if (reviews) {
-  // }
-
+  let reviewCollection = [];
+  if (reviews) {
+    reviewCollection = reviews.map(
+      (review) => (
+        <ReviewTile
+          key={review.review_id}
+          review={review}
+        />
+      ),
+    );
+  }
   return (
     <ReviewContainer>
-      ReviewList
-      {/* {productReview.map((review) => <ReviewTile review={review} />)} */}
+      {reviewCollection}
     </ReviewContainer>
   );
 }

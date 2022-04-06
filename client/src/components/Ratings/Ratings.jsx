@@ -4,10 +4,6 @@ import styled from 'styled-components';
 import RatingBreakdown from './RatingBreakdown';
 import ReviewList from './ReviewList';
 import { ReviewProvider } from '../../contexts/ProductReview';
-<<<<<<< HEAD
-=======
-
->>>>>>> 18278a7 (fixed bugs in applying ReviewProvider)
 
 export default function Ratings() {
   return (
