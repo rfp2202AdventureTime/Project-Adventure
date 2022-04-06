@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { ProductIDContext } from '../../contexts/ProductIDContext';
 
 const QAContext = React.createContext('Loading');
 
@@ -11,6 +12,7 @@ export function useData() {
 }
 
 export function QADataProvider({ children }) {
+  const productId = useContext(ProductIDContext);
   const [qaData, setQAData] = useState(null);
 
   useEffect(() => {
@@ -18,8 +20,7 @@ export function QADataProvider({ children }) {
       method: 'get',
       url: 'http://localhost:3000/qa/questions',
       params: {
-        // harded coded for now but will use context product ID
-        product_id: '65634',
+        product_id: productId,
       },
     })
       .then(({ data }) => {
@@ -28,7 +29,7 @@ export function QADataProvider({ children }) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [productId]);
   return (
     <QAContext.Provider value={qaData}>
       { children }

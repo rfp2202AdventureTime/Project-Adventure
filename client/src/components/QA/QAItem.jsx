@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 export default function QAItem({ question }) {
   return (
     <QAItemSection>
-      <li>{question.asker_name}</li>
       <li>{question.question_body}</li>
+      <li>{question.asker_name}</li>
       <li>{question.question_date}</li>
       <li>{question.question_helpfulness}</li>
       {<li>{question.reported}</li> && question.reported}
@@ -15,8 +15,11 @@ export default function QAItem({ question }) {
   );
 }
 
-const QAItemSection = styled.section`
-  background-color: ${(props) => props.theme.colors.background}
+const QAItemSection = styled.div`
+  background-color: ${(props) => props.theme.colors.background};
+  display: flexbox;
+  flex-direction: column;
+  justify-content: space-around;
 `;
 
 QAItem.propTypes = {
