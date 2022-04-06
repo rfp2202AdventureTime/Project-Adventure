@@ -2,8 +2,7 @@ import React, {
   createContext, useContext, useEffect, useState,
 } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { useRelated } from './RelatedContext';
+
 
 // should retrieve all related products from initial product page
 // map each individual card with all the information
@@ -37,7 +36,7 @@ const IndCard = styled.div`
   }
 `;
 
-const CardText = styled.ul`
+const CardText = styled.div`
   align-item: left;
 `;
 

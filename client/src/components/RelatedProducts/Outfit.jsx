@@ -20,10 +20,6 @@ const OutfitText = styled.p`
   text-align: center;
 `;
 
-// const OutfitCard = styled(IndCard)`
-//   width:
-// `;
-
 // to check functionality of 'add to outfit'
 // will need to add current product to 'Your Outfit' list
 let outfitList = 0;

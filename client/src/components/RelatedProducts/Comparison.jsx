@@ -12,18 +12,10 @@ const Item2 = styled(Item1)`
 function Comparison() {
   return (
     <div>
-      <div>
-        <Item1>
-          item1
-        </Item1>
-
-        <Item2>
-          item2
-        </Item2>
-
-      </div>
+      <title>This is a test of the comparison table</title>
 
     </div>
+
   );
 }
 
