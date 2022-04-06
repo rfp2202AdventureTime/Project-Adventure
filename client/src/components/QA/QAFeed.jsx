@@ -17,24 +17,23 @@ export default function Feed({ submitSearchQuestionBody }) {
   }
   return (
     <FeedSection>
-      <h1>Feed</h1>
-      <ul>
-        {filteredQData === null ? 'Loading...' : filteredQData.map(
-          (question) => (
-            <QAItem
-              question={question}
-              allAnswers={answerData}
-              key={question.question_id}
-            />
-          ),
-        )}
-      </ul>
+      {filteredQData === null ? 'Loading...' : filteredQData.map(
+        (question) => (
+          <QAItem
+            question={question}
+            allAnswers={answerData}
+            key={question.question_id}
+          />
+        ),
+      )}
     </FeedSection>
   );
 }
 
 const FeedSection = styled.section`
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${(props) => props.theme.colors.light};
+  display: flex;
+  flex-direction: column;
 `;
 
 Feed.propTypes = {

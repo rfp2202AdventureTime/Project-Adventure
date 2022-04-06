@@ -28,5 +28,5 @@ export default function QA() {
 }
 
 const QASection = styled.section`
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${(props) => props.theme.colors.light};
 `;

@@ -34,7 +34,7 @@ const IndCard = styled.div`
   }
 `;
 
-const CardText = styled.p`
+const CardText = styled.ul`
   padding-left: 1px;
 `;
 

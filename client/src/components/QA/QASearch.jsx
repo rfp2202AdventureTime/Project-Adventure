@@ -10,7 +10,6 @@ export default function Search({
 }) {
   return (
     <SearchSection>
-      <h3>Search Bar</h3>
       <form onSubmit={((e) => {
         e.preventDefault();
         setsubmitSearchQuestionBody(searchQuesitonBody);
@@ -33,7 +32,7 @@ export default function Search({
 }
 
 const SearchSection = styled.section`
-  background-color: ${(props) => props.theme.colors.background}
+  background-color: ${(props) => props.theme.colors.light}
 `;
 
 Search.propTypes = {

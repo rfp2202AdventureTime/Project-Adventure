@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 export default function QAItem({ question, allAnswers }) {
   const filteredAnswers = allAnswers.filter(
@@ -10,25 +11,79 @@ export default function QAItem({ question, allAnswers }) {
   if (filteredAnswers.length > 0 && filteredAnswers[0].results.length > 0) {
     arrayOfAnswers = filteredAnswers[0].results;
   }
-  console.log(arrayOfAnswers);
   return (
     <QAItemSection>
-      <li>{question.question_body}</li>
-      {arrayOfAnswers === undefined ? '' : arrayOfAnswers.map((answer) => <ol>{answer.body}</ol>)}
-      {/* <li>{question.asker_name}</li>
-      <li>{question.question_date}</li>
-      <li>{question.question_helpfulness}</li>
-      {<li>{question.reported}</li> && question.reported} */}
+      <QAItemFullQuestion>
+        <QAItemQuestionLeft>
+          {`Q: ${question.question_body}`}
+        </QAItemQuestionLeft>
+        <QAItemQuestionRight>
+          {'Helpful? '}
+          <u onClick={(e) => console.log('Clicked Yes')}>Yes</u>
+          {` (${question.question_helpfulness}) | `}
+          <u onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
+        </QAItemQuestionRight>
+      </QAItemFullQuestion>
+      {arrayOfAnswers === undefined ? '' : arrayOfAnswers.map((answer) => (
+        <QAItemAnswer>
+          <span>
+            <strong>A: </strong>
+            {answer.body}
+          </span>
+          <span>
+            {`by ${answer.answerer_name},
+            ${moment(answer.date).format('MMMM DD, YYYY')} |
+            Helpful? `}
+            <u onClick={(e) => console.log('Clicked Yes')}>Yes</u>
+            {` (${answer.helpfulness}) | `}
+            <u onClick={(e) => console.log('Clicked Report')}>Report</u>
+          </span>
+        </QAItemAnswer>
+      ))}
       <br />
     </QAItemSection>
   );
 }
 
 const QAItemSection = styled.div`
-  background-color: ${(props) => props.theme.colors.background};
-  display: flexbox;
+  background-color: ${(props) => props.theme.colors.light};
+  display: flex;
   flex-direction: column;
   justify-content: space-around;
+`;
+
+const QAItemFullQuestion = styled.div`
+  background-color: ${(props) => props.theme.colors.light};
+  display: flex;
+  flex-direction: row;
+`;
+
+const QAItemQuestionLeft = styled.span`
+  background-color: ${(props) => props.theme.colors.light};
+  justify-content: space-around;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-weight:bold;
+  width: 75%;
+  float: right;
+  `;
+
+const QAItemQuestionRight = styled.span`
+  background-color: ${(props) => props.theme.colors.light};
+  justify-content: space-around;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  width: 25%;
+  float: right;
+`;
+
+const QAItemAnswer = styled.div`
+  background-color: ${(props) => props.theme.colors.light};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-bottom: 10px;
+  padding-top: 10px;
 `;
 
 QAItem.propTypes = {
