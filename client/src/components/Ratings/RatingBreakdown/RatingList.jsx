@@ -1,42 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { useMeta } from '@Contexts/ReviewContext';
 
+import RatingBar from './RatingBar';
+
 export default function RatingList() {
-  const starMap = new Map();
+  const starList = [];
   // let totalCT = 0;
-  let starPCTArray = [];
 
   const currentMeta = useMeta();
   if (currentMeta) {
     const { ratings, totalCT } = currentMeta;
     const starArray = [5, 4, 3, 2, 1];
 
-
-    // fist loop to get total count
     starArray.forEach((key) => {
       const currentCT = Number(ratings[key]);
       if (Number.isNaN(currentCT)) {
-        starMap.set(key, 0);
+        starList.push({ id: key, decimal: 0 });
       } else {
-        starMap.set(key, currentCT);
+        starList.push({ id: key, decimal: currentCT / totalCT });
       }
     });
-
-    // second loop to calculate percentage
-    starMap.forEach((value) => {
-      starPCTArray.push(value / totalCT);
-    });
   }
-  const ratingBars = starPCTArray.map((pct) => <div>{pct}</div>);
 
+  // TODO: figure out how to show each star bar in one line
   return (
     <Ratings>
-      {/* {ratingBars} */}
-      <div className="w3-light-grey">
-        <div className="w3-green" style={{ height: '2rem', width: '25%' }}> </div>
-      </div>
+      {starList.map((item) => {
+        const scorePerct = Math.floor((item.decimal) * 100).toString().concat('%');
+        return (
+          <RatingBar
+            key={item.id}
+            scorePerct={scorePerct}
+            id={item.id.toString()}
+          />
+        );
+      })}
     </Ratings>
   );
 }
@@ -45,4 +44,5 @@ export default function RatingList() {
 const Ratings = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 1rem;
 `;
