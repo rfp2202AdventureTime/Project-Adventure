@@ -13,7 +13,7 @@ export default function Feed({ submitSearchQuestionBody }) {
       (question) => question.question_body.includes(submitSearchQuestionBody),
     );
   }
-  console.log(filteredFullQAData);
+  // console.log(filteredFullQAData);
   return (
     <FeedSection>
       <h1>Feed</h1>
