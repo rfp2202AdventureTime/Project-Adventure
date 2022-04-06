@@ -1,16 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-// import { useMeta } from '@Contexts/ReviewContext';
 
-export default function ReviewTile() {
+export default function ReviewTile({ review }) {
+  // TODO: display a photo; sort
+  console.log(review);
   return (
     <ReviewBlock>
-      {/* {FactorBars} */}
       This is one block of review
+
     </ReviewBlock>
   );
 }
+ReviewTile.propTypes = {
+  review: PropTypes.shape({
+
+  })
+};
 
 // Style components
 const ReviewBlock = styled.div`

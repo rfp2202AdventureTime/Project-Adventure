@@ -3,12 +3,15 @@ import styled from 'styled-components';
 
 import RatingBreakdown from './RatingBreakdown';
 import ReviewList from './ReviewList';
+import { ReviewProvider } from '../../contexts/ProductReview';
 
 export default function Ratings() {
   return (
     <RatingSection>
       <RatingBreakdown />
-      <ReviewList />
+      <ReviewProvider>
+        <ReviewList />
+      </ReviewProvider>
     </RatingSection>
   );
 }

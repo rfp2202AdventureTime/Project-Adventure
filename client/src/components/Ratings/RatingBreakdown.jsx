@@ -1,20 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ReviewProvider } from '@Contexts/ReviewContext';
+import { RatingProvider } from '../../contexts/ReviewMeta';
 import RatingOverview from './RatingBreakdown/RatingOverview';
 import RatingList from './RatingBreakdown/RatingList';
 import FactorList from './RatingBreakdown/FactorList';
 
 export default function RatingBreakdown() {
   return (
-    <ReviewProvider>
+    <RatingProvider>
       <RatingContainer>
         <RatingOverview />
         <RatingList />
         <FactorList />
       </RatingContainer>
-    </ReviewProvider>
+    </RatingProvider>
   );
 }
 

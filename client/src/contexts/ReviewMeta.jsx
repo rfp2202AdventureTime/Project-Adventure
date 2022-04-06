@@ -6,12 +6,13 @@ import { ProductIDContext } from './ProductIDContext';
 const ReviewContext = React.createContext();
 ReviewContext.displayName = 'RatingData';
 
+// custome hook to return useContext
 export function useMeta() {
   return useContext(ReviewContext);
 }
 
 // Context has reviewMeta received from API plus converted avgRating and total rating count
-export function ReviewProvider({ children }) {
+export function RatingProvider({ children }) {
   const productId = useContext(ProductIDContext);
   const [reviewMeta, setReviewMeta] = useState(null);
 
@@ -55,6 +56,6 @@ export function ReviewProvider({ children }) {
   );
 }
 
-ReviewProvider.propTypes = {
+RatingProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
