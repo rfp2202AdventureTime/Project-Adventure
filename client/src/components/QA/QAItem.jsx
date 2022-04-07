@@ -81,6 +81,7 @@ const QAItemSection = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  border-bottom: 0.2rem dotted rgba(221, 235, 223);
 `;
 
 const QAItemFullQuestion = styled.div`
@@ -95,7 +96,7 @@ const QAItemQuestionLeft = styled.span`
   padding-bottom: 10px;
   padding-top: 10px;
   font-weight:bold;
-  width: 75%;
+  width: 80%;
   float: right;
   `;
 
@@ -104,7 +105,7 @@ const QAItemQuestionRight = styled.span`
   justify-content: space-around;
   padding-bottom: 10px;
   padding-top: 10px;
-  width: 25%;
+  width: 20%;
   float: right;
 `;
 

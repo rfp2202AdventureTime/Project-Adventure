@@ -69,7 +69,8 @@ const ImageGalleryViewport = styled.div`
 const ProductInfo = styled.section`
   background-color:${(props) => props.theme.colors.light};
   width: 480px;
-  padding: 10px;
+  padding: 10px 30px;
+  color: ${(props) => props.theme.colors.secondary};
 `;
 
 export default Overview;

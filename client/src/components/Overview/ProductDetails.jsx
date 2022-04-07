@@ -1,18 +1,31 @@
 import React from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 function ProductDetails() {
   return (
     <div>
-      <h3>
+      <Category>
         CATEGORY
-      </h3>
-      <h1>
+      </Category>
+      <ProductName>
         Expanded Product Name
-      </h1>
-      $159
+      </ProductName>
+      <Price>
+        $159
+      </Price>
     </div>
   );
 }
+
+const ProductName = styled.h1`
+  font-weight: bold;
+`;
+
+const Category = styled.h3`
+`;
+
+const Price = styled.div`
+  padding-bottom: 10px;
+`;
 
 export default ProductDetails;

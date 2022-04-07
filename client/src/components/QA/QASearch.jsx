@@ -12,7 +12,6 @@ export default function Search({
     <SearchSection>
       <form onSubmit={((e) => {
         e.preventDefault();
-        console.log(searchQuesitonBody);
         setsubmitSearchQuestionBody(searchQuesitonBody);
       })}
       >

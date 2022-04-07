@@ -32,7 +32,7 @@ export default function Feed({ submitSearchQuestionBody }) {
           />
         ),
       )}
-      <span>
+      <ButtonBlock>
         {moreQsClicked && (
           <MoreAnswersButton
             type="submit"
@@ -49,7 +49,7 @@ export default function Feed({ submitSearchQuestionBody }) {
         >
           Ask a Question +
         </MoreAnswersButton>
-      </span>
+      </ButtonBlock>
 
     </FeedSection>
   );
@@ -62,15 +62,18 @@ const FeedSection = styled.section`
 `;
 
 const MoreAnswersButton = styled.button`
-background: transparent;
-border: 2px solid ${(props) => props.theme.colors.primary};
-color: ${(props) => props.theme.colors.primary};
-margin: 0 1em;
-padding: 0.25em 1em;
-width: 250px;
-height: 75px;
-color: black;
-font-weight: bolder;
+  border: 2px solid;
+  text-align: center;
+  padding: 1.3rem 1rem 1.3rem 1rem;
+  font-size: medium;
+  font-weight: 700;
+`;
+
+const ButtonBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1.3rem 1rem 1.3rem 1rem;
 `;
 
 Feed.propTypes = {
