@@ -21,8 +21,6 @@ export default function Feed({ submitSearchQuestionBody }) {
       totalQsToRender.push(filteredQData[i]);
     }
   }
-  console.log(totalQsToRender);
-
   return (
     <FeedSection>
       {totalQsToRender === [] ? 'Loading...' : totalQsToRender.map(
@@ -34,17 +32,25 @@ export default function Feed({ submitSearchQuestionBody }) {
           />
         ),
       )}
-      {moreQsClicked && (
-        <button
-          type="submit"
-          onClick={() => {
-            setNumQsToRender(filteredQData.length);
-            setMoreQsClicked(false);
-          }}
+      <span>
+        {moreQsClicked && (
+          <MoreAnswersButton
+            type="submit"
+            onClick={() => {
+              setNumQsToRender(filteredQData.length);
+              setMoreQsClicked(false);
+            }}
+          >
+            Load More Questions
+          </MoreAnswersButton>
+        )}
+        <MoreAnswersButton
+          onClick={() => { console.log('Nice, you ask a really dumb question'); }}
         >
-          Load More Questions
-        </button>
-      )}
+          Ask a Question
+        </MoreAnswersButton>
+      </span>
+
     </FeedSection>
   );
 }
@@ -53,6 +59,18 @@ const FeedSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
   display: flex;
   flex-direction: column;
+`;
+
+const MoreAnswersButton = styled.button`
+background: transparent;
+border: 2px solid ${(props) => props.theme.colors.primary};
+color: ${(props) => props.theme.colors.primary};
+margin: 0 1em;
+padding: 0.25em 1em;
+width: 250px;
+height: 75px;
+color: black;
+font-weight: bolder;
 `;
 
 Feed.propTypes = {
