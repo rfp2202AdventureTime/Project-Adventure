@@ -24,7 +24,7 @@ export default function QAItem({ question, allAnswers }) {
     }
   }
 
-  const handleHelpfulQuestion = (category, ID) => {
+  const handleQuestionHelpful = (category, ID) => {
     axios({
       method: 'PUT',
       url: `http://localhost:3000/qa/questions/${ID}/${category}`,
@@ -68,6 +68,40 @@ export default function QAItem({ question, allAnswers }) {
       });
   };
 
+  const handleReport = (category, ID) => {
+    axios({
+      method: 'PUT',
+      url: `http://localhost:3000/qa/answers/${ID}/${category}`,
+    })
+      .then((response) => {
+        console.log(response.status);
+        const copyAllQuestions = [...globalQData];
+        const copyAllAnswers = [...allAnswers];
+        for (let i = 0; i < copyAllAnswers.length; i += 1) {
+          if (copyAllAnswers[i].question === question.question_id.toString()) {
+            for (let j = 0; j < copyAllAnswers[i].results.length; j += 1) {
+              if (copyAllAnswers[i].results[j].answer_id === ID) {
+                if (category === 'helpful') {
+                  copyAllAnswers[i].results[j].helpfulness += 1;
+                  setGlobalAData(copyAllAnswers);
+                } else if (category === 'report') {
+                  for (let t = 0; t < copyAllQuestions.length; t += 1) {
+                    if (copyAllQuestions[t].question_id === question.question_id) {
+                      copyAllQuestions[t].reported = true;
+                      setReported(true);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <QAItemSection>
       <QAItemFullQuestion>
@@ -76,7 +110,7 @@ export default function QAItem({ question, allAnswers }) {
         </QAItemQuestionLeft>
         <QAItemQuestionRight>
           {'Helpful? '}
-          <u onClick={(e) => handleHelpfulQuestion('helpful', question.question_id)}>Yes</u>
+          <u onClick={(e) => handleQuestionHelpful('helpful', question.question_id)}>Yes</u>
           {` (${question.question_helpfulness}) | `}
           <u value='add answer' onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
         </QAItemQuestionRight>
@@ -96,7 +130,7 @@ export default function QAItem({ question, allAnswers }) {
             Helpful? `}
             <u onClick={(e) => handleHelpfulAnswer('helpful', answer.answer_id)}>Yes</u>
             {` (${answer.helpfulness}) | `}
-            {!reported && <u onClick={(e) => handleReportInteraction('report', answer.answer_id)}>Report</u>}
+            {!reported && <u onClick={(e) => handleReport('report', answer.answer_id)}>Report</u>}
           </span>
         </QAItemAnswer>
       ))}
