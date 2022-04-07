@@ -43,8 +43,9 @@ const Thumbnails = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px;
-  max-width: 350px;
+  justify-content: left;
+  gap: 20px;
+  max-width: 400px;
   padding: 10px 0;
 `;
 

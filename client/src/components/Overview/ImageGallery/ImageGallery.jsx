@@ -9,6 +9,7 @@ import DotNavigation from './DotNavigation';
 
 function ImageGallery({ view, handleViewChange }) {
   const [imgIdx, setImgIdx] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const { activeStyle: { photos } } = useActiveStyle();
 
   const handlePhotoChange = (selection) => {
@@ -18,6 +19,12 @@ function ImageGallery({ view, handleViewChange }) {
     if (photos[newIdx]) setImgIdx(newIdx);
   };
 
+  const handleHover = (e) => {
+    if (e.target === e.currentTarget) {
+      setIsHovered(!isHovered);
+    }
+  };
+
   if (photos) {
     const hasMultiplePhotos = photos.length > 1;
 
@@ -25,6 +32,9 @@ function ImageGallery({ view, handleViewChange }) {
       <MainImage
         url={photos[imgIdx].url}
         onClick={(e) => handleViewChange(e, 'expanded')}
+        className={isHovered ? 'hover' : ''}
+        onMouseOver={(e) => handleHover(e)}
+        onMouseOut={(e) => handleHover(e)}
       >
 
         <LeftArrow
@@ -68,21 +78,24 @@ function ImageGallery({ view, handleViewChange }) {
 const Arrow = styled.span`
   position: absolute;
   height: 50px;
-  width: 30px;
+  width: 20px;
   background-color: red;
+  &:hover {
+    cursor: pointer;
+  }
   ${(props) => (!props.visible && 'visibility: hidden;')}
 `;
 
 const LeftArrow = styled(Arrow)`
   top: 50%;
   left: 0px;
-  translate(0, -50%);
+  transform: translate(0, -50%);
 `;
 
 const RightArrow = styled(Arrow)`
   top 50%;
   right: 0px;
-  translate(0, -50%);
+  transform: translate(0, -50%);
 `;
 
 const MainImage = styled.div`
@@ -93,17 +106,23 @@ const MainImage = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
+  &.hover {
+    cursor: zoom-in;
+  }
 `;
 
 const Exit = styled.span`
-  background-color: ${(props) => props.theme.colors.primary};
-  width: 50px;
-  height: 50px;
+  background-color: red;
+  width: 30px;
+  height: 30px;
   position: absolute;
   top: 20px;
   right: 20px;
   visibility: hidden;
   opacity: 0;
+  &:hover {
+    cursor: pointer;
+  }
   &.expanded {
     opacity: 1;
     visibility: visible;
