@@ -37,8 +37,11 @@ export default function QAItem({ question, allAnswers }) {
             {answer.body}
           </span>
           <span>
-            {`by ${answer.answerer_name},
-            ${moment(answer.date).format('MMMM DD, YYYY')} |
+            {`by `} {answer.answerer_name === 'Seller' ?
+              <strong>{answer.answerer_name}</strong>
+              : `${answer.answerer_name}`
+            }
+            {`${moment(answer.date).format('MMMM DD, YYYY')} |
             Helpful? `}
             <u onClick={(e) => console.log('Clicked Yes')}>Yes</u>
             {` (${answer.helpfulness}) | `}
