@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ReviewTile from './Review/ReviewTile';
 import { useReviews } from '../../contexts/ProductReview';
+import { useMeta } from '../../contexts/ReviewMeta';
 
 export default function ReviewList() {
   const reviews = useReviews().results;
+
+  // const [reviewNum, setReviewNum] = useState(0);
+  // const { totalCT } = useMeta();
   // console.log(reviews);
+
   let reviewCollection = [];
   if (reviews) {
+    // render reviewTiles
     reviewCollection = reviews.map(
       (review) => (
         <ReviewTile
@@ -16,6 +22,8 @@ export default function ReviewList() {
         />
       ),
     );
+    // control review number
+
   }
   return (
     <ReviewContainer>

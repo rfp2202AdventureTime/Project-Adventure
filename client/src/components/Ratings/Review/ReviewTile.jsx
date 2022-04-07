@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 import Star from '../../../Star';
-import { useMeta } from '../../../contexts/ReviewMeta';
 
 export default function ReviewTile(review) {
-  // TODO: display a photo; sort
+  // TODO: display a photo; sort, response, recp,,emt
   const {
     review: {
       rating, summary, recommend, response, date, body,
@@ -14,9 +13,6 @@ export default function ReviewTile(review) {
   const convertedDate = moment(date).format('MMMM D, YYYY');
   // eslint-disable-next-line react/destructuring-assignment
   const usernameDate = `${review.review.reviewer_name},  ${convertedDate}`;
-
-  // const [reviewNum, setReviewNum] = useState(0);
-  // const { totalCT } = useMeta();
 
   return (
     <ReviewBlock>
