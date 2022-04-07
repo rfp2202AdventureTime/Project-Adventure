@@ -10,6 +10,8 @@ export default function Feed({ submitSearchQuestionBody }) {
   const [moreQsClicked, setMoreQsClicked] = useState(true);
   const questionData = useData().qData;
   const answerData = useData().aData;
+  console.log(questionData);
+  console.log(answerData);
   let filteredQData = questionData;
   const totalQsToRender = [];
 

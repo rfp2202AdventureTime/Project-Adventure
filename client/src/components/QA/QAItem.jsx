@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import axios from 'axios';
+import { useData } from './QAContext';
 
 export default function QAItem({ question, allAnswers }) {
+  const setGlobalAData = useData().setAData;
   const [numAsToRender, setNumAsToRender] = useState(2);
   const [moreAsClicked, setMoreAsClicked] = useState(true);
   const filteredAnswers = allAnswers.filter(
@@ -18,6 +20,8 @@ export default function QAItem({ question, allAnswers }) {
       totalAsToRender.push(arrayOfAnswers[i]);
     }
   }
+
+  console.log(allAnswers);
   // category will be if the click was for helpful or reported
   const handleQuestionInteraction = (category, ID) => {
     console.log(category);
@@ -33,7 +37,6 @@ export default function QAItem({ question, allAnswers }) {
         console.log(err);
       });
   };
-
   const handleAnswerInteraction = (category, ID) => {
     console.log(category);
     console.log(ID);
@@ -43,6 +46,25 @@ export default function QAItem({ question, allAnswers }) {
     })
       .then((response) => {
         console.log(response.status);
+        const copyAllAnswers = [...allAnswers];
+        console.log(copyAllAnswers);
+        console.log('start');
+        for (let i = 0; i < copyAllAnswers.length; i += 1) {
+          console.log(copyAllAnswers);
+          if (copyAllAnswers[i].question === question.question_id.toString()) {
+            console.log(copyAllAnswers[i].results);
+            for (let j = 0; j < copyAllAnswers[i].results.length; j += 1) {
+              console.log(copyAllAnswers[i].results[j].answer_id);
+              console.log(ID);
+              if (copyAllAnswers[i].results[j].answer_id === ID) {
+                copyAllAnswers[i].results[j].helpfulness += 1;
+                console.log('here');
+                console.log(copyAllAnswers);
+                setGlobalAData(copyAllAnswers);
+              }
+            }
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
