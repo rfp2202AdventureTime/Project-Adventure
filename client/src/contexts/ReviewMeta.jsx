@@ -34,7 +34,7 @@ export function RatingProvider({ children }) {
     let newData;
     axios({
       method: 'get',
-      url: 'http://localhost:3000/reviews/meta',
+      url: '/reviews/meta',
       params: {
         product_id: productId,
       },
