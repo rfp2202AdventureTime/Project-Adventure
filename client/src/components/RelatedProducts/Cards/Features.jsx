@@ -1,21 +1,33 @@
 import React from 'react';
-import sampleFeatures from './sampleFeatures';
 
 function Features({ features }) {
   // const values = sampleFeatures.features;
-  console.log(features[0].features, 'this is features');
-  const test = features[0].features;
+  console.log(features, 'this is features');
+
+  const testArray = [];
+
+  for (let i = 0; i < features.length; i += 1) {
+    features[i].features.map((item) => {
+      testArray.push(item);
+    });
+  }
+
+  console.log(testArray, 'this is test array');
+
   return (
-    <div>
-      {test.map((item) => (
+    <tr>
+
+      <td>{ }</td>
+      {testArray.map((item) => (
         <tr>
           {item.feature}
-          :
+
           {' '}
-          {item.value}
+          {item.value ? `: ${item.value}` : ' '}
         </tr>
       ))}
-    </div>
+      <td>{} </td>
+    </tr>
   );
 }
 
