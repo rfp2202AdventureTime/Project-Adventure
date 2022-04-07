@@ -57,7 +57,7 @@ function ImageGallery({ children, photos }) {
               ref={zoomImg}
               url={photos[imgIdx].url}
               onClick={(e) => handleViewChange(e, 'expanded')}
-              className={view}
+              className={`${view} ${isHovered ? 'hover' : ''}`}
               onMouseMove={(e) => handleZoomPosition(e)}
               onMouseOver={(e) => handleHover(e)}
               onMouseOut={(e) => handleHover(e)}
@@ -151,8 +151,14 @@ const MainImage = styled.div`
   background-repeat: no-repeat;
   background-position: 50% 50%;
   position: relative;
-  &.hover {
+  &.hover.default {
     cursor: zoom-in;
+  }
+  &.hover.expanded {
+    cursor: crosshair;
+  }
+  &.hover.zoom {
+    cursor: zoom-out;
   }
   &.zoom {
     background-size: auto 250%;
