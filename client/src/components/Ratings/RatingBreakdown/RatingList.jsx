@@ -23,7 +23,6 @@ export default function RatingList() {
     });
   }
 
-  // TODO: figure out how to show each star bar in one line
   return (
     <Ratings>
       {starList.map((item) => {

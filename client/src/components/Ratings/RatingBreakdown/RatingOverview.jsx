@@ -18,6 +18,12 @@ export default function RatingOverview() {
     const falseCT = Number(recommended.false);
     helpfulness = Math.round((trueCT / (trueCT + falseCT)) * 100);
   }
+  const helpfulBar = helpfulness ? (
+    <div>
+      {helpfulness}
+      % of reviews recommend this product
+    </div>
+  ) : '';
 
   return (
     <RatingOverviewContainer>
@@ -30,10 +36,7 @@ export default function RatingOverview() {
         </Score>
         <Star score={score} />
       </StarContainer>
-      <div>
-        {helpfulness}
-        % of reviews recommend this product
-      </div>
+      {helpfulBar}
     </RatingOverviewContainer>
   );
 }
