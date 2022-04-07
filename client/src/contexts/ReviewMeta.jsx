@@ -17,13 +17,13 @@ export function RatingProvider({ children }) {
   const [reviewMeta, setReviewMeta] = useState(null);
 
   function convertRating(data) {
-    let totalRating;
+    let totalRating = 0;
     let avgRating = 0;
     let totalCT = null;
     const { ratings } = data;
     Object.keys(ratings).forEach((key) => {
       const currentCT = Number(ratings[key]);
-      totalRating = key * currentCT;
+      totalRating += key * currentCT;
       totalCT += currentCT;
     });
     avgRating = Math.round((totalRating / totalCT) * 10) / 10;
