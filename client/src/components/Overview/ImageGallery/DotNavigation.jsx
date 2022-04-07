@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+// TODO: Refactor to pull out `view` dependency to the image gallery level.
 function DotNavigation({
   activeIndex,
   numItems,
@@ -32,8 +33,11 @@ const Dot = styled.span`
   width: 20px;
   margin: 5px;
   border-radius: 50%;
+  &:hover {
+    cursor: pointer;
+  }
   &.selected {
-    background-color: ${(props) => props.theme.colors.primary};
+    background-color: red;
   }
 `;
 

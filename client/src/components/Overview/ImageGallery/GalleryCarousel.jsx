@@ -2,31 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+// TODO: Refactor to pull `view` dependency out and into the Image Gallery.
 function GalleryCarousel({
   photos,
   activeIndex,
   handleClick,
   view,
 }) {
-  const [viewport, setViewport] = React.useState(0);
-  const size = 4;
+  // Determines the maximum of items to display in the carousel.
+  const carouselSize = 4;
 
+  // When the index of the actively selected photo changes,
+  // check to see if it's visibly in range of the carousel's viewport.
+  // If it isn't, adjust the viewport so that it is.
+  const [viewportPosition, setViewportPosition] = React.useState(0);
   React.useEffect(() => {
-    const visiblePhotos = { min: viewport, max: viewport + size };
-    if (activeIndex >= visiblePhotos.max) setViewport(activeIndex - size + 1);
-    if (activeIndex < visiblePhotos.min) setViewport(activeIndex);
+    const visiblePhotos = { min: viewportPosition, max: viewportPosition + carouselSize };
+    if (activeIndex >= visiblePhotos.max) setViewportPosition(activeIndex - carouselSize + 1);
+    if (activeIndex < visiblePhotos.min) setViewportPosition(activeIndex);
   }, [activeIndex]);
 
+  // The up and down arrows should only be visible if there
+  // are more photos in the carousel's viewport in that direction.
+  const canScrollViewportUp = viewportPosition > 0;
+  const canSrollViewportDown = viewportPosition <= (photos.length - carouselSize - 1);
+
   return (
-    <Carousel className={view}>
-      <UpArrow
-        visible={activeIndex > 0}
-        onClick={() => handleClick('prev')}
-      >
-        UP
-      </UpArrow>
-      <CarouselViewport size={size}>
-        <CarouselItems viewport={viewport}>
+    <Carousel size={carouselSize} className={view}>
+      <UpArrow visible={canScrollViewportUp} onClick={() => handleClick('prev')} />
+      <CarouselViewport size={carouselSize}>
+        <CarouselItems viewportPosition={viewportPosition}>
           {photos.map((photo, i) => (
             <Thumbnail
               key={photo.thumbnail_url}
@@ -37,12 +42,7 @@ function GalleryCarousel({
           ))}
         </CarouselItems>
       </CarouselViewport>
-      <DownArrow
-        visible={activeIndex < (photos.length - 1)}
-        onClick={() => handleClick('next')}
-      >
-        DOWN
-      </DownArrow>
+      <DownArrow visible={canSrollViewportDown} onClick={() => handleClick('next')} />
     </Carousel>
   );
 }
@@ -61,23 +61,15 @@ const Thumbnail = styled.span`
   }
   position: relative;
   &.selected {
-    &::after {
-      content: "";
-      position: absolute;
-      width: 70px;
-      height: 5px;
-      top: 71px;
-      left: -1px;
-      display: inline-block;
-      background: ${(props) => props.theme.colors.primary};
-    }
+    background: red;
   }
 `;
 
 const Arrow = styled.div`
-  text-align: center;
+  display: inline-block;
+  width: 20px;
   height: 20px;
-  background: ${(props) => props.theme.colors.primary};
+  background: red;
   ${(props) => (!props.visible && 'visibility: hidden;')}
   &:hover {
     cursor: pointer;
@@ -85,23 +77,23 @@ const Arrow = styled.div`
 `;
 
 const UpArrow = styled(Arrow)`
-
 `;
 
 const DownArrow = styled(Arrow)`
-
 `;
 
 const CarouselItems = styled.div`
   width: 100%;
-  transform: translate(0, -${((props) => props.viewport * 85)}px);
+  transform: translate(0, -${((props) => props.viewportPosition * 85)}px);
 `;
 
 const Carousel = styled.div`
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 30px;
   display: inline-block;
+  text-align: center;
   width: 72px;
   &.expanded {
     visibility: hidden;
