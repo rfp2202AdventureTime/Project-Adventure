@@ -2,8 +2,8 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import styled from 'styled-components';
 
-import { StylesProvider } from '@Contexts/ActiveStyleId';
-import { ProductIDContext } from '@Contexts/ProductIDContext';
+import { StylesProvider } from '@Contexts/StylesProvider';
+import { ProductProvider } from '@Contexts/ProductIDContext';
 import { RatingProvider } from './contexts/ReviewMeta';
 
 import Theme from './contexts/Theme';
@@ -17,7 +17,7 @@ function App() {
 
   return (
     <Theme>
-      <ProductIDContext.Provider value={defaultProductId}>
+      <ProductProvider productId={defaultProductId}>
         <SiteHeader>
           Adventure Time
           <SiteSearch>
@@ -37,7 +37,7 @@ function App() {
         <RatingProvider>
           <Ratings />
         </RatingProvider>
-      </ProductIDContext.Provider>
+      </ProductProvider>
     </Theme>
   );
 }
