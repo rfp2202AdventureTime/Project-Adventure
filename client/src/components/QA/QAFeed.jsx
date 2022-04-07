@@ -26,9 +26,9 @@ export default function Feed({ submitSearchQuestionBody }) {
       {totalQsToRender === [] ? 'Loading...' : totalQsToRender.map(
         (question) => (
           <QAItem
+            key={question.question_id}
             question={question}
             allAnswers={answerData}
-            key={question.question_id}
           />
         ),
       )}

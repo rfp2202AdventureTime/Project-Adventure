@@ -82,7 +82,7 @@ export default function QAItem({ question, allAnswers }) {
         </QAItemQuestionRight>
       </QAItemFullQuestion>
       {totalAsToRender === undefined ? '' : totalAsToRender.map((answer) => (
-        <QAItemAnswer>
+        <QAItemAnswer key={answer.answer_id}>
           <span>
             <strong>A: </strong>
             {answer.body}
