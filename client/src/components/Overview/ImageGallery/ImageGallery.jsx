@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { useActiveStyle } from '@Contexts/ActiveStyleId';
+import { useActiveStyle } from '@Contexts/StylesProvider';
 
 import GalleryCarousel from './GalleryCarousel';
 import DotNavigation from './DotNavigation';
