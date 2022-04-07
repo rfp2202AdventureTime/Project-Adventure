@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import axios from 'axios';
 
 export default function QAItem({ question, allAnswers }) {
   const [numAsToRender, setNumAsToRender] = useState(2);
@@ -17,6 +18,37 @@ export default function QAItem({ question, allAnswers }) {
       totalAsToRender.push(arrayOfAnswers[i]);
     }
   }
+  // category will be if the click was for helpful or reported
+  const handleQuestionInteraction = (category, ID) => {
+    console.log(category);
+    console.log(ID);
+    axios({
+      method: 'PUT',
+      url: `http://localhost:3000/qa/questions/${ID}/${category}`,
+    })
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleAnswerInteraction = (category, ID) => {
+    console.log(category);
+    console.log(ID);
+    axios({
+      method: 'PUT',
+      url: `http://localhost:3000/qa/answers/${ID}/${category}`,
+    })
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <QAItemSection>
       <QAItemFullQuestion>
@@ -25,9 +57,9 @@ export default function QAItem({ question, allAnswers }) {
         </QAItemQuestionLeft>
         <QAItemQuestionRight>
           {'Helpful? '}
-          <u onClick={(e) => console.log('Clicked Yes')}>Yes</u>
+          <u onClick={(e) => handleQuestionInteraction('helpful', question.question_id)}>Yes</u>
           {` (${question.question_helpfulness}) | `}
-          <u onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
+          <u value='add answer' onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
         </QAItemQuestionRight>
       </QAItemFullQuestion>
       {totalAsToRender === undefined ? '' : totalAsToRender.map((answer) => (
@@ -43,9 +75,9 @@ export default function QAItem({ question, allAnswers }) {
             }
             {`${moment(answer.date).format('MMMM DD, YYYY')} |
             Helpful? `}
-            <u onClick={(e) => console.log('Clicked Yes')}>Yes</u>
+            <u onClick={(e) => handleAnswerInteraction('helpful', answer.answer_id)}>Yes</u>
             {` (${answer.helpfulness}) | `}
-            <u onClick={(e) => console.log('Clicked Report')}>Report</u>
+            <u onClick={(e) => handleAnswerInteraction('report', answer.answer_id)}>Report</u>
           </span>
         </QAItemAnswer>
       ))}
