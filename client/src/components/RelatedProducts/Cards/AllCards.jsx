@@ -15,7 +15,7 @@ const Layout = styled.div`
 function AllCards() {
   return (
     <Layout>
-      <IndCard>
+      {/* <IndCard>
         <ProductImg image={sampleRelatedThumbnails[0]} />
         <Individualcard product={sampleRelatedData[0]} />
       </IndCard>
@@ -33,7 +33,15 @@ function AllCards() {
       <IndCard>
         <ProductImg image={sampleRelatedThumbnails[3]} />
         <Individualcard product={sampleRelatedData[3]} />
-      </IndCard>
+      </IndCard> */}
+      {/* <IndCard> */}
+      <>
+        {sampleRelatedThumbnails.map((item) => <ProductImg image={item} key={item} />)}
+        {sampleRelatedData.map((item) => <Individualcard product={item} />)}
+        {/* {sampleRelatedData.map((item) => <Individualcard product={item} />)} */}
+        {/* </IndCard> */}
+      </>
+
     </Layout>
   );
 }

@@ -1,11 +1,14 @@
 import { React, useState } from 'react';
 import styled from 'styled-components';
 import Comparison from './Comparison';
+import { IndCard } from './Individualcard';
 
 const FavButton = styled.button`
   color: black;
   position: relative;
   float: right;
+  background-color: transparent;
+  border: transparent;
 `;
 
 const TestingModal = styled.section`
@@ -27,23 +30,25 @@ function ProductImg({ image }) {
   }
 
   return (
-    <div id="parent">
-      <TestingModal show={showModal}>
-        <Comparison />
-      </TestingModal>
-      {/* <FavButton as="a" href="http://bing.com">Compare</FavButton> */}
-      <FavButton onClick={() => handleClick()}>Compare</FavButton>
-      <a href="http://google.com">
-        <img
-          src={productThumbnail}
-          width={250}
-          height={175}
-          alt="If you can see this, thumbnail not found"
+    <IndCard>
 
-        />
-      </a>
+      <div id="parent">
+        <TestingModal show={showModal}>
+          <Comparison />
+        </TestingModal>
+        {/* <FavButton as="a" href="http://bing.com">Compare</FavButton> */}
+        <FavButton onClick={() => handleClick()}>Compare</FavButton>
+        <a href="http://google.com">
+          <img
+            src={productThumbnail}
+            width={250}
+            height={175}
+            alt="If you can see this, thumbnail not found"
+          />
+        </a>
 
-    </div>
+      </div>
+    </IndCard>
 
   );
 }

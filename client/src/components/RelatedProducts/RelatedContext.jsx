@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect, useContext, createContext, useMemo,
+  useState, useEffect, useContext, createContext,
 } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -12,34 +12,34 @@ export function useRelated() {
 }
 
 export function RelatedProvider({ children }) {
-  const [productInfo, setProductInfo] = useState();
-  const [thumbnail, setThumbnail] = useState();
+  const [related, setProductInfo] = useState();
+  const [styles, setStyles] = useState();
   const productId = useContext(ProductIDContext);
 
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:3000/products/${productId}`,
+      url: `products/${productId}/related`,
     })
       .then(({ data }) => {
         setProductInfo(data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [productId]);
 
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:3000/products/${productId}/related`,
+      url: `products/${productId}/styles`,
     })
       .then(({ data }) => {
-        setThumbnail(data);
+        setStyles(data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [productId]);
 
   return (
-    <RelatedContext.Provider value={productInfo}>
+    <RelatedContext.Provider value={[related, setProductInfo]} value2={[styles, setStyles]}>
       { children }
     </RelatedContext.Provider>
   );
