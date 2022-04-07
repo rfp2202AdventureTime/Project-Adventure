@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { React, useState } from 'react';
 import styled from 'styled-components';
 import Comparison from './Comparison';
@@ -12,7 +13,7 @@ const FavButton = styled.button`
 `;
 
 const TestingModal = styled.section`
-  display: ${(props) => props.show ? 'fixed' : 'none'};
+  display: ${(props) => (props.show ? 'fixed' : 'none')};
   position: inline;
   background: green;
   z-index: 500;

@@ -25,20 +25,23 @@ function Comparison() {
 
   return (
     <Testing>
+      <div>
 
-      <table>
-        <tr>
-          <th>{item1}</th>
-          <th>Compare</th>
-          <th>{item2}</th>
-        </tr>
-          <Features features={sampleFeatures} />
+        {/* <table>
+          <tr>
+            <th>{item1}</th>
+            <th>Compare</th>
+            <th>{item2}</th>
+          </tr> */}
+          {/* <Item1 item1={sampleFeatures[0]} /> */}
+          <Features item1={sampleFeatures[0]} item2={sampleFeatures[1]} />
 
 
 
 
 
-      </table>
+        {/* </table> */}
+      </div>
     </Testing>
 
   );

@@ -1,34 +1,48 @@
 import React from 'react';
+import styled from 'styled-components';
 
-function Features({ features }) {
+function Features({ item1, item2 }) {
   // const values = sampleFeatures.features;
-  console.log(features, 'this is features');
+  // console.log(features, 'this is features');
 
-  const testArray = [];
+  const FeatArray = item1.features.concat(item2.features);
 
-  for (let i = 0; i < features.length; i += 1) {
-    features[i].features.map((item) => {
-      testArray.push(item);
-    });
-  }
+  const item1Array = [];
+  item1.features.map((item) => item1Array.push(item));
 
-  console.log(testArray, 'this is test array');
+
+  const item2Array = [];
+  item2.features.map((item) => item2Array.push(item));
 
   return (
-    <tr>
-
-      <td>{ }</td>
-      {testArray.map((item) => (
+    <table>
+      <thead>
         <tr>
-          {item.feature}
+          <th>{item1.name}</th>
+          <th> </th>
+          <th>{item2.name}</th>
 
-          {' '}
-          {item.value ? `: ${item.value}` : ' '}
         </tr>
-      ))}
-      <td>{} </td>
-    </tr>
+      </thead>
+      <tbody>
+        {FeatArray.map((item) => (
+          <tr>
+
+            <td>{item1Array.map((item1) => (item1.feature === item.feature ? 'X' : ' '))}</td>
+
+            <td>{item.feature}</td>
+
+            <td>{item2Array.map((item2) => (item2.feature === item.feature ? 'X' : ' '))}</td>
+          </tr>
+        ))}
+
+      </tbody>
+    </table>
   );
 }
 
+const item1Style = styled.td`
+  display: center
+  align-items: center;
+`;
 export default Features;
