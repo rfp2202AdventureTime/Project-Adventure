@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { StylesProvider } from '@Contexts/ActiveStyleId';
 import { ProductIDContext } from '@Contexts/ProductIDContext';
+import { RatingProvider } from './contexts/ReviewMeta';
 
 import Theme from './contexts/Theme';
 import Overview from './components/Overview';
@@ -12,7 +13,7 @@ import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
-  const defaultProductId = 65633;
+  const defaultProductId = 65635;
 
   return (
     <Theme>
@@ -33,7 +34,9 @@ function App() {
           <RelatedProducts />
         </StylesProvider>
         <QA />
-        <Ratings />
+        <RatingProvider>
+          <Ratings />
+        </RatingProvider>
       </ProductIDContext.Provider>
     </Theme>
   );
