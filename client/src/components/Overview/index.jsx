@@ -1,43 +1,44 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { useCurrentProduct } from '@Contexts/ProductIDContext';
 import { useActiveStyle } from '@Contexts/StylesProvider';
 
 import ImageGallery from './ImageGallery';
-import ProductDetails from './ProductDetails';
 import StyleSelector from './StyleSelector';
 import AddToCart from './AddToCart';
 import ProductDescription from './ProductDescription';
 
 function Overview() {
   const { activeStyle } = useActiveStyle();
+  const { currentProduct } = useCurrentProduct();
   const [view, setView] = useState('default');
 
   const handleViewChange = (e, newView) => {
     if (e.target === e.currentTarget) setView(newView);
   };
 
-  if (activeStyle) {
-    return (
-      <>
-        <ExpandedImageGallery>
-          <DefaultImageGallery>
-            <ImageGalleryViewport className={view}>
-              <ImageGallery view={view} handleViewChange={handleViewChange} />
-            </ImageGalleryViewport>
-          </DefaultImageGallery>
+  return (
+    <>
+      <ExpandedImageGallery>
+        <DefaultImageGallery>
+          <ImageGalleryViewport className={view}>
+            {activeStyle && <ImageGallery view={view} handleViewChange={handleViewChange} />}
+          </ImageGalleryViewport>
+        </DefaultImageGallery>
 
-          <ProductInfo>
-            <ProductDetails />
-            <StyleSelector />
-            <AddToCart />
-          </ProductInfo>
-        </ExpandedImageGallery>
+        <ProductInfo>
+          <Category>{currentProduct ? currentProduct.category : ''}</Category>
+          <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
+          <Price>$159</Price>
+          {activeStyle && <StyleSelector />}
+          <AddToCart />
+        </ProductInfo>
+      </ExpandedImageGallery>
 
-        <ProductDescription />
-      </>
-    );
-  }
+      <ProductDescription />
+    </>
+  );
 }
 
 const ExpandedImageGallery = styled.section`
@@ -71,6 +72,17 @@ const ProductInfo = styled.section`
   width: 480px;
   padding: 10px 30px;
   color: ${(props) => props.theme.colors.secondary};
+`;
+
+const ProductName = styled.h1`
+  font-weight: bold;
+`;
+
+const Category = styled.h3`
+`;
+
+const Price = styled.div`
+  padding-bottom: 10px;
 `;
 
 export default Overview;
