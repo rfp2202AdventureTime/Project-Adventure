@@ -8,18 +8,16 @@ import { ReviewProvider } from '../../contexts/ProductReview';
 
 export default function Ratings() {
   const currentMeta = useMeta();
+  const ratingSection = (currentMeta && currentMeta.avgRating) ? <RatingBreakdown /> : <div />;
 
-  if (currentMeta && currentMeta.avgRating) {
-    return (
-      <RatingSection>
-        <RatingBreakdown />
-        <ReviewProvider>
-          <ReviewList />
-        </ReviewProvider>
-      </RatingSection>
-    );
-  }
-
+  return (
+    <RatingSection>
+      {ratingSection}
+      <ReviewProvider>
+        <ReviewList />
+      </ReviewProvider>
+    </RatingSection>
+  );
 }
 
 // inherented theme
