@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-import { useActiveStyle } from '@Contexts/ActiveStyleId';
 
 import GalleryCarousel from './GalleryCarousel';
 import DotNavigation from './DotNavigation';
 
-function ImageGallery({ view, handleViewChange }) {
+function ImageGallery({ children, photos }) {
   const [imgIdx, setImgIdx] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const { activeStyle: { photos } } = useActiveStyle();
+  const [view, setView] = useState('default');
+  const zoomBox = useRef();
+  const zoomImg = useRef();
 
   const handlePhotoChange = (selection) => {
     let newIdx = selection;
@@ -25,55 +25,100 @@ function ImageGallery({ view, handleViewChange }) {
     }
   };
 
-  if (photos) {
+  const handleZoomPosition = (e, override) => {
+    if (view === 'zoom' || override) {
+      const bounds = zoomBox.current.getBoundingClientRect();
+      const xPercent = (((e.clientX - bounds.left) / (bounds.right - bounds.left)) * 100);
+      const yPercent = (((e.clientY - bounds.top) / (bounds.bottom - bounds.top)) * 100);
+      zoomImg.current.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
+    }
+  };
+
+  const handleViewChange = (e, newView) => {
+    if (e.target === e.currentTarget) {
+      if (view === 'expanded' && newView === 'expanded') {
+        setView('zoom');
+        handleZoomPosition(e, true);
+      } else {
+        setView(newView);
+        zoomImg.current.style.backgroundPosition = '50% 50%';
+      }
+    }
+  };
+
+  if (photos.length > 0) {
     const hasMultiplePhotos = photos.length > 1;
-
     return (
-      <MainImage
-        url={photos[imgIdx].url}
-        onClick={(e) => handleViewChange(e, 'expanded')}
-        className={isHovered ? 'hover' : ''}
-        onMouseOver={(e) => handleHover(e)}
-        onMouseOut={(e) => handleHover(e)}
-      >
 
-        <LeftArrow
-          visible={imgIdx > 0}
-          onClick={() => handlePhotoChange('prev')}
-        />
+      <ExpandedImageGallery ref={zoomBox}>
+        <DefaultImageGallery>
+          <ImageGalleryViewport className={view}>
+            <MainImage
+              ref={zoomImg}
+              url={photos[imgIdx].url}
+              onClick={(e) => handleViewChange(e, 'expanded')}
+              className={`${view} ${isHovered ? 'hover' : ''}`}
+              onMouseMove={(e) => handleZoomPosition(e)}
+              onMouseOver={(e) => handleHover(e)}
+              onMouseOut={(e) => handleHover(e)}
+            >
+              <LeftArrow visible={imgIdx > 0} onClick={() => handlePhotoChange('prev')} />
+              <RightArrow visible={imgIdx < (photos.length - 1)} onClick={() => handlePhotoChange('next')} />
+              <Exit className={view} onClick={(e) => handleViewChange(e, 'default')} />
 
-        <RightArrow
-          visible={imgIdx < (photos.length - 1)}
-          onClick={() => handlePhotoChange('next')}
-        />
+              {hasMultiplePhotos && (
+                <>
+                  <GalleryCarousel
+                    activeIndex={imgIdx}
+                    photos={photos}
+                    handleClick={handlePhotoChange}
+                    view={view}
+                  />
 
-        <Exit
-          className={view}
-          onClick={(e) => handleViewChange(e, 'default')}
-        />
+                  <DotNavigation
+                    activeIndex={imgIdx}
+                    numItems={photos.length}
+                    handleClick={handlePhotoChange}
+                    view={view}
+                  />
+                </>
+              )}
 
-        {hasMultiplePhotos && (
-          <>
-            <GalleryCarousel
-              activeIndex={imgIdx}
-              photos={photos}
-              handleClick={handlePhotoChange}
-              view={view}
-            />
-
-            <DotNavigation
-              activeIndex={imgIdx}
-              numItems={photos.length}
-              handleClick={handlePhotoChange}
-              view={view}
-            />
-          </>
-        )}
-
-      </MainImage>
+            </MainImage>
+          </ImageGalleryViewport>
+        </DefaultImageGallery>
+        {children}
+      </ExpandedImageGallery>
     );
   }
 }
+
+const ExpandedImageGallery = styled.section`
+  background-color: ${(props) => props.theme.colors.light};
+  display: flex;
+  height: 630px;
+`;
+
+const DefaultImageGallery = styled.div`
+  width: 800px;
+  overflow: visible;
+  z-index: 2;
+`;
+
+const ImageGalleryViewport = styled.div`
+  background-color:${(props) => props.theme.colors.background};
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  &.expanded, &.zoom {
+    width: ${() => document.getElementById('main').offsetWidth}px;
+    transition: width 1s ease-in-out;
+  }
+  &.default {
+    width: 100%;
+    transition: width 1s ease-in-out;
+  }
+`;
 
 const Arrow = styled.span`
   position: absolute;
@@ -104,10 +149,20 @@ const MainImage = styled.div`
   width: 100%;
   background-size: auto 100%;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: 50% 50%;
   position: relative;
-  &.hover {
+  &.hover.default {
     cursor: zoom-in;
+  }
+  &.hover.expanded {
+    cursor: crosshair;
+  }
+  &.hover.zoom {
+    cursor: zoom-out;
+  }
+  &.zoom {
+    background-size: auto 250%;
+  }
   }
 `;
 
@@ -136,12 +191,8 @@ const Exit = styled.span`
 `;
 
 ImageGallery.propTypes = {
-  view: PropTypes.string,
-  handleViewChange: PropTypes.func.isRequired,
-};
-
-ImageGallery.defaultProps = {
-  view: 'default',
+  children: PropTypes.node.isRequired,
+  photos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default ImageGallery;

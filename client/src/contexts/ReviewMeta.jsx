@@ -57,5 +57,5 @@ export function RatingProvider({ children }) {
 }
 
 RatingProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };

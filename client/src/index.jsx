@@ -2,8 +2,8 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import styled from 'styled-components';
 
-import { StylesProvider } from '@Contexts/ActiveStyleId';
-import { ProductIDContext } from '@Contexts/ProductIDContext';
+import { StylesProvider } from '@Contexts/StylesProvider';
+import { ProductProvider } from '@Contexts/ProductIDContext';
 import { RatingProvider } from './contexts/ReviewMeta';
 
 import Theme from './contexts/Theme';
@@ -13,11 +13,11 @@ import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
-  const defaultProductId = 65635;
+  const defaultProductId = 65655;
 
   return (
     <Theme>
-      <ProductIDContext.Provider value={defaultProductId}>
+      <ProductProvider productId={defaultProductId}>
         <SiteHeader>
           Adventure Time
           <SiteSearch>
@@ -29,15 +29,15 @@ function App() {
           SITE-WIDE ANNOUNCEMENT MESSAGE - SALE / DISCOUNT OFFER - NEW PRODUCT HIGHLIGHT
         </Banner>
 
-        <StylesProvider>
-          <Overview />
-          <RelatedProducts />
-        </StylesProvider>
-        <QA />
         <RatingProvider>
+          <StylesProvider>
+            <Overview />
+            <RelatedProducts />
+          </StylesProvider>
+          <QA />
           <Ratings />
         </RatingProvider>
-      </ProductIDContext.Provider>
+      </ProductProvider>
     </Theme>
   );
 }
