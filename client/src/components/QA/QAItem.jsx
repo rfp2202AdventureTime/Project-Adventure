@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -7,8 +7,11 @@ import { useData } from './QAContext';
 
 export default function QAItem({ question, allAnswers }) {
   const setGlobalAData = useData().setAData;
+  const globalQData = useData().qData;
+  const setGlobalQData = useData().setQData;
   const [numAsToRender, setNumAsToRender] = useState(2);
   const [moreAsClicked, setMoreAsClicked] = useState(true);
+  const [reported, setReported] = useState(false);
   const filteredAnswers = allAnswers.filter(
     (answer) => answer.question === question.question_id.toString(),
   );
@@ -21,25 +24,27 @@ export default function QAItem({ question, allAnswers }) {
     }
   }
 
-  console.log(allAnswers);
-  // category will be if the click was for helpful or reported
-  const handleQuestionInteraction = (category, ID) => {
-    console.log(category);
-    console.log(ID);
+  const handleHelpfulQuestion = (category, ID) => {
     axios({
       method: 'PUT',
       url: `http://localhost:3000/qa/questions/${ID}/${category}`,
     })
       .then((response) => {
         console.log(response.status);
+        const copyAllQuestions = [...globalQData];
+        for (let i = 0; i < copyAllQuestions.length; i += 1) {
+          if (copyAllQuestions[i].question_id === ID) {
+            copyAllQuestions[i].question_helpfulness += 1;
+            setGlobalQData(copyAllQuestions);
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const handleAnswerInteraction = (category, ID) => {
-    console.log(category);
-    console.log(ID);
+
+  const handleHelpfulAnswer = (category, ID) => {
     axios({
       method: 'PUT',
       url: `http://localhost:3000/qa/answers/${ID}/${category}`,
@@ -47,19 +52,11 @@ export default function QAItem({ question, allAnswers }) {
       .then((response) => {
         console.log(response.status);
         const copyAllAnswers = [...allAnswers];
-        console.log(copyAllAnswers);
-        console.log('start');
         for (let i = 0; i < copyAllAnswers.length; i += 1) {
-          console.log(copyAllAnswers);
           if (copyAllAnswers[i].question === question.question_id.toString()) {
-            console.log(copyAllAnswers[i].results);
             for (let j = 0; j < copyAllAnswers[i].results.length; j += 1) {
-              console.log(copyAllAnswers[i].results[j].answer_id);
-              console.log(ID);
               if (copyAllAnswers[i].results[j].answer_id === ID) {
                 copyAllAnswers[i].results[j].helpfulness += 1;
-                console.log('here');
-                console.log(copyAllAnswers);
                 setGlobalAData(copyAllAnswers);
               }
             }
@@ -79,7 +76,7 @@ export default function QAItem({ question, allAnswers }) {
         </QAItemQuestionLeft>
         <QAItemQuestionRight>
           {'Helpful? '}
-          <u onClick={(e) => handleQuestionInteraction('helpful', question.question_id)}>Yes</u>
+          <u onClick={(e) => handleHelpfulQuestion('helpful', question.question_id)}>Yes</u>
           {` (${question.question_helpfulness}) | `}
           <u value='add answer' onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
         </QAItemQuestionRight>
@@ -97,9 +94,9 @@ export default function QAItem({ question, allAnswers }) {
             }
             {`${moment(answer.date).format('MMMM DD, YYYY')} |
             Helpful? `}
-            <u onClick={(e) => handleAnswerInteraction('helpful', answer.answer_id)}>Yes</u>
+            <u onClick={(e) => handleHelpfulAnswer('helpful', answer.answer_id)}>Yes</u>
             {` (${answer.helpfulness}) | `}
-            <u onClick={(e) => handleAnswerInteraction('report', answer.answer_id)}>Report</u>
+            {!reported && <u onClick={(e) => handleReportInteraction('report', answer.answer_id)}>Report</u>}
           </span>
         </QAItemAnswer>
       ))}
@@ -126,7 +123,7 @@ export default function QAItem({ question, allAnswers }) {
           </strong>
         </span>
       ) : (
-        <p1>* No Answers for this question *</p1>
+        <p>* No Answers for this question *</p>
       )}
       <br />
     </QAItemSection>
