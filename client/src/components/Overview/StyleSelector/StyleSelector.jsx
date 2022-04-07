@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { usePreviewStyle, useCurrentStyles } from '@Contexts/ActiveStyleId';
+import { usePreviewStyle, useCurrentStyles } from '@Contexts/StylesProvider';
 
 import ThumbnailList from './ThumbnailList';
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { ProductIDContext } from './ProductIDContext';
+import { useCurrentProductId } from './ProductIDContext';
 
 const CurrentStyles = React.createContext();
 const ActiveStyleId = React.createContext();
@@ -34,13 +34,15 @@ function StylesProvider({ children }) {
   const [currentStyles, setCurrentStyles] = React.useState();
   const [activeStyleId, setActiveStyleId] = React.useState();
   const [previewStyleId, setPreviewStyleId] = React.useState();
-  const productId = React.useContext(ProductIDContext);
+  const { currentProductId } = useCurrentProductId();
 
   React.useEffect(() => {
-    axios({ method: 'get', url: `/products/${productId}/styles` })
-      .then(({ data }) => { setCurrentStyles(data.results); })
-      .catch(() => setCurrentStyles([]));
-  }, [productId]);
+    if (currentProductId) {
+      axios({ method: 'get', url: `/products/${currentProductId}/styles` })
+        .then(({ data }) => { setCurrentStyles(data.results); })
+        .catch(() => setCurrentStyles([]));
+    }
+  }, [currentProductId]);
 
   React.useEffect(() => {
     if (currentStyles && currentStyles[0].style_id) {

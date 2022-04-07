@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { useActiveStyle } from '@Contexts/ActiveStyleId';
+import { useActiveStyle } from '@Contexts/StylesProvider';
 
 import ImageGallery from './ImageGallery';
 import ProductDetails from './ProductDetails';
