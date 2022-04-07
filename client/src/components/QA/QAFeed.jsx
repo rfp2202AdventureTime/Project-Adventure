@@ -21,6 +21,7 @@ export default function Feed({ submitSearchQuestionBody }) {
       totalQsToRender.push(filteredQData[i]);
     }
   }
+  console.log(totalQsToRender);
   return (
     <FeedSection>
       {totalQsToRender === [] ? 'Loading...' : totalQsToRender.map(
@@ -47,7 +48,7 @@ export default function Feed({ submitSearchQuestionBody }) {
         <MoreAnswersButton
           onClick={() => { console.log('Nice, you ask a really dumb question'); }}
         >
-          Ask a Question
+          Ask a Question +
         </MoreAnswersButton>
       </span>
 

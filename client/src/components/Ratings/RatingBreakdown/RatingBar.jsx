@@ -26,7 +26,6 @@ const RatingBarCONT = styled.div`
   // flex-direction: row;
   // align-content: flex-start;
 padding : 0 0.5rem 0.5rem 0.5rem ;
-
 `;
 
 const StarLink = styled.div`

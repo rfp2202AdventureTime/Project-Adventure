@@ -13,10 +13,12 @@ export default function QAItem({ question, allAnswers }) {
   const totalAsToRender = [];
   if (filteredAnswers.length > 0 && filteredAnswers[0].results.length > 0) {
     arrayOfAnswers = filteredAnswers[0].results;
-    for (let i = 0; i < numAsToRender; i += 1) {
+    for (let i = 0; i < Math.min(numAsToRender, arrayOfAnswers.length); i += 1) {
       totalAsToRender.push(arrayOfAnswers[i]);
     }
   }
+  console.log(totalAsToRender);
+  console.log(moreAsClicked && totalAsToRender[0] !== undefined);
   return (
     <QAItemSection>
       <QAItemFullQuestion>
@@ -46,7 +48,7 @@ export default function QAItem({ question, allAnswers }) {
           </span>
         </QAItemAnswer>
       ))}
-      {moreAsClicked ? (
+      {(moreAsClicked && totalAsToRender[0] !== undefined) ? (
         <span>
           <strong
             onClick={() => {
@@ -57,7 +59,7 @@ export default function QAItem({ question, allAnswers }) {
             Load More Answers
           </strong>
         </span>
-      ) : (
+      ) : ((!moreAsClicked) && totalAsToRender[0] !== undefined) ? (
         <span>
           <strong
             onClick={() => {
@@ -68,6 +70,8 @@ export default function QAItem({ question, allAnswers }) {
             Collapse Answers
           </strong>
         </span>
+      ) : (
+        <p1>* No Answers for this question *</p1>
       )}
       <br />
     </QAItemSection>

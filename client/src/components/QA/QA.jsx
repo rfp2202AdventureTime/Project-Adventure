@@ -13,7 +13,7 @@ export default function QA() {
     <QASection>
       <QADataProvider>
         <>
-          <h1>Questions and Answers</h1>
+          <h2>Questions and Answers</h2>
           <Search
             searchQuesitonBody={searchQuesitonBody}
             setSearchQuestionBody={setSearchQuestionBody}
