@@ -26,8 +26,11 @@ const RatingBarBlock = styled.div`
   align-items: baseline;
   padding : 0 0.5rem 0.5rem 0.5rem ;
   height: 1.5rem;
-  justify-content: space-between
+  justify-content: flex-end;
   width: 15rem;
+  gap: 1rem;
+  overflow: hidden;
+
 `;
 
 const StarLink = styled.div`
