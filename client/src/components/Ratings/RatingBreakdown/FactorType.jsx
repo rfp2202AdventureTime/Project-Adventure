@@ -10,11 +10,10 @@ export default function FactorList({ factor }) {
     Length: ['Runs short', 'perfect', 'Runs long'],
     Fit: ['Runs tight', 'Perfect', 'Runs big'],
   };
-  // console.log(factor);
 
   return (
-    factorSummary[factor].map((characteristic) => (
-      <div>
+    factorSummary[factor].map((characteristic, index) => (
+      <div key={factor.concat(index)}>
         {characteristic}
       </div>
     ))
