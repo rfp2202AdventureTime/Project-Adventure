@@ -17,8 +17,6 @@ export default function QAItem({ question, allAnswers }) {
       totalAsToRender.push(arrayOfAnswers[i]);
     }
   }
-  console.log(totalAsToRender);
-  console.log(moreAsClicked && totalAsToRender[0] !== undefined);
   return (
     <QAItemSection>
       <QAItemFullQuestion>

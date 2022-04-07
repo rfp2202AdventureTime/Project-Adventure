@@ -21,7 +21,6 @@ export default function Feed({ submitSearchQuestionBody }) {
       totalQsToRender.push(filteredQData[i]);
     }
   }
-  console.log(totalQsToRender);
   return (
     <FeedSection>
       {totalQsToRender === [] ? 'Loading...' : totalQsToRender.map(
