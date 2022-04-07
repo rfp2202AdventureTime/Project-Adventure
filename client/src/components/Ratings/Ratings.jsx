@@ -8,11 +8,11 @@ import { ReviewProvider } from '../../contexts/ProductReview';
 
 export default function Ratings() {
   const currentMeta = useMeta();
-  const ratingSection = (currentMeta && currentMeta.avgRating) ? <RatingBreakdown /> : <div />;
+  const ratingBreakdown = (currentMeta && currentMeta.avgRating) ? <RatingBreakdown /> : <div />;
 
   return (
     <RatingSection>
-      {ratingSection}
+      {ratingBreakdown}
       <ReviewProvider>
         <ReviewList />
       </ReviewProvider>
@@ -26,5 +26,5 @@ const RatingSection = styled.section`
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  padding: 0.5rem;
+  padding: 2rem;
 `;

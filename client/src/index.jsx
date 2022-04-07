@@ -13,7 +13,7 @@ import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
-  const defaultProductId = 65638;
+  const defaultProductId = 65635;
 
   return (
     <Theme>
@@ -37,7 +37,6 @@ function App() {
         <RatingProvider>
           <Ratings />
         </RatingProvider>
-
       </ProductIDContext.Provider>
     </Theme>
   );
