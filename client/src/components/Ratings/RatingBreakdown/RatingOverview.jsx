@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useMeta } from '@Contexts/ReviewContext';
+import { useMeta } from '@Contexts/ReviewMeta';
 import Star from '../../../Star';
 
 export default function RatingOverview() {
@@ -18,6 +18,12 @@ export default function RatingOverview() {
     const falseCT = Number(recommended.false);
     helpfulness = Math.round((trueCT / (trueCT + falseCT)) * 100);
   }
+  const helpfulBar = helpfulness ? (
+    <div>
+      {helpfulness}
+      % of reviews recommend this product
+    </div>
+  ) : '';
 
   return (
     <RatingOverviewContainer>
@@ -30,10 +36,7 @@ export default function RatingOverview() {
         </Score>
         <Star score={score} />
       </StarContainer>
-      <div>
-        {helpfulness}
-        % of reviews recommend this product
-      </div>
+      {helpfulBar}
     </RatingOverviewContainer>
   );
 }

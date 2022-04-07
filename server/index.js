@@ -17,13 +17,13 @@ app.use(express.json());
 
 // Get products use case:
 // Note: ******might not need to pre-pend localhost. Let us know.*******
-// axios.get('http://localhost:3000/products',(res, req) => {...})
+// axios.get('/products',(res, req) => {...})
 
 // REQUEST DOCUMENTATION
 // ------------------------------------------------------------------------------------------
 // To make request to middle server -->
 // provide entire route (incl. product_id, review_id, etc) after localhost:3000/xxxxx
-// Example: "http://localhost:3000/products/65623/" where "65623" is a dynamic url piece
+// Example: "/products/65623/" where "65623" is a dynamic url piece
 // Template literals might be considered the best way to handle dynamic request pieces
 // on the clientside
 // Be sure that you have configured your .env file to contain your personal GihHub token

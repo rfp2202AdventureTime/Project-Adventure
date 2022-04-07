@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useMeta } from '../../../contexts/ReviewContext';
+import { useMeta } from '../../../contexts/ReviewMeta';
 
 import RatingBar from './RatingBar';
 
@@ -23,7 +23,6 @@ export default function RatingList() {
     });
   }
 
-  // TODO: figure out how to show each star bar in one line
   return (
     <Ratings>
       {starList.map((item) => {
@@ -46,4 +45,5 @@ const Ratings = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  padding-right: 3rem;
 `;

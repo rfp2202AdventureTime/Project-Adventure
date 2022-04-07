@@ -4,28 +4,32 @@ import PropTypes from 'prop-types';
 
 export default function RatingBar({ scorePerct, id }) {
   return (
-    <RatingBarCONT>
+    <RatingBarBlock>
       <StarLink>
         {`${id} Star`}
       </StarLink>
-      <GreyBar className="w3-light-grey">
+      <GreyBar>
         <GreenBar
-          className="w3-green"
           width={scorePerct}
         />
       </GreyBar>
-    </RatingBarCONT>
+    </RatingBarBlock>
 
   );
 }
 
 // Style components
 
-const RatingBarCONT = styled.div`
-  // display: flex;
-  // flex-direction: row;
-  // align-content: flex-start;
-padding : 0 0.5rem 0.5rem 0.5rem ;
+const RatingBarBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  padding : 0 0.5rem 0.5rem 0.5rem ;
+  height: 1.5rem;
+  justify-content: flex-end;
+  width: 15rem;
+  gap: 1rem;
+  overflow: hidden;
 
 `;
 
@@ -33,10 +37,24 @@ const StarLink = styled.div`
 `;
 
 const GreyBar = styled.div`
+  left: 1.3rem;
+  position: relative;
+  vertical-align: middle;
+  display: inline-block;
+  background-color: ${(props) => props.theme.colors.background};
+  overflow: hidden;
+  width: 10rem;
+  height: 0.5rem;
 `;
 
 const GreenBar = styled.div`
-  height: 1rem;
+  height: 0.5rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: #4CAF50;
   width: ${(props) => props.width};
 `;
 

@@ -26,7 +26,7 @@ let outfitList = 0;
 
 function clickCheck(e) {
   outfitList += 1;
-  console.log(outfitList, 'this is outfitlist');
+  // console.log(outfitList, 'this is outfitlist');
 }
 
 export default function Outfit() {

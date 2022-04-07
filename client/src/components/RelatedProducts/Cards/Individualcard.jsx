@@ -37,7 +37,7 @@ const IndCard = styled.div`
 `;
 
 const CardText = styled.div`
-  align-item: left;
+  padding-left: 1px;
 `;
 
 export {

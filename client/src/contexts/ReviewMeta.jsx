@@ -3,26 +3,27 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { ProductIDContext } from './ProductIDContext';
 
-const ReviewContext = React.createContext();
-ReviewContext.displayName = 'RatingData';
+const RatingContext = React.createContext();
+RatingContext.displayName = 'RatingData';
 
+// custome hook to return useContext
 export function useMeta() {
-  return useContext(ReviewContext);
+  return useContext(RatingContext);
 }
 
 // Context has reviewMeta received from API plus converted avgRating and total rating count
-export function ReviewProvider({ children }) {
+export function RatingProvider({ children }) {
   const productId = useContext(ProductIDContext);
   const [reviewMeta, setReviewMeta] = useState(null);
 
   function convertRating(data) {
-    let totalRating;
+    let totalRating = 0;
     let avgRating = 0;
     let totalCT = null;
     const { ratings } = data;
     Object.keys(ratings).forEach((key) => {
       const currentCT = Number(ratings[key]);
-      totalRating = key * currentCT;
+      totalRating += key * currentCT;
       totalCT += currentCT;
     });
     avgRating = Math.round((totalRating / totalCT) * 10) / 10;
@@ -33,7 +34,7 @@ export function ReviewProvider({ children }) {
     let newData;
     axios({
       method: 'get',
-      url: 'http://localhost:3000/reviews/meta',
+      url: '/reviews/meta',
       params: {
         product_id: productId,
       },
@@ -49,12 +50,12 @@ export function ReviewProvider({ children }) {
   }, [productId]);
 
   return (
-    <ReviewContext.Provider value={reviewMeta}>
+    <RatingContext.Provider value={reviewMeta}>
       { children }
-    </ReviewContext.Provider>
+    </RatingContext.Provider>
   );
 }
 
-ReviewProvider.propTypes = {
+RatingProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };

@@ -2,59 +2,74 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import GalleryThumbnail from './GalleryThumbnail';
-
+// TODO: Refactor to pull `view` dependency out and into the Image Gallery.
 function GalleryCarousel({
   photos,
   activeIndex,
   handleClick,
-  viewport,
   view,
 }) {
-  // const [viewport, setViewport] = useState(0);
+  // Determines the maximum of items to display in the carousel.
+  const carouselSize = 4;
 
-  // if (viewport > (carouselSize - mainImageIndex - 2)) {
-  //   setViewport(viewport + 1);
-  // }
-  // Carousel viewport
-  const size = 4;
+  // When the index of the actively selected photo changes,
+  // check to see if it's visibly in range of the carousel's viewport.
+  // If it isn't, adjust the viewport so that it is.
+  const [viewportPosition, setViewportPosition] = React.useState(0);
+  React.useEffect(() => {
+    const visiblePhotos = { min: viewportPosition, max: viewportPosition + carouselSize };
+    if (activeIndex >= visiblePhotos.max) setViewportPosition(activeIndex - carouselSize + 1);
+    if (activeIndex < visiblePhotos.min) setViewportPosition(activeIndex);
+  }, [activeIndex]);
+
+  // The up and down arrows should only be visible if there
+  // are more photos in the carousel's viewport in that direction.
+  const canScrollViewportUp = viewportPosition > 0;
+  const canSrollViewportDown = viewportPosition <= (photos.length - carouselSize - 1);
 
   return (
-    <Carousel className={view}>
-      <UpArrow
-        visible={activeIndex > 0}
-        // onClick={handleUpClick}
-        onClick={() => handleClick('up')}
-      >
-        UP
-      </UpArrow>
-      <CarouselViewport size={size}>
-        <CarouselItems viewport={viewport}>
+    <Carousel size={carouselSize} className={view}>
+      <UpArrow visible={canScrollViewportUp} onClick={() => handleClick('prev')} />
+      <CarouselViewport size={carouselSize}>
+        <CarouselItems viewportPosition={viewportPosition}>
           {photos.map((photo, i) => (
-            <GalleryThumbnail
-              // eslint-disable-next-line react/no-array-index-key
-              key={i}
-              isSelected={(activeIndex === i)}
-              url={photo.url}
+            <Thumbnail
+              key={photo.thumbnail_url}
+              url={photo.thumbnail_url}
+              className={(activeIndex === i) && 'selected'}
+              onClick={() => handleClick(i)}
             />
           ))}
         </CarouselItems>
       </CarouselViewport>
-      <DownArrow
-        visible={activeIndex < (photos.length - 1)}
-        // onClick={handleDownClick}
-        onClick={() => handleClick('down')}
-      >
-        DOWN
-      </DownArrow>
+      <DownArrow visible={canSrollViewportDown} onClick={() => handleClick('next')} />
     </Carousel>
   );
 }
 
+const Thumbnail = styled.span`
+  background: url(${(props) => props.url});
+  height: 70px;
+  width: 70px;
+  display: inline-block;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid ${(props) => props.theme.colors.secondary};
+  margin: 5px 0;
+  &:hover {
+    cursor: pointer;
+  }
+  position: relative;
+  &.selected {
+    background: red;
+  }
+`;
+
 const Arrow = styled.div`
-  text-align: center;
+  display: inline-block;
+  width: 20px;
   height: 20px;
-  background: ${(props) => props.theme.colors.primary};
+  background: red;
   ${(props) => (!props.visible && 'visibility: hidden;')}
   &:hover {
     cursor: pointer;
@@ -62,23 +77,23 @@ const Arrow = styled.div`
 `;
 
 const UpArrow = styled(Arrow)`
-
 `;
 
 const DownArrow = styled(Arrow)`
-
 `;
 
 const CarouselItems = styled.div`
   width: 100%;
-  transform: translate(0, -${((props) => props.viewport * 85)}px);
+  transform: translate(0, -${((props) => props.viewportPosition * 85)}px);
 `;
 
 const Carousel = styled.div`
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 30px;
   display: inline-block;
+  text-align: center;
   width: 72px;
   &.expanded {
     visibility: hidden;
@@ -97,13 +112,11 @@ GalleryCarousel.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   activeIndex: PropTypes.number,
   handleClick: PropTypes.func.isRequired,
-  viewport: PropTypes.number,
   view: PropTypes.string,
 };
 
 GalleryCarousel.defaultProps = {
   activeIndex: 0,
-  viewport: 0,
   view: 'default',
 };
 

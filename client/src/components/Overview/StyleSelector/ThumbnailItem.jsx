@@ -39,7 +39,7 @@ const Thumbnail = styled.span`
     left: 75%;
     width: 25%;
     height: 25%;
-    background: ${(props) => props.theme.colors.light};
+    background: red;
     border: 1px solid ${(props) => props.theme.colors.secondary};
   }
 `;
