@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useMeta } from '../../contexts/ReviewMeta';
-
 import RatingBreakdown from './RatingBreakdown';
 import ReviewList from './ReviewList';
-import { ReviewProvider } from '../../contexts/ProductReview';
 
 export default function Ratings() {
   const currentMeta = useMeta();
@@ -13,9 +11,7 @@ export default function Ratings() {
   return (
     <RatingSection>
       {ratingBreakdown}
-      <ReviewProvider>
-        <ReviewList />
-      </ReviewProvider>
+      <ReviewList />
     </RatingSection>
   );
 }
@@ -25,6 +21,5 @@ const RatingSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
   display: flex;
   flex-direction: row;
-  gap: 1rem;
-  padding: 2rem;
+  padding: 2rem 0rem 4rem 1rem;
 `;

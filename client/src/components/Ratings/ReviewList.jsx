@@ -1,35 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import ReviewTile from './Review/ReviewTile';
-import { useReviews } from '../../contexts/ProductReview';
 import { useMeta } from '../../contexts/ReviewMeta';
+import { ProductIDContext } from '../../contexts/ProductIDContext';
 
 export default function ReviewList() {
-  const reviews = useReviews().results;
+  let totalCT;
+  const productId = useContext(ProductIDContext);
+  const reviewMeta = useMeta();
+  const [prevCount, setPrevCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [reviewFeed, setReviewFeed] = useState([]
+  );
 
-  // const [reviewNum, setReviewNum] = useState(0);
-  // const { totalCT } = useMeta();
-  // console.log(reviews);
+  const getReview = () => (
+    axios({
+      method: 'get',
+      url: '/reviews',
+      params: {
+        product_id: productId,
+        count: 2,
+        page,
+      },
+    }));
 
-  let reviewCollection = [];
-  if (reviews) {
-    // render reviewTiles
-    reviewCollection = reviews.map(
-      (review) => (
-        <ReviewTile
-          key={review.review_id}
-          review={review}
-        />
-      ),
-    );
-    // control review number
+  // TODO: check to see if there's memory leakage on unmounted components. Unsure why I didn't need a loading varable here. Will have to investigate
+  useEffect(() => {
+    getReview()
+      .then(({ data }) => {
+        const review = data.results;
+        setPrevCount(review.length);
+        setReviewFeed(reviewFeed.concat(review));
+      })
+      .catch((err) => console.log(err));
+  }, [page]);
 
-  }
+  const fetchFeed = () => {
+    totalCT = reviewMeta?.totalCT;
+    if(prevCount < totalCT) {
+      setPage(page + 1);
+    }
+  };
+
   return (
     <ReviewContainer>
-      {reviewCollection}
+    {reviewFeed.map(
+      (review) => (
+        <ReviewTile
+        key={review.review_id}
+        review={review}
+        />
+        ),
+      )}
       <ButtonBlock>
-        <Botton> MORE REVIEWS</Botton>
+        <Botton onClick={fetchFeed}> MORE REVIEWS</Botton>
         <Botton> ADD A REVIEW +</Botton>
       </ButtonBlock>
     </ReviewContainer>
@@ -40,7 +65,10 @@ export default function ReviewList() {
 const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: auto;
+  height: 45rem;
 `;
+
 const ButtonBlock = styled.div`
   display: flex;
   flex-direction: row;
