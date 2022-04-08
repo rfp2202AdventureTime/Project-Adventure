@@ -32,16 +32,18 @@ export default function Feed({ searchQuesitonBody }) {
   }
 
   return (
-    <FeedSection>
-      {tempTotalQsToRender === [] ? 'Loading...' : tempTotalQsToRender.map(
-        (question) => (
-          <QAItem
-            key={question.question_id}
-            question={question}
-            allAnswers={answerData}
-          />
-        ),
-      )}
+    <>
+      <FeedSection>
+        {tempTotalQsToRender === [] ? 'Loading...' : tempTotalQsToRender.map(
+          (question) => (
+            <QAItem
+              key={question.question_id}
+              question={question}
+              allAnswers={answerData}
+            />
+          ),
+        )}
+      </FeedSection>
       <ButtonBlock>
         {(lengthOfFeed > numQsToRender) && (
           <MoreAnswersButton
@@ -61,8 +63,7 @@ export default function Feed({ searchQuesitonBody }) {
           Ask a Question +
         </MoreAnswersButton>
       </ButtonBlock>
-
-    </FeedSection>
+    </>
   );
 }
 
@@ -70,6 +71,8 @@ const FeedSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
   display: flex;
   flex-direction: column;
+  height: 500px;
+  overflow: scroll;
 `;
 
 const MoreAnswersButton = styled.button`

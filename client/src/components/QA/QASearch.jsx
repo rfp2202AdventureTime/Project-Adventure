@@ -6,15 +6,10 @@ import PropTypes from 'prop-types';
 export default function Search({
   setSearchQuestionBody,
   searchQuesitonBody,
-  setsubmitSearchQuestionBody,
 }) {
   return (
     <SearchSection>
-      <form onSubmit={((e) => {
-        e.preventDefault();
-        setsubmitSearchQuestionBody(searchQuesitonBody);
-      })}
-      >
+      <form>
         <SearchBox
           type="text"
           name="QASearchText"
@@ -23,7 +18,6 @@ export default function Search({
           id="QASearchText"
           onChange={(e) => { setSearchQuestionBody(e.target.value); }}
         />
-        <input type="submit" value="Submit" />
       </form>
     </SearchSection>
   );
@@ -51,5 +45,4 @@ const SearchBox = styled.input`
 Search.propTypes = {
   setSearchQuestionBody: PropTypes.func.isRequired,
   searchQuesitonBody: PropTypes.string.isRequired,
-  setsubmitSearchQuestionBody: PropTypes.func.isRequired,
 };
