@@ -12,7 +12,8 @@ export function useRelated() {
 }
 
 export function RelatedProvider({ children }) {
-  const [related, setProductInfo] = useState();
+  const [related, setRelatedInfo] = useState();
+  const [relatedInformation, setRelatedInformation] = useState([]);
   const [styles, setStyles] = useState();
   const productId = useContext(ProductIDContext);
 
@@ -22,7 +23,7 @@ export function RelatedProvider({ children }) {
       url: `products/${productId}/related`,
     })
       .then(({ data }) => {
-        setProductInfo(data);
+        setRelatedInfo(data);
       })
       .catch((err) => console.log(err));
   }, [productId]);
@@ -38,8 +39,21 @@ export function RelatedProvider({ children }) {
       .catch((err) => console.log(err));
   }, [productId]);
 
+  // useEffect(() => {
+  //   related.forEach((number) => {
+  //     axios({
+  //       method: 'get',
+  //       url: `products/${number}`,
+  //     })
+  //     .then(({ data }) => {
+  //       setRelatedInformation.push(data);
+  //     })
+  //     .catch((err) => console.log('something broke!!', err));
+  //   });
+  // }, []);
+
   return (
-    <RelatedContext.Provider value={[related, setProductInfo]} value2={[styles, setStyles]}>
+    <RelatedContext.Provider value={related}>
       { children }
     </RelatedContext.Provider>
   );

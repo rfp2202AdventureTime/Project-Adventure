@@ -4,22 +4,6 @@ import styled from 'styled-components';
 import Comparison from './Comparison';
 import { IndCard } from './Individualcard';
 
-const FavButton = styled.button`
-  color: black;
-  position: relative;
-  float: right;
-  background-color: transparent;
-  border: transparent;
-`;
-
-const TestingModal = styled.section`
-  display: ${(props) => (props.show ? 'fixed' : 'none')};
-  position: inline;
-  background: green;
-  z-index: 500;
-  border-style: 10px solid;
-`;
-
 // link should take it to the product page (productID)
 // src should image of related products
 function ProductImg({ image }) {
@@ -31,14 +15,12 @@ function ProductImg({ image }) {
   }
 
   return (
-    <IndCard>
 
       <div id="parent">
         <TestingModal show={showModal}>
           <Comparison />
         </TestingModal>
-        {/* <FavButton as="a" href="http://bing.com">Compare</FavButton> */}
-        <FavButton onClick={() => handleClick()}>Compare</FavButton>
+        <CompareButton onClick={() => handleClick()}>Compare</CompareButton>
         <a href="http://google.com">
           <img
             src={productThumbnail}
@@ -49,9 +31,22 @@ function ProductImg({ image }) {
         </a>
 
       </div>
-    </IndCard>
-
   );
 }
 
+const CompareButton = styled.button`
+  color: black;
+  position: relative;
+  float: right;
+  background-color: transparent;
+  border: transparent;
+`;
+
+const TestingModal = styled.section`
+  display: ${(props) => (props.show ? 'block' : 'none')};
+  position: relative;
+  background: grey;
+  z-index: 500;
+  border-style: 10px solid;
+`;
 export default ProductImg;

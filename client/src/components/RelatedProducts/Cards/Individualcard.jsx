@@ -2,14 +2,20 @@ import React, {
   createContext, useContext, useEffect, useState,
 } from 'react';
 import styled from 'styled-components';
-
+import { useRelated, RelatedProvider } from '../RelatedContext';
+import { useTest } from './testingContext';
 
 // should retrieve all related products from initial product page
 // map each individual card with all the information
 
-export default function Individualcard({ product }) {
+function Individualcard({ product }) {
+  const sample = useTest();
+
+  console.log(sample, 'this is testcontext');
+
   return (
     <div>
+
       <CardText>
         <p>{product.category}</p>
         <p>{product.name}</p>
