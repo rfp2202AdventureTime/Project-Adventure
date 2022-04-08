@@ -3,36 +3,30 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { useRelated, RelatedProvider } from '../RelatedContext';
+import sampleRelatedThumbnails from './sampleRelatedThumbnails';
 import { useTest } from './testingContext';
 
 // should retrieve all related products from initial product page
 // map each individual card with all the information
 
 function Individualcard({ product }) {
-  const sample = useTest();
-  const information = [];
-  // console.log(sample, 'this is testing context sample');
-  if (!sample.data) {
-    console.log('loading');
-  } else {
-    console.log(sample, 'this is test context');
-    sample.data.map((item) => {
-      information.push(item.data);
-    });
-    console.log(information, 'this is information');
-  }
+
+  // console.log(thumbnail, 'IND Product');
+
   return (
     <div>
-
-      <CardText>
-        <p>{product.category}</p>
-        <p>{product.name}</p>
-        <p>
-          $
-          {product.default_price}
-        </p>
-        <p>CSS rating with stars</p>
-      </CardText>
+      <IndCard>
+        <CardText>
+          <p>TEST</p>
+          <p>{product.category}</p>
+          <p>{product.name}</p>
+          <p>
+            $
+            {product.default_price}
+          </p>
+          <p>CSS rating with stars</p>
+        </CardText>
+      </IndCard>
     </div>
   );
 }
@@ -58,3 +52,17 @@ export {
   Individualcard,
   IndCard,
 };
+
+
+//line 12
+// const sample = useTest();
+//   const information = [];
+// if (!sample.data) {
+//   console.log('loading');
+// } else {
+//   console.log(sample, 'this is test context');
+//   sample.data.map((item) => {
+//     information.push(item.data);
+//   });
+//   console.log(information, 'this is information');
+// }

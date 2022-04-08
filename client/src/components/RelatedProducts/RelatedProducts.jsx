@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Outfit from './Outfit';
 import { RelatedProvider } from './RelatedContext';
+import { TestProvider } from './Cards/testingContext';
+import { ThumbnailProvider } from './Cards/thumbnailContext';
 import AllCards from './Cards/AllCards';
 
 function RelatedProducts() {
@@ -10,10 +12,16 @@ function RelatedProducts() {
 
       <h1>Related Products</h1>
       <RelatedProvider>
+        <TestProvider>
+          <ThumbnailProvider>
 
-        <AllCards />
 
+            <AllCards />
+
+          </ThumbnailProvider>
+        </TestProvider>
       </RelatedProvider>
+
       <h1>Your Outfit</h1>
       <Layout>
         <Outfit />

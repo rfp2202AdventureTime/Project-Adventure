@@ -4,15 +4,15 @@ import {
 import axios from 'axios';
 import { useRelated } from '../RelatedContext';
 
-const TestContext = createContext();
+const ThumbnailContext = createContext();
 
-export function useTest() {
-  return useContext(TestContext);
+export function useThumbnail() {
+  return useContext(ThumbnailContext);
 }
-export function TestProvider({ children }) {
+export function ThumbnailProvider({ children }) {
   const related = useRelated();
 
-  const [relatedInformation, setRelatedInformation] = useState([]);
+  const [thumbnailInformation, setThumbnailInformation] = useState([]);
 
   useEffect(() => {
     if (!related) {
@@ -20,20 +20,21 @@ export function TestProvider({ children }) {
     } else {
       Promise.all(related.map((number) => axios({
         method: 'get',
-        url: `products/${number}`,
+        url: `products/${number}/styles`,
       })))
         .then((data) => {
-          setRelatedInformation({ data });
+          // console.log({ data }, 'this is DATA');
+          setThumbnailInformation({ data });
         })
         .catch((err) => console.log('there was an ERROR', err));
     }
   }, [related]);
 
   return (
-    <TestContext.Provider value={relatedInformation}>
+    <ThumbnailContext.Provider value={thumbnailInformation}>
       { children }
-    </TestContext.Provider>
+    </ThumbnailContext.Provider>
   );
 }
 
-export default TestContext;
+export default ThumbnailContext;
