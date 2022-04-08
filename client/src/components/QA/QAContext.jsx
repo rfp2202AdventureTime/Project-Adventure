@@ -26,7 +26,6 @@ export function QADataProvider({ children }) {
       },
     })
       .then(({ data }) => {
-        console.log(data.results);
         setQData(data.results);
         data.results.forEach((question) => {
           axios({

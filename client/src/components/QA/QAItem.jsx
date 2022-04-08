@@ -17,8 +17,18 @@ export default function QAItem({ question, allAnswers }) {
   );
   let arrayOfAnswers;
   const totalAsToRender = [];
+  const compareAnswersForSeller = (a, b) => {
+    if (a.answerer_name === 'Seller' && b.answerer_name !== 'Seller') {
+      return -1;
+    } if (a.answerer_name !== 'Seller' && b.answerer_name === 'Seller') {
+      return 1;
+    } return 0;
+  };
+
   if (filteredAnswers.length > 0 && filteredAnswers[0].results.length > 0) {
+    console.log(filteredAnswers[0].results);
     arrayOfAnswers = filteredAnswers[0].results;
+    arrayOfAnswers.sort(compareAnswersForSeller);
     for (let i = 0; i < Math.min(numAsToRender, arrayOfAnswers.length); i += 1) {
       totalAsToRender.push(arrayOfAnswers[i]);
     }
