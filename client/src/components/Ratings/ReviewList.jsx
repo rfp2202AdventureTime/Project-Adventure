@@ -45,12 +45,12 @@ export default function ReviewList() {
 
   return (
     <ReviewContainer>
-      {reviewFeed.map(
-        (review) => (
-          <ReviewTile
-            key={review.review_id}
-            review={review}
-          />
+    {reviewFeed.map(
+      (review) => (
+        <ReviewTile
+        key={review.review_id}
+        review={review}
+        />
         ),
       )}
       <ButtonBlock>
@@ -65,7 +65,10 @@ export default function ReviewList() {
 const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: auto;
+  height: 45rem;
 `;
+
 const ButtonBlock = styled.div`
   display: flex;
   flex-direction: row;

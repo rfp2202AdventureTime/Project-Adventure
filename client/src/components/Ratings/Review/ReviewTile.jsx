@@ -53,7 +53,6 @@ const ReviewBlock = styled.div`
   display: flex;
   flex-direction: column;
   padding:1rem;
-  min-width:950px;
   border-bottom: 0.2rem dotted rgba(221, 235, 223);
 `;
 const StarBlock = styled.div`
