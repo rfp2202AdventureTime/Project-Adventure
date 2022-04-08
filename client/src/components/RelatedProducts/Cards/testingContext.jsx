@@ -2,7 +2,7 @@ import {
   React, useContext, useState, useEffect, createContext,
 } from 'react';
 import axios from 'axios';
-import { useRelated, RelatedProvider, RelatedContext } from '../RelatedContext';
+import { useRelated } from '../RelatedContext';
 
 const TestContext = createContext();
 
@@ -12,22 +12,22 @@ export function useTest() {
 export function TestProvider({ children }) {
   const related = useRelated();
 
-  const [relatedInformation, setRelatedInformation] = useState();
-
+  const [relatedInformation, setRelatedInformation] = useState([]);
   // console.log(related, 'this is useRelated');
+  // let prodArray = [];
 
   useEffect(() => {
     if (!related) {
       console.log('loading information');
     } else {
-      related.map((number) => axios({
+      Promise.all(related.map((number) => axios({
         method: 'get',
         url: `products/${number}`,
-      })
-        .then(({ data }) => {
-          setRelatedInformation(data);
+      })))
+        .then((data) => {
+          setRelatedInformation({ data });
         })
-        .catch((err) => console.log('there was an ERROR')));
+        .catch((err) => console.log('there was an ERROR', err));
     }
   }, [related]);
 
