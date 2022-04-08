@@ -1,19 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
-import CarouselNavigation from './CarouselNavigation';
-import DotNavigation from './DotNavigation';
+import ZoomableImage from './ZoomableImage';
+import Carousel from './Carousel';
+import DotNav from './DotNav';
 
 function ImageGallery({ children, photos }) {
-  // Views can be ['default', 'expanded', 'zoom']
+  // Views can be ['default', 'expanded']
   const [view, setView] = useState('default');
   const [imgIdx, setImgIdx] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
 
-  const zoomBox = useRef();
-  const zoomImg = useRef();
-
+  const handleViewChange = (e, newView) => {
+    if (e.currentTarget.firstChild === e.target || e.currentTarget === e.target) {
+      setView(newView);
+    }
+  };
   const handleImgIdxChange = (idx) => {
     let newIdx = idx;
     if (idx === 'prev') newIdx = imgIdx - 1;
@@ -21,78 +23,45 @@ function ImageGallery({ children, photos }) {
     if (photos[newIdx]) setImgIdx(newIdx);
   };
 
-  // Ensure the hovered area doesn't include child elements.
-  const handleHover = (e) => {
-    if (e.target === e.currentTarget) setIsHovered(!isHovered);
-  };
-
-  const handleZoomPosition = (e, override) => {
-    // An optional override forces the function to run outside of zoom view.
-    if (override === 'reset') {
-      zoomImg.current.style.backgroundPosition = '50% 50%';
-    } else if (view === 'zoom' || override === 'zoom') {
-      const bounds = zoomBox.current.getBoundingClientRect();
-      const xPercent = ((e.clientX - bounds.left) / (bounds.right - bounds.left)) * 100;
-      const yPercent = ((e.clientY - bounds.top) / (bounds.bottom - bounds.top)) * 100;
-      zoomImg.current.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
-    }
-  };
-
-  const handleViewChange = (e, newView) => {
-    if (e.target === e.currentTarget) {
-      // Clicking into expanded view twice also triggers zoom view.
-      if (view === 'expanded' && newView === 'expanded') {
-        setView('zoom');
-        handleZoomPosition(e, 'zoom');
-      } else {
-        handleZoomPosition(e, 'reset');
-        setView(newView);
-      }
-    }
-  };
+  const leftVisibility = imgIdx > 0;
+  const rightVisibility = photos && imgIdx < (photos.length - 1);
+  const navVisibile = photos && photos.length > 1;
+  const size = photos && photos.length;
+  const isZoomDisabled = view === 'default';
 
   return (
 
-    <ExpandedViewport ref={zoomBox}>
+    <ExpandedViewport>
       <DefaultViewport>
-        <Gallery className={view}>
+        <Gallery className={view} onClick={(e) => handleViewChange(e, 'expanded')}>
+
           {photos && (
-            <MainImage
-              ref={zoomImg}
-              url={photos[imgIdx].url}
-              className={`${view} ${isHovered ? 'hover' : ''}`}
-              onClick={(e) => handleViewChange(e, 'expanded')}
-              onMouseMove={(e) => handleZoomPosition(e)}
-              onMouseOver={(e) => handleHover(e)}
-              onMouseOut={(e) => handleHover(e)}
-            >
-              <LeftArrow visible={imgIdx > 0} onClick={() => handleImgIdxChange('prev')} />
-              <RightArrow visible={imgIdx < (photos.length - 1)} onClick={() => handleImgIdxChange('next')} />
-              <ExitButton className={view} onClick={(e) => handleViewChange(e, 'default')} />
+            <>
+              <ZoomableImage url={photos[imgIdx].url} disabled={isZoomDisabled} />
 
-              {photos.length > 1 && (
-                <CarouselViewer className={view}>
-                  <CarouselNavigation
-                    imgIdx={imgIdx}
-                    photos={photos}
-                    handleImgIdxChange={handleImgIdxChange}
-                  />
-                </CarouselViewer>
+              <LeftArrow visible={leftVisibility} onClick={() => handleImgIdxChange('prev')} />
+              <RightArrow visible={rightVisibility} onClick={() => handleImgIdxChange('next')} />
+
+              {navVisibile && (
+              <CarouselPresenter className={view}>
+                <Carousel imgIdx={imgIdx} photos={photos} handleImgIdxChange={handleImgIdxChange} />
+              </CarouselPresenter>
               )}
 
-              {photos.length > 1 && (
-                <DotNavigation
-                  activeIndex={imgIdx}
-                  numItems={photos.length}
-                  handleClick={handleImgIdxChange}
-                  view={view}
-                />
+              {navVisibile && (
+              <DotNavPresenter className={view}>
+                <DotNav imgIdx={imgIdx} size={size} handleClick={handleImgIdxChange} />
+              </DotNavPresenter>
               )}
-            </MainImage>
+            </>
           )}
+
+          <ExitButton className={view} onClick={(e) => handleViewChange(e, 'default')} />
         </Gallery>
       </DefaultViewport>
-      <GalleryAside>{children}</GalleryAside>
+      <GalleryAside>
+        {children}
+      </GalleryAside>
     </ExpandedViewport>
   );
 }
@@ -110,18 +79,7 @@ const VisibleInExpanded = css`
   }
 `;
 
-const GalleryAside = styled.div`
-  background-color:${(props) => props.theme.colors.light};
-  width: 480px;
-  padding: 10px 30px;
-  color: ${(props) => props.theme.colors.secondary};
-`;
-
-const CarouselViewer = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 30px;
-  transform: translate(0, -50%);
+const VisibleInDefault = css`
   &.expanded, &.zoom {
     visibility: hidden;
     opacity: 0;
@@ -132,6 +90,29 @@ const CarouselViewer = styled.div`
     visibility: visible;
     transition: opacity 0.5s linear;
   }
+`;
+
+const DotNavPresenter = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  ${VisibleInExpanded}
+`;
+
+const CarouselPresenter = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  transform: translate(0, -50%);
+  ${VisibleInDefault}
+`;
+
+const GalleryAside = styled.div`
+  background-color:${(props) => props.theme.colors.light};
+  width: 480px;
+  padding: 10px 30px;
+  color: ${(props) => props.theme.colors.secondary};
 `;
 
 const ExpandedViewport = styled.section`
@@ -149,14 +130,17 @@ const DefaultViewport = styled.div`
 const Gallery = styled.div`
   background-color:${(props) => props.theme.colors.background};
   height: 100%;
-  &.expanded, &.zoom {
+  &.expanded {
     width: ${() => document.getElementById('main').offsetWidth}px;
     transition: width 1s ease-in-out;
+    :hover { cursor: crosshair; }
   }
   &.default {
     width: 100%;
     transition: width 1s ease-in-out;
+    &:hover { cursor: zoom-in; }
   }
+  position: relative;
 `;
 
 const Arrow = styled.span`
@@ -176,20 +160,6 @@ const LeftArrow = styled(Arrow)`
 
 const RightArrow = styled(Arrow)`
   right: 0px;
-`;
-
-const MainImage = styled.figure`
-  background: url(${(props) => props.url});
-  height: 100%;
-  width: 100%;
-  background-size: auto 100%;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  position: relative;
-  &.hover.default { cursor: zoom-in; }
-  &.hover.expanded { cursor: crosshair; }
-  &.hover.zoom { cursor: zoom-out; }
-  &.zoom { background-size: auto 250%; }
 `;
 
 const ExitButton = styled.span`

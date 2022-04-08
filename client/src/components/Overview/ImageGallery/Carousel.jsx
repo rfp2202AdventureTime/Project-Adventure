@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -11,10 +11,10 @@ const CONFIG = {
   spacing: 5,
 };
 
-function CarouselNavigation({ photos, imgIdx, handleImgIdxChange }) {
-  const [viewportIdx, setViewportIdx] = React.useState(0);
+function Carousel({ photos, imgIdx, handleImgIdxChange }) {
+  const [viewportIdx, setViewportIdx] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const viewport = { min: viewportIdx, max: viewportIdx + CONFIG.size };
     if (imgIdx >= viewport.max) setViewportIdx(imgIdx - CONFIG.size + 1);
     if (imgIdx < viewport.min) setViewportIdx(imgIdx);
@@ -22,9 +22,11 @@ function CarouselNavigation({ photos, imgIdx, handleImgIdxChange }) {
 
   const upVisibility = viewportIdx > 0;
   const downVisibility = viewportIdx <= (photos.length - CONFIG.size - 1);
+  const itemVisibility = (i) => (i - (viewportIdx)) * (i - (viewportIdx + CONFIG.size)) <= 0;
+  const isSelected = (i) => (imgIdx === i);
 
   return (
-    <Carousel size={CONFIG.size}>
+    <CarouselContainer size={CONFIG.size}>
       <UpArrow visible={upVisibility} onClick={() => handleImgIdxChange('prev')} />
       <CarouselViewport>
         <CarouselItems viewportIdx={viewportIdx}>
@@ -32,8 +34,8 @@ function CarouselNavigation({ photos, imgIdx, handleImgIdxChange }) {
             <CarouselItem
               key={i}
               onClick={() => handleImgIdxChange(i)}
-              visible={(i - (viewportIdx)) * (i - (viewportIdx + CONFIG.size)) <= 0}
-              className={(imgIdx === i) && 'selected'}
+              visible={itemVisibility(i)}
+              className={isSelected(i) && 'selected'}
             >
               <Thumbnail url={photo.thumbnail_url} />
             </CarouselItem>
@@ -41,11 +43,11 @@ function CarouselNavigation({ photos, imgIdx, handleImgIdxChange }) {
         </CarouselItems>
       </CarouselViewport>
       <DownArrow visible={downVisibility} onClick={() => handleImgIdxChange('next')} />
-    </Carousel>
+    </CarouselContainer>
   );
 }
 
-const Carousel = styled.nav`
+const CarouselContainer = styled.nav`
   position: relative;
   width: ${CONFIG.width}px;
   height: ${(CONFIG.size * (CONFIG.itemHeight + CONFIG.spacing) - CONFIG.spacing)}px;
@@ -102,14 +104,14 @@ const DownArrow = styled(Arrow)`
   top: ${(CONFIG.size * (CONFIG.itemHeight + CONFIG.spacing) - CONFIG.spacing) + 10}px;
 `;
 
-CarouselNavigation.propTypes = {
+Carousel.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   imgIdx: PropTypes.number,
   handleImgIdxChange: PropTypes.func.isRequired,
 };
 
-CarouselNavigation.defaultProps = {
+Carousel.defaultProps = {
   imgIdx: 0,
 };
 
-export default CarouselNavigation;
+export default Carousel;
