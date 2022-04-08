@@ -9,46 +9,50 @@ export default function ReviewList() {
   let totalCT;
   const productId = useContext(ProductIDContext);
   const reviewMeta = useMeta();
-  const [reviews, setReviews] = useState();
-  const [count, setCount] = useState(1);
+  const [prevCount, setPrevCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [reviewFeed, setReviewFeed] = useState([]
+  );
 
+  const getReview = () => (
+    axios({
+      method: 'get',
+      url: '/reviews',
+      params: {
+        product_id: productId,
+        count: 2,
+        page,
+      },
+    }));
+
+  // TODO: check to see if there's memory leakage on unmounted components. Unsure why I didn't need a loading varable here. Will have to investigate
   useEffect(() => {
-    if (reviewMeta) {
-      totalCT = reviewMeta.totalCT;
-      axios({
-        method: 'get',
-        url: '/reviews',
-        params: {
-          product_id: productId,
-          count: totalCT,
-        },
+    getReview()
+      .then(({ data }) => {
+        const review = data.results;
+        setPrevCount(review.length);
+        setReviewFeed(reviewFeed.concat(review));
       })
-        .then(({ data }) => {
-          console.log(data);
-          setReviews(data);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [productId, reviewMeta]);
+      .catch((err) => console.log(err));
+  }, [page]);
 
-  // change count when clicked
   const fetchFeed = () => {
-    if (reviews && reviewMeta) {
-      totalCT = reviewMeta.totalCT;
-      setCount(Math.min(totalCT, count + 2));
+    totalCT = reviewMeta?.totalCT;
+    if(prevCount < totalCT) {
+      setPage(page + 1);
     }
   };
 
   return (
     <ReviewContainer>
-      {reviews ? reviews.results.slice(0, count + 1).map(
+      {reviewFeed.map(
         (review) => (
           <ReviewTile
             key={review.review_id}
             review={review}
           />
         ),
-      ) : ''}
+      )}
       <ButtonBlock>
         <Botton onClick={fetchFeed}> MORE REVIEWS</Botton>
         <Botton> ADD A REVIEW +</Botton>
