@@ -1,35 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import ReviewTile from './Review/ReviewTile';
-import { useReviews } from '../../contexts/ProductReview';
 import { useMeta } from '../../contexts/ReviewMeta';
+import { ProductIDContext } from '../../contexts/ProductIDContext';
+
 
 export default function ReviewList() {
-  const reviews = useReviews().results;
-
-  // const [reviewNum, setReviewNum] = useState(0);
-  // const { totalCT } = useMeta();
-  // console.log(reviews);
-
-  let reviewCollection = [];
-  if (reviews) {
-    // render reviewTiles
-    reviewCollection = reviews.map(
-      (review) => (
-        <ReviewTile
-          key={review.review_id}
-          review={review}
-        />
-      ),
-    );
-    // control review number
-
-  }
+  let fetchFeed;
+  const productId = useContext(ProductIDContext);
+  const [reviews, setReviews] = useState({});
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: '/reviews',
+      params: {
+        product_id: productId,
+        page: 1,
+        count: 2,
+      },
+    })
+      .then(({ data }) => {
+        setReviews(data);
+      })
+      .catch(() => setReviews(null));
+  }, [productId]);
   return (
     <ReviewContainer>
-      {reviewCollection}
+      {/* {reviewFeed.length === 0 ? '' : reviewFeed.map(
+        (review) => (
+          <ReviewTile
+            key={review.review_id}
+            review={review}
+          />
+        ),
+      )} */}
       <ButtonBlock>
-        <Botton> MORE REVIEWS</Botton>
+        <Botton onClick={fetchFeed}> MORE REVIEWS</Botton>
         <Botton> ADD A REVIEW +</Botton>
       </ButtonBlock>
     </ReviewContainer>
