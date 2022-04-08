@@ -7,35 +7,60 @@ import { useActiveStyle } from '@Contexts/StylesProvider';
 import ImageGallery from './ImageGallery';
 import StyleSelector from './StyleSelector';
 import AddToCart from './AddToCart';
-import ProductDescription from './ProductDescription';
 
 function Overview() {
   const { activeStyle } = useActiveStyle();
   const { currentProduct } = useCurrentProduct();
-  const photos = activeStyle ? activeStyle.photos : [];
+  const photos = activeStyle ? activeStyle.photos : null;
 
   return (
     <>
       <ImageGallery photos={photos}>
-        <ProductInfo>
-          <Category>{currentProduct ? currentProduct.category : ''}</Category>
-          <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
-          <Price>$159</Price>
-          {activeStyle && <StyleSelector />}
-          <AddToCart />
-        </ProductInfo>
+        <Category>{currentProduct && currentProduct.category}</Category>
+        <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
+        <Price>$159</Price>
+        {activeStyle && <StyleSelector />}
+        {activeStyle && <AddToCart />}
       </ImageGallery>
 
-      <ProductDescription />
+      <AdditionalDetails>
+        <LongDescription>
+          <h3>{currentProduct ? currentProduct.slogan : '' }</h3>
+          <p>{currentProduct ? currentProduct.description : '' }</p>
+        </LongDescription>
+        <Features>
+          <ul>
+            {currentProduct
+            && currentProduct.features.map((f) => (
+              <li key={f.feature}>
+                <strong>{`${f.feature}- `}</strong>
+                {f.value}
+              </li>
+            ))}
+          </ul>
+        </Features>
+      </AdditionalDetails>
     </>
   );
 }
 
-const ProductInfo = styled.section`
-  background-color:${(props) => props.theme.colors.light};
-  width: 480px;
-  padding: 10px 30px;
-  color: ${(props) => props.theme.colors.secondary};
+const AdditionalDetails = styled.section`
+color: ${(props) => props.theme.colors.secondary};
+display: block;
+padding: 50px 100px;
+& p {
+padding-top: 10px;
+}
+`;
+
+const LongDescription = styled.div`
+display: inline-block;
+width: 70%;
+`;
+
+const Features = styled.div`
+display: inline-block;
+width: 30%;
 `;
 
 const ProductName = styled.h1`
