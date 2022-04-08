@@ -23,8 +23,6 @@ export default function QAItem({ question, allAnswers }) {
       totalAsToRender.push(arrayOfAnswers[i]);
     }
   }
-  console.log(numAsToRender);
-
   const handleQuestionHelpful = (category, ID) => {
     axios({
       method: 'PUT',
@@ -124,8 +122,8 @@ export default function QAItem({ question, allAnswers }) {
           </span>
           <span>
             {`by `} {answer.answerer_name === 'Seller' ?
-              <strong>{answer.answerer_name}</strong>
-              : `${answer.answerer_name}`
+              <strong>{answer.answerer_name} </strong>
+              : `${answer.answerer_name} `
             }
             {`${moment(answer.date).format('MMMM DD, YYYY')} |
             Helpful? `}

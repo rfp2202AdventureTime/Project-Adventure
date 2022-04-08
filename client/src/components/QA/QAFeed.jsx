@@ -26,6 +26,17 @@ export default function Feed({ searchQuesitonBody }) {
     filteredQData = questionData.filter(
       (question) => question.question_body.includes(queryText),
     );
+    console.log(filteredQData)
+    const compare = (a, b) => {
+      if (a.question_helpfulness > b.question_helpfulness) {
+        return -1;
+      } if (a.question_helpfulness < b.question_helpfulness) {
+        return 1;
+      } return 0;
+    };
+    filteredQData.sort(compare);
+    console.log(filteredQData)
+
     for (let i = 0; i < Math.min(numQsToRender, filteredQData.length); i += 1) {
       tempTotalQsToRender.push(filteredQData[i]);
     }
