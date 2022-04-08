@@ -38,12 +38,13 @@ export default function ReviewTile(review) {
         photos={photos}
         isSelected={clickPhoto}
       />
-      <Modal
-        showModal={showModal}
-        modal={modalUrl}
-      >
+      {/* <ModalParent> */}
+        <Modal
+          showModal={showModal}
+          modal={modalUrl}
+        />
         <ModalClose />
-      </Modal>
+      {/* </ModalParent> */}
     </ReviewBlock>
   );
 }
@@ -65,6 +66,10 @@ const StarBlock = styled.div`
 
 const UserData = styled.div`
   justify-content: end
+`;
+
+const ModalParent = styled.div`
+  position: relative;
 `;
 
 const ReviewHeading = styled.p`
@@ -102,9 +107,9 @@ const Modal = styled.div`
   bottom: 0;
   left: 0;
   z-index: 999;
-  opacity: 1;
+  opacity: ${(props) => (props.showModal ? 1 : 0)};;
   pointer-events: none;
-  transition: all 0.3s;
+  transition: opacity .25s ease;
   visibility: ${(props) => (props.showModal ? 'visible' : 'hidden')};
 
 `;
