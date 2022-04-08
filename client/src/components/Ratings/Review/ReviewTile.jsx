@@ -90,7 +90,11 @@ const ModalClose = styled.a`
 
 const Modal = styled.div`
   background: ${(props) => (props.modal ? `url(${props.modal})` : props.theme.colors.transparent)};
-
+  background-repeat: no-repeat;
+  background-size: 100% auto%;
+  width: 60%;
+  height: 60%;
+  background-position: center center;
   position: fixed;
   background-color: rgba(255, 255, 255, 0.25);
   top: 0;
