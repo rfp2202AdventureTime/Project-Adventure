@@ -12,12 +12,18 @@ function AllCards() {
   const relatedProds = useTest();
   const thumbnail = useThumbnail();
 
-  // console.log(thumbnail, 'relatedProds');
+  const zippedArray = [];
   if (!thumbnail.data) {
     console.log('loading thumbnail');
+  } if (!relatedProds.data) {
+    console.log('loading related prods');
   } else {
-    console.log(thumbnail.data[0].data.results[0].photos[0].thumbnail_url, 'this is thumbnail information');
+    relatedProds.data.map((item, i) => {
+      zippedArray.push([item.data, thumbnail.data[i].data.results[0].photos[0].thumbnail_url]);
+    });
   }
+
+  // console.log(zippedArray, 'this is zipped')
 
   if (!relatedProds.data) {
     console.log('loading Prods');
@@ -28,24 +34,8 @@ function AllCards() {
           <ThumbnailProvider>
 
             <Layout>
-              <ProductImg image={sampleRelatedThumbnails[0]} />
+              {zippedArray.map((item) => <div><Individualcard product={item} /></div>)}
 
-              {relatedProds.data.map((item) => <div><Individualcard product={item.data} /></div>)}
-
-              {/* <IndCard>
-                <ProductImg image={sampleRelatedThumbnails[1]} />
-                <Individualcard product={sampleRelatedData[1]} />
-                </IndCard>
-
-                <IndCard>
-                <ProductImg image={sampleRelatedThumbnails[2]} />
-                <Individualcard product={sampleRelatedData[2]} />
-                </IndCard>
-
-                <IndCard>
-                <ProductImg image={sampleRelatedThumbnails[3]} />
-                <Individualcard product={sampleRelatedData[3]} />
-              </IndCard> */}
             </Layout>
           </ThumbnailProvider>
         </TestProvider>
@@ -56,12 +46,13 @@ function AllCards() {
 
 const Layout = styled.div`
   display: flex;
-  width: 100%;
-  overflow: auto;
+  width: fit-content;
+  overflow: flex;
+  flex-direction: row;
+`;
+
+const Car = styled.div`
+  display: flex;
   flex-direction: row;
 `;
 export default AllCards;
-
-{ /* {sampleRelatedThumbnails.map((item) => <ProductImg image={item} />)}
-        {sampleRelatedData.map((item) => <Individualcard product={item} />)}
-      </div> */ }

@@ -3,26 +3,25 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { useRelated, RelatedProvider } from '../RelatedContext';
-import sampleRelatedThumbnails from './sampleRelatedThumbnails';
+// import sampleRelatedThumbnails from './sampleRelatedThumbnails';
 import { useTest } from './testingContext';
+import ProductImg from './ProductImg';
 
 // should retrieve all related products from initial product page
 // map each individual card with all the information
 
 function Individualcard({ product }) {
-
-  // console.log(thumbnail, 'IND Product');
-
+  // console.log(product, 'IND Product');
   return (
     <div>
       <IndCard>
+        <ProductImg image={product[1]} />
         <CardText>
-          <p>TEST</p>
-          <p>{product.category}</p>
-          <p>{product.name}</p>
+          <p>{product[0].category}</p>
+          <p>{product[0].name}</p>
           <p>
             $
-            {product.default_price}
+            {product[0].default_price}
           </p>
           <p>CSS rating with stars</p>
         </CardText>
@@ -35,6 +34,7 @@ const IndCard = styled.div`
   border-style: solid;
   border-width: 2px;
   width: fit-content;
+  height: max-content;
   margin-right: 30px;
   margin-bottom: 5px;
   border-radius: 5px;
@@ -52,17 +52,3 @@ export {
   Individualcard,
   IndCard,
 };
-
-
-//line 12
-// const sample = useTest();
-//   const information = [];
-// if (!sample.data) {
-//   console.log('loading');
-// } else {
-//   console.log(sample, 'this is test context');
-//   sample.data.map((item) => {
-//     information.push(item.data);
-//   });
-//   console.log(information, 'this is information');
-// }
