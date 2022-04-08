@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 import Star from '../../../Star';
@@ -18,10 +18,20 @@ export default function ReviewTile(review) {
   const [modalUrl, setModalUrl] = useState('');
 
   const clickPhoto = (index) => {
-    // console.log('clicked');
     setModalUrl(photos[index].url);
     setShowModal(!showModal);
   };
+
+  useEffect(() => {
+    const close = (e) => {
+      if (e.key === 'Escape') {
+        setShowModal(false);
+      }
+    };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
+
   return (
     <ReviewBlock>
       <StarBlock>
@@ -38,12 +48,14 @@ export default function ReviewTile(review) {
         photos={photos}
         isSelected={clickPhoto}
       />
-      <Modal
+      <ModalParent
         showModal={showModal}
-        modal={modalUrl}
       >
-        <ModalClose />
-      </Modal>
+        <Modal
+          showModal={showModal}
+          modal={modalUrl}
+        />
+      </ModalParent>
     </ReviewBlock>
   );
 }
@@ -67,44 +79,40 @@ const UserData = styled.div`
   justify-content: end
 `;
 
-const ReviewHeading = styled.p`
-  font-weight:bold;
-  font-size: medium;
-  padding: 1rem 0 1rem 0;
-`;
-
-const ModalClose = styled.a`
-    fcolor: #aaa;
-    line-height: 50px;
-    font-size: 80%;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    top: 0;
-    width: 70px;
-    text-decoration: none;
-    &:hover {
-      color: black;
-    }
-`;
-
-const Modal = styled.div`
-  background: ${(props) => (props.modal ? `url(${props.modal})` : props.theme.colors.transparent)};
-  background-repeat: no-repeat;
-  background-size: 100% auto%;
-  width: 60%;
-  height: 60%;
-  background-position: center center;
+const ModalParent = styled.a`
   position: fixed;
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: ${(props) => props.theme.colors.modalBackground};
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 999;
-  opacity: 1;
-  pointer-events: none;
+  z-index: 9998;
+  display: ${(props) => (props.showModal ? 'block' : 'none')};
+  opacity: ${(props) => (props.showModal ? 1 : 0)};
+  pointer-events: disabled;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
   transition: all 0.3s;
-  visibility: ${(props) => (props.showModal ? 'visible' : 'hidden')};
+`;
 
+const Modal = styled.div`
+  z-index: 9999;
+  background-position: center;
+  width: 60%;
+  height: 60%;
+  position: relative;
+  margin: 10% auto;
+  padding: 2rem;
+  color: #444;
+  background: ${(props) => (props.modal ? `url(${props.modal})` : props.theme.colors.primary)};
+  background-repeat: no-repeat;
+  background-size: 100% auto%;
+  visibility: ${(props) => (props.showModal ? 'visible' : 'hidden')};
+  }
+`;
+
+const ReviewHeading = styled.p`
+  font-weight:bold;
+  font-size: medium;
+  padding: 1rem 0 1rem 0;
 `;

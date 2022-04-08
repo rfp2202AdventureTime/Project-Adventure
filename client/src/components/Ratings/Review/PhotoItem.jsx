@@ -28,6 +28,7 @@ const Thumbnail = styled.span`
   background-size: cover;
   background-position: center;
   position: relative;
+  cursor: pointer;
 `;
 
 PhotoItem.propTypes = {
