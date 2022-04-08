@@ -10,13 +10,16 @@ import { useTest } from './testingContext';
 
 function Individualcard({ product }) {
   const sample = useTest();
+  const information = [];
   // console.log(sample, 'this is testing context sample');
   if (!sample.data) {
     console.log('loading');
   } else {
     console.log(sample, 'this is test context');
-    console.log(sample.data[0].data, 'this is DATA');
-    // console.log(sample.data, 'this is DATA');
+    sample.data.map((item) => {
+      information.push(item.data);
+    });
+    console.log(information, 'this is information');
   }
   return (
     <div>
