@@ -5,36 +5,49 @@ import ReviewTile from './Review/ReviewTile';
 import { useMeta } from '../../contexts/ReviewMeta';
 import { ProductIDContext } from '../../contexts/ProductIDContext';
 
-
 export default function ReviewList() {
-  let fetchFeed;
+  let totalCT;
   const productId = useContext(ProductIDContext);
-  const [reviews, setReviews] = useState({});
+  const reviewMeta = useMeta();
+  const [reviews, setReviews] = useState();
+  const [count, setCount] = useState(1);
+
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: '/reviews',
-      params: {
-        product_id: productId,
-        page: 1,
-        count: 2,
-      },
-    })
-      .then(({ data }) => {
-        setReviews(data);
+    if (reviewMeta) {
+      totalCT = reviewMeta.totalCT;
+      axios({
+        method: 'get',
+        url: '/reviews',
+        params: {
+          product_id: productId,
+          count: totalCT,
+        },
       })
-      .catch(() => setReviews(null));
-  }, [productId]);
+        .then(({ data }) => {
+          setReviews(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [productId, reviewMeta]);
+
+  // change count when clicked
+  const fetchFeed = () => {
+    if (reviews && reviewMeta) {
+      totalCT = reviewMeta.totalCT;
+      setCount(Math.min(totalCT, count + 2));
+    }
+  };
+
   return (
     <ReviewContainer>
-      {/* {reviewFeed.length === 0 ? '' : reviewFeed.map(
+      {reviews ? reviews.results.slice(0, count + 1).map(
         (review) => (
           <ReviewTile
             key={review.review_id}
             review={review}
           />
         ),
-      )} */}
+      ) : ''}
       <ButtonBlock>
         <Botton onClick={fetchFeed}> MORE REVIEWS</Botton>
         <Botton> ADD A REVIEW +</Botton>
