@@ -48,7 +48,13 @@ export function QADataProvider({ children }) {
   // const allQAData = useMemo(() => ({}))
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <QAContext.Provider value={{ qData, aData }}>
+    <QAContext.Provider value={{
+      qData,
+      aData,
+      setQData,
+      setAData,
+    }}
+    >
       { children }
     </QAContext.Provider>
   );
