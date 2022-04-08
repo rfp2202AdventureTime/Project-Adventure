@@ -44,6 +44,7 @@ export function RatingProvider({ children }) {
         const RatingDetails = convertRating(data);
         newData.avgRating = RatingDetails.avgRating;
         newData.totalCT = RatingDetails.totalCT;
+        console.log(newData);
         setReviewMeta(newData);
       })
       .catch(() => setReviewMeta(null));

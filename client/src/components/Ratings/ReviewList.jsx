@@ -6,13 +6,14 @@ import { useMeta } from '../../contexts/ReviewMeta';
 import { ProductIDContext } from '../../contexts/ProductIDContext';
 
 export default function ReviewList() {
-  let totalCT;
   const productId = useContext(ProductIDContext);
   const reviewMeta = useMeta();
   const [prevCount, setPrevCount] = useState(0);
   const [page, setPage] = useState(1);
   const [reviewFeed, setReviewFeed] = useState([]
-  );
+    );
+  let totalCT = reviewMeta?.totalCT;
+  ;
 
   const getReview = () => (
     axios({
@@ -25,23 +26,28 @@ export default function ReviewList() {
       },
     }));
 
-  // TODO: check to see if there's memory leakage on unmounted components. Unsure why I didn't need a loading varable here. Will have to investigate
+  // TODO: check to see if there's memory leakage on unmounted components.
   useEffect(() => {
     getReview()
       .then(({ data }) => {
         const review = data.results;
-        setPrevCount(review.length);
+        if (reviewFeed.length === 0) {
+          setPrevCount(review.length);
+        } else {
+          setPrevCount(Math.min(totalCT, prevCount + 2));
+        }
         setReviewFeed(reviewFeed.concat(review));
       })
       .catch((err) => console.log(err));
   }, [page]);
 
   const fetchFeed = () => {
-    totalCT = reviewMeta?.totalCT;
     if(prevCount < totalCT) {
       setPage(page + 1);
     }
   };
+  console.log("prevCount", prevCount)
+  console.log("totalCT", totalCT)
 
   return (
     <ReviewContainer>
@@ -54,7 +60,11 @@ export default function ReviewList() {
         ),
       )}
       <ButtonBlock>
-        <Botton onClick={fetchFeed}> MORE REVIEWS</Botton>
+        {(prevCount < totalCT) ?
+          (<Botton onClick={fetchFeed}>
+            MORE REVIEWS
+          </Botton>) : ''
+        }
         <Botton> ADD A REVIEW +</Botton>
       </ButtonBlock>
     </ReviewContainer>
