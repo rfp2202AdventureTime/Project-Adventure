@@ -26,7 +26,6 @@ export default function QAItem({ question, allAnswers }) {
   };
 
   if (filteredAnswers.length > 0 && filteredAnswers[0].results.length > 0) {
-    console.log(filteredAnswers[0].results);
     arrayOfAnswers = filteredAnswers[0].results;
     arrayOfAnswers.sort(compareAnswersForSeller);
     for (let i = 0; i < Math.min(numAsToRender, arrayOfAnswers.length); i += 1) {
