@@ -12,31 +12,22 @@ import ProductDescription from './ProductDescription';
 function Overview() {
   const { activeStyle } = useActiveStyle();
   const { currentProduct } = useCurrentProduct();
-  const photos = activeStyle ? activeStyle.photos : [];
+  const photos = activeStyle ? activeStyle.photos : null;
 
   return (
     <>
       <ImageGallery photos={photos}>
-        <ProductInfo>
-          <Category>{currentProduct ? currentProduct.category : ''}</Category>
-          <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
-          <Price>$159</Price>
-          {activeStyle && <StyleSelector />}
-          <AddToCart />
-        </ProductInfo>
+        <Category>{currentProduct && currentProduct.category}</Category>
+        <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
+        <Price>$159</Price>
+        {activeStyle && <StyleSelector />}
+        {activeStyle && <AddToCart />}
       </ImageGallery>
 
       <ProductDescription />
     </>
   );
 }
-
-const ProductInfo = styled.section`
-  background-color:${(props) => props.theme.colors.light};
-  width: 480px;
-  padding: 10px 30px;
-  color: ${(props) => props.theme.colors.secondary};
-`;
 
 const ProductName = styled.h1`
   font-weight: bold;
