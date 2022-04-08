@@ -67,6 +67,7 @@ const ReviewContainer = styled.div`
   flex-direction: column;
   overflow: auto;
   height: 45rem;
+  width: 100%
 `;
 
 const ButtonBlock = styled.div`
@@ -81,5 +82,4 @@ const Botton = styled.button`
   padding: 1.3rem 1rem 1.3rem 1rem;
   font-size: medium;
   font-weight: 700;
-
 `;

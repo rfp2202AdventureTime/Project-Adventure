@@ -3,6 +3,7 @@ import moment from 'moment';
 import styled from 'styled-components';
 import Star from '../../../Star';
 import PhotoList from './PhotoList';
+import ReviewContent from './ReviewContent';
 
 export default function ReviewTile(review) {
   // TODO: display a photo; sort, response, recp,,emt
@@ -43,7 +44,7 @@ export default function ReviewTile(review) {
       <ReviewHeading>
         {summary}
       </ReviewHeading>
-      {body}
+      <ReviewContent body={body} />
       <PhotoList
         photos={photos}
         isSelected={clickPhoto}
