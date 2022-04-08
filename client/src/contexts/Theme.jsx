@@ -9,6 +9,7 @@ const theme = {
     background: '#ebebeb',
     light: '#ffffff',
     offWhite: '#FAF9F6',
+    modalBackground: 'rgba(0,0,0,0.8)',
   },
   fonts: {
     title: {
