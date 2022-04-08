@@ -13,7 +13,7 @@ export default function ReviewList() {
   const [reviewFeed, setReviewFeed] = useState([]
     );
   let totalCT = reviewMeta?.totalCT;
-  ;
+
 
   const getReview = () => (
     axios({
@@ -46,8 +46,6 @@ export default function ReviewList() {
       setPage(page + 1);
     }
   };
-  console.log("prevCount", prevCount)
-  console.log("totalCT", totalCT)
 
   return (
     <ReviewContainer>

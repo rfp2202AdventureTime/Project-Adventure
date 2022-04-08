@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Star from '../../../Star';
 import PhotoList from './PhotoList';
 import ReviewContent from './ReviewContent';
+import Helpfulness from './Helpfulness';
 
 export default function ReviewTile(review) {
   // TODO: display a photo; sort, response, recp,,emt
@@ -45,6 +46,16 @@ export default function ReviewTile(review) {
         {summary}
       </ReviewHeading>
       <ReviewContent body={body} />
+      {recommend && <Recommend> &#10003; I recommend this product</Recommend>}
+      {(response
+        && (
+          <Response>
+            <div>
+              <b>Response from seller:</b>
+            </div>
+            {response}
+          </Response>
+        ))}
       <PhotoList
         photos={photos}
         isSelected={clickPhoto}
@@ -116,4 +127,14 @@ const ReviewHeading = styled.p`
   font-weight:bold;
   font-size: medium;
   padding: 1rem 0 1rem 0;
+`;
+
+const Response = styled.div`
+  background-color: #e6ebea;
+  padding: 0.7rem;
+  margin: 0.7rem;
+`;
+const Recommend = styled.div`
+  padding: 0.7rem;
+  font-style: italic;
 `;

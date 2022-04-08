@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-export default function ReviewContent({ body }) {
+export default function Helpfulness({ body }) {
   const [showButton, setShowButton] = useState(false);
   const [modifiedBody, setModifiedBody] = useState(body);
   useEffect(() => {
@@ -53,6 +53,6 @@ const MiniBotton = styled.button`
   margin-top: 0.5rem;
 `;
 
-ReviewContent.propTypes = {
+Helpfulness.propTypes = {
   body: PropTypes.string.isRequired,
 };
