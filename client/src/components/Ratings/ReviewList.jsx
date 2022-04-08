@@ -24,6 +24,7 @@ export default function ReviewList() {
         },
       })
         .then(({ data }) => {
+          console.log(data);
           setReviews(data);
         })
         .catch((err) => console.log(err));
