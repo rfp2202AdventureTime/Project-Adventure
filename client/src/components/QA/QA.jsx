@@ -8,7 +8,7 @@ import { QADataProvider } from './QAContext';
 export default function QA() {
   const [searchQuesitonBody, setSearchQuestionBody] = useState('');
   const [submitSearchQuestionBody, setsubmitSearchQuestionBody] = useState('');
-
+  console.log(searchQuesitonBody);
   return (
     <QASection>
       <QADataProvider>
@@ -20,7 +20,10 @@ export default function QA() {
             submitSearchQuestionBody={submitSearchQuestionBody}
             setsubmitSearchQuestionBody={setsubmitSearchQuestionBody}
           />
-          <QAFeed submitSearchQuestionBody={submitSearchQuestionBody} />
+          <QAFeed
+            searchQuesitonBody={searchQuesitonBody}
+            submitSearchQuestionBody={submitSearchQuestionBody}
+          />
         </>
       </QADataProvider>
     </QASection>
@@ -30,4 +33,6 @@ export default function QA() {
 const QASection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
   padding-left: 2rem;
+  height: 550px;
+  overflow: scroll;
 `;

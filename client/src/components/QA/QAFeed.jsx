@@ -5,25 +5,35 @@ import PropTypes from 'prop-types';
 import { useData } from './QAContext';
 import QAItem from './QAItem';
 
-export default function Feed({ submitSearchQuestionBody }) {
+export default function Feed({ searchQuesitonBody }) {
   const [numQsToRender, setNumQsToRender] = useState(2);
-  const [moreQsClicked, setMoreQsClicked] = useState(true);
+  const [startQsToRender, setStartQsToRender] = useState(0);
+  const [lengthOfQs, setLengthOfQs] = useState(0);
   const questionData = useData().qData;
   const answerData = useData().aData;
   let filteredQData = questionData;
-  const totalQsToRender = [];
+  let queryText = '';
+  if (searchQuesitonBody !== undefined && searchQuesitonBody.length > 2) {
+    queryText = searchQuesitonBody;
+  } else {
+    queryText = '';
+  }
+  const tempTotalQsToRender = [];
+  let lengthOfFeed = 0;
 
   if (questionData !== null) {
+    lengthOfFeed = questionData.length;
     filteredQData = questionData.filter(
-      (question) => question.question_body.includes(submitSearchQuestionBody),
+      (question) => question.question_body.includes(queryText),
     );
     for (let i = 0; i < Math.min(numQsToRender, filteredQData.length); i += 1) {
-      totalQsToRender.push(filteredQData[i]);
+      tempTotalQsToRender.push(filteredQData[i]);
     }
   }
+
   return (
     <FeedSection>
-      {totalQsToRender === [] ? 'Loading...' : totalQsToRender.map(
+      {tempTotalQsToRender === [] ? 'Loading...' : tempTotalQsToRender.map(
         (question) => (
           <QAItem
             key={question.question_id}
@@ -33,19 +43,20 @@ export default function Feed({ submitSearchQuestionBody }) {
         ),
       )}
       <ButtonBlock>
-        {moreQsClicked && (
+        {(lengthOfFeed > numQsToRender) && (
           <MoreAnswersButton
             type="submit"
             onClick={() => {
-              setNumQsToRender(filteredQData.length);
-              setMoreQsClicked(false);
+              setNumQsToRender(numQsToRender + 2);
+              setStartQsToRender(startQsToRender + 2);
+              setLengthOfQs(tempTotalQsToRender.length);
             }}
           >
             Load More Questions
           </MoreAnswersButton>
         )}
         <MoreAnswersButton
-          onClick={() => { console.log('Nice, you ask a really dumb question'); }}
+          onClick={() => { console.log('Nice ...'); }}
         >
           Ask a Question +
         </MoreAnswersButton>
@@ -77,5 +88,5 @@ const ButtonBlock = styled.div`
 `;
 
 Feed.propTypes = {
-  submitSearchQuestionBody: PropTypes.string.isRequired,
+  searchQuesitonBody: PropTypes.string.isRequired,
 };

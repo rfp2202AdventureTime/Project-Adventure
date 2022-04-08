@@ -18,7 +18,7 @@ export default function Search({
         <SearchBox
           type="text"
           name="QASearchText"
-          placeholder="Search questions ...."
+          placeholder="Have a question? Search for answers…"
           value={searchQuesitonBody}
           id="QASearchText"
           onChange={(e) => { setSearchQuestionBody(e.target.value); }}

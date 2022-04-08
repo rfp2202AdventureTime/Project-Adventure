@@ -23,6 +23,7 @@ export default function QAItem({ question, allAnswers }) {
       totalAsToRender.push(arrayOfAnswers[i]);
     }
   }
+  console.log(numAsToRender);
 
   const handleQuestionHelpful = (category, ID) => {
     axios({
@@ -170,7 +171,7 @@ const QAItemSection = styled.div`
   flex-direction: column;
   justify-content: space-around;
   border-bottom: 0.2rem dotted rgba(221, 235, 223);
-`;
+  `;
 
 const QAItemFullQuestion = styled.div`
   background-color: ${(props) => props.theme.colors.light};
