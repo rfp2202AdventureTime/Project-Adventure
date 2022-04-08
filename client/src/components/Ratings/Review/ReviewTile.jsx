@@ -52,8 +52,10 @@ export default function ReviewTile(review) {
 const ReviewBlock = styled.div`
   display: flex;
   flex-direction: column;
-  padding:1rem;
-  border-bottom: 0.2rem dotted rgba(221, 235, 223);
+  margin: 0.25rem 0.5rem 0.25rem 0.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  // border-bottom: 0.2rem dotted rgba(221, 235, 223);
+  background-color: ${(props) => props.theme.colors.offWhite};
 `;
 const StarBlock = styled.div`
   display: flex;

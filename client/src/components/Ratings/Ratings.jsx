@@ -21,5 +21,5 @@ const RatingSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
   display: flex;
   flex-direction: row;
-  padding: 2rem 0rem 2rem 1rem;
+  padding: 2rem 0rem 4rem 1rem;
 `;
