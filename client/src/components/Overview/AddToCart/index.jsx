@@ -1,12 +1,3 @@
-import React from 'react';
-// import styled from 'styled-components';
-
-function AddToCart() {
-  return (
-    <div>
-      ADD TO CART, TBD
-    </div>
-  );
-}
+import AddToCart from './AddToCart';
 
 export default AddToCart;

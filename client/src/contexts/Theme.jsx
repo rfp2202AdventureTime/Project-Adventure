@@ -8,6 +8,7 @@ const theme = {
     secondary: '#5a5a5a',
     background: '#ebebeb',
     light: '#ffffff',
+    offWhite: '#FAF9F6',
   },
   fonts: {
     title: {

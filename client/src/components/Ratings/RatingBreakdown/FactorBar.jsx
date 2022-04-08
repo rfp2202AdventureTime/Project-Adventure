@@ -70,6 +70,5 @@ const Arrow = styled.div`
 `;
 
 FactorBar.propTypes = {
-  score: PropTypes.string.isRequired,
   factor: PropTypes.string.isRequired,
 };

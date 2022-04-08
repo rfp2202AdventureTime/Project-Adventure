@@ -13,7 +13,7 @@ import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
-  const defaultProductId = 65635;
+  const defaultProductId = 65688;
 
   return (
     <Theme>
@@ -29,12 +29,12 @@ function App() {
           SITE-WIDE ANNOUNCEMENT MESSAGE - SALE / DISCOUNT OFFER - NEW PRODUCT HIGHLIGHT
         </Banner>
 
-        <StylesProvider>
-          <Overview />
-          <RelatedProducts />
-        </StylesProvider>
-        <QA />
         <RatingProvider>
+          <StylesProvider>
+            <Overview />
+            <RelatedProducts />
+          </StylesProvider>
+          <QA />
           <Ratings />
         </RatingProvider>
       </ProductProvider>

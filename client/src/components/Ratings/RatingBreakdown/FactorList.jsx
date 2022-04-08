@@ -6,17 +6,19 @@ import { useMeta } from '../../../contexts/ReviewMeta';
 export default function FactorList() {
   const meta = useMeta();
   let factor;
-  let factorBars = [];
+  const factorBars = [];
   // const factor = (meta && meta.characteristics) ? <FactorBar meta={meta} /> : <div />;
   if (meta) {
     factor = meta.characteristics;
-    factorBars = Object.keys(factor).map((key) => (
-      <FactorBar
-        factor={key}
-        score={factor[key].value}
-        key={factor[key].id}
-      />
-    ));
+    Object.keys(factor).forEach((key) => {
+      if (factor[key].value) {
+        factorBars.push(<FactorBar
+          factor={key}
+          score={factor[key].value}
+          key={factor[key].id}
+        />);
+      }
+    });
   }
   return (
     <Factor>
