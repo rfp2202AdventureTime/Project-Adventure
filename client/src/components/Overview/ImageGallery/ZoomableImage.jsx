@@ -36,8 +36,8 @@ function ZoomableImage({ url, disabled }) {
     <Image
       url={url}
       ref={zoomImg}
-      onMouseMove={isZoomed && ((e) => handleZoomPosition(e))}
-      onClick={!disabled && ((e) => toggleZoom(e))}
+      onMouseMove={isZoomed ? ((e) => handleZoomPosition(e)) : null}
+      onClick={!disabled ? ((e) => toggleZoom(e)) : null}
       className={`${isZoomed ? 'zoom' : ''}`}
     />
   );
