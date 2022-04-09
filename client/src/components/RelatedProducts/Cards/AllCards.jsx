@@ -9,15 +9,6 @@ function AllCards() {
   const thumbnail = useThumbnail();
 
   const zippedArray = [];
-  // if (!thumbnail.data) {
-  //   console.log('loading thumbnail');
-  // } if (!relatedProds.data) {
-  //   console.log('loading related prods');
-  // } else {
-  //   relatedProds.data.map((item, i) => {
-  //     zippedArray.push([item.data, thumbnail.data[i].data.results[0].photos[0].thumbnail_url]);
-  //   });
-  // }
 
   if (thumbnail.data && relatedProds.data) {
     relatedProds.data.map((item, i) => {

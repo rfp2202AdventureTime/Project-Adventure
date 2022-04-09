@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Outfit from './Outfit';
+import Outfit from './Outfits/Outfit';
 import { RelatedProvider } from './RelatedContext';
 import { ProdProvider } from './Cards/ProdContext';
 import { ThumbnailProvider } from './Cards/thumbnailContext';
