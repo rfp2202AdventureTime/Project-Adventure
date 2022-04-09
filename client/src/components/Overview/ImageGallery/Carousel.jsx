@@ -1,7 +1,9 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
 
 const CONFIG = {
   size: 4,
@@ -11,10 +13,12 @@ const CONFIG = {
   spacing: 5,
 };
 
-function CarouselNavigation({ photos, imgIdx, handleImgIdxChange }) {
-  const [viewportIdx, setViewportIdx] = React.useState(0);
+// TODO - fix carousel bug if there are fewer images than max size.
 
-  React.useEffect(() => {
+function Carousel({ photos, imgIdx, handleImgIdxChange }) {
+  const [viewportIdx, setViewportIdx] = useState(0);
+
+  useEffect(() => {
     const viewport = { min: viewportIdx, max: viewportIdx + CONFIG.size };
     if (imgIdx >= viewport.max) setViewportIdx(imgIdx - CONFIG.size + 1);
     if (imgIdx < viewport.min) setViewportIdx(imgIdx);
@@ -22,30 +26,32 @@ function CarouselNavigation({ photos, imgIdx, handleImgIdxChange }) {
 
   const upVisibility = viewportIdx > 0;
   const downVisibility = viewportIdx <= (photos.length - CONFIG.size - 1);
+  const itemVisibility = (i) => (i - (viewportIdx)) * (i - (viewportIdx + CONFIG.size)) <= 0;
+  const isSelected = (i) => (imgIdx === i);
 
   return (
-    <Carousel size={CONFIG.size}>
-      <UpArrow visible={upVisibility} onClick={() => handleImgIdxChange('prev')} />
+    <CarouselContainer size={CONFIG.size}>
+      <UpArrow visible={upVisibility} onClick={() => handleImgIdxChange('prev')}><FiChevronUp size={20} /></UpArrow>
       <CarouselViewport>
         <CarouselItems viewportIdx={viewportIdx}>
           {photos.map((photo, i) => (
             <CarouselItem
               key={i}
               onClick={() => handleImgIdxChange(i)}
-              visible={(i - (viewportIdx)) * (i - (viewportIdx + CONFIG.size)) <= 0}
-              className={(imgIdx === i) && 'selected'}
+              visible={itemVisibility(i)}
+              className={isSelected(i) && 'selected'}
             >
-              <Thumbnail url={photo.thumbnail_url} />
+              <Thumbnail className={isSelected(i) && 'selected'} url={photo.thumbnail_url} />
             </CarouselItem>
           ))}
         </CarouselItems>
       </CarouselViewport>
-      <DownArrow visible={downVisibility} onClick={() => handleImgIdxChange('next')} />
-    </Carousel>
+      <DownArrow visible={downVisibility} onClick={() => handleImgIdxChange('next')}><FiChevronDown size={20} /></DownArrow>
+    </CarouselContainer>
   );
 }
 
-const Carousel = styled.nav`
+const CarouselContainer = styled.nav`
   position: relative;
   width: ${CONFIG.width}px;
   height: ${(CONFIG.size * (CONFIG.itemHeight + CONFIG.spacing) - CONFIG.spacing)}px;
@@ -61,6 +67,7 @@ const CarouselItems = styled.div`
   display: flex;
   flex-direction: column;
   transform: translate(0, -${({ viewportIdx }) => viewportIdx * (CONFIG.itemHeight + CONFIG.spacing)}px);
+  transition: transform 0.3s ease-in-out;
 `;
 
 const CarouselItem = styled.div`
@@ -70,8 +77,8 @@ const CarouselItem = styled.div`
   border: ${CONFIG.itemBorder}px solid ${({ theme }) => theme.colors.secondary};
   margin-bottom: ${CONFIG.spacing}px;
   ${({ visibility }) => (visibility && 'visibility: hidden;')}
-  &.selected { border: ${CONFIG.itemBorder}px solid red; }
   &:hover { cursor: pointer; }
+  // background: ${({ theme }) => theme.colors.background};
 `;
 
 const Thumbnail = styled.figure`
@@ -80,18 +87,28 @@ const Thumbnail = styled.figure`
   background: url(${({ url }) => url});
   background-size: cover;
   background-position: center;
+  filter: opacity(0.65);
+  &.selected, &:hover {
+    filter: opacity(1);
+    transition: filter 0.1s ease-in-out;
+  }
 `;
 
-const Arrow = styled.button`
+const Arrow = styled.div`
   display: inline-block;
   position: absolute;
   width: 20px;
   height: 20px;
   left: 50%;
   transform: translate(-50%, 0);
-  background: red;
   ${({ visible }) => (!visible && 'visibility: hidden;')}
   &:hover { cursor: pointer; }
+  color: ${({ theme }) => theme.colors.primary};
+  & > *:hover {
+    transform: scale(1.2);
+    transition: transform 0.1s ease-in-out;
+  }
+  & > * { transition: transform 0.1s ease-in-out; }
 `;
 
 const UpArrow = styled(Arrow)`
@@ -102,14 +119,14 @@ const DownArrow = styled(Arrow)`
   top: ${(CONFIG.size * (CONFIG.itemHeight + CONFIG.spacing) - CONFIG.spacing) + 10}px;
 `;
 
-CarouselNavigation.propTypes = {
+Carousel.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   imgIdx: PropTypes.number,
   handleImgIdxChange: PropTypes.func.isRequired,
 };
 
-CarouselNavigation.defaultProps = {
+Carousel.defaultProps = {
   imgIdx: 0,
 };
 
-export default CarouselNavigation;
+export default Carousel;

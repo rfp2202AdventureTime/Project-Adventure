@@ -1,24 +1,32 @@
+/* eslint-disable react/prop-types */
+// TODO: fix pro-types for this file
+
+
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Star from '../../../Star';
 import PhotoList from './PhotoList';
+import ReviewContent from './ReviewContent';
+import Helpfulness from './Helpfulness';
 
-export default function ReviewTile(review) {
+export default function ReviewTile({ review, addHelpVote, reportReview, index }) {
   // TODO: display a photo; sort, response, recp,,emt
   const {
-    review: {
-      rating, summary, recommend, response, date, body, photos,
-    },
+    rating, summary, recommend, response, date, body, photos, helpfulness,
   } = review;
   const convertedDate = moment(date).format('MMMM D, YYYY');
   // eslint-disable-next-line react/destructuring-assignment
-  const usernameDate = `${review.review.reviewer_name},  ${convertedDate}`;
+  const reviewId = review.review_id;
+  // eslint-disable-next-line react/destructuring-assignment
+  const usernameDate = `${review.reviewer_name},  ${convertedDate}`;
   const [showModal, setShowModal] = useState(false);
   const [modalUrl, setModalUrl] = useState('');
 
-  const clickPhoto = (index) => {
-    setModalUrl(photos[index].url);
+  const clickPhoto = (i) => {
+    setModalUrl(photos[i].url);
+
     setShowModal(!showModal);
   };
 
@@ -43,7 +51,17 @@ export default function ReviewTile(review) {
       <ReviewHeading>
         {summary}
       </ReviewHeading>
-      {body}
+      <ReviewContent body={body} />
+      {recommend && <Recommend> &#10003; I recommend this product</Recommend>}
+      {(response
+        && (
+          <Response>
+            <div>
+              <b>Response from seller:</b>
+            </div>
+            {response}
+          </Response>
+        ))}
       <PhotoList
         photos={photos}
         isSelected={clickPhoto}
@@ -56,6 +74,14 @@ export default function ReviewTile(review) {
           modal={modalUrl}
         />
       </ModalParent>
+      <Helpfulness
+        addHelpVote={addHelpVote}
+        reviewId={reviewId}
+        helpfulness={helpfulness}
+        reportReview={reportReview}
+        index={index}
+      />
+
     </ReviewBlock>
   );
 }
@@ -64,8 +90,8 @@ export default function ReviewTile(review) {
 const ReviewBlock = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0.25rem 0.5rem 0.25rem 0.5rem;
-  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  margin: 0.4rem 0.8rem 0.4rem 0.8rem;
+  padding: 0.25rem 1rem 0.25rem 1rem;
   // border-bottom: 0.2rem dotted rgba(221, 235, 223);
   background-color: ${(props) => props.theme.colors.offWhite};
 `;
@@ -116,3 +142,17 @@ const ReviewHeading = styled.p`
   font-size: medium;
   padding: 1rem 0 1rem 0;
 `;
+
+const Response = styled.div`
+  background-color: #e6ebea;
+  padding: 0.7rem;
+  margin: 0.7rem;
+`;
+const Recommend = styled.div`
+  padding: 0.7rem 0.7rem 0 0.7rem;
+  font-style: italic;
+`;
+
+ReviewTile.propTypes = {
+  addHelpVote: PropTypes.func.isRequired,
+};
