@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import ReviewTile from './Review/ReviewTile';
+import SortBar from './Review/SortBar';
 import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
 import { ProductIDContext } from '../../contexts/ProductIDContext';
@@ -9,11 +10,12 @@ import { ProductIDContext } from '../../contexts/ProductIDContext';
 export default function ReviewList() {
   const productId = useContext(ProductIDContext);
   const reviewMeta = useMeta();
+  const [sort, setSort] = useState('relevant');
   const [reviewDetail, setReviewDetail] = useState({
     prevCount: 0,
     allReview: [],
+    totalCT:0,
   });
-
 
   // totalCT get from reviewMeta isn't accurate due to reported reviews removal from db
   const getReview = () => (
@@ -23,6 +25,7 @@ export default function ReviewList() {
       params: {
         product_id: productId,
         count: reviewMeta?.totalCT,
+        sort,
       },
     }));
 
@@ -33,6 +36,10 @@ export default function ReviewList() {
     })
       .catch((err) => Console.log(err));
   };
+
+  const handleSort = (criteria) => {
+    setSort(criteria);
+  }
 
   const reportReview = (index, reviewId) => {
     axios({
@@ -45,9 +52,20 @@ export default function ReviewList() {
       setReviewDetail({
         prevCount:reviewDetail.prevCount,
         allReview: tempData.allReview,
+        totalCT: tempData.totalCT,
       });
     })
       .catch((err) => Console.log(err));
+  };
+
+  const fetchFeed = () => {
+    if (reviewDetail.prevCount < reviewDetail.allReview.length) {
+      setReviewDetail({
+        allReview: reviewDetail.allReview,
+        prevCount: reviewDetail.allReview.length,
+        totalCT: reviewDetail.totalCT,
+      });
+    }
   };
 
   // TODO: check to see if there's memory leakage on unmounted components.
@@ -56,23 +74,20 @@ export default function ReviewList() {
       .then(({ data }) => {
         setReviewDetail({
           allReview: data.results,
+          totalCT: data.results.length,
           prevCount: Math.min(data.results.length, 2),
         });
       })
       .catch((err) => Console.log(err));
-  }, [productId]);
+  }, [productId, sort]);
 
-  const fetchFeed = () => {
-    if (reviewDetail.prevCount < reviewDetail.allReview.length) {
-      setReviewDetail({
-        allReview: reviewDetail.allReview,
-        prevCount: reviewDetail.allReview.length,
-      });
-    }
-  };
+
 
   return (
     <ReviewContainer>
+      <SortBar
+      totalCT={reviewDetail.totalCT}
+      handleSort={handleSort}/>
       {reviewDetail.allReview.slice(0, reviewDetail.prevCount).map(
         (review, index) => (
           <ReviewTile
