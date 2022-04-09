@@ -84,21 +84,23 @@ export default function ReviewList() {
 
 
   return (
-    <ReviewContainer>
+    <ReviewSection>
       <SortBar
       totalCT={reviewDetail.totalCT}
       handleSort={handleSort}/>
-      {reviewDetail.allReview.slice(0, reviewDetail.prevCount).map(
-        (review, index) => (
-          <ReviewTile
-            key={review.review_id.toString()}
-            addHelpVote={addHelpVote}
-            review={review}
-            index={index}
-            reportReview={reportReview}
-          />
-        ),
-      )}
+      <ReviewContainer>
+        {reviewDetail.allReview.slice(0, reviewDetail.prevCount).map(
+          (review, index) => (
+            <ReviewTile
+              key={review.review_id.toString()}
+              addHelpVote={addHelpVote}
+              review={review}
+              index={index}
+              reportReview={reportReview}
+            />
+          ),
+        )}
+      </ReviewContainer>
       <ButtonBlock>
         {(reviewDetail.prevCount < reviewDetail.allReview.length)
           ? (
@@ -108,17 +110,24 @@ export default function ReviewList() {
           ) : ''}
         <Botton> ADD A REVIEW +</Botton>
       </ButtonBlock>
-    </ReviewContainer>
+    </ReviewSection>
   );
 }
 
 // Styled Container
-const ReviewContainer = styled.div`
+const ReviewSection = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
   height: 45rem;
   width: 100%
+`;
+const ReviewContainer = styled.div`
+  // display: flex;
+  // flex-direction: column;
+  // overflow: auto;
+  // height: 45rem;
+  // width: 100%
 `;
 
 const ButtonBlock = styled.div`
@@ -134,6 +143,6 @@ const Botton = styled.button`
   font-size: medium;
   font-weight: 700;
   &:hover {
-    background-color:${(props) => props.theme.colors.buttonHover}
+    background-color:${({theme}) => theme.colors.buttonHover}
   }
 `;

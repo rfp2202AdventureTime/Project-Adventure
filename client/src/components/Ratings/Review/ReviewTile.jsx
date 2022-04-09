@@ -14,7 +14,6 @@ import Helpfulness from './Helpfulness';
 export default function ReviewTile({
   review, addHelpVote, reportReview, index,
 }) {
-  // TODO: display a photo; sort, response, recp,,emt
   const {
     rating, summary, recommend, response, date, body, photos, helpfulness,
   } = review;
@@ -33,11 +32,10 @@ export default function ReviewTile({
   };
 
   const clickEsp = (e) => {
-    // console.log('clicked');
-    // console.log(e.target);
-    setShowModal(false);
-    // if (e.target.closest('ReviewTile__ModalParent-FLanA gURikV')) {
-    // }
+    // console.log(e.currentTarget.className);
+    if (!e.target.closest('ModalParent')) {
+      setShowModal(false);
+    }
   };
 
   useEffect(() => {
@@ -77,12 +75,16 @@ export default function ReviewTile({
         isSelected={clickPhoto}
       />
       <ModalParent
+        className="ModalParent"
         showModal={showModal}
         onClick={clickEsp}
+
       >
         <Modal
+          className="Modal"
           showModal={showModal}
           modal={modalUrl}
+
         />
       </ModalParent>
       <Helpfulness
