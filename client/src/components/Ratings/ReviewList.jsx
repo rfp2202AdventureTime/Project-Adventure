@@ -50,7 +50,7 @@ export default function ReviewList({ filterStatus }) {
     setSort(criteria);
   };
 
-  const handleSearch = (keyword) => {
+  const handleSearch = () => {
     setKeyword(keyword);
     const searchedData = reviewDetail.filteredReview.filter(
       (review) => review.body.toLowerCase().includes(keyword) || review.summary.toLowerCase().includes(keyword),
@@ -62,8 +62,21 @@ export default function ReviewList({ filterStatus }) {
     });
   };
 
+  const filterReview = (reviews) => {
+    let filteredReview = [];
+    if (filterStatus.filterCount) {
+      reviews.forEach((review) => {
+        const star = review.rating.toString();
+        filterStatus[star] && filteredReview.push(review);
+      });
+    } else {
+      filteredReview = reviews;
+    }
+    return filteredReview;
+  };
+
   const resetSearch = () => {
-    const filteredData = filterReview(reviewDetail.allReview)
+    const filteredData = filterReview(reviewDetail.allReview);
     setReviewDetail({
       ...reviewDetail,
       prevCount: filteredData.length,
@@ -80,19 +93,6 @@ export default function ReviewList({ filterStatus }) {
       .catch((err) => Console.log(err));
   };
 
-
-  const filterReview = (reviews) => {
-    let filteredReview = [];
-    if (filterStatus.filterCount) {
-      reviews.forEach((review) => {
-        const star = review.rating.toString();
-        filterStatus[star] && filteredReview.push(review);
-      });
-    } else {
-      filteredReview = reviews;
-    }
-    return filteredReview;
-  };
 
   const fetchFeed = () => {
     if (prevCount < reviewDetail.allReview.length) {

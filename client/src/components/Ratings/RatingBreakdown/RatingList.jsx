@@ -26,7 +26,6 @@ export default function RatingList({ toggleFilter, filterStatus, clearFilter }) 
       }
     });
   }
-
   const removeAllFilter = (() => {
     clearFilter();
   });
@@ -36,7 +35,6 @@ export default function RatingList({ toggleFilter, filterStatus, clearFilter }) 
     if (filterStatus.filterCount) {
       Object.keys(filterStatus).forEach((key) => {
         if (key !== 'filterCount') {
-          // eslint-disable-next-line no-unused-expressions
           filterStatus[key] && tags.push(`${key} Star`);
         }
       });
@@ -84,10 +82,8 @@ const Ratings = styled.div`
   padding: 1rem;
   padding-right: 3rem;
 `;
-
 // TODO:make this pretty
 const SortingTags = styled.div`
-
 `;
 const ClearFilter = styled.button`
   background-color: transparent;
