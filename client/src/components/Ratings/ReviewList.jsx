@@ -15,7 +15,10 @@ export default function ReviewList({ filterStatus }) {
   const reviewMeta = useMeta();
   const [sort, setSort] = useState('relevant');
   const [initialRender, setInitialRender] = useState(true);
+<<<<<<< HEAD
   const [keyword, setKeyword] = useState(null);
+=======
+>>>>>>> 46fcd52 (fix review render sorting bug fix)
   const [prevCount, setPrevCount] = useState(0);
   const [reviewDetail, setReviewDetail] = useState({
     allReview: [],
@@ -72,9 +75,11 @@ export default function ReviewList({ filterStatus }) {
     } else {
       filteredReview = reviews;
     }
+    // console.log('filteredReview Output is' , filteredReview)
     return filteredReview;
   };
 
+<<<<<<< HEAD
   const resetSearch = () => {
     const filteredData = filterReview(reviewDetail.allReview);
     setReviewDetail({
@@ -83,6 +88,26 @@ export default function ReviewList({ filterStatus }) {
       filteredReview: filteredData,
     });
     setKeyword(null);
+=======
+  // totalCT get from reviewMeta isn't accurate due to reported reviews removal from db
+  const getReview = () => (
+    axios({
+      method: 'get',
+      url: '/reviews',
+      params: {
+        product_id: productId,
+        count: reviewMeta?.totalCT,
+        sort,
+      },
+    }));
+
+  const addHelpVote = (reviewId) => {
+    axios({
+      method: 'put',
+      url: `/reviews/${reviewId}/helpful`,
+    })
+      .catch((err) => Console.log(err));
+>>>>>>> 46fcd52 (fix review render sorting bug fix)
   };
 
   const reportReview = (reviewId) => {
@@ -108,6 +133,10 @@ export default function ReviewList({ filterStatus }) {
   useEffect(() => {
     getReview()
       .then(({ data }) => {
+<<<<<<< HEAD
+=======
+        // console.log('rendering', data);
+>>>>>>> 46fcd52 (fix review render sorting bug fix)
         setInitialRender(initialRender && !initialRender);
         setReviewDetail({
           filteredReview: filterReview(data.results),
@@ -128,6 +157,7 @@ export default function ReviewList({ filterStatus }) {
 
   return (
     <ReviewSection>
+<<<<<<< HEAD
       <StickyTop>
         <SearchBar
           resetSearch={resetSearch}
@@ -162,6 +192,35 @@ export default function ReviewList({ filterStatus }) {
           <Button> Add a Review +</Button>
         </ButtonBlock>
       </StickyBottom>
+=======
+      <SortBar
+        totalCT={reviewDetail.filteredReview.length}
+        handleSort={handleSort}
+      />
+      <ReviewContainer>
+        {reviewDetail.filteredReview.map(
+          (review, index) => (
+            <ReviewTile
+              key={review.review_id.toString()}
+              addHelpVote={addHelpVote}
+              review={review}
+              index={index}
+              reportReview={reportReview}
+            />
+          ),
+        )}
+      </ReviewContainer>
+      <ButtonBlock>
+        { (!(filterStatus.filterCount)
+          && (prevCount < reviewDetail.allReview.length))
+          ? (
+            <Botton onClick={fetchFeed}>
+              MORE REVIEWS
+            </Botton>
+          ) : ''}
+        <Botton> ADD A REVIEW +</Botton>
+      </ButtonBlock>
+>>>>>>> 46fcd52 (fix review render sorting bug fix)
     </ReviewSection>
   );
 }
