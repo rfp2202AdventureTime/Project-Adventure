@@ -15,9 +15,7 @@ export function ThumbnailProvider({ children }) {
   const [thumbnailInformation, setThumbnailInformation] = useState([]);
 
   useEffect(() => {
-    if (!related) {
-      console.log('loading information');
-    } else {
+    if (related) {
       Promise.all(related.map((number) => axios({
         method: 'get',
         url: `products/${number}/styles`,

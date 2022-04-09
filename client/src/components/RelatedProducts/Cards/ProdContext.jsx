@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   React, useContext, useState, useEffect, createContext,
 } from 'react';
@@ -15,9 +16,7 @@ export function ProdProvider({ children }) {
   const [relatedInformation, setRelatedInformation] = useState([]);
 
   useEffect(() => {
-    if (!related) {
-      console.log('loading information');
-    } else {
+    if (related) {
       Promise.all(related.map((number) => axios({
         method: 'get',
         url: `products/${number}`,

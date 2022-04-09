@@ -24,8 +24,8 @@ function Features({ item1, item2 }) {
         </tr>
       </thead>
       <tbody>
-        {FeatArray.map((item) => (
-          <tr>
+        {FeatArray.map((item, key) => (
+          <tr key={key}>
 
             <td>{item1Array.map((item1) => (item1.feature === item.feature ? 'X' : ' '))}</td>
 
