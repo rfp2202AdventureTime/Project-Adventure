@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
@@ -54,7 +55,7 @@ function ImageGallery({ children, photos }) {
 
               {navVisibile && (
               <DotNavPresenter className={view}>
-                {photos.map((i) => (
+                {photos.map((photo, i) => (
                   <Dot key={i} className={(i === imgIdx && 'selected')} onClick={() => handleImgIdxChange(i)} />
                 ))}
               </DotNavPresenter>
@@ -187,8 +188,12 @@ const ExitButton = styled.span`
   ${VisibleInExpanded}
   color: ${({ theme }) => theme.colors.primary};
   & > *:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     transition: transform 0.1s ease-in-out;
+  }
+  & > *:active {
+    transform: scale(0.95);
+    transition: transform 0.06s ease-in-out;
   }
   & > * { transition: transform 0.1s ease-in-out; }
 `;

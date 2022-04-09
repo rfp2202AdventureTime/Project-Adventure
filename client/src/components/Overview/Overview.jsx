@@ -6,6 +6,8 @@ import { FiCheck } from 'react-icons/fi';
 import { useCurrentProduct } from '@Contexts/ProductIDContext';
 import { useActiveStyle } from '@Contexts/StylesProvider';
 
+import Price from '@Components/Shared/Price';
+
 import ImageGallery from './ImageGallery';
 import StyleSelector from './StyleSelector';
 import AddToCart from './AddToCart';
@@ -20,7 +22,8 @@ function Overview() {
       <ImageGallery photos={photos}>
         <Category>{currentProduct && currentProduct.category}</Category>
         <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
-        <Price>$159</Price>
+        {activeStyle
+        && <Price original={activeStyle.original_price} discount={activeStyle.sale_price} />}
         {activeStyle && <StyleSelector />}
         {activeStyle && <AddToCart skus={activeStyle.skus} />}
       </ImageGallery>
@@ -33,10 +36,11 @@ function Overview() {
         <Features>
           <FeatureItems>
             {currentProduct
-            && currentProduct.features.map((f) => (
-              <FeatureItem key={f.feature}>
+            && currentProduct.features.map((f, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <FeatureItem key={i}>
                 <FiCheck size={18} />
-                <strong>{`${f.feature}: `}</strong>
+                <strong>{`${f.feature} `}</strong>
                 {f.value}
               </FeatureItem>
             ))}
@@ -91,10 +95,6 @@ const Category = styled.h3`
   font-weight: normal;
   text-transform: uppercase;
   font-size: 0.9em;
-`;
-
-const Price = styled.div`
-  padding-bottom: 10px;
 `;
 
 export default Overview;
