@@ -49,10 +49,12 @@ const CompareButton = styled.button`
 `;
 
 const TestingModal = styled.section`
-  display: ${(props) => (props.show ? 'block' : 'none')};
-  position: relative;
-  background: grey;
+  display: ${(props) => (props.show ? 'relative' : 'none')};
+  position: absolute;
   z-index: 500;
+  top: -10;
+  left: -1;
+  background: grey;
   border-style: 10px solid;
 `;
 export default ProductImg;

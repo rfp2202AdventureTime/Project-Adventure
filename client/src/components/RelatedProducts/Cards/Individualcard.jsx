@@ -28,7 +28,7 @@ function Individualcard({ product }) {
 }
 
 const IndCard = styled.div`
-  display: table-cell;
+  display: table-cell, relative;
   border-style: solid;
   border-width: 2px;
   width: fit-content;
