@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 // TODO: fix pro-types for this file
+
+
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -24,6 +26,7 @@ export default function ReviewTile({ review, addHelpVote, reportReview, index })
 
   const clickPhoto = (i) => {
     setModalUrl(photos[i].url);
+
     setShowModal(!showModal);
   };
 
@@ -78,6 +81,7 @@ export default function ReviewTile({ review, addHelpVote, reportReview, index })
         reportReview={reportReview}
         index={index}
       />
+
     </ReviewBlock>
   );
 }
