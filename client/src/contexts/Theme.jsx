@@ -10,6 +10,8 @@ const theme = {
     light: '#ffffff',
     offWhite: '#FAF9F6',
     modalBackground: 'rgba(0,0,0,0.8)',
+    // button color still not pretty - open to all suggestions
+    buttonHover: 'rgba(167, 201, 227, 0.36)',
   },
   fonts: {
     title: {

@@ -14,6 +14,7 @@ export default function ReviewList() {
     allReview: [],
   });
 
+  // totalCT get from reviewMeta isn't accurate due to reported reviews removal from db
   const getReview = () => (
     axios({
       method: 'get',
@@ -23,6 +24,18 @@ export default function ReviewList() {
         count: reviewMeta?.totalCT,
       },
     }));
+
+  const addHelpVote = (reviewId) => {
+    console.log('voted');
+    axios({
+      method: 'put',
+      url: `/reviews/${reviewId}/helpful`,
+    })
+      .then(() => {
+        console.log('success');
+      })
+      .catch((err) => console.log(err));
+  };
 
   // TODO: check to see if there's memory leakage on unmounted components.
   useEffect(() => {
@@ -51,8 +64,10 @@ export default function ReviewList() {
       {reviewDetail.allReview.slice(0, reviewDetail.prevCount).map(
         (review) => (
           <ReviewTile
-            key={review.review_id}
+            key={review.review_id.toString()}
+            addHelpVote={addHelpVote}
             review={review}
+          helpfulness={review.helpfulness}
           />
         ),
       )}
@@ -90,4 +105,7 @@ const Botton = styled.button`
   padding: 1.3rem 1rem 1.3rem 1rem;
   font-size: medium;
   font-weight: 700;
+  &:hover {
+    background-color:${(props) => props.theme.colors.buttonHover}
+  }
 `;

@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-export default function Helpfulness({ helpfulness, reviewId }) {
-  // const [showButton, setShowButton] = useState(false);
-  const [help, setHelp] = useState(false);
+export default function Helpfulness({ addHelpVote, helpfulness, reviewId }) {
+  const [helpCount, setHelpCount] = useState(helpfulness);
 
-  // useEffect(() => {
-
-  // }, []);
   const vote = () => {
-    console.log('voted');
-    axios({
-      method: 'put',
-      url: `/reviews/${reviewId}/helpful`,
-    })
-      .then(() => {
-        console.log('success');
-        setHelp(!help);
-      })
-      .catch((err) => console.log(err));
+    addHelpVote(reviewId);
+    setHelpCount(helpCount + 1);
   };
 
   const report = () => {
@@ -35,7 +22,7 @@ export default function Helpfulness({ helpfulness, reviewId }) {
       </FontLikeButton>
       <WhiteSpaceWrapper>
         (
-        {helpfulness}
+        {helpCount}
         )
       </WhiteSpaceWrapper>
       {' | '}
@@ -65,4 +52,5 @@ margin-left: 0.5rem;
 Helpfulness.propTypes = {
   helpfulness: PropTypes.number.isRequired,
   reviewId: PropTypes.number.isRequired,
+  addHelpVote: PropTypes.func.isRequired,
 };

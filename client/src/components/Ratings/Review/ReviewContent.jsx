@@ -44,13 +44,17 @@ const ReviewContainer = styled.div`
 
 const MiniBotton = styled.button`
   display: ${(props) => (props.showButton ? 'block' : 'none')};
-  border: 2px solid;
   text-align: center;
   padding: 0.4rem 0.4rem 0.4rem 0.4rem;
   font-size: small;
   font-weight: 400;
-  border-radius:5px
+  border-radius: 0.5rem;
   margin-top: 0.5rem;
+  &:hover {
+    background-color:${(props) => props.theme.colors.buttonHover}
+  }
+
+  }
 `;
 
 ReviewContent.propTypes = {
