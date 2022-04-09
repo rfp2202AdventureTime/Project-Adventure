@@ -1,24 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useMeta } from '../../contexts/ReviewMeta';
 import RatingBreakdown from './RatingBreakdown';
 import ReviewList from './ReviewList';
+import Console from '../../Console';
 
 export default function Ratings() {
   const currentMeta = useMeta();
-  const ratingBreakdown = (currentMeta && currentMeta.avgRating) ? <RatingBreakdown /> : <div />;
+  const [filterStatus, setFilterStatus] = useState({
+    5: false,
+    4: false,
+    3: false,
+    2: false,
+    1: false,
+    filterCount: 0,
+  });
+
+  const getfilterCount = (selected) => {
+    let { filterCount } = filterStatus;
+    if (filterStatus[selected]) {
+      filterCount -= 1;
+    } else {
+      filterCount += 1;
+    }
+    return filterCount;
+  };
+
+  const toggleFilter = (selected) => {
+    const filterCount = getfilterCount(selected);
+    setFilterStatus({
+      ...filterStatus,
+      filterCount,
+      [selected]: !filterStatus[selected],
+    });
+  };
 
   return (
     <RatingSection>
-      {ratingBreakdown}
-      <ReviewList />
+      {currentMeta?.avgRating ? (
+        <RatingBreakdown
+          toggleFilter={toggleFilter}
+        />
+      ) : ''}
+      <ReviewList filterStatus={filterStatus} />
     </RatingSection>
   );
 }
 
 // inherented theme
 const RatingSection = styled.section`
-  background-color: ${(props) => props.theme.colors.light};
+  background-color: ${({ theme }) => theme.colors.light};
   display: flex;
   flex-direction: row;
   padding: 2rem 0rem 4rem 1rem;

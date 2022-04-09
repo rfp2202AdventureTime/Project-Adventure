@@ -1,21 +1,37 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+// import PropTypes from 'prop-types';
 import ReviewTile from './Review/ReviewTile';
 import SortBar from './Review/SortBar';
 import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
 import { ProductIDContext } from '../../contexts/ProductIDContext';
 
-export default function ReviewList() {
+export default function ReviewList({ filterStatus }) {
   const productId = useContext(ProductIDContext);
   const reviewMeta = useMeta();
   const [sort, setSort] = useState('relevant');
   const [reviewDetail, setReviewDetail] = useState({
     prevCount: 0,
     allReview: [],
-    totalCT:0,
+    filteredReview: [],
+    totalCT: 0,
   });
+
+  const filterReview = (reviews) => {
+    // review = review.slice(0, reviewDetail.prevCount)
+    let filteredReview = [];
+    if (filterStatus.filterCount) {
+      reviews.forEach((review) => {
+        const star = review.rating.toString();
+        filterStatus[star] && filteredReview.push(review);
+      });
+    } else {
+      filteredReview = reviews;
+    }
+    return filteredReview;
+  };
 
   // totalCT get from reviewMeta isn't accurate due to reported reviews removal from db
   const getReview = () => (
@@ -24,6 +40,7 @@ export default function ReviewList() {
       url: '/reviews',
       params: {
         product_id: productId,
+        ///here
         count: reviewMeta?.totalCT,
         sort,
       },
@@ -39,31 +56,31 @@ export default function ReviewList() {
 
   const handleSort = (criteria) => {
     setSort(criteria);
-  }
+  };
 
   const reportReview = (index, reviewId) => {
     axios({
       method: 'put',
       url: `/reviews/${reviewId}/report`,
     })
-    .then( () => {
-      let tempData = reviewDetail;
-      tempData.allReview.splice(index, 1);
-      setReviewDetail({
-        prevCount:reviewDetail.prevCount,
-        allReview: tempData.allReview,
-        totalCT: tempData.totalCT,
-      });
-    })
+      .then(() => {
+        const tempData = reviewDetail;
+        tempData.allReview.splice(index, 1);
+        setReviewDetail({
+          ...reviewDetail,
+          allReview: tempData.allReview,
+          totalCT: tempData.totalCT,
+        });
+      })
       .catch((err) => Console.log(err));
   };
 
   const fetchFeed = () => {
     if (reviewDetail.prevCount < reviewDetail.allReview.length) {
       setReviewDetail({
-        allReview: reviewDetail.allReview,
+        ...reviewDetail,
+        filteredReview: filterReview(reviewDetail.allReview),
         prevCount: reviewDetail.allReview.length,
-        totalCT: reviewDetail.totalCT,
       });
     }
   };
@@ -72,24 +89,25 @@ export default function ReviewList() {
   useEffect(() => {
     getReview()
       .then(({ data }) => {
+        // console.log(data.results);
         setReviewDetail({
+          filteredReview: filterReview(data.results),
           allReview: data.results,
           totalCT: data.results.length,
           prevCount: Math.min(data.results.length, 2),
         });
       })
       .catch((err) => Console.log(err));
-  }, [productId, sort]);
-
-
+  }, [productId, sort, filterStatus.filterCount]);
 
   return (
     <ReviewSection>
       <SortBar
-      totalCT={reviewDetail.totalCT}
-      handleSort={handleSort}/>
+        totalCT={reviewDetail.totalCT}
+        handleSort={handleSort}
+      />
       <ReviewContainer>
-        {reviewDetail.allReview.slice(0, reviewDetail.prevCount).map(
+        {reviewDetail.filteredReview.map(
           (review, index) => (
             <ReviewTile
               key={review.review_id.toString()}
@@ -143,6 +161,12 @@ const Botton = styled.button`
   font-size: medium;
   font-weight: 700;
   &:hover {
-    background-color:${({theme}) => theme.colors.buttonHover}
+    background-color:${({ theme }) => theme.colors.buttonHover}
   }
 `;
+
+// TODO: figure out nested proptype
+// ReviewList.propTypes = {
+//   filterStatus: PropTypes.shape({
+//   }),
+// };

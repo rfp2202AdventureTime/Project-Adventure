@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useMeta } from '../../../contexts/ReviewMeta';
+import PropTypes from 'prop-types';
 
+import { useMeta } from '../../../contexts/ReviewMeta';
 import RatingBar from './RatingBar';
 
-export default function RatingList() {
+export default function RatingList({ toggleFilter }) {
   const starList = [];
   // let totalCT = 0;
 
@@ -33,6 +34,7 @@ export default function RatingList() {
             scorePerct={scorePerct}
             id={item.id.toString()}
             data-testid="ratingBar"
+            toggleFilter={toggleFilter}
           />
         );
       })}
@@ -47,3 +49,7 @@ const Ratings = styled.div`
   padding: 1rem;
   padding-right: 3rem;
 `;
+
+RatingList.propTypes = {
+  toggleFilter: PropTypes.func.isRequired,
+};

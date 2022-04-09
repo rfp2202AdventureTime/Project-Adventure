@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 // TODO: fix pro-types for this file
 
-
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';

@@ -2,10 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-export default function RatingBar({ scorePerct, id }) {
+export default function RatingBar({ scorePerct, id, toggleFilter }) {
+  const handleClick = (e) => {
+    const selected = e.target.className.slice(-1);
+    toggleFilter(selected);
+  };
+
   return (
     <RatingBarBlock>
-      <StarLink>
+      <StarLink
+        className={`${id}`}
+        onClick={handleClick}
+      >
         {`${id} Star`}
       </StarLink>
       <GreyBar>
@@ -14,7 +22,6 @@ export default function RatingBar({ scorePerct, id }) {
         />
       </GreyBar>
     </RatingBarBlock>
-
   );
 }
 
@@ -28,12 +35,15 @@ const RatingBarBlock = styled.div`
   height: 1.5rem;
   justify-content: flex-end;
   width: 15rem;
-  gap: 1rem;
+  // gap: 1rem;
   overflow: hidden;
 
 `;
 
-const StarLink = styled.div`
+const StarLink = styled.button`
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
 `;
 
 const GreyBar = styled.div`
@@ -41,7 +51,7 @@ const GreyBar = styled.div`
   position: relative;
   vertical-align: middle;
   display: inline-block;
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.background};
   overflow: hidden;
   width: 10rem;
   height: 0.5rem;
@@ -55,10 +65,11 @@ const GreenBar = styled.div`
   white-space: nowrap;
   overflow: hidden;
   background-color: #4CAF50;
-  width: ${(props) => props.width};
+  width: ${({ width }) => width};
 `;
 
 RatingBar.propTypes = {
   scorePerct: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  toggleFilter: PropTypes.func.isRequired,
 };
