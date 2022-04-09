@@ -11,7 +11,9 @@ import PhotoList from './PhotoList';
 import ReviewContent from './ReviewContent';
 import Helpfulness from './Helpfulness';
 
-export default function ReviewTile({ review, addHelpVote, reportReview, index }) {
+export default function ReviewTile({
+  review, addHelpVote, reportReview, index,
+}) {
   // TODO: display a photo; sort, response, recp,,emt
   const {
     rating, summary, recommend, response, date, body, photos, helpfulness,
@@ -30,14 +32,22 @@ export default function ReviewTile({ review, addHelpVote, reportReview, index })
     setShowModal(!showModal);
   };
 
+  const clickEsp = (e) => {
+    // console.log('clicked');
+    // console.log(e.target);
+    setShowModal(false);
+    // if (e.target.closest('ReviewTile__ModalParent-FLanA gURikV')) {
+    // }
+  };
+
   useEffect(() => {
-    const close = (e) => {
+    const espExit = (e) => {
       if (e.key === 'Escape') {
         setShowModal(false);
       }
     };
-    window.addEventListener('keydown', close);
-    return () => window.removeEventListener('keydown', close);
+    window.addEventListener('keydown', espExit);
+    return () => window.removeEventListener('keydown', espExit);
   }, []);
 
   return (
@@ -68,6 +78,7 @@ export default function ReviewTile({ review, addHelpVote, reportReview, index })
       />
       <ModalParent
         showModal={showModal}
+        onClick={clickEsp}
       >
         <Modal
           showModal={showModal}
@@ -128,7 +139,6 @@ const Modal = styled.div`
   height: 60%;
   position: relative;
   margin: 10% auto;
-  padding: 2rem;
   color: #444;
   background: ${(props) => (props.modal ? `url(${props.modal})` : props.theme.colors.primary)};
   background-repeat: no-repeat;

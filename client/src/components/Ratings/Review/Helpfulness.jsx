@@ -22,18 +22,18 @@ export default function Helpfulness({
   return (
     <HelpfulnessContainer>
       Helpful?
-      <FontLikeButton onClick={vote}>
+      <ButtonBlock onClick={vote}>
         Yes
-      </FontLikeButton>
+      </ButtonBlock>
       <WhiteSpaceWrapper>
         (
         {helpCount}
         )
       </WhiteSpaceWrapper>
       {' | '}
-      <FontLikeButton onClick={report}>
+      <ButtonBlock onClick={report}>
         Report
-      </FontLikeButton>
+      </ButtonBlock>
     </HelpfulnessContainer>
   );
 }
@@ -47,7 +47,7 @@ const HelpfulnessContainer = styled.div`
 const WhiteSpaceWrapper = styled.div`
   margin-right: 1rem;
 `;
-const FontLikeButton = styled.button`
+const ButtonBlock = styled.button`
 background-color: transparent;
 border: none;
 text-decoration: underline;
