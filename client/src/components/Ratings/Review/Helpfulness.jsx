@@ -1,58 +1,68 @@
 import React, { useState, useEffect } from 'react';
-
+import axios from 'axios';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-export default function Helpfulness({ body }) {
-  const [showButton, setShowButton] = useState(false);
-  const [modifiedBody, setModifiedBody] = useState(body);
-  useEffect(() => {
-    if (body.length > 250) {
-      setShowButton(true);
-      setModifiedBody(body.slice(0, 251).concat(' ...'));
-    }
-  }, [body]);
+export default function Helpfulness({ helpfulness, reviewId }) {
+  // const [showButton, setShowButton] = useState(false);
+  const [help, setHelp] = useState(false);
 
-  const toggleShowMore = () => {
-    setShowButton(!showButton);
-    setModifiedBody(body);
+  // useEffect(() => {
+
+  // }, []);
+  const vote = () => {
+    console.log('voted');
+    axios({
+      method: 'put',
+      url: `/reviews/${reviewId}/helpful`,
+    })
+      .then(() => {
+        console.log('success');
+        setHelp(!help);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const report = () => {
+    console.log('reported');
   };
 
   return (
-    <ReviewContainer>
-      {modifiedBody}
-      {showButton
-        ? (
-          <MiniBotton
-            showButton={showButton}
-            onClick={toggleShowMore}
-          >
-            {' '}
-            Show More
-          </MiniBotton>
-        ) : ''}
-    </ReviewContainer>
+    <HelpfulnessContainer>
+      Helpful?
+      <FontLikeButton onClick={vote}>
+        Yes
+      </FontLikeButton>
+      <WhiteSpaceWrapper>
+        (
+        {helpfulness}
+        )
+      </WhiteSpaceWrapper>
+      {' | '}
+      <FontLikeButton onClick={report}>
+        Report
+      </FontLikeButton>
+    </HelpfulnessContainer>
   );
 }
 
 // Style components
 
-const ReviewContainer = styled.div`
-  overflow-wrap: break-word;
-    hyphens: manual;
+const HelpfulnessContainer = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
-
-const MiniBotton = styled.button`
-  display: ${(props) => (props.showButton ? 'block' : 'none')};
-  border: 2px solid;
-  text-align: center;
-  padding: 0.4rem 0.4rem 0.4rem 0.4rem;
-  font-size: small;
-  font-weight: 400;
-  border-radius:5px
-  margin-top: 0.5rem;
+const WhiteSpaceWrapper = styled.div`
+  margin-right: 1rem;
+`;
+const FontLikeButton = styled.button`
+background-color: transparent;
+border: none;
+text-decoration: underline;
+margin-left: 0.5rem;
 `;
 
 Helpfulness.propTypes = {
-  body: PropTypes.string.isRequired,
+  helpfulness: PropTypes.number.isRequired,
+  reviewId: PropTypes.number.isRequired,
 };

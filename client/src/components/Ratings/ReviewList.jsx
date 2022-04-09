@@ -2,18 +2,18 @@ import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import ReviewTile from './Review/ReviewTile';
+import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
 import { ProductIDContext } from '../../contexts/ProductIDContext';
 
 export default function ReviewList() {
   const productId = useContext(ProductIDContext);
-  const reviewMeta = useMeta();
-  const [prevCount, setPrevCount] = useState(0);
-  const [page, setPage] = useState(1);
-  const [reviewFeed, setReviewFeed] = useState([]
-    );
-  let totalCT = reviewMeta?.totalCT;
-
+  // const [prevCount, setPrevCount] = useState(0);
+  // const [allReview, setAllReview] = useState([]);
+  const [reviewDetail, setReviewDetail] = useState({
+    prevCount: 0,
+    allReview: [],
+  });
 
   const getReview = () => (
     axios({
@@ -21,8 +21,7 @@ export default function ReviewList() {
       url: '/reviews',
       params: {
         product_id: productId,
-        count: 2,
-        page,
+        count: 999,
       },
     }));
 
@@ -30,39 +29,37 @@ export default function ReviewList() {
   useEffect(() => {
     getReview()
       .then(({ data }) => {
-        const review = data.results;
-        if (reviewFeed.length === 0) {
-          setPrevCount(review.length);
-        } else {
-          setPrevCount(Math.min(totalCT, prevCount + 2));
-        }
-        setReviewFeed(reviewFeed.concat(review));
+        setReviewDetail({
+          allReview: data.results,
+          prevCount: Math.min(data.results.length, 2),
+        });
       })
-      .catch((err) => console.log(err));
-  }, [page]);
+      .catch((err) => Console.log(err));
+  }, [productId]);
 
   const fetchFeed = () => {
-    if(prevCount < totalCT) {
-      setPage(page + 1);
+    if (prevCount < allReview.length) {
+      setPrevCount(allReview.length);
     }
   };
 
   return (
     <ReviewContainer>
-    {reviewFeed.map(
-      (review) => (
-        <ReviewTile
-        key={review.review_id}
-        review={review}
-        />
+      {allReview.slice(0, prevCount + 1).map(
+        (review) => (
+          <ReviewTile
+            key={review.review_id}
+            review={review}
+          />
         ),
       )}
       <ButtonBlock>
-        {(prevCount < totalCT) ?
-          (<Botton onClick={fetchFeed}>
-            MORE REVIEWS
-          </Botton>) : ''
-        }
+        {(prevCount < allReview.length)
+          ? (
+            <Botton onClick={fetchFeed}>
+              MORE REVIEWS
+            </Botton>
+          ) : ''}
         <Botton> ADD A REVIEW +</Botton>
       </ButtonBlock>
     </ReviewContainer>

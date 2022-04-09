@@ -10,10 +10,12 @@ export default function ReviewTile(review) {
   // TODO: display a photo; sort, response, recp,,emt
   const {
     review: {
-      rating, summary, recommend, response, date, body, photos,
+      rating, summary, recommend, response, date, body, photos, helpfulness,
     },
   } = review;
   const convertedDate = moment(date).format('MMMM D, YYYY');
+  // eslint-disable-next-line react/destructuring-assignment
+  const reviewId = review.review.review_id;
   // eslint-disable-next-line react/destructuring-assignment
   const usernameDate = `${review.review.reviewer_name},  ${convertedDate}`;
   const [showModal, setShowModal] = useState(false);
@@ -68,6 +70,10 @@ export default function ReviewTile(review) {
           modal={modalUrl}
         />
       </ModalParent>
+      <Helpfulness
+        reviewId={reviewId}
+        helpfulness={helpfulness}
+      />
     </ReviewBlock>
   );
 }
@@ -77,7 +83,7 @@ const ReviewBlock = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0.25rem 0.5rem 0.25rem 0.5rem;
-  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  padding: 0.25rem 1rem 0.25rem 1rem;
   // border-bottom: 0.2rem dotted rgba(221, 235, 223);
   background-color: ${(props) => props.theme.colors.offWhite};
 `;
@@ -135,6 +141,6 @@ const Response = styled.div`
   margin: 0.7rem;
 `;
 const Recommend = styled.div`
-  padding: 0.7rem;
+  padding: 0.7rem 0.7rem 0 0.7rem;
   font-style: italic;
 `;
