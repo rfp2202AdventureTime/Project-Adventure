@@ -14,6 +14,10 @@ export default function QAItem({ question, allAnswers }) {
   const [numAsToRender, setNumAsToRender] = useState(2);
   const [moreAsClicked, setMoreAsClicked] = useState(true);
   const [reported, setReported] = useState(false);
+  const [disableHelpfulQuestion, setdisableHelpfulQuestion] = useState(false);
+  const [disableHelpfulAnswer, setdisableHelpfulAnswer] = useState(false);
+
+
   const filteredAnswers = allAnswers.filter(
     (answer) => answer.question === question.question_id.toString(),
   );
@@ -125,7 +129,15 @@ export default function QAItem({ question, allAnswers }) {
         </QAItemQuestionLeft>
         <QAItemQuestionRight>
           {'Helpful? '}
-          <u onClick={(e) => handleQuestionHelpful('helpful', question.question_id)}>Yes</u>
+          <ClickableText
+            disabled={disableHelpfulQuestion}
+            onClick={() => {
+              setdisableHelpfulQuestion(true);
+              handleQuestionHelpful('helpful', question.question_id);
+            }}
+          >
+            Yes
+          </ClickableText>
           {` (${question.question_helpfulness}) | `}
           <u value='add answer' onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
         </QAItemQuestionRight>
@@ -143,9 +155,21 @@ export default function QAItem({ question, allAnswers }) {
             }
             {`${moment(answer[0].date).format('MMMM DD, YYYY')} |
             Helpful? `}
-            <u onClick={(e) => handleHelpfulAnswer('helpful', answer[0].answer_id)}>Yes</u>
+            <ClickableText
+              disabled={disableHelpfulAnswer}
+              onClick={() => {
+                setdisableHelpfulAnswer(true);
+                handleHelpfulAnswer('helpful', answer[0].answer_id);
+              }}
+            >
+              Yes
+            </ClickableText>
             {` (${answer[0].helpfulness}) | `}
-            {!reported && <u onClick={(e) => handleReport('report', answer[0].answer_id)}>Report</u>}
+            {!reported && <ClickableText
+              onClick={() => handleReport('report', answer[0].answer_id)}
+            >
+              Report
+            </ClickableText>}
           </span>
           <QAPhotoContainer>
             { answer[1].map((photos) => (
@@ -238,6 +262,18 @@ const QAPhotoContainer = styled.div`
   gap: 20px;
   max-width: 400px;
   padding: 10px 0;
+`;
+
+const ClickableText = styled.button`
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
 `;
 
 QAItem.propTypes = {
