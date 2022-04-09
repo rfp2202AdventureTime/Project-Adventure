@@ -1,35 +1,41 @@
 /* eslint-disable react/prop-types */
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import styled from 'styled-components';
 import Comparison from './Comparison';
+import { useFeature, FeatureProvider } from './FeatureContext';
 
 // link should take it to the product page (productID)
 // src should image of related products
-function ProductImg({ image }) {
+function ProductImg({ image, product }) {
   const [showModal, setShowModal] = useState(false);
-
+  const [ID, setID] = useState();
   const productThumbnail = image;
+
   function handleClick() {
     setShowModal(!showModal);
+    setID(product);
   }
+  // console.log(Feature, 'this is FEATURE!');
 
   return (
 
     <div>
-      <TestingModal show={showModal}>
-        <Comparison />
-      </TestingModal>
+      <FeatureProvider prodID={ID}>
+        <TestingModal show={showModal}>
+          <Comparison />
+        </TestingModal>
 
-      <CompareButton onClick={() => handleClick()}>Compare</CompareButton>
-      <a href="http://google.com">
-        <img
-          src={productThumbnail}
-          width={250}
-          height={150}
-          alt="If you can see this, thumbnail not found"
-        />
-      </a>
+        <CompareButton onClick={() => handleClick()}>Compare</CompareButton>
+        <a href="http://google.com">
+          <img
+            src={productThumbnail}
+            width={250}
+            height={150}
+            alt="If you can see this, thumbnail not found"
+          />
+        </a>
 
+      </FeatureProvider>
     </div>
   );
 }

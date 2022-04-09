@@ -10,7 +10,7 @@ function Individualcard({ product }) {
   return (
     <div>
       <IndCard>
-        <ProductImg image={product[1]} />
+        <ProductImg image={product[1]} product={product[0].id} />
         <CardText>
           <CategoryText>
             <div>{product[0].category}</div>

@@ -4,6 +4,7 @@ import Outfit from './Outfit';
 import { RelatedProvider } from './RelatedContext';
 import { ProdProvider } from './Cards/ProdContext';
 import { ThumbnailProvider } from './Cards/thumbnailContext';
+import { FeatureProvider } from './Cards/FeatureContext';
 import AllCards from './Cards/AllCards';
 
 function RelatedProducts() {
@@ -15,9 +16,11 @@ function RelatedProducts() {
       <RelatedProvider>
         <ProdProvider>
           <ThumbnailProvider>
+            <FeatureProvider>
 
-            <AllCards />
+              <AllCards />
 
+            </FeatureProvider>
           </ThumbnailProvider>
         </ProdProvider>
       </RelatedProvider>
