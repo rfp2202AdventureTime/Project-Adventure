@@ -8,7 +8,6 @@ import QAItem from './QAItem';
 export default function Feed({ searchQuesitonBody }) {
   const [numQsToRender, setNumQsToRender] = useState(2);
   const [startQsToRender, setStartQsToRender] = useState(0);
-  const [lengthOfQs, setLengthOfQs] = useState(0);
 
   const questionData = useData().qData;
   const answerData = useData().aData;
@@ -60,7 +59,6 @@ export default function Feed({ searchQuesitonBody }) {
             onClick={() => {
               setNumQsToRender(numQsToRender + 2);
               setStartQsToRender(startQsToRender + 2);
-              setLengthOfQs(tempTotalQsToRender.length);
             }}
           >
             Load More Questions

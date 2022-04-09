@@ -149,10 +149,14 @@ export default function QAItem({ question, allAnswers }) {
             {answer[0].body}
           </span>
           <span>
-            {'by '} {answer[0].answerer_name === 'Seller' ?
-              <strong>{answer[0].answerer_name} </strong>
-              : `${answer[0].answerer_name} `
-            }
+            {'by '}
+            {answer[0].answerer_name === 'Seller'
+              ? (
+                <strong>
+                  {answer[0].answerer_name}
+                </strong>
+              )
+              : `${answer[0].answerer_name} `}
             {`${moment(answer[0].date).format('MMMM DD, YYYY')} |
             Helpful? `}
             <ClickableText
@@ -165,11 +169,13 @@ export default function QAItem({ question, allAnswers }) {
               Yes
             </ClickableText>
             {` (${answer[0].helpfulness}) | `}
-            {!reported && <ClickableText
-              onClick={() => handleReport('report', answer[0].answer_id)}
-            >
-              Report
-            </ClickableText>}
+            {!reported && (
+              <ClickableText
+                onClick={() => handleReport('report', answer[0].answer_id)}
+              >
+                Report
+              </ClickableText>
+            )}
           </span>
           <QAPhotoContainer>
             { answer[1].map((photos) => (
