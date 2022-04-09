@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Outfit from './Outfit';
 import { RelatedProvider } from './RelatedContext';
-import { TestProvider } from './Cards/testingContext';
+import { ProdProvider } from './Cards/ProdContext';
 import { ThumbnailProvider } from './Cards/thumbnailContext';
 import AllCards from './Cards/AllCards';
 
@@ -11,15 +11,15 @@ function RelatedProducts() {
     <RelatedProductsSection>
 
       <h1>Related Products</h1>
-      <RelatedProvider>
-        <TestProvider>
-          <ThumbnailProvider>
 
+      <RelatedProvider>
+        <ProdProvider>
+          <ThumbnailProvider>
 
             <AllCards />
 
           </ThumbnailProvider>
-        </TestProvider>
+        </ProdProvider>
       </RelatedProvider>
 
       <h1>Your Outfit</h1>

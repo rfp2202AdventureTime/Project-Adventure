@@ -1,15 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Individualcard, IndCard } from './Individualcard';
-import ProductImg from './ProductImg';
-import sampleRelatedData from './sampleRelatedData';
-import sampleRelatedThumbnails from './sampleRelatedThumbnails';
-import { RelatedProvider } from '../RelatedContext';
-import { TestProvider, useTest } from './testingContext';
-import { ThumbnailProvider, useThumbnail } from './thumbnailContext';
+import { Individualcard } from './Individualcard';
+import { useProd } from './ProdContext';
+import { useThumbnail } from './thumbnailContext';
 
 function AllCards() {
-  const relatedProds = useTest();
+  const relatedProds = useProd();
   const thumbnail = useThumbnail();
 
   const zippedArray = [];
@@ -23,23 +19,16 @@ function AllCards() {
     });
   }
 
-  // console.log(zippedArray, 'this is zipped')
-
   if (!relatedProds.data) {
     console.log('loading Prods');
   } else {
     return (
-      <RelatedProvider>
-        <TestProvider>
-          <ThumbnailProvider>
 
-            <Layout>
-              {zippedArray.map((item) => <div><Individualcard product={item} /></div>)}
+      <Layout>
+        {zippedArray.map((item, key) => <div><Individualcard product={item} key={key} /></div>)}
 
-            </Layout>
-          </ThumbnailProvider>
-        </TestProvider>
-      </RelatedProvider>
+      </Layout>
+
     );
   }
 }
@@ -47,12 +36,8 @@ function AllCards() {
 const Layout = styled.div`
   display: flex;
   width: fit-content;
-  overflow: flex;
+  height: max-content;
   flex-direction: row;
 `;
 
-const Car = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
 export default AllCards;

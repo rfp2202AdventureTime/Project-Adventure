@@ -1,7 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-import sampleFeatures from './sampleFeatures';
+import sampleFeatures from '../sampledata/sampleFeatures';
 import Features from './Features';
+
+// should get an array with two arrays of features from each item
+function Comparison() {
+  const item1 = sampleFeatures[0];
+  const item2 = sampleFeatures[1];
+
+  return (
+    <Testing>
+      <div>
+
+        <Features item1={item1} item2={item2} />
+
+      </div>
+    </Testing>
+
+  );
+}
 
 const Testing = styled.div`
   border-style: solid;
@@ -13,22 +30,4 @@ const Featstyle = styled.td`
   align-items: center;
   width: max-content;
 `;
-
-function Comparison() {
-  const item1 = sampleFeatures[0].name;
-  const item2 = sampleFeatures[1].name;
-
-  return (
-    <Testing>
-      <div>
-
-        <Features item1={sampleFeatures[0]} item2={sampleFeatures[1]} />
-
-        {/* </table> */}
-      </div>
-    </Testing>
-
-  );
-}
-
 export default Comparison;

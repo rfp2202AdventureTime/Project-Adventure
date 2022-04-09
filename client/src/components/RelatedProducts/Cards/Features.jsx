@@ -1,6 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 
+// adds all the features in to one array
+// then compares if item has feature or not
 function Features({ item1, item2 }) {
   const FeatArray = item1.features.concat(item2.features);
 
@@ -37,8 +40,4 @@ function Features({ item1, item2 }) {
   );
 }
 
-const item1Style = styled.td`
-  display: flex;
-  align-items: center;
-`;
 export default Features;

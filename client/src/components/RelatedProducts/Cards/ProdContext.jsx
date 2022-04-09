@@ -4,12 +4,12 @@ import {
 import axios from 'axios';
 import { useRelated } from '../RelatedContext';
 
-const TestContext = createContext();
+const ProdContext = createContext();
 
-export function useTest() {
-  return useContext(TestContext);
+export function useProd() {
+  return useContext(ProdContext);
 }
-export function TestProvider({ children }) {
+export function ProdProvider({ children }) {
   const related = useRelated();
 
   const [relatedInformation, setRelatedInformation] = useState([]);
@@ -30,10 +30,10 @@ export function TestProvider({ children }) {
   }, [related]);
 
   return (
-    <TestContext.Provider value={relatedInformation}>
+    <ProdContext.Provider value={relatedInformation}>
       { children }
-    </TestContext.Provider>
+    </ProdContext.Provider>
   );
 }
 
-export default TestContext;
+export default ProdContext;

@@ -2,7 +2,6 @@
 import { React, useState } from 'react';
 import styled from 'styled-components';
 import Comparison from './Comparison';
-import { IndCard } from './Individualcard';
 
 // link should take it to the product page (productID)
 // src should image of related products
@@ -20,6 +19,7 @@ function ProductImg({ image }) {
       <TestingModal show={showModal}>
         <Comparison />
       </TestingModal>
+
       <CompareButton onClick={() => handleClick()}>Compare</CompareButton>
       <a href="http://google.com">
         <img
