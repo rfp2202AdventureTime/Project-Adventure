@@ -14,7 +14,7 @@ export default function Feed({ searchQuesitonBody }) {
   let filteredQData = questionData;
   let queryText = '';
   if (searchQuesitonBody !== undefined && searchQuesitonBody.length > 2) {
-    queryText = searchQuesitonBody;
+    queryText = searchQuesitonBody.toLowerCase();
   } else {
     queryText = '';
   }
@@ -24,7 +24,7 @@ export default function Feed({ searchQuesitonBody }) {
   if (questionData !== null) {
     lengthOfFeed = questionData.length;
     filteredQData = questionData.filter(
-      (question) => question.question_body.includes(queryText),
+      (question) => question.question_body.toLowerCase().includes(queryText),
     );
     const compareQuestionHelpfulness = (a, b) => {
       if (a.question_helpfulness > b.question_helpfulness) {

@@ -8,7 +8,6 @@ import { QADataProvider } from './QAContext';
 export default function QA() {
   const [searchQuesitonBody, setSearchQuestionBody] = useState('');
   const [submitSearchQuestionBody, setsubmitSearchQuestionBody] = useState('');
-  console.log(searchQuesitonBody);
   return (
     <QASection>
       <QADataProvider>
