@@ -6,11 +6,16 @@ import RatingOverview from './RatingBreakdown/RatingOverview';
 import RatingList from './RatingBreakdown/RatingList';
 import FactorList from './RatingBreakdown/FactorList';
 
-export default function RatingBreakdown({ toggleFilter }) {
+// eslint-disable-next-line react/prop-types
+export default function RatingBreakdown({ toggleFilter, filterStatus, clearFilter }) {
   return (
     <RatingContainer>
       <RatingOverview />
-      <RatingList toggleFilter={toggleFilter} />
+      <RatingList
+        filterStatus={filterStatus}
+        toggleFilter={toggleFilter}
+        clearFilter={clearFilter}
+      />
       <FactorList />
     </RatingContainer>
   );
@@ -22,6 +27,7 @@ const RatingContainer = styled.div`
   flex-direction: column;
 `;
 
+// TODO: figure out nested proptype
 RatingBreakdown.propTypes = {
   toggleFilter: PropTypes.func.isRequired,
 };

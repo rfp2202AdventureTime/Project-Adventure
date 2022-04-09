@@ -35,11 +35,24 @@ export default function Ratings() {
     });
   };
 
+  const clearFilter = () => {
+    setFilterStatus({
+      5: false,
+      4: false,
+      3: false,
+      2: false,
+      1: false,
+      filterCount: 0,
+    });
+  };
+
   return (
     <RatingSection>
       {currentMeta?.avgRating ? (
         <RatingBreakdown
+          clearFilter={clearFilter}
           toggleFilter={toggleFilter}
+          filterStatus={filterStatus}
         />
       ) : ''}
       <ReviewList filterStatus={filterStatus} />

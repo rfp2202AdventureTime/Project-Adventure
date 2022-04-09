@@ -12,15 +12,15 @@ export default function ReviewList({ filterStatus }) {
   const productId = useContext(ProductIDContext);
   const reviewMeta = useMeta();
   const [sort, setSort] = useState('relevant');
+  const [prevCount, setPrevCount] = useState(0);
   const [reviewDetail, setReviewDetail] = useState({
-    prevCount: 0,
+    // prevCount: 0,
     allReview: [],
     filteredReview: [],
     totalCT: 0,
   });
 
   const filterReview = (reviews) => {
-    // review = review.slice(0, reviewDetail.prevCount)
     let filteredReview = [];
     if (filterStatus.filterCount) {
       reviews.forEach((review) => {
@@ -40,7 +40,7 @@ export default function ReviewList({ filterStatus }) {
       url: '/reviews',
       params: {
         product_id: productId,
-        ///here
+        /// here
         count: reviewMeta?.totalCT,
         sort,
       },
@@ -80,8 +80,9 @@ export default function ReviewList({ filterStatus }) {
       setReviewDetail({
         ...reviewDetail,
         filteredReview: filterReview(reviewDetail.allReview),
-        prevCount: reviewDetail.allReview.length,
+        // prevCount: reviewDetail.allReview.length,
       });
+      setPrevCount(reviewDetail.allReview.length)
     }
   };
 
@@ -89,21 +90,31 @@ export default function ReviewList({ filterStatus }) {
   useEffect(() => {
     getReview()
       .then(({ data }) => {
-        // console.log(data.results);
+        console.log('rendering', data);
         setReviewDetail({
           filteredReview: filterReview(data.results),
           allReview: data.results,
           totalCT: data.results.length,
-          prevCount: Math.min(data.results.length, 2),
+          // prevCount: Math.min(data.results.length, 2),
         });
+        setPrevCount(Math.min(data.results.length, 2));
+        if (!filterStatus.filterCount) {
+          setReviewDetail({
+            ...reviewDetail,
+            filteredReview: data.results.slice(0,prevCount),
+          });
+        }
+
       })
       .catch((err) => Console.log(err));
-  }, [productId, sort, filterStatus.filterCount]);
+  }, [productId, sort, filterStatus.filterCount, prevCount]);
 
+  console.log(reviewDetail.filteredReview);
+  console.log( 'count ', prevCount);
   return (
     <ReviewSection>
       <SortBar
-        totalCT={reviewDetail.totalCT}
+        totalCT={reviewDetail.filteredReview.length}
         handleSort={handleSort}
       />
       <ReviewContainer>
@@ -120,7 +131,7 @@ export default function ReviewList({ filterStatus }) {
         )}
       </ReviewContainer>
       <ButtonBlock>
-        {(reviewDetail.prevCount < reviewDetail.allReview.length)
+        {(prevCount < reviewDetail.allReview.length)
           ? (
             <Botton onClick={fetchFeed}>
               MORE REVIEWS

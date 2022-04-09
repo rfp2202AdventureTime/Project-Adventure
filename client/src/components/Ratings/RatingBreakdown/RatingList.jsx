@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { useMeta } from '../../../contexts/ReviewMeta';
 import RatingBar from './RatingBar';
 
-export default function RatingList({ toggleFilter }) {
+export default function RatingList({ toggleFilter, filterStatus, clearFilter }) {
   const starList = [];
-  // let totalCT = 0;
+  const [activeTags, setActiveTags] = useState({
+    tags: [],
+    filterOn: false,
+  });
 
   const currentMeta = useMeta();
   if (currentMeta) {
@@ -23,6 +26,29 @@ export default function RatingList({ toggleFilter }) {
       }
     });
   }
+  const removeAllFilter = (() => {
+    clearFilter();
+  });
+
+  useEffect(() => {
+    const tags = [];
+    if (filterStatus.filterCount) {
+      Object.keys(filterStatus).forEach((key) => {
+        if (key !== 'filterCount') {
+          filterStatus[key] && tags.push(`${key} Star`);
+        }
+      });
+      setActiveTags({
+        tags,
+        filterOn: true,
+      });
+    } else {
+      setActiveTags({
+        tags: [],
+        filterOn: false,
+      });
+    }
+  }, [filterStatus.filterCount]);
 
   return (
     <Ratings>
@@ -38,6 +64,17 @@ export default function RatingList({ toggleFilter }) {
           />
         );
       })}
+      {activeTags.filterOn ? (
+        <ClearFilter onClick={removeAllFilter}>
+          Remove all filters
+        </ClearFilter>
+      ) : ''}
+      {activeTags.tags.length ? (
+        <SortingTags>
+          {'Active Tags are : '}
+          {activeTags.tags.join(', ')}
+        </SortingTags>
+      ) : ''}
     </Ratings>
   );
 }
@@ -49,7 +86,15 @@ const Ratings = styled.div`
   padding: 1rem;
   padding-right: 3rem;
 `;
+const SortingTags = styled.div`
 
+`;
+const ClearFilter = styled.button`
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+`;
+// TODO: figure out nested proptype
 RatingList.propTypes = {
   toggleFilter: PropTypes.func.isRequired,
 };
