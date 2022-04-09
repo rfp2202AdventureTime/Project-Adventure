@@ -78,10 +78,17 @@ const Thumbnail = styled.span`
   background-size: cover;
   background-position: center;
   position: relative;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease-in-out;
+  }
 `;
 
 const StyleSelectorContainer = styled.section`
   padding: 10px 0;
+  color: ${(props) => props.theme.colors.primary};
+  font-size: 0.9em;
 `;
 
 export default StyleSelector;

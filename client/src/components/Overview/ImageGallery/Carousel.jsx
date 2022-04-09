@@ -78,8 +78,7 @@ const CarouselItem = styled.div`
   margin-bottom: ${CONFIG.spacing}px;
   ${({ visibility }) => (visibility && 'visibility: hidden;')}
   &:hover { cursor: pointer; }
-  background: ${({ theme }) => theme.colors.background};
-  border-radius: 2px;
+  // background: ${({ theme }) => theme.colors.background};
 `;
 
 const Thumbnail = styled.figure`
@@ -88,9 +87,8 @@ const Thumbnail = styled.figure`
   background: url(${({ url }) => url});
   background-size: cover;
   background-position: center;
-  border-radius: 2px;
-  filter: opacity(0.5);
-  &.selected {
+  filter: opacity(0.65);
+  &.selected, &:hover {
     filter: opacity(1);
     transition: filter 0.1s ease-in-out;
   }
