@@ -79,16 +79,18 @@ const FeedSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
   display: flex;
   flex-direction: column;
-  height: 500px;
+  height: 400px;
   overflow: scroll;
 `;
 
 const MoreAnswersButton = styled.button`
-  border: 2px solid;
-  text-align: center;
-  padding: 1.3rem 1rem 1.3rem 1rem;
-  font-size: medium;
-  font-weight: 700;
+border: 2px solid;
+text-align: center;
+padding: 1.3rem 1rem 1.3rem 1rem;
+font-size: medium;
+font-weight: 700;
+&:hover {
+  background-color:${(props) => props.theme.colors.buttonHover}
 `;
 
 const ButtonBlock = styled.div`

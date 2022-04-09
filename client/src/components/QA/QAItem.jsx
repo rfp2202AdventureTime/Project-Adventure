@@ -5,6 +5,8 @@ import moment from 'moment';
 import axios from 'axios';
 import { useData } from './QAContext';
 
+import QAPhoto from './QAPhoto';
+
 export default function QAItem({ question, allAnswers }) {
   const setGlobalAData = useData().setAData;
   const globalQData = useData().qData;
@@ -29,7 +31,12 @@ export default function QAItem({ question, allAnswers }) {
     arrayOfAnswers = filteredAnswers[0].results;
     arrayOfAnswers.sort(compareAnswersForSeller);
     for (let i = 0; i < Math.min(numAsToRender, arrayOfAnswers.length); i += 1) {
-      totalAsToRender.push(arrayOfAnswers[i]);
+      totalAsToRender.push([arrayOfAnswers[i], []]);
+      if (arrayOfAnswers[i].photos[0] !== undefined) {
+        for (let p = 0; p < arrayOfAnswers[i].photos.length; p += 1) {
+          totalAsToRender[i][1].push(arrayOfAnswers[i].photos[p]);
+        }
+      }
     }
   }
   const handleQuestionHelpful = (category, ID) => {
@@ -124,22 +131,31 @@ export default function QAItem({ question, allAnswers }) {
         </QAItemQuestionRight>
       </QAItemFullQuestion>
       {totalAsToRender === undefined ? '' : totalAsToRender.map((answer) => (
-        <QAItemAnswer key={answer.answer_id}>
+        <QAItemAnswer key={answer[0].answer_id}>
           <span>
             <strong>A: </strong>
-            {answer.body}
+            {answer[0].body}
           </span>
           <span>
-            {`by `} {answer.answerer_name === 'Seller' ?
-              <strong>{answer.answerer_name} </strong>
-              : `${answer.answerer_name} `
+            {'by '} {answer[0].answerer_name === 'Seller' ?
+              <strong>{answer[0].answerer_name} </strong>
+              : `${answer[0].answerer_name} `
             }
-            {`${moment(answer.date).format('MMMM DD, YYYY')} |
+            {`${moment(answer[0].date).format('MMMM DD, YYYY')} |
             Helpful? `}
-            <u onClick={(e) => handleHelpfulAnswer('helpful', answer.answer_id)}>Yes</u>
-            {` (${answer.helpfulness}) | `}
-            {!reported && <u onClick={(e) => handleReport('report', answer.answer_id)}>Report</u>}
+            <u onClick={(e) => handleHelpfulAnswer('helpful', answer[0].answer_id)}>Yes</u>
+            {` (${answer[0].helpfulness}) | `}
+            {!reported && <u onClick={(e) => handleReport('report', answer[0].answer_id)}>Report</u>}
           </span>
+          <QAPhotoContainer>
+            { answer[1].map((photos) => (
+              <QAPhoto
+                test={photos}
+                url={photos.url}
+                key={photos.id}
+              />
+            ))}
+          </QAPhotoContainer>
         </QAItemAnswer>
       ))}
       {(moreAsClicked && totalAsToRender[0] !== undefined) ? (
@@ -214,7 +230,15 @@ const QAItemAnswer = styled.div`
   padding-top: 10px;
 `;
 
-const QAItemPhoto = styled
+const QAPhotoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  gap: 20px;
+  max-width: 400px;
+  padding: 10px 0;
+`;
 
 QAItem.propTypes = {
   question: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
