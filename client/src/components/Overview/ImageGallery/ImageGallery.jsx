@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
+import { FiArrowLeft, FiArrowRight, FiX } from 'react-icons/fi';
+
 import ZoomableImage from './ZoomableImage';
 import Carousel from './Carousel';
 import DotNav from './DotNav';
@@ -39,8 +41,12 @@ function ImageGallery({ children, photos }) {
             <>
               <ZoomableImage url={photos[imgIdx].url} disabled={isZoomDisabled} />
 
-              <LeftArrow visible={leftVisibility} onClick={() => handleImgIdxChange('prev')} />
-              <RightArrow visible={rightVisibility} onClick={() => handleImgIdxChange('next')} />
+              <LeftArrow visible={leftVisibility} onClick={() => handleImgIdxChange('prev')}>
+                <FiArrowLeft size={20} />
+              </LeftArrow>
+              <RightArrow visible={rightVisibility} onClick={() => handleImgIdxChange('next')}>
+                <FiArrowRight size={20} />
+              </RightArrow>
 
               {navVisibile && (
               <CarouselPresenter className={view}>
@@ -56,7 +62,9 @@ function ImageGallery({ children, photos }) {
             </>
           )}
 
-          <ExitButton className={view} onClick={(e) => handleViewChange(e, 'default')} />
+          <ExitButton className={view}>
+            <FiX size={30} onClick={(e) => handleViewChange(e, 'default')} />
+          </ExitButton>
         </Gallery>
       </DefaultViewport>
       <GalleryAside>
@@ -145,25 +153,29 @@ const Gallery = styled.div`
 
 const Arrow = styled.span`
   position: absolute;
-  height: 50px;
+  height: 20px;
   width: 20px;
-  background-color: red;
   transform: translate(0, -50%);
   top: 50%;
   &:hover { cursor: pointer; }
+  color: ${({ theme }) => theme.colors.primary};
   ${(props) => (!props.visible && 'visibility: hidden;')}
+  & > *:hover {
+    transform: scale(1.2);
+    transition: transform 0.1s ease-in-out;
+  }
+  & > * { transition: transform 0.1s ease-in-out; }
 `;
 
 const LeftArrow = styled(Arrow)`
-  left: 0px;
+  left: 5px;
 `;
 
 const RightArrow = styled(Arrow)`
-  right: 0px;
+  right: 5px;
 `;
 
 const ExitButton = styled.span`
-  background-color: red;
   width: 30px;
   height: 30px;
   position: absolute;
@@ -173,6 +185,12 @@ const ExitButton = styled.span`
   opacity: 0;
   &:hover { cursor: pointer; }
   ${VisibleInExpanded}
+  color: ${({ theme }) => theme.colors.primary};
+  & > *:hover {
+    transform: scale(1.2);
+    transition: transform 0.1s ease-in-out;
+  }
+  & > * { transition: transform 0.1s ease-in-out; }
 `;
 
 ImageGallery.propTypes = {

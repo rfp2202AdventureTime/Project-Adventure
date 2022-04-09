@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { FiCheck } from 'react-icons/fi';
+
 import { usePreviewStyle, useCurrentStyles, useActiveStyle } from '@Contexts/StylesProvider';
 
 function StyleSelector() {
@@ -25,12 +27,14 @@ function StyleSelector() {
             {currentStyles.map((style) => (
               <Thumbnail
                 thumbnail={style.photos[0].thumbnail_url}
-                className={(style.style_id === activeStyle.style_id) && 'selected'}
                 key={style.style_id}
                 onClick={() => handleStyleThumbnailClick(style.style_id)}
                 onMouseOver={() => handleStyleThumbnailMouseOver(style.style_id)}
                 onMouseOut={() => handleStyleThumbnailMouseOut()}
-              />
+              >
+                {(style.style_id === activeStyle.style_id)
+                && <SelectedThumbnail><FiCheck size={15} /></SelectedThumbnail>}
+              </Thumbnail>
             ))}
         </Thumbnails>
       )}
@@ -49,6 +53,22 @@ const Thumbnails = styled.div`
   padding: 10px 0;
 `;
 
+const SelectedThumbnail = styled.span`
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: -3px;
+  top: -3px;
+  background: #4CAF50;
+  border-radius: 50%;
+  color: ${(props) => props.theme.colors.background};
+  & > * {
+    position: absolute;
+    top: 3px;
+    left: 2px;
+  }
+`;
+
 const Thumbnail = styled.span`
   height: 75px;
   width: 75px;
@@ -58,17 +78,6 @@ const Thumbnail = styled.span`
   background-size: cover;
   background-position: center;
   position: relative;
-  &.selected::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    top: 0;
-    left: 75%;
-    width: 25%;
-    height: 25%;
-    background: red;
-    border: 1px solid ${(props) => props.theme.colors.secondary};
-  }
 `;
 
 const StyleSelectorContainer = styled.section`
