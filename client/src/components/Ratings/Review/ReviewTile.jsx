@@ -9,7 +9,7 @@ import PhotoList from './PhotoList';
 import ReviewContent from './ReviewContent';
 import Helpfulness from './Helpfulness';
 
-export default function ReviewTile({ review, addHelpVote, index }) {
+export default function ReviewTile({ review, addHelpVote, reportReview, index }) {
   // TODO: display a photo; sort, response, recp,,emt
   const {
     rating, summary, recommend, response, date, body, photos, helpfulness,
@@ -75,6 +75,8 @@ export default function ReviewTile({ review, addHelpVote, index }) {
         addHelpVote={addHelpVote}
         reviewId={reviewId}
         helpfulness={helpfulness}
+        reportReview={reportReview}
+        index={index}
       />
     </ReviewBlock>
   );

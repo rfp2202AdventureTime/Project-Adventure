@@ -14,6 +14,7 @@ export default function ReviewList() {
     allReview: [],
   });
 
+
   // totalCT get from reviewMeta isn't accurate due to reported reviews removal from db
   const getReview = () => (
     axios({
@@ -26,22 +27,33 @@ export default function ReviewList() {
     }));
 
   const addHelpVote = (reviewId) => {
-    console.log('voted');
     axios({
       method: 'put',
       url: `/reviews/${reviewId}/helpful`,
     })
-      .then(() => {
-        console.log('success');
-      })
-      .catch((err) => console.log(err));
+      .catch((err) => Console.log(err));
+  };
+
+  const reportReview = (index, reviewId) => {
+    axios({
+      method: 'put',
+      url: `/reviews/${reviewId}/report`,
+    })
+    .then( () => {
+      let tempData = reviewDetail;
+      tempData.allReview.splice(index, 1);
+      setReviewDetail({
+        prevCount:reviewDetail.prevCount,
+        allReview: tempData.allReview,
+      });
+    })
+      .catch((err) => Console.log(err));
   };
 
   // TODO: check to see if there's memory leakage on unmounted components.
   useEffect(() => {
     getReview()
       .then(({ data }) => {
-        console.log('fetching')
         setReviewDetail({
           allReview: data.results,
           prevCount: Math.min(data.results.length, 2),
@@ -62,12 +74,13 @@ export default function ReviewList() {
   return (
     <ReviewContainer>
       {reviewDetail.allReview.slice(0, reviewDetail.prevCount).map(
-        (review) => (
+        (review, index) => (
           <ReviewTile
             key={review.review_id.toString()}
             addHelpVote={addHelpVote}
             review={review}
-          helpfulness={review.helpfulness}
+            index={index}
+            reportReview={reportReview}
           />
         ),
       )}

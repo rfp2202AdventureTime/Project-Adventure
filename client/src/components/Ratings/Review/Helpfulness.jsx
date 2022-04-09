@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-export default function Helpfulness({ addHelpVote, helpfulness, reviewId }) {
+export default function Helpfulness({
+  addHelpVote, helpfulness, reportReview, reviewId, index
+}) {
   const [helpCount, setHelpCount] = useState(helpfulness);
 
   const vote = () => {
@@ -11,9 +13,8 @@ export default function Helpfulness({ addHelpVote, helpfulness, reviewId }) {
   };
 
   const report = () => {
-    console.log('reported');
+    reportReview(index, reviewId);
   };
-
   return (
     <HelpfulnessContainer>
       Helpful?
@@ -51,6 +52,8 @@ margin-left: 0.5rem;
 
 Helpfulness.propTypes = {
   helpfulness: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
   reviewId: PropTypes.number.isRequired,
   addHelpVote: PropTypes.func.isRequired,
+  reportReview: PropTypes.func.isRequired,
 };
