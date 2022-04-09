@@ -7,7 +7,7 @@ export default function FactorList({ factor }) {
     Width: ['Too narrow', 'Perfect', 'Too wide'],
     Comfort: ['Poor', '', 'Perfect'],
     Quality: ['Poor', '', 'Perfect'],
-    Length: ['Runs short', 'perfect', 'Runs long'],
+    Length: ['Runs short', 'Perfect', 'Runs long'],
     Fit: ['Runs tight', 'Perfect', 'Runs big'],
   };
 
