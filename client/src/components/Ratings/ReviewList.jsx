@@ -8,8 +8,7 @@ import { ProductIDContext } from '../../contexts/ProductIDContext';
 
 export default function ReviewList() {
   const productId = useContext(ProductIDContext);
-  // const [prevCount, setPrevCount] = useState(0);
-  // const [allReview, setAllReview] = useState([]);
+  const reviewMeta = useMeta();
   const [reviewDetail, setReviewDetail] = useState({
     prevCount: 0,
     allReview: [],
@@ -21,7 +20,7 @@ export default function ReviewList() {
       url: '/reviews',
       params: {
         product_id: productId,
-        count: 999,
+        count: reviewMeta?.totalCT,
       },
     }));
 
@@ -29,6 +28,7 @@ export default function ReviewList() {
   useEffect(() => {
     getReview()
       .then(({ data }) => {
+        console.log('fetching')
         setReviewDetail({
           allReview: data.results,
           prevCount: Math.min(data.results.length, 2),
@@ -38,14 +38,17 @@ export default function ReviewList() {
   }, [productId]);
 
   const fetchFeed = () => {
-    if (prevCount < allReview.length) {
-      setPrevCount(allReview.length);
+    if (reviewDetail.prevCount < reviewDetail.allReview.length) {
+      setReviewDetail({
+        allReview: reviewDetail.allReview,
+        prevCount: reviewDetail.allReview.length,
+      });
     }
   };
 
   return (
     <ReviewContainer>
-      {allReview.slice(0, prevCount + 1).map(
+      {reviewDetail.allReview.slice(0, reviewDetail.prevCount).map(
         (review) => (
           <ReviewTile
             key={review.review_id}
@@ -54,7 +57,7 @@ export default function ReviewList() {
         ),
       )}
       <ButtonBlock>
-        {(prevCount < allReview.length)
+        {(reviewDetail.prevCount < reviewDetail.allReview.length)
           ? (
             <Botton onClick={fetchFeed}>
               MORE REVIEWS
