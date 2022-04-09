@@ -22,7 +22,7 @@ function Overview() {
         <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
         <Price>$159</Price>
         {activeStyle && <StyleSelector />}
-        {activeStyle && <AddToCart />}
+        {activeStyle && <AddToCart skus={activeStyle.skus} />}
       </ImageGallery>
 
       <AdditionalDetails>

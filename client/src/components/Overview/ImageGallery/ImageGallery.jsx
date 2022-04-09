@@ -6,7 +6,6 @@ import { FiArrowLeft, FiArrowRight, FiX } from 'react-icons/fi';
 
 import ZoomableImage from './ZoomableImage';
 import Carousel from './Carousel';
-import DotNav from './DotNav';
 
 function ImageGallery({ children, photos }) {
   // Views can be ['default', 'expanded']
@@ -28,7 +27,6 @@ function ImageGallery({ children, photos }) {
   const leftVisibility = imgIdx > 0;
   const rightVisibility = photos && imgIdx < (photos.length - 1);
   const navVisibile = photos && photos.length > 1;
-  const size = photos && photos.length;
   const isZoomDisabled = view === 'default';
 
   return (
@@ -56,7 +54,9 @@ function ImageGallery({ children, photos }) {
 
               {navVisibile && (
               <DotNavPresenter className={view}>
-                <DotNav imgIdx={imgIdx} size={size} handleClick={handleImgIdxChange} />
+                {photos.map((i) => (
+                  <Dot key={i} className={(i === imgIdx && 'selected')} onClick={() => handleImgIdxChange(i)} />
+                ))}
               </DotNavPresenter>
               )}
             </>
@@ -191,6 +191,17 @@ const ExitButton = styled.span`
     transition: transform 0.1s ease-in-out;
   }
   & > * { transition: transform 0.1s ease-in-out; }
+`;
+
+const Dot = styled.span`
+  background-color: ${(props) => props.theme.colors.light};
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  margin: 5px;
+  border-radius: 50%;
+  &:hover { cursor: pointer; }
+  &.selected { background-color: red; }
 `;
 
 ImageGallery.propTypes = {
