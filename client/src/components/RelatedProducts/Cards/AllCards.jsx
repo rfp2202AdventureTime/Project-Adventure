@@ -1,41 +1,47 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Individualcard, IndCard } from './Individualcard';
-import ProductImg from './ProductImg';
-import sampleRelatedData from './sampleRelatedData';
-import sampleRelatedThumbnails from './sampleRelatedThumbnails';
+import { Individualcard } from './Individualcard';
+import { useProd } from './ProdContext';
+import { useThumbnail } from './thumbnailContext';
+
+function AllCards() {
+  const relatedProds = useProd();
+  const thumbnail = useThumbnail();
+
+  const zippedArray = [];
+  // if (!thumbnail.data) {
+  //   console.log('loading thumbnail');
+  // } if (!relatedProds.data) {
+  //   console.log('loading related prods');
+  // } else {
+  //   relatedProds.data.map((item, i) => {
+  //     zippedArray.push([item.data, thumbnail.data[i].data.results[0].photos[0].thumbnail_url]);
+  //   });
+  // }
+
+  if (thumbnail.data && relatedProds.data) {
+    relatedProds.data.map((item, i) => {
+      zippedArray.push([item.data, thumbnail.data[i].data.results[0].photos[0].thumbnail_url]);
+    });
+  }
+
+  if (relatedProds.data) {
+    return (
+
+      <Layout>
+        {zippedArray.map((item, key) => <Individualcard product={item} key={key} />)}
+
+      </Layout>
+
+    );
+  }
+}
 
 const Layout = styled.div`
   display: flex;
-  width: 100%;
-  overflow: auto;
+  width: fit-content;
+  height: max-content;
   flex-direction: row;
 `;
-
-function AllCards() {
-  return (
-    <Layout>
-      <IndCard>
-        <ProductImg image={sampleRelatedThumbnails[0]} />
-        <Individualcard product={sampleRelatedData[0]} />
-      </IndCard>
-
-      <IndCard>
-        <ProductImg image={sampleRelatedThumbnails[1]} />
-        <Individualcard product={sampleRelatedData[1]} />
-      </IndCard>
-
-      <IndCard>
-        <ProductImg image={sampleRelatedThumbnails[2]} />
-        <Individualcard product={sampleRelatedData[2]} />
-      </IndCard>
-
-      <IndCard>
-        <ProductImg image={sampleRelatedThumbnails[3]} />
-        <Individualcard product={sampleRelatedData[3]} />
-      </IndCard>
-    </Layout>
-  );
-}
 
 export default AllCards;
