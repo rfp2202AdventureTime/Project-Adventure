@@ -214,6 +214,8 @@ const QAItemAnswer = styled.div`
   padding-top: 10px;
 `;
 
+const QAItemPhoto = styled
+
 QAItem.propTypes = {
   question: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   allAnswers: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
