@@ -3,13 +3,17 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 export default function Helpfulness({
-  addHelpVote, helpfulness, reportReview, reviewId, index
+  addHelpVote, helpfulness, reportReview, reviewId, index,
 }) {
   const [helpCount, setHelpCount] = useState(helpfulness);
+  const [voteLimiter, setvoteLimiter] = useState(true);
 
   const vote = () => {
-    addHelpVote(reviewId);
-    setHelpCount(helpCount + 1);
+    if (voteLimiter) {
+      addHelpVote(reviewId);
+      setHelpCount(helpCount + 1);
+    }
+    setvoteLimiter(voteLimiter && false);
   };
 
   const report = () => {
