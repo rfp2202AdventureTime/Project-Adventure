@@ -47,6 +47,7 @@ const ModalParent = styled.div`
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
+  // cursor: pointer;
 `;
 
 const Modal = styled.div`
