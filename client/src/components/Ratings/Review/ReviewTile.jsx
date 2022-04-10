@@ -99,7 +99,9 @@ const ReviewBlock = styled.div`
   margin: 0.4rem 0.8rem 0.4rem 0.8rem;
   padding: 0.25rem 1rem 0.25rem 1rem;
   background-color: ${({ theme }) => theme.colors.offWhite};
-  box-shadow: 0.3rem 0.3rem 0.3rem ${({ theme }) => theme.colors.secondary};
+  &:hover {
+    box-shadow: 0.3rem 0.3rem 0.3rem ${({ theme }) => theme.colors.secondary}
+  };
 `;
 const UserRatingRow = styled.div`
   display: flex;

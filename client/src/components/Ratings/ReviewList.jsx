@@ -111,6 +111,7 @@ export default function ReviewList({ filterStatus }) {
       <StickyTop>
         <SortBar
           totalCT={reviewDetail.filteredReview.length}
+          allCT={reviewDetail.allReview.length}
           handleSort={handleSort}
         />
       </StickyTop>

@@ -9,7 +9,8 @@ const Button = styled.button`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.secondary};
   &:hover {
-    background-color:${({ theme }) => theme.colors.tertiary}
+    background-color:${({ theme }) => theme.colors.tertiary};
+    box-shadow: 0.3rem 0.3rem 0.3rem ${({ theme }) => theme.colors.secondary}
   }
 `;
 

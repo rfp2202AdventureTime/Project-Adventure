@@ -22,7 +22,7 @@ function PhotoEntry({
 const Thumbnail = styled.span`
   height: 75px;
   width: 75px;
-  background: ${(props) => (props.thumbnail ? `url(${props.thumbnail})` : props.theme.colors.background)};
+  background: ${({ thumbnail, theme }) => (thumbnail ? `url(${thumbnail})` : theme.colors.background)};
   background-size: cover;
   background-position: center;
   position: relative;
