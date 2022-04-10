@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { ClickableText } from '../../../contexts/Shared.styled';
 
-export default function RatingBar({ scorePerct, id, toggleFilter }) {
+export default function RatingBar({ scorePct, id, toggleFilter }) {
   const handleClick = (e) => {
     const selected = e.target.className.slice(-1);
     toggleFilter(selected);
@@ -19,7 +19,7 @@ export default function RatingBar({ scorePerct, id, toggleFilter }) {
       </ClickableText>
       <GreyBar>
         <GreenBar
-          width={scorePerct}
+          width={scorePct}
         />
       </GreyBar>
     </RatingBarBlock>
@@ -38,7 +38,6 @@ const RatingBarBlock = styled.div`
   width: 15rem;
   // gap: 1rem;
   overflow: hidden;
-
 `;
 
 const GreyBar = styled.div`
@@ -64,7 +63,7 @@ const GreenBar = styled.div`
 `;
 
 RatingBar.propTypes = {
-  scorePerct: PropTypes.string.isRequired,
+  scorePct: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   toggleFilter: PropTypes.func.isRequired,
 };

@@ -6,28 +6,24 @@ import ReviewList from './ReviewList';
 import Console from '../../Console';
 
 export default function Ratings() {
-  const currentMeta = useMeta();
-  const [filterStatus, setFilterStatus] = useState({
+  const unSorted = {
     5: false,
     4: false,
     3: false,
     2: false,
     1: false,
     filterCount: 0,
-  });
+  };
+  const currentMeta = useMeta();
+  const [filterStatus, setFilterStatus] = useState(unSorted);
 
-  const getfilterCount = (selected) => {
-    let { filterCount } = filterStatus;
-    if (filterStatus[selected]) {
-      filterCount -= 1;
-    } else {
-      filterCount += 1;
-    }
-    return filterCount;
+  const getFilterCount = (selected) => {
+    const { filterCount } = filterStatus;
+    return filterStatus[selected] ? (filterCount - 1) : (filterCount + 1);
   };
 
   const toggleFilter = (selected) => {
-    const filterCount = getfilterCount(selected);
+    const filterCount = getFilterCount(selected);
     setFilterStatus({
       ...filterStatus,
       filterCount,
@@ -36,14 +32,7 @@ export default function Ratings() {
   };
 
   const clearFilter = () => {
-    setFilterStatus({
-      5: false,
-      4: false,
-      3: false,
-      2: false,
-      1: false,
-      filterCount: 0,
-    });
+    setFilterStatus(unSorted);
   };
 
   return (
@@ -67,5 +56,4 @@ const RatingSection = styled.section`
   flex-direction: row;
   padding: 2rem 0rem 4rem 1rem;
   color: ${({ theme }) => theme.colors.secondary};
-
 `;

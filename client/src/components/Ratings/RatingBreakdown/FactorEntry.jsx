@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function FactorList({ factor }) {
+export default function FactorEntry({ factor }) {
   const factorSummary = {
     Size: ['Too small', 'Perfect', 'Too large'],
     Width: ['Too narrow', 'Perfect', 'Too wide'],
@@ -17,10 +17,9 @@ export default function FactorList({ factor }) {
         {characteristic}
       </div>
     ))
-
   );
 }
 
-FactorList.propTypes = {
+FactorEntry.propTypes = {
   factor: PropTypes.string.isRequired,
 };

@@ -12,21 +12,21 @@ export default function RatingList({ toggleFilter, filterStatus, clearFilter }) 
     tags: [],
     filterOn: false,
   });
-
   const currentMeta = useMeta();
+
   if (currentMeta) {
     const { ratings, totalCT } = currentMeta;
     const starArray = [5, 4, 3, 2, 1];
-
     starArray.forEach((key) => {
       const currentCT = Number(ratings[key]);
       if (Number.isNaN(currentCT)) {
-        starList.push({ id: key, decimal: 0 });
+        starList.push({ id: key, score: 0 });
       } else {
-        starList.push({ id: key, decimal: currentCT / totalCT });
+        starList.push({ id: key, score: currentCT / totalCT });
       }
     });
   }
+
   const removeAllFilter = (() => {
     clearFilter();
   });
@@ -54,18 +54,14 @@ export default function RatingList({ toggleFilter, filterStatus, clearFilter }) 
 
   return (
     <Ratings>
-      {starList.map((item) => {
-        const scorePerct = Math.floor((item.decimal) * 100).toString().concat('%');
-        return (
-          <RatingBar
-            key={item.id}
-            scorePerct={scorePerct}
-            id={item.id.toString()}
-            data-testid="ratingBar"
-            toggleFilter={toggleFilter}
-          />
-        );
-      })}
+      {starList.map((item) => (
+        <RatingBar
+          key={item.id}
+          scorePct={`${Math.floor((item.score) * 100)}%`}
+          id={item.id.toString()}
+          toggleFilter={toggleFilter}
+        />
+      ))}
       {activeTags.filterOn ? (
         <ClearFilter onClick={removeAllFilter}>
           Remove all filters
@@ -88,6 +84,8 @@ const Ratings = styled.div`
   padding: 1rem;
   padding-right: 3rem;
 `;
+
+// TODO:make this pretty
 const SortingTags = styled.div`
 
 `;
