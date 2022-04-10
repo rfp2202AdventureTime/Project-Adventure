@@ -38,5 +38,9 @@ const DropDown = styled.select`
 SortBar.propTypes = {
   handleSort: PropTypes.func.isRequired,
   totalCT: PropTypes.number.isRequired,
-  allCT: PropTypes.number.isRequired,
+  allCT: PropTypes.number,
+};
+
+SortBar.defaultProps = {
+  allCT: null,
 };

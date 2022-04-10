@@ -115,45 +115,7 @@ const UserRatingRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-<<<<<<< HEAD
   font-size: small;
-=======
-`;
-
-const UserData = styled.div`
-  justify-content: end
-`;
-
-const ModalParent = styled.a`
-  position: fixed;
-  background-color: ${(props) => props.theme.colors.modalBackground};
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 9998;
-  display: ${(props) => (props.showModal ? 'block' : 'none')};
-  opacity: ${(props) => (props.showModal ? 1 : 0)};
-  pointer-events: disabled;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-`;
-
-const Modal = styled.div`
-  z-index: 9999;
-  background-position: center;
-  width: 60%;
-  height: 60%;
-  position: relative;
-  margin: 10% auto;
-  color: #444;
-  background-image: ${(props) => (props.modal ? `url(${props.modal})` : props.theme.colors.primary)};
-  background-repeat: no-repeat;
-  background-size: 100% auto%;
-  visibility: ${(props) => (props.showModal ? 'visible' : 'hidden')};
-  }
->>>>>>> 6c2e8aa (fixed modal picture position)
 `;
 
 const ReviewHeading = styled.p`
