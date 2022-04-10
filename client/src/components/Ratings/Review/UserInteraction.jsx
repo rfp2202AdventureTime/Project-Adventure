@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import { ClickableText } from '../../../contexts/Shared.styled';
 
 export default function Helpfulness({
-  addHelpVote, helpfulness, reportReview, reviewId, index,
+  addHelpVote, helpfulness, reportReview, reviewId,
 }) {
   const [helpCount, setHelpCount] = useState(helpfulness);
   const [voteLimiter, setvoteLimiter] = useState(true);
+  const [reportLimiter, setReportLimiter] = useState(true);
 
   const vote = () => {
     if (voteLimiter) {
@@ -18,8 +19,12 @@ export default function Helpfulness({
   };
 
   const report = () => {
-    reportReview(index, reviewId);
+    if (reportLimiter) {
+      reportReview(reviewId);
+    }
+    setReportLimiter(reportLimiter && false);
   };
+
   return (
     <HelpfulnessContainer>
       {'Helpful? '}
@@ -30,9 +35,12 @@ export default function Helpfulness({
       {helpCount}
       )
       {'    |   '}
-      <ClickableText onClick={report}>
-        Report
-      </ClickableText>
+      {reportLimiter
+        ? (
+          <ClickableText onClick={report}>
+            Report
+          </ClickableText>
+        ) : (<div> Reported</div>)}
     </HelpfulnessContainer>
   );
 }

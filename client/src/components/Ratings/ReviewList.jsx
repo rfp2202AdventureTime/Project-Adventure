@@ -57,20 +57,11 @@ export default function ReviewList({ filterStatus }) {
     setSort(criteria);
   };
 
-  const reportReview = (index, reviewId) => {
+  const reportReview = (reviewId) => {
     axios({
       method: 'put',
       url: `/reviews/${reviewId}/report`,
     })
-      .then(() => {
-        const tempData = reviewDetail;
-        tempData.allReview.splice(index, 1);
-        setReviewDetail({
-          ...reviewDetail,
-          allReview: tempData.allReview,
-          totalCT: tempData.totalCT,
-        });
-      })
       .catch((err) => Console.log(err));
   };
 
@@ -116,12 +107,11 @@ export default function ReviewList({ filterStatus }) {
         />
       </StickyTop>
       {reviewDetail.filteredReview.map(
-        (review, index) => (
+        (review) => (
           <ReviewTile
             key={review.review_id.toString()}
             addHelpVote={addHelpVote}
             review={review}
-            index={index}
             reportReview={reportReview}
           />
         ),

@@ -12,7 +12,7 @@ import UserInteraction from './UserInteraction';
 import { Modal, ModalParent } from '../../../contexts/Shared.styled';
 
 export default function ReviewTile({
-  review, addHelpVote, reportReview, index,
+  review, addHelpVote, reportReview,
 }) {
   const {
     rating, summary, recommend, response, date, body, photos, helpfulness,
@@ -86,7 +86,6 @@ export default function ReviewTile({
         reviewId={reviewId}
         helpfulness={helpfulness}
         reportReview={reportReview}
-        index={index}
       />
     </ReviewBlock>
   );
