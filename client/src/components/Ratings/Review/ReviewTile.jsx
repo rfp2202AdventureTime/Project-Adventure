@@ -141,7 +141,7 @@ const Modal = styled.div`
   position: relative;
   margin: 10% auto;
   color: #444;
-  background: ${(props) => (props.modal ? `url(${props.modal})` : props.theme.colors.primary)};
+  background-image: ${(props) => (props.modal ? `url(${props.modal})` : props.theme.colors.primary)};
   background-repeat: no-repeat;
   background-size: 100% auto%;
   visibility: ${(props) => (props.showModal ? 'visible' : 'hidden')};
