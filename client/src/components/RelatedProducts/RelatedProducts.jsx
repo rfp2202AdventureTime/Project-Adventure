@@ -26,10 +26,10 @@ function RelatedProducts() {
       </RelatedProvider>
 
       <h1>Your Outfit</h1>
-      <Layout>
+      {/* <Layout> */}
         <Outfit />
 
-      </Layout>
+      {/* </Layout> */}
     </RelatedProductsSection>
   );
 }

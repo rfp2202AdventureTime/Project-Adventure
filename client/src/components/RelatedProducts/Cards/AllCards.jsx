@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import { Individualcard } from './Individualcard';
 import { useProd } from './ProdContext';
 import { useThumbnail } from './thumbnailContext';
-
+import { useMeta } from '../../../contexts/ReviewMeta';
+import star from '../../../Star';
 function AllCards() {
   const relatedProds = useProd();
   const thumbnail = useThumbnail();
+
+  console.log(star, 'STARRRRR');
 
   const zippedArray = [];
 
