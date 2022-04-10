@@ -16,7 +16,6 @@ export default function ReviewList({ filterStatus }) {
   const [initialRender, setInitialRender] = useState(true);
   const [prevCount, setPrevCount] = useState(0);
   const [reviewDetail, setReviewDetail] = useState({
-    // prevCount: 0,
     allReview: [],
     filteredReview: [],
     totalCT: 0,
@@ -32,7 +31,6 @@ export default function ReviewList({ filterStatus }) {
     } else {
       filteredReview = reviews;
     }
-    // console.log('filteredReview Output is' , filteredReview)
     return filteredReview;
   };
 
@@ -43,7 +41,7 @@ export default function ReviewList({ filterStatus }) {
       url: '/reviews',
       params: {
         product_id: productId,
-        count: reviewMeta?.totalCT || 999,
+        count: (reviewMeta?.totalCT || 999),
         sort,
       },
     }));
@@ -55,7 +53,6 @@ export default function ReviewList({ filterStatus }) {
     })
       .catch((err) => Console.log(err));
   };
-
   const handleSort = (criteria) => {
     setSort(criteria);
   };
@@ -82,7 +79,6 @@ export default function ReviewList({ filterStatus }) {
       setReviewDetail({
         ...reviewDetail,
         filteredReview: filterReview(reviewDetail.allReview),
-        // prevCount: reviewDetail.allReview.length,
       });
       setPrevCount(reviewDetail.allReview.length);
     }
@@ -92,7 +88,6 @@ export default function ReviewList({ filterStatus }) {
   useEffect(() => {
     getReview()
       .then(({ data }) => {
-        // console.log('rendering', data);
         setInitialRender(initialRender && !initialRender);
         setReviewDetail({
           filteredReview: filterReview(data.results),
@@ -113,39 +108,35 @@ export default function ReviewList({ filterStatus }) {
 
   return (
     <ReviewSection>
-      <TopSortBar>
-
+      <StickyTop>
         <SortBar
           totalCT={reviewDetail.filteredReview.length}
           handleSort={handleSort}
         />
-      </TopSortBar>
-      <ReviewContainer>
-        {reviewDetail.filteredReview.map(
-          (review, index) => (
-            <ReviewTile
-              key={review.review_id.toString()}
-              addHelpVote={addHelpVote}
-              review={review}
-              index={index}
-              reportReview={reportReview}
-            />
-          ),
-        )}
-      <Bottom>
-
+      </StickyTop>
+      {reviewDetail.filteredReview.map(
+        (review, index) => (
+          <ReviewTile
+            key={review.review_id.toString()}
+            addHelpVote={addHelpVote}
+            review={review}
+            index={index}
+            reportReview={reportReview}
+          />
+        ),
+      )}
+      <StickyBottom>
         <ButtonBlock>
           { (!(filterStatus.filterCount)
             && (prevCount < reviewDetail.allReview.length))
             ? (
               <Button onClick={fetchFeed}>
-                MORE REVIEWS
+                More Reviews
               </Button>
             ) : ''}
-          <Button> ADD A REVIEW +</Button>
+          <Button> Add a Review +</Button>
         </ButtonBlock>
-      </Bottom>
-        </ReviewContainer>
+      </StickyBottom>
     </ReviewSection>
   );
 }
@@ -158,34 +149,19 @@ const ReviewSection = styled.div`
   height: 60rem;
   width: 100%
 `;
-const TopSortBar = styled.div`
+const StickyTop = styled.div`
   position: sticky;
   top:0;
-    width:100%;
-    z-index:100;
-    background-color: ${({ theme }) => theme.colors.light}
-
+  width:100%;
+  z-index:100;
+  background-color: ${({ theme }) => theme.colors.light}
 `;
-const Bottom = styled.div`
-  position: sticky;
+const StickyBottom = styled(StickyTop)`
   bottom:0;
-    width:100%;
-    z-index:100;
-    background-color: ${({ theme }) => theme.colors.light}
-
 `;
-const ReviewContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  height: 60rem;
-  width: 100%
-`;
-
 const ButtonBlock = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1rem;
   padding: 1.3rem 1rem 1.3rem 1rem;
 `;
-

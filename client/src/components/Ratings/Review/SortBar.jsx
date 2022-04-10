@@ -9,15 +9,15 @@ export default function SortBar({ handleSort, totalCT }) {
 
   return (
     <SortBarBlock>
-      <WhiteSpaceWrapper>
-        {totalCT}
-      </WhiteSpaceWrapper>
-      reviews, sorted by
-      <SortContainer name="sort" onChange={sort}>
+      {totalCT}
+      <div>
+        reviews, sorted by
+      </div>
+      <DropDown name="sort" onChange={sort}>
         <option value="relevant">relevant</option>
         <option value="newest">newest</option>
         <option value="helpful">helpful</option>
-      </SortContainer>
+      </DropDown>
     </SortBarBlock>
   );
 }
@@ -27,19 +27,16 @@ export default function SortBar({ handleSort, totalCT }) {
 const SortBarBlock = styled.div`
   display: flex;
   flex-direction: row;
-  font: 500;
   margin: 0.4rem 0.8rem 0.4rem 0.8rem;
   padding: 0.25rem 1rem 0.25rem 1rem;
   font-weight:bold;
   font-size: medium;
+  gap: 0.4rem;
 `;
 
-const SortContainer = styled.select`
-  margin-left: 0.4rem;
-`;
-
-const WhiteSpaceWrapper = styled.div`
-  margin-right: 0.4rem;
+const DropDown = styled.select`
+  // margin-left: 0.4rem;
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 SortBar.propTypes = {

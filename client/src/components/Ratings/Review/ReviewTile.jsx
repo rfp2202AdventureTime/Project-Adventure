@@ -8,7 +8,8 @@ import styled from 'styled-components';
 import Star from '../../../Star';
 import PhotoList from './PhotoList';
 import ReviewContent from './ReviewContent';
-import Helpfulness from './Helpfulness';
+import UserInteraction from './UserInteraction';
+import { Modal, ModalParent } from '../../../contexts/Shared.styled';
 
 export default function ReviewTile({
   review, addHelpVote, reportReview, index,
@@ -26,12 +27,10 @@ export default function ReviewTile({
 
   const clickPhoto = (i) => {
     setModalUrl(photos[i].url);
-
     setShowModal(!showModal);
   };
 
   const clickEsp = (e) => {
-    // console.log(e.currentTarget.className);
     if (!e.target.closest('ModalParent')) {
       setShowModal(false);
     }
@@ -49,12 +48,10 @@ export default function ReviewTile({
 
   return (
     <ReviewBlock>
-      <StarBlock>
+      <UserRatingRow>
         <Star score={rating} />
-        <UserData>
-          {usernameDate}
-        </UserData>
-      </StarBlock>
+        {usernameDate}
+      </UserRatingRow>
       <ReviewHeading>
         {summary}
       </ReviewHeading>
@@ -84,7 +81,7 @@ export default function ReviewTile({
           modal={modalUrl}
         />
       </ModalParent>
-      <Helpfulness
+      <UserInteraction
         addHelpVote={addHelpVote}
         reviewId={reviewId}
         helpfulness={helpfulness}
@@ -101,49 +98,14 @@ const ReviewBlock = styled.div`
   flex-direction: column;
   margin: 0.4rem 0.8rem 0.4rem 0.8rem;
   padding: 0.25rem 1rem 0.25rem 1rem;
-  // border-bottom: 0.2rem dotted rgba(221, 235, 223);
   background-color: ${({ theme }) => theme.colors.offWhite};
+  box-shadow: 0.3rem 0.3rem 0.3rem ${({ theme }) => theme.colors.secondary};
 `;
-const StarBlock = styled.div`
+const UserRatingRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const UserData = styled.div`
-  justify-content: end;
-  color: ${({ theme }) => theme.colors.secondary};
-`;
-
-const ModalParent = styled.a`
-  position: fixed;
-  background-color: ${({ theme }) => theme.colors.modalBackground};
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 9998;
-  display: ${(props) => (props.showModal ? 'block' : 'none')};
-  opacity: ${(props) => (props.showModal ? 1 : 0)};
-  pointer-events: disabled;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-`;
-
-const Modal = styled.div`
-  z-index: 9999;
-  background-position: center;
-  width: 60%;
-  height: 60%;
-  position: relative;
-  margin: 10% auto;
-  color: #444;
-  background-image: ${(props) => (props.modal ? `url(${props.modal})` : props.theme.colors.primary)};
-  background-repeat: no-repeat;
-  background-size: 100% auto%;
-  visibility: ${(props) => (props.showModal ? 'visible' : 'hidden')};
-  }
+  font-size: small;
 `;
 
 const ReviewHeading = styled.p`
@@ -156,6 +118,7 @@ const Response = styled.div`
   background-color: ${({ theme }) => theme.colors.tertiary};
   padding: 0.7rem;
   margin: 0.7rem;
+  box-shadow: 0.3rem 0.3rem 0.3rem ${({ theme }) => theme.colors.secondary};
 `;
 const Recommend = styled.div`
   padding: 0.7rem 0.7rem 0 0.7rem;

@@ -25,4 +25,37 @@ const ClickableText = styled.button`
   cursor: pointer;
 `;
 
-export { Button, ClickableText };
+const ModalParent = styled.a`
+  position: fixed;
+  background-color: ${({ theme }) => theme.colors.modalBackground};
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9998;
+  display: ${({ showModal }) => (showModal ? 'block' : 'none')};
+  opacity: ${({ showModal }) => (showModal ? 1 : 0)};
+  pointer-events: disabled;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+`;
+
+const Modal = styled.div`
+  z-index: 9999;
+  background-position: center;
+  width: 60%;
+  height: 60%;
+  position: relative;
+  margin: 10% auto;
+  color: #444;
+  background-image: ${({ modal, theme }) => (modal ? `url(${modal})` : theme.colors.primary)};
+  background-repeat: no-repeat;
+  background-size: 100% auto%;
+  visibility: ${({ showModal }) => (showModal ? 'visible' : 'hidden')};
+  }
+`;
+
+export {
+  Button, ClickableText, Modal, ModalParent,
+};
