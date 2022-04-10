@@ -112,10 +112,13 @@ export default function ReviewList({ filterStatus }) {
 
   return (
     <ReviewSection>
-      <SortBar
-        totalCT={reviewDetail.filteredReview.length}
-        handleSort={handleSort}
-      />
+      <TopSortBar>
+
+        <SortBar
+          totalCT={reviewDetail.filteredReview.length}
+          handleSort={handleSort}
+        />
+      </TopSortBar>
       <ReviewContainer>
         {reviewDetail.filteredReview.map(
           (review, index) => (
@@ -128,17 +131,20 @@ export default function ReviewList({ filterStatus }) {
             />
           ),
         )}
-      </ReviewContainer>
-      <ButtonBlock>
-        { (!(filterStatus.filterCount)
-          && (prevCount < reviewDetail.allReview.length))
-          ? (
-            <Botton onClick={fetchFeed}>
-              MORE REVIEWS
-            </Botton>
-          ) : ''}
-        <Botton> ADD A REVIEW +</Botton>
-      </ButtonBlock>
+      <Bottom>
+
+        <ButtonBlock>
+          { (!(filterStatus.filterCount)
+            && (prevCount < reviewDetail.allReview.length))
+            ? (
+              <Botton onClick={fetchFeed}>
+                MORE REVIEWS
+              </Botton>
+            ) : ''}
+          <Botton> ADD A REVIEW +</Botton>
+        </ButtonBlock>
+      </Bottom>
+        </ReviewContainer>
     </ReviewSection>
   );
 }
@@ -148,15 +154,31 @@ const ReviewSection = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
-  height: 45rem;
+  height: 60rem;
   width: 100%
 `;
+const TopSortBar = styled.div`
+  position: sticky;
+  top:0;
+    width:100%;
+    z-index:100;
+    background-color: ${({ theme }) => theme.colors.light}
+
+`;
+const Bottom = styled.div`
+  position: sticky;
+  bottom:0;
+    width:100%;
+    z-index:100;
+    background-color: ${({ theme }) => theme.colors.light}
+
+`;
 const ReviewContainer = styled.div`
-  // display: flex;
-  // flex-direction: column;
-  // overflow: auto;
-  // height: 45rem;
-  // width: 100%
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 60rem;
+  width: 100%
 `;
 
 const ButtonBlock = styled.div`
