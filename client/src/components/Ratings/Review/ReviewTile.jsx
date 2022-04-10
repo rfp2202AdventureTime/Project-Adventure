@@ -77,13 +77,11 @@ export default function ReviewTile({
         className="ModalParent"
         showModal={showModal}
         onClick={clickEsp}
-
       >
         <Modal
           className="Modal"
           showModal={showModal}
           modal={modalUrl}
-
         />
       </ModalParent>
       <Helpfulness
@@ -93,7 +91,6 @@ export default function ReviewTile({
         reportReview={reportReview}
         index={index}
       />
-
     </ReviewBlock>
   );
 }
@@ -105,7 +102,7 @@ const ReviewBlock = styled.div`
   margin: 0.4rem 0.8rem 0.4rem 0.8rem;
   padding: 0.25rem 1rem 0.25rem 1rem;
   // border-bottom: 0.2rem dotted rgba(221, 235, 223);
-  background-color: ${(props) => props.theme.colors.offWhite};
+  background-color: ${({ theme }) => theme.colors.offWhite};
 `;
 const StarBlock = styled.div`
   display: flex;
@@ -114,12 +111,13 @@ const StarBlock = styled.div`
 `;
 
 const UserData = styled.div`
-  justify-content: end
+  justify-content: end;
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const ModalParent = styled.a`
   position: fixed;
-  background-color: ${(props) => props.theme.colors.modalBackground};
+  background-color: ${({ theme }) => theme.colors.modalBackground};
   top: 0;
   right: 0;
   bottom: 0;
@@ -155,7 +153,7 @@ const ReviewHeading = styled.p`
 `;
 
 const Response = styled.div`
-  background-color: #e6ebea;
+  background-color: ${({ theme }) => theme.colors.tertiary};
   padding: 0.7rem;
   margin: 0.7rem;
 `;

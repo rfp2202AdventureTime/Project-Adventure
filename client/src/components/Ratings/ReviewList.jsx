@@ -7,6 +7,7 @@ import SortBar from './Review/SortBar';
 import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
 import { ProductIDContext } from '../../contexts/ProductIDContext';
+import { Button } from '../../contexts/Shared.styled';
 
 export default function ReviewList({ filterStatus }) {
   const productId = useContext(ProductIDContext);
@@ -137,11 +138,11 @@ export default function ReviewList({ filterStatus }) {
           { (!(filterStatus.filterCount)
             && (prevCount < reviewDetail.allReview.length))
             ? (
-              <Botton onClick={fetchFeed}>
+              <Button onClick={fetchFeed}>
                 MORE REVIEWS
-              </Botton>
+              </Button>
             ) : ''}
-          <Botton> ADD A REVIEW +</Botton>
+          <Button> ADD A REVIEW +</Button>
         </ButtonBlock>
       </Bottom>
         </ReviewContainer>
@@ -187,19 +188,4 @@ const ButtonBlock = styled.div`
   gap: 1rem;
   padding: 1.3rem 1rem 1.3rem 1rem;
 `;
-const Botton = styled.button`
-  border: 2px solid;
-  text-align: center;
-  padding: 1.3rem 1rem 1.3rem 1rem;
-  font-size: medium;
-  font-weight: 700;
-  &:hover {
-    background-color:${({ theme }) => theme.colors.buttonHover}
-  }
-`;
 
-// TODO: figure out nested proptype
-// ReviewList.propTypes = {
-//   filterStatus: PropTypes.shape({
-//   }),
-// };

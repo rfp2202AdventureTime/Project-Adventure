@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { ClickableText } from '../../../contexts/Shared.styled';
 
 export default function RatingBar({ scorePerct, id, toggleFilter }) {
   const handleClick = (e) => {
@@ -10,12 +11,12 @@ export default function RatingBar({ scorePerct, id, toggleFilter }) {
 
   return (
     <RatingBarBlock>
-      <StarLink
+      <ClickableText
         className={`${id}`}
         onClick={handleClick}
       >
         {`${id} Star`}
-      </StarLink>
+      </ClickableText>
       <GreyBar>
         <GreenBar
           width={scorePerct}
@@ -38,12 +39,6 @@ const RatingBarBlock = styled.div`
   // gap: 1rem;
   overflow: hidden;
 
-`;
-
-const StarLink = styled.button`
-  background-color: transparent;
-  border: none;
-  text-decoration: underline;
 `;
 
 const GreyBar = styled.div`

@@ -66,4 +66,6 @@ const RatingSection = styled.section`
   display: flex;
   flex-direction: row;
   padding: 2rem 0rem 4rem 1rem;
+  color: ${({ theme }) => theme.colors.secondary};
+
 `;

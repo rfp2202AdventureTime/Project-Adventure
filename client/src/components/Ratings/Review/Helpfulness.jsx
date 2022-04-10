@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { ClickableText } from '../../../contexts/Shared.styled';
 
 export default function Helpfulness({
   addHelpVote, helpfulness, reportReview, reviewId, index,
@@ -21,19 +22,17 @@ export default function Helpfulness({
   };
   return (
     <HelpfulnessContainer>
-      Helpful?
-      <ButtonBlock onClick={vote}>
+      {'Helpful? '}
+      <ClickableText onClick={vote}>
         Yes
-      </ButtonBlock>
-      <WhiteSpaceWrapper>
-        (
-        {helpCount}
-        )
-      </WhiteSpaceWrapper>
-      {' | '}
-      <ButtonBlock onClick={report}>
+      </ClickableText>
+      (
+      {helpCount}
+      )
+      {'    |   '}
+      <ClickableText onClick={report}>
         Report
-      </ButtonBlock>
+      </ClickableText>
     </HelpfulnessContainer>
   );
 }
@@ -43,15 +42,7 @@ export default function Helpfulness({
 const HelpfulnessContainer = styled.div`
   display: flex;
   flex-direction: row;
-`;
-const WhiteSpaceWrapper = styled.div`
-  margin-right: 1rem;
-`;
-const ButtonBlock = styled.button`
-background-color: transparent;
-border: none;
-text-decoration: underline;
-margin-left: 0.5rem;
+  gap: 0.7rem;
 `;
 
 Helpfulness.propTypes = {
