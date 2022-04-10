@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -35,6 +36,7 @@ export default function RatingList({ toggleFilter, filterStatus, clearFilter }) 
     if (filterStatus.filterCount) {
       Object.keys(filterStatus).forEach((key) => {
         if (key !== 'filterCount') {
+          // eslint-disable-next-line no-unused-expressions
           filterStatus[key] && tags.push(`${key} Star`);
         }
       });
