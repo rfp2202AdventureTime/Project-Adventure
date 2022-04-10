@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-// TODO: fix pro-types for this file
-
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -9,7 +6,7 @@ import Star from '../../../Star';
 import PhotoList from './PhotoList';
 import ReviewContent from './ReviewContent';
 import UserInteraction from './UserInteraction';
-import { Modal, ModalParent } from '../../../contexts/Shared.styled';
+import { Modal, ModalParent, ModalClose } from '../../../contexts/Shared.styled';
 
 export default function ReviewTile({
   review, addHelpVote, reportReview,
@@ -18,9 +15,7 @@ export default function ReviewTile({
     rating, summary, recommend, response, date, body, photos, helpfulness,
   } = review;
   const convertedDate = moment(date).format('MMMM D, YYYY');
-  // eslint-disable-next-line react/destructuring-assignment
   const reviewId = review.review_id;
-  // eslint-disable-next-line react/destructuring-assignment
   const usernameDate = `${review.reviewer_name},  ${convertedDate}`;
   const [showModal, setShowModal] = useState(false);
   const [modalUrl, setModalUrl] = useState('');
@@ -30,10 +25,13 @@ export default function ReviewTile({
     setShowModal(!showModal);
   };
 
-  const clickEsp = (e) => {
-    if (!e.target.closest('ModalParent')) {
-      setShowModal(false);
-    }
+  // const clickEsp = (e) => {
+  //   if (!e.target.closest('ModalParent')) {
+  //     setShowModal(false);
+  //   }
+  // };
+  const clickEsp = () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -73,13 +71,17 @@ export default function ReviewTile({
       <ModalParent
         className="ModalParent"
         showModal={showModal}
-        onClick={clickEsp}
       >
         <Modal
           className="Modal"
           showModal={showModal}
           modal={modalUrl}
-        />
+        >
+          <ModalClose
+                  onClick={clickEsp}
+
+          >&times;</ModalClose>
+        </Modal>
       </ModalParent>
       <UserInteraction
         addHelpVote={addHelpVote}
@@ -128,4 +130,6 @@ const Recommend = styled.div`
 
 ReviewTile.propTypes = {
   addHelpVote: PropTypes.func.isRequired,
+  reportReview: PropTypes.func.isRequired,
+  review: PropTypes.shape().isRequired,
 };

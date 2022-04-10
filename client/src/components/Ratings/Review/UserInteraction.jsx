@@ -28,9 +28,12 @@ export default function Helpfulness({
   return (
     <HelpfulnessContainer>
       {'Helpful? '}
-      <ClickableText onClick={vote}>
-        Yes
-      </ClickableText>
+      {voteLimiter
+        ? (
+          <ClickableText onClick={vote}>
+            Yes
+          </ClickableText>
+        ) : (<div>Yes</div>)}
       (
       {helpCount}
       )
@@ -55,7 +58,6 @@ const HelpfulnessContainer = styled.div`
 
 Helpfulness.propTypes = {
   helpfulness: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
   reviewId: PropTypes.number.isRequired,
   addHelpVote: PropTypes.func.isRequired,
   reportReview: PropTypes.func.isRequired,

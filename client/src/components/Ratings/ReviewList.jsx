@@ -21,6 +21,41 @@ export default function ReviewList({ filterStatus }) {
     totalCT: 0,
   });
 
+  // totalCT get from reviewMeta isn't accurate due to reported reviews removal from
+  // db but reflects the max possible review count
+  const getReview = () => (
+    axios({
+      method: 'get',
+      url: '/reviews',
+      params: {
+        product_id: productId,
+        count: (reviewMeta?.totalCT || 999),
+        sort,
+      },
+    })
+      .catch((err) => Console.log(err))
+  );
+
+  const addHelpVote = (reviewId) => {
+    axios({
+      method: 'put',
+      url: `/reviews/${reviewId}/helpful`,
+    })
+      .catch((err) => Console.log(err));
+  };
+
+  const handleSort = (criteria) => {
+    setSort(criteria);
+  };
+
+  const reportReview = (reviewId) => {
+    axios({
+      method: 'put',
+      url: `/reviews/${reviewId}/report`,
+    })
+      .catch((err) => Console.log(err));
+  };
+
   const filterReview = (reviews) => {
     let filteredReview = [];
     if (filterStatus.filterCount) {
@@ -32,37 +67,6 @@ export default function ReviewList({ filterStatus }) {
       filteredReview = reviews;
     }
     return filteredReview;
-  };
-
-  // totalCT get from reviewMeta isn't accurate due to reported reviews removal from db
-  const getReview = () => (
-    axios({
-      method: 'get',
-      url: '/reviews',
-      params: {
-        product_id: productId,
-        count: (reviewMeta?.totalCT || 999),
-        sort,
-      },
-    }));
-
-  const addHelpVote = (reviewId) => {
-    axios({
-      method: 'put',
-      url: `/reviews/${reviewId}/helpful`,
-    })
-      .catch((err) => Console.log(err));
-  };
-  const handleSort = (criteria) => {
-    setSort(criteria);
-  };
-
-  const reportReview = (reviewId) => {
-    axios({
-      method: 'put',
-      url: `/reviews/${reviewId}/report`,
-    })
-      .catch((err) => Console.log(err));
   };
 
   const fetchFeed = () => {
