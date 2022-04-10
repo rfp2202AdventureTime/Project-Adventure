@@ -96,7 +96,7 @@ export default function ReviewList({ filterStatus }) {
       url: '/reviews',
       params: {
         product_id: productId,
-        count: reviewMeta?.totalCT,
+        count: reviewMeta?.totalCT || 999,
         sort,
       },
     }));
