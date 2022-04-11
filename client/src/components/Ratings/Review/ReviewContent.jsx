@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { MiniButton } from '../../../contexts/Shared.styled';
+import HighlightText from './HighlightText';
 
-export default function ReviewContent({ body }) {
+export default function ReviewContent({ body, keyword }) {
   const [showButton, setShowButton] = useState(false);
   const [modifiedBody, setModifiedBody] = useState(body);
   const bodyCharLimit = 250;
@@ -22,7 +23,14 @@ export default function ReviewContent({ body }) {
 
   return (
     <ReviewContainer>
-      {modifiedBody}
+      {keyword
+        ? (
+          <HighlightText
+            text={modifiedBody}
+            highlight={keyword}
+          />
+        )
+        : modifiedBody}
       {showButton
         ? (
           <MiniButton
@@ -44,4 +52,9 @@ const ReviewContainer = styled.div`
 
 ReviewContent.propTypes = {
   body: PropTypes.string.isRequired,
+  keyword: PropTypes.string,
+};
+
+ReviewContent.defaultProps = {
+  keyword: null,
 };

@@ -6,10 +6,11 @@ import Star from '../../../Star';
 import PhotoList from './PhotoList';
 import ReviewContent from './ReviewContent';
 import UserInteraction from './UserInteraction';
+import HighlightText from './HighlightText';
 import { Modal, ModalParent, ModalClose } from '../../../contexts/Shared.styled';
 
 export default function ReviewTile({
-  review, addHelpVote, reportReview,
+  review, addHelpVote, reportReview, keyword,
 }) {
   const {
     rating, summary, recommend, response, date, body, photos, helpfulness,
@@ -46,9 +47,19 @@ export default function ReviewTile({
         {usernameDate}
       </UserRatingRow>
       <ReviewHeading>
-        {summary}
+        {keyword
+          ? (
+            <HighlightText
+              text={summary}
+              highlight={keyword}
+            />
+          )
+          : summary}
       </ReviewHeading>
-      <ReviewContent body={body} />
+      <ReviewContent
+        keyword={keyword}
+        body={body}
+      />
       {recommend && <Recommend> &#10003; I recommend this product</Recommend>}
       {(response
         && (
@@ -127,5 +138,10 @@ const Recommend = styled.div`
 ReviewTile.propTypes = {
   addHelpVote: PropTypes.func.isRequired,
   reportReview: PropTypes.func.isRequired,
+  keyword: PropTypes.string,
   review: PropTypes.shape().isRequired,
+};
+
+ReviewTile.defaultProps = {
+  keyword: null,
 };

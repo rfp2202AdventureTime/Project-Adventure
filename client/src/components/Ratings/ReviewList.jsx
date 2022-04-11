@@ -15,6 +15,7 @@ export default function ReviewList({ filterStatus }) {
   const reviewMeta = useMeta();
   const [sort, setSort] = useState('relevant');
   const [initialRender, setInitialRender] = useState(true);
+  const [keyword, setKeyword] = useState(null);
   const [prevCount, setPrevCount] = useState(0);
   const [reviewDetail, setReviewDetail] = useState({
     allReview: [],
@@ -50,6 +51,7 @@ export default function ReviewList({ filterStatus }) {
   };
 
   const handleSearch = (keyword) => {
+    setKeyword(keyword);
     const searchedData = reviewDetail.filteredReview.filter(
       (review) => review.body.toLowerCase().includes(keyword) || review.summary.toLowerCase().includes(keyword),
     );
@@ -67,6 +69,7 @@ export default function ReviewList({ filterStatus }) {
       prevCount: filteredData.length,
       filteredReview: filteredData,
     });
+    setKeyword(null);
   };
 
   const reportReview = (reviewId) => {
@@ -142,6 +145,7 @@ export default function ReviewList({ filterStatus }) {
             key={review.review_id.toString()}
             addHelpVote={addHelpVote}
             review={review}
+            keyword={keyword}
             reportReview={reportReview}
           />
         ),
