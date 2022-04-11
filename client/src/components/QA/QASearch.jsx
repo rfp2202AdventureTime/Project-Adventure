@@ -6,24 +6,18 @@ import PropTypes from 'prop-types';
 export default function Search({
   setSearchQuestionBody,
   searchQuesitonBody,
-  setsubmitSearchQuestionBody,
 }) {
   return (
     <SearchSection>
-      <form onSubmit={((e) => {
-        e.preventDefault();
-        setsubmitSearchQuestionBody(searchQuesitonBody);
-      })}
-      >
+      <form>
         <SearchBox
           type="text"
           name="QASearchText"
-          placeholder="Search questions ...."
+          placeholder="Have a question? Search for answers…"
           value={searchQuesitonBody}
           id="QASearchText"
           onChange={(e) => { setSearchQuestionBody(e.target.value); }}
         />
-        <input type="submit" value="Submit" />
       </form>
     </SearchSection>
   );
@@ -34,6 +28,8 @@ const SearchSection = styled.div`
   display: flex;
   flex-direction: row;
   padding-left: 25%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 `;
 
 const SearchBox = styled.input`
@@ -51,5 +47,4 @@ const SearchBox = styled.input`
 Search.propTypes = {
   setSearchQuestionBody: PropTypes.func.isRequired,
   searchQuesitonBody: PropTypes.string.isRequired,
-  setsubmitSearchQuestionBody: PropTypes.func.isRequired,
 };
