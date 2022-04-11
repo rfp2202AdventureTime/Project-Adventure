@@ -20,6 +20,7 @@
   "homepage": "https://github.com/rfp2202AdventureTime/Project-Adventure#readme",
   "dependencies": {
     "axios": "^0.26.1",
+    "babel-jest": "^27.5.1",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "moment": "^2.29.2",
@@ -50,5 +51,16 @@
     "nodemon": "^2.0.15",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2"
+  },
+  "jest": {
+    "moduleFileExtensions": ["js", "jsx"],
+    "moduleDirectories": ["node_modules", "bower_components", "shared"],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js",
+
+      "^react(.*)$": "<rootDir>/vendor/react-master$1",
+      "^config$": "<rootDir>/configs/app-config.js"
+    }
   }
 }
