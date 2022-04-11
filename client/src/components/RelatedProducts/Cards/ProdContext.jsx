@@ -45,7 +45,6 @@ export function ProdProvider({ children }) {
   }
 
   useEffect(() => {
-
     let newData;
     if (related) {
       Promise.all(related.map((number) => axios({

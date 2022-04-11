@@ -1,3 +1,6 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
 import { React, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { useCurrentStyles } from '../../../contexts/StylesProvider';
@@ -5,10 +8,9 @@ import { useMeta } from '../../../contexts/ReviewMeta';
 import Star from '../../../Star';
 
 function OutfitCard({ product, setOutfitArray, outfitArray }) {
-  // console.log(useCurrentStyles()[0].photos[0].thumbnail_url, 'this is currentstyles');
   const thumbnail = useCurrentStyles()[0].photos[0].thumbnail_url;
 
-
+  const rating = useMeta().avgRating;
 
   // use if add outfit array is more than 1
   const removeItem = (product) => {
@@ -16,7 +18,7 @@ function OutfitCard({ product, setOutfitArray, outfitArray }) {
     console.log(remove, 'this is 1');
 
     if (remove > -1) {
-      setOutfitArray((outfitArray => outfitArray.filter((product, i) => i === remove)
+      setOutfitArray(((outfitArray) => outfitArray.filter((product, i) => i === remove)
       ));
 
       console.log(outfitArray, 'this is array after removing');
@@ -33,7 +35,7 @@ function OutfitCard({ product, setOutfitArray, outfitArray }) {
 
         <img
           src={thumbnail}
-          alt="it's borked yo"
+          alt="Not found"
         />
       </OutfitImg>
       <div>{product.category}</div>
@@ -42,7 +44,7 @@ function OutfitCard({ product, setOutfitArray, outfitArray }) {
         $
         {product.default_price}
       </p>
-      <div><Star score={useMeta()} /></div>
+      <div><Star score={rating} /></div>
 
     </IndCard>
   );
@@ -78,5 +80,3 @@ const OutfitImg = styled.p`
   margin-top: 5px;
 `;
 export default OutfitCard;
-
-{ /* <CloseButton onClick={() => setOutfitArray((outfitArray) => outfitArray.splice(removeItem, 1))}></CloseButton> */ }

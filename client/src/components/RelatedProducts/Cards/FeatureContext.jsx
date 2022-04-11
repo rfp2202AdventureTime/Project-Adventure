@@ -1,8 +1,8 @@
+/* eslint-disable react/prop-types */
 import React, {
   useState, useEffect, useContext, createContext,
 } from 'react';
 import axios from 'axios';
-// import PropTypes from 'prop-types';
 import { ProductIDContext } from '../../../contexts/ProductIDContext';
 
 const FeatureContext = createContext();
@@ -24,7 +24,6 @@ export function FeatureProvider({ children, prodID }) {
         url: `products/${number}`,
       })))
         .then((data) => {
-          // console.log({ data }, 'this DATA')
           setFeatures({ data });
         })
         .catch((err) => console.log(err));

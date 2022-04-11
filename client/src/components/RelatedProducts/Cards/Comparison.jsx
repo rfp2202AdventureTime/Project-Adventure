@@ -1,13 +1,9 @@
 import { React } from 'react';
 import styled from 'styled-components';
-// import sampleFeatures from '../sampledata/sampleFeatures';
 import { useFeature } from './FeatureContext';
 
 // should get an array with two arrays of features from each item
 function Comparison() {
-  // const item1 = sampleFeatures[0];
-  // const item2 = sampleFeatures[1];
-
   const twoProductsArray = useFeature();
 
   if (twoProductsArray) {
@@ -49,14 +45,4 @@ function Comparison() {
   }
 }
 
-const Testing = styled.div`
-  border-style: solid;
-  height: max-content;
-  width: max-content;
-`;
-
-const Featstyle = styled.td`
-  align-items: center;
-  width: max-content;
-`;
 export default Comparison;

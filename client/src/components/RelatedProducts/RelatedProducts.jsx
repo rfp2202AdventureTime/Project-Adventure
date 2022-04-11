@@ -4,7 +4,6 @@ import Outfit from './Outfits/Outfit';
 import { RelatedProvider } from './RelatedContext';
 import { ProdProvider } from './Cards/ProdContext';
 import { ThumbnailProvider } from './Cards/thumbnailContext';
-import { FeatureProvider } from './Cards/FeatureContext';
 import AllCards from './Cards/AllCards';
 
 function RelatedProducts() {
@@ -32,12 +31,6 @@ function RelatedProducts() {
     </RelatedProductsSection>
   );
 }
-
-const Layout = styled.div`
-  display: flex;
-  width: 100%;
-  overflow: auto;
-`;
 
 const RelatedProductsSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};

@@ -16,10 +16,6 @@ function ProductImg({ image, product }) {
     setID(product);
   }
 
-  // useEffect(() => {
-  //   window.eventlistener
-  // })
-
   return (
 
     <div>

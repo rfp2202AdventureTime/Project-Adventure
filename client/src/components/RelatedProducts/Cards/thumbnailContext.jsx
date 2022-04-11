@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   React, useContext, useState, useEffect, createContext,
 } from 'react';
@@ -21,7 +22,6 @@ export function ThumbnailProvider({ children }) {
         url: `products/${number}/styles`,
       })))
         .then((data) => {
-          // console.log({ data }, 'this is DATA');
           setThumbnailInformation({ data });
         })
         .catch((err) => console.log('there was an ERROR', err));

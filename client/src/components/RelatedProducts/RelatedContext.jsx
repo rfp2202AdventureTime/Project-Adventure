@@ -13,7 +13,6 @@ export function useRelated() {
 
 export function RelatedProvider({ children }) {
   const [related, setRelatedInfo] = useState();
-  const [styles, setStyles] = useState();
   const productId = useContext(ProductIDContext);
 
   useEffect(() => {
@@ -23,17 +22,6 @@ export function RelatedProvider({ children }) {
     })
       .then(({ data }) => {
         setRelatedInfo(data);
-      })
-      .catch((err) => console.log(err));
-  }, [productId]);
-
-  useEffect(() => {
-    axios({
-      method: 'get',
-      url: `products/${productId}/styles`,
-    })
-      .then(({ data }) => {
-        setStyles(data);
       })
       .catch((err) => console.log(err));
   }, [productId]);
