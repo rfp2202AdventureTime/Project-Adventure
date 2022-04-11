@@ -103,7 +103,7 @@ const VisibleInDefault = css`
 
 const DotNavPresenter = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   left: 50%;
   transform: translate(-50%, 0);
   ${VisibleInExpanded}
@@ -201,12 +201,12 @@ const ExitButton = styled.span`
 const Dot = styled.span`
   background-color: ${(props) => props.theme.colors.light};
   display: inline-block;
-  height: 20px;
-  width: 20px;
-  margin: 5px;
+  height: 10px;
+  width: 10px;
+  margin: 7px;
   border-radius: 50%;
   &:hover { cursor: pointer; }
-  &.selected { background-color: red; }
+  &.selected { background-color: ${(props) => props.theme.colors.primary}; }
 `;
 
 ImageGallery.propTypes = {
