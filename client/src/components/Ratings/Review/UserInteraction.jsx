@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { ClickableText } from '../../../contexts/Shared.styled';
 
 export default function Helpfulness({
-  addHelpVote, helpfulness, reportReview, reviewId, index,
+  addHelpVote, helpfulness, reportReview, reviewId,
 }) {
   const [helpCount, setHelpCount] = useState(helpfulness);
   const [voteLimiter, setvoteLimiter] = useState(true);
+  const [reportLimiter, setReportLimiter] = useState(true);
 
   const vote = () => {
     if (voteLimiter) {
@@ -17,23 +19,31 @@ export default function Helpfulness({
   };
 
   const report = () => {
-    reportReview(index, reviewId);
+    if (reportLimiter) {
+      reportReview(reviewId);
+    }
+    setReportLimiter(reportLimiter && false);
   };
+
   return (
     <HelpfulnessContainer>
-      Helpful?
-      <FontLikeButton onClick={vote}>
-        Yes
-      </FontLikeButton>
-      <WhiteSpaceWrapper>
-        (
-        {helpCount}
-        )
-      </WhiteSpaceWrapper>
-      {' | '}
-      <FontLikeButton onClick={report}>
-        Report
-      </FontLikeButton>
+      {'Helpful? '}
+      {voteLimiter
+        ? (
+          <ClickableText onClick={vote}>
+            Yes
+          </ClickableText>
+        ) : (<div>Yes</div>)}
+      (
+      {helpCount}
+      )
+      {'    |   '}
+      {reportLimiter
+        ? (
+          <ClickableText onClick={report}>
+            Report
+          </ClickableText>
+        ) : (<div> Reported</div>)}
     </HelpfulnessContainer>
   );
 }
@@ -43,20 +53,11 @@ export default function Helpfulness({
 const HelpfulnessContainer = styled.div`
   display: flex;
   flex-direction: row;
-`;
-const WhiteSpaceWrapper = styled.div`
-  margin-right: 1rem;
-`;
-const FontLikeButton = styled.button`
-background-color: transparent;
-border: none;
-text-decoration: underline;
-margin-left: 0.5rem;
+  gap: 0.7rem;
 `;
 
 Helpfulness.propTypes = {
   helpfulness: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
   reviewId: PropTypes.number.isRequired,
   addHelpVote: PropTypes.func.isRequired,
   reportReview: PropTypes.func.isRequired,

@@ -12,13 +12,12 @@ export default function RatingOverview() {
   if (currentMeta) {
     const { recommended, avgRating } = currentMeta;
     score = avgRating;
-
-    // Handle helpfulness
     const trueCT = Number(recommended.true);
     const falseCT = Number(recommended.false);
     helpfulness = Math.round((trueCT / (trueCT + falseCT)) * 100);
   }
-  const helpfulBar = helpfulness ? (
+
+  const recommendationEntry = helpfulness ? (
     <div>
       {helpfulness}
       % of reviews recommend this product
@@ -36,7 +35,7 @@ export default function RatingOverview() {
         </Score>
         <Star score={score} />
       </StarContainer>
-      {helpfulBar}
+      {recommendationEntry}
     </RatingOverviewContainer>
   );
 }
