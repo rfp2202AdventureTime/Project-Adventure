@@ -6,7 +6,7 @@
   "scripts": {
     "server-dev": "npx nodemon --watch server servers/index.js",
     "client-dev": "npx webpack --watch",
-    "test": "jest"
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -58,9 +58,9 @@
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
       "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js",
-
-      "^react(.*)$": "<rootDir>/vendor/react-master$1",
+      "^@/(.*)$": "<rootDir>/$1",
       "^config$": "<rootDir>/configs/app-config.js"
-    }
+    },
+    "testEnvironment": "jsdom"
   }
 }

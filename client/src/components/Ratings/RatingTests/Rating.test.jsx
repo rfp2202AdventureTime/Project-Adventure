@@ -12,28 +12,24 @@ test('use jsdom in this test file', () => {
 
 
 
-// let container = null;
-// beforeEach(() => {
-//   // setup a DOM element as a render target
-//   container = document.createElement('div');
-//   document.body.appendChild(container);
-// });
+let container = null;
+beforeEach(() => {
+  // setup a DOM element as a render target
+  container = document.createElement('div');
+  document.body.appendChild(container);
+});
 
-// afterEach(() => {
-//   // cleanup on exiting
-//   unmountComponentAtNode(container);
-//   container.remove();
-//   container = null;
-// });
+afterEach(() => {
+  // cleanup on exiting
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+});
 
-// it('renders with or without a name', () => {
-//   act(() => {
-//     render(<FactorEntry />, container);
-//   });
-//   expect(container.textContent).toBe('');
-
-//   act(() => {
-//     render(<FactorEntry factor="size" />, container);
-//   });
-//   expect(container.textContent[0]).toBe('Too small');
-// });
+it('renders with factorBar descriptions', () => {
+  act(() => {
+    render(<FactorEntry factor="Size" />, container);
+  });
+  // expect(container.textContent[0]).toBe('Too small');
+  expect(container.textContent).toBe('Too smallPerfectToo large');
+});
