@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+import { FiAlertTriangle } from 'react-icons/fi';
 
 // - Actually make the POST request when adding to cart instead of console logging.
 // - Down arrow styling for the dropdowns.
@@ -40,7 +42,7 @@ function AddToCart({ skus }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selectedSku) {
-      setError(!error);
+      setError(true);
     } else {
       // eslint-disable-next-line no-console
       console.log(`Size: ${skus[selectedSku].size} - Quantity: ${quantity}`);
@@ -51,7 +53,16 @@ function AddToCart({ skus }) {
 
   return (
     <>
-      <SelectionError>{error ? 'Please select a size!' : null}</SelectionError>
+      <SelectionError>
+        {error ? (
+          <Error>
+            <AlertWrapper>
+              <FiAlertTriangle />
+            </AlertWrapper>
+            Please select a size!
+          </Error>
+        ) : null}
+      </SelectionError>
 
       <SelectSize defaultValue="selectsize" onChange={handleChange}>
         {anySkus
@@ -84,9 +95,61 @@ function AddToCart({ skus }) {
   );
 }
 
+const ErrorAnimation = keyframes`
+  0% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+  37% {
+    transform: translateX(5px);
+    timing-function: ease-out;
+  }
+  55% {
+    transform: translateX(-5px);
+    timing-function: ease-in;
+  }
+  73% {
+    transform: translateX(4px);
+    timing-function: ease-out;
+  }
+  82% {
+    transform: translateX(-4px);
+    timing-function: ease-in;
+  }
+  91% {
+    transform: translateX(2px);
+    timing-function: ease-out;
+  }
+  96% {
+    transform: translateX(-2px);
+    timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+`;
+
 const SelectionError = styled.div`
   height: 40px;
   color: red;
+  animation-name: ${ErrorAnimation};
+  animation-duration: 0.5s;
+  display: flex;
+  align-content: flex-end;
+`;
+
+const Error = styled.span`
+  animation-name: ${ErrorAnimation};
+  animation-duration: 0.5s;
+  line-height: 50px;
+  font-size: 0.9em;
+  margin-left: 5px;
+`;
+
+const AlertWrapper = styled.div`
+  display: inline-block;
+  padding-right: 4px;
 `;
 
 const AddToCartButton = styled.button`
@@ -118,6 +181,7 @@ const CustomSelect = styled.select`
 
 const SelectSize = styled(CustomSelect)`
   width: 150px;
+  & > svg { display: inline-block; }
 `;
 
 const SelectQuantity = styled(CustomSelect)`
