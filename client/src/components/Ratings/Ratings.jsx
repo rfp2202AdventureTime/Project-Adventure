@@ -37,6 +37,7 @@ export default function Ratings() {
 
   return (
     <RatingSection>
+      // here
       {currentMeta?.avgRating ? (
         <RatingBreakdown
           clearFilter={clearFilter}
