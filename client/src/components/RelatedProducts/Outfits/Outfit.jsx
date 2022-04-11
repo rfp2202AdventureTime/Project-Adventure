@@ -2,7 +2,7 @@ import {
   React, useState, useContext, useEffect,
 } from 'react';
 import styled from 'styled-components';
-import { ProductIDContext, useCurrentProduct } from '../../../contexts/ProductIDContext';
+import { useCurrentProduct } from '../../../contexts/ProductIDContext';
 
 import OutfitCard from './OutfitCard';
 
@@ -14,41 +14,27 @@ export default function Outfit() {
   const initialArray = [];
   const [outfitArray, setOutfitArray] = useState(initialArray);
 
-  // useEffect(() => {
-  //   console.log(outfitArray);
-  // }, [outfitArray]);
-
   return (
 
     <AddSection>
-      <div>
+      <AddButton>
 
         <img
           src="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
           alt="plus sign"
-          width={280}
-          height={250}
-          onClick={() => setOutfitArray((initialArray) => [...initialArray, productToAdd])}
+          width={175}
+          height={200}
+          onClick={() => setOutfitArray((initialArray) => [...outfitArray, productToAdd])}
           />
 
         <OutfitText>Add to Outfit</OutfitText>
 
+          </AddButton>
+      <AddedOutfit>
 
-
-
-
-          </div>
-        <AddedOutfit>
-
-        {outfitArray.map((item, key) => <OutfitCard product={item} key={key} />)}
-        </AddedOutfit>
+        {outfitArray.map((item, key) => <OutfitCard product={item} key={key} outfitArray={outfitArray} setOutfitArray={setOutfitArray} />)}
+      </AddedOutfit>
     </AddSection>
-
-
-
-
-  // {/* <OutfitCard product={outfitArray} /> */}
-
 
   );
 }
@@ -69,6 +55,7 @@ const AddedOutfit = styled.div`
   width: fit-content;
   height: fit-content;
   margin-right: 30px;
+  margin-left: 15px;
   margin-bottom: 5px;
   border-radius: 5px;
   justify-content: space-evenly;
@@ -77,6 +64,15 @@ const AddedOutfit = styled.div`
   // }
 `;
 
+const AddButton = styled.div`
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  &:hover {
+    box-shadow: 0 8px 16px 0;
+  }
+
+`;
 const OutfitText = styled.p`
   text-align: center;
 `;
@@ -85,8 +81,7 @@ const OutfitText = styled.p`
 
 // };
 
-
-{/* <div onClick={() => setOutfitArray((initialArray) => [...initialArray, productToAdd])}></div> */}
+{ /* <div onClick={() => setOutfitArray((initialArray) => [...initialArray, productToAdd])}></div> */ }
 
 // const AddSection = styled.div`
 //   display: flex;

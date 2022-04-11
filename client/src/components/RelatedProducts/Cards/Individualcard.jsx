@@ -1,16 +1,19 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 import ProductImg from './ProductImg';
-
-// should retrieve all related products from initial product page
-// map each individual card with all the information
+import Star from '../../../Star';
 
 // receives array [product information, thumbnail url]
 function Individualcard({ product }) {
+  const starRating = product[2].avgRating;
   return (
     <div>
       <IndCard>
-        <ProductImg image={product[1]} product={product[0].id} />
+        <ThumbnailImage>
+          <ProductImg image={product[1]} product={product[0].id} />
+
+        </ThumbnailImage>
         <CardText>
           <CategoryText>
             <div>{product[0].category}</div>
@@ -20,7 +23,10 @@ function Individualcard({ product }) {
             $
             {product[0].default_price}
           </p>
-          <p>Stars</p>
+          <div>
+            <Star score={starRating} />
+            {' '}
+          </div>
         </CardText>
       </IndCard>
     </div>
@@ -29,6 +35,7 @@ function Individualcard({ product }) {
 
 const IndCard = styled.div`
   display: table-cell, relative;
+  position: relative;
   border-style: solid;
   border-width: 2px;
   width: fit-content;
@@ -47,6 +54,10 @@ const CategoryText = styled.div`
 `;
 const CardText = styled.div`
   padding-left: 1px;
+`;
+
+const ThumbnailImage = styled.div`
+  margin-top: 5px;
 `;
 
 export {

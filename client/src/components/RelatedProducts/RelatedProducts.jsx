@@ -16,20 +16,19 @@ function RelatedProducts() {
       <RelatedProvider>
         <ProdProvider>
           <ThumbnailProvider>
-            <FeatureProvider>
+            {/* <FeatureProvider> */}
 
-              <AllCards />
+            <AllCards />
 
-            </FeatureProvider>
+            {/* </FeatureProvider> */}
           </ThumbnailProvider>
         </ProdProvider>
       </RelatedProvider>
 
       <h1>Your Outfit</h1>
-      {/* <Layout> */}
-        <Outfit />
 
-      {/* </Layout> */}
+      <Outfit />
+
     </RelatedProductsSection>
   );
 }

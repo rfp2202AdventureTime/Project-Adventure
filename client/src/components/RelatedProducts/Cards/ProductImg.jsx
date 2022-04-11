@@ -15,7 +15,10 @@ function ProductImg({ image, product }) {
     setShowModal(!showModal);
     setID(product);
   }
-  // console.log(Feature, 'this is FEATURE!');
+
+  // useEffect(() => {
+  //   window.eventlistener
+  // })
 
   return (
 
@@ -25,7 +28,7 @@ function ProductImg({ image, product }) {
           <Comparison />
         </TestingModal>
 
-        <CompareButton onClick={() => handleClick()}>Compare</CompareButton>
+        <CompareButton onClick={() => handleClick()}>&#9733;</CompareButton>
         <a href="http://google.com">
           <img
             src={productThumbnail}
@@ -41,19 +44,23 @@ function ProductImg({ image, product }) {
 }
 
 const CompareButton = styled.button`
-  color: black;
-  position: relative;
-  float: right;
+  color: yellow;
+  border: 2px, white;
+  position: absolute;
+  right: 8px;
+  top: -3px;
   background-color: transparent;
   border: transparent;
+  margin: 5px;
 `;
 
-const TestingModal = styled.section`
+const TestingModal = styled.div`
   display: ${(props) => (props.show ? 'relative' : 'none')};
   position: absolute;
+  width: max-content;
   z-index: 500;
-  top: -10;
-  left: -1;
+  top: 50%;
+  left: 50%;
   background: grey;
   border-style: 10px solid;
 `;
