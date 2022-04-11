@@ -24,7 +24,7 @@ export default function SortBar({ handleSort, totalCT, allCT }) {
 const SortBarBlock = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 0.4rem 0.8rem 0.4rem 0.8rem;
+  margin: 0.1rem 0.8rem 0.2rem 0.8rem;
   padding: 0.25rem 1rem 0.25rem 1rem;
   font-size: medium;
   gap: 0.4rem;

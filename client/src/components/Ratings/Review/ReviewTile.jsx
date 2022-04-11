@@ -25,12 +25,7 @@ export default function ReviewTile({
     setShowModal(!showModal);
   };
 
-  // const clickEsp = (e) => {
-  //   if (!e.target.closest('ModalParent')) {
-  //     setShowModal(false);
-  //   }
-  // };
-  const clickEsp = () => {
+  const clickExit = () => {
     setShowModal(false);
   };
 
@@ -78,9 +73,10 @@ export default function ReviewTile({
           modal={modalUrl}
         >
           <ModalClose
-                  onClick={clickEsp}
-
-          >&times;</ModalClose>
+            onClick={clickExit}
+          >
+            &times;
+          </ModalClose>
         </Modal>
       </ModalParent>
       <UserInteraction

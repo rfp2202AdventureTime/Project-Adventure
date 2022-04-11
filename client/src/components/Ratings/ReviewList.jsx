@@ -4,6 +4,7 @@ import axios from 'axios';
 // import PropTypes from 'prop-types';
 import ReviewTile from './Review/ReviewTile';
 import SortBar from './Review/SortBar';
+import SearchBar from './Review/SearchBar';
 import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
 import { ProductIDContext } from '../../contexts/ProductIDContext';
@@ -104,6 +105,7 @@ export default function ReviewList({ filterStatus }) {
   return (
     <ReviewSection>
       <StickyTop>
+        <SearchBar />
         <SortBar
           totalCT={reviewDetail.filteredReview.length}
           allCT={reviewDetail.allReview.length}
