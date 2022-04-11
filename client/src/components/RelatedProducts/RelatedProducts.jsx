@@ -15,11 +15,9 @@ function RelatedProducts() {
       <RelatedProvider>
         <ProdProvider>
           <ThumbnailProvider>
-            {/* <FeatureProvider> */}
 
             <AllCards />
 
-            {/* </FeatureProvider> */}
           </ThumbnailProvider>
         </ProdProvider>
       </RelatedProvider>

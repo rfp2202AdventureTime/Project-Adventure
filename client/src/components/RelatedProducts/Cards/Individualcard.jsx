@@ -7,6 +7,7 @@ import Star from '../../../Star';
 // receives array [product information, thumbnail url]
 function Individualcard({ product }) {
   const starRating = product[2].avgRating;
+  // console.log(product[0], 'this is product for price')
   return (
     <div>
       <IndCard>
