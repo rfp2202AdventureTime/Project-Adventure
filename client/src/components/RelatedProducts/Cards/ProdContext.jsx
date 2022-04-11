@@ -15,6 +15,8 @@ export function ProdProvider({ children }) {
 
   const [relatedInformation, setRelatedInformation] = useState([]);
 
+  const [ratingsMeta, setRatingsMeta] = useState();
+
   useEffect(() => {
     if (related) {
       Promise.all(related.map((number) => axios({
@@ -28,8 +30,47 @@ export function ProdProvider({ children }) {
     }
   }, [related]);
 
+  function convertRating(data) {
+    let totalRating = 0;
+    let avgRating = 0;
+    let totalCT = null;
+    const { ratings } = data;
+    Object.keys(ratings).forEach((key) => {
+      const currentCT = Number(ratings[key]);
+      totalRating += key * currentCT;
+      totalCT += currentCT;
+    });
+    avgRating = Math.round((totalRating / totalCT) * 10) / 10;
+    return { avgRating, totalCT };
+  }
+
+  useEffect(() => {
+    let newData;
+    if (related) {
+      Promise.all(related.map((number) => axios({
+        method: 'get',
+        url: '/reviews/meta',
+        params: {
+          product_id: number,
+        },
+      })))
+        .then((data) => {
+          const testArray = [];
+          Promise.all(data.map((item) => {
+            newData = item.data;
+            const RatingDetails = convertRating(newData);
+            newData.avgRating = RatingDetails.avgRating;
+            newData.totalCT = RatingDetails.totalCT;
+            testArray.push(newData);
+          }));
+          setRatingsMeta({ data });
+        })
+        .catch(() => setRatingsMeta(null));
+    }
+  }, [related]);
+
   return (
-    <ProdContext.Provider value={relatedInformation}>
+    <ProdContext.Provider value={{ relatedInformation, ratingsMeta }}>
       { children }
     </ProdContext.Provider>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Outfit from './Outfit';
+import Outfit from './Outfits/Outfit';
 import { RelatedProvider } from './RelatedContext';
 import { ProdProvider } from './Cards/ProdContext';
 import { ThumbnailProvider } from './Cards/thumbnailContext';
@@ -23,19 +23,12 @@ function RelatedProducts() {
       </RelatedProvider>
 
       <h1>Your Outfit</h1>
-      <Layout>
-        <Outfit />
 
-      </Layout>
+      <Outfit />
+
     </RelatedProductsSection>
   );
 }
-
-const Layout = styled.div`
-  display: flex;
-  width: 100%;
-  overflow: auto;
-`;
 
 const RelatedProductsSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
