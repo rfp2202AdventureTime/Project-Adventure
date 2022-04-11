@@ -49,6 +49,26 @@ export default function ReviewList({ filterStatus }) {
     setSort(criteria);
   };
 
+  const handleSearch = (keyword) => {
+    const searchedData = reviewDetail.filteredReview.filter(
+      (review) => review.body.toLowerCase().includes(keyword) || review.summary.toLowerCase().includes(keyword),
+    );
+    setReviewDetail({
+      ...reviewDetail,
+      prevCount: searchedData.length,
+      filteredReview: searchedData,
+    });
+  };
+
+  const resetSearch = () => {
+    const filteredData = filterReview(reviewDetail.allReview)
+    setReviewDetail({
+      ...reviewDetail,
+      prevCount: filteredData.length,
+      filteredReview: filteredData,
+    });
+  };
+
   const reportReview = (reviewId) => {
     axios({
       method: 'put',
@@ -56,6 +76,7 @@ export default function ReviewList({ filterStatus }) {
     })
       .catch((err) => Console.log(err));
   };
+
 
   const filterReview = (reviews) => {
     let filteredReview = [];
@@ -105,7 +126,10 @@ export default function ReviewList({ filterStatus }) {
   return (
     <ReviewSection>
       <StickyTop>
-        <SearchBar />
+        <SearchBar
+          resetSearch={resetSearch}
+          handleSearch={handleSearch}
+        />
         <SortBar
           totalCT={reviewDetail.filteredReview.length}
           allCT={reviewDetail.allReview.length}

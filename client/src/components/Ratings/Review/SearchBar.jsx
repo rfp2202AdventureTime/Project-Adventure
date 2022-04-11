@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-export default function SearchBar({ handleSearch }) {
+export default function SearchBar({ handleSearch, resetSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const search = (e) => {
-    const currentSearch = e.target.value;
-    setSearchTerm(currentSearch);
-    if (currentSearch.length > 2) {
-      handleSearch(currentSearch);
+    const keyword = e.target.value.toLowerCase();
+    setSearchTerm(keyword);
+    if (keyword.length > 2) {
+      handleSearch(keyword);
+    } else {
+      resetSearch();
     }
   };
-
-  // useEffect(() => {
-
-  // }, []);
 
   return (
     <SearchBarBlock>
@@ -43,4 +41,5 @@ const SearchBarBlock = styled.div`
 
 SearchBar.propTypes = {
   handleSearch: PropTypes.func.isRequired,
+  resetSearch: PropTypes.func.isRequired,
 };
