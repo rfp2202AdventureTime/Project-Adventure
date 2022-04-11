@@ -5,6 +5,8 @@ import moment from 'moment';
 import axios from 'axios';
 import { useData } from './QAContext';
 
+import QAPhoto from './QAPhoto';
+
 export default function QAItem({ question, allAnswers }) {
   const setGlobalAData = useData().setAData;
   const globalQData = useData().qData;
@@ -12,18 +14,35 @@ export default function QAItem({ question, allAnswers }) {
   const [numAsToRender, setNumAsToRender] = useState(2);
   const [moreAsClicked, setMoreAsClicked] = useState(true);
   const [reported, setReported] = useState(false);
+  const [disableHelpfulQuestion, setdisableHelpfulQuestion] = useState(false);
+  const [disableHelpfulAnswer, setdisableHelpfulAnswer] = useState(false);
+
+
   const filteredAnswers = allAnswers.filter(
     (answer) => answer.question === question.question_id.toString(),
   );
   let arrayOfAnswers;
   const totalAsToRender = [];
+  const compareAnswersForSeller = (a, b) => {
+    if (a.answerer_name === 'Seller' && b.answerer_name !== 'Seller') {
+      return -1;
+    } if (a.answerer_name !== 'Seller' && b.answerer_name === 'Seller') {
+      return 1;
+    } return 0;
+  };
+
   if (filteredAnswers.length > 0 && filteredAnswers[0].results.length > 0) {
     arrayOfAnswers = filteredAnswers[0].results;
+    arrayOfAnswers.sort(compareAnswersForSeller);
     for (let i = 0; i < Math.min(numAsToRender, arrayOfAnswers.length); i += 1) {
-      totalAsToRender.push(arrayOfAnswers[i]);
+      totalAsToRender.push([arrayOfAnswers[i], []]);
+      if (arrayOfAnswers[i].photos[0] !== undefined) {
+        for (let p = 0; p < arrayOfAnswers[i].photos.length; p += 1) {
+          totalAsToRender[i][1].push(arrayOfAnswers[i].photos[p]);
+        }
+      }
     }
   }
-
   const handleQuestionHelpful = (category, ID) => {
     axios({
       method: 'PUT',
@@ -110,28 +129,63 @@ export default function QAItem({ question, allAnswers }) {
         </QAItemQuestionLeft>
         <QAItemQuestionRight>
           {'Helpful? '}
-          <u onClick={(e) => handleQuestionHelpful('helpful', question.question_id)}>Yes</u>
+          <ClickableText
+            disabled={disableHelpfulQuestion}
+            onClick={() => {
+              setdisableHelpfulQuestion(true);
+              handleQuestionHelpful('helpful', question.question_id);
+            }}
+          >
+            Yes
+          </ClickableText>
           {` (${question.question_helpfulness}) | `}
           <u value='add answer' onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
         </QAItemQuestionRight>
       </QAItemFullQuestion>
       {totalAsToRender === undefined ? '' : totalAsToRender.map((answer) => (
-        <QAItemAnswer key={answer.answer_id}>
+        <QAItemAnswer key={answer[0].answer_id}>
           <span>
             <strong>A: </strong>
-            {answer.body}
+            {answer[0].body}
           </span>
           <span>
-            {`by `} {answer.answerer_name === 'Seller' ?
-              <strong>{answer.answerer_name}</strong>
-              : `${answer.answerer_name}`
-            }
-            {`${moment(answer.date).format('MMMM DD, YYYY')} |
+            {'by '}
+            {answer[0].answerer_name === 'Seller'
+              ? (
+                <strong>
+                  {answer[0].answerer_name}
+                </strong>
+              )
+              : `${answer[0].answerer_name} `}
+            {`${moment(answer[0].date).format('MMMM DD, YYYY')} |
             Helpful? `}
-            <u onClick={(e) => handleHelpfulAnswer('helpful', answer.answer_id)}>Yes</u>
-            {` (${answer.helpfulness}) | `}
-            {!reported && <u onClick={(e) => handleReport('report', answer.answer_id)}>Report</u>}
+            <ClickableText
+              disabled={disableHelpfulAnswer}
+              onClick={() => {
+                setdisableHelpfulAnswer(true);
+                handleHelpfulAnswer('helpful', answer[0].answer_id);
+              }}
+            >
+              Yes
+            </ClickableText>
+            {` (${answer[0].helpfulness}) | `}
+            {!reported && (
+              <ClickableText
+                onClick={() => handleReport('report', answer[0].answer_id)}
+              >
+                Report
+              </ClickableText>
+            )}
           </span>
+          <QAPhotoContainer>
+            { answer[1].map((photos) => (
+              <QAPhoto
+                test={photos}
+                url={photos.url}
+                key={photos.id}
+              />
+            ))}
+          </QAPhotoContainer>
         </QAItemAnswer>
       ))}
       {(moreAsClicked && totalAsToRender[0] !== undefined) ? (
@@ -170,7 +224,7 @@ const QAItemSection = styled.div`
   flex-direction: column;
   justify-content: space-around;
   border-bottom: 0.2rem dotted rgba(221, 235, 223);
-`;
+  `;
 
 const QAItemFullQuestion = styled.div`
   background-color: ${(props) => props.theme.colors.light};
@@ -204,6 +258,28 @@ const QAItemAnswer = styled.div`
   justify-content: space-around;
   padding-bottom: 10px;
   padding-top: 10px;
+`;
+
+const QAPhotoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  gap: 20px;
+  max-width: 400px;
+  padding: 10px 0;
+`;
+
+const ClickableText = styled.button`
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
 `;
 
 QAItem.propTypes = {
