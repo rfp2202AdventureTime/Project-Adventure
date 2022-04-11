@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { React, useState, useContext } from 'react';
+import { React, useState } from 'react';
 import styled from 'styled-components';
 import Comparison from './Comparison';
-import { useFeature, FeatureProvider } from './FeatureContext';
+import { FeatureProvider } from './FeatureContext';
 
 // link should take it to the product page (productID)
 // src should image of related products

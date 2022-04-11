@@ -7,6 +7,7 @@ import OutfitCard from './OutfitCard';
 // to check functionality of 'add to outfit'
 // will need to add current product to 'Your Outfit' list
 
+// change image to cover
 export default function Outfit() {
   const productToAdd = useCurrentProduct().currentProduct;
   const initialArray = [];

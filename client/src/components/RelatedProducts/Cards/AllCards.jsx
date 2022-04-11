@@ -9,7 +9,7 @@ function AllCards() {
   const relatedProds = useProd().relatedInformation;
   const thumbnail = useThumbnail();
   const ratings = useProd().ratingsMeta;
-  console.log(thumbnail, 'this is thumbnail');
+  // console.log(thumbnail, 'this is thumbnail');
 
   const zippedArray = [];
 

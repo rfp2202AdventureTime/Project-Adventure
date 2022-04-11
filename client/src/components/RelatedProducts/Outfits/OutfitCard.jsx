@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
-import { React, useEffect, useContext } from 'react';
+import { React } from 'react';
 import styled from 'styled-components';
 import { useCurrentStyles } from '../../../contexts/StylesProvider';
 import { useMeta } from '../../../contexts/ReviewMeta';
