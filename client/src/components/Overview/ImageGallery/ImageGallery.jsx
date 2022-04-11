@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
@@ -6,7 +7,6 @@ import { FiArrowLeft, FiArrowRight, FiX } from 'react-icons/fi';
 
 import ZoomableImage from './ZoomableImage';
 import Carousel from './Carousel';
-import DotNav from './DotNav';
 
 function ImageGallery({ children, photos }) {
   // Views can be ['default', 'expanded']
@@ -28,7 +28,6 @@ function ImageGallery({ children, photos }) {
   const leftVisibility = imgIdx > 0;
   const rightVisibility = photos && imgIdx < (photos.length - 1);
   const navVisibile = photos && photos.length > 1;
-  const size = photos && photos.length;
   const isZoomDisabled = view === 'default';
 
   return (
@@ -56,7 +55,9 @@ function ImageGallery({ children, photos }) {
 
               {navVisibile && (
               <DotNavPresenter className={view}>
-                <DotNav imgIdx={imgIdx} size={size} handleClick={handleImgIdxChange} />
+                {photos.map((photo, i) => (
+                  <Dot key={i} className={(i === imgIdx && 'selected')} onClick={() => handleImgIdxChange(i)} />
+                ))}
               </DotNavPresenter>
               )}
             </>
@@ -102,7 +103,7 @@ const VisibleInDefault = css`
 
 const DotNavPresenter = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   left: 50%;
   transform: translate(-50%, 0);
   ${VisibleInExpanded}
@@ -187,10 +188,25 @@ const ExitButton = styled.span`
   ${VisibleInExpanded}
   color: ${({ theme }) => theme.colors.primary};
   & > *:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     transition: transform 0.1s ease-in-out;
   }
+  & > *:active {
+    transform: scale(0.95);
+    transition: transform 0.06s ease-in-out;
+  }
   & > * { transition: transform 0.1s ease-in-out; }
+`;
+
+const Dot = styled.span`
+  background-color: ${(props) => props.theme.colors.light};
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  margin: 7px;
+  border-radius: 50%;
+  &:hover { cursor: pointer; }
+  &.selected { background-color: ${(props) => props.theme.colors.primary}; }
 `;
 
 ImageGallery.propTypes = {

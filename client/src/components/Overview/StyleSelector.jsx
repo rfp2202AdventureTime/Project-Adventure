@@ -69,7 +69,7 @@ const SelectedThumbnail = styled.span`
   }
 `;
 
-const Thumbnail = styled.span`
+const Thumbnail = styled.a`
   height: 75px;
   width: 75px;
   border-radius: 50%;
@@ -83,6 +83,11 @@ const Thumbnail = styled.span`
     transform: scale(1.02);
     transition: transform 0.2s ease-in-out;
   }
+  &:active {
+    transform: scale(0.99);
+    transition: transform 0.06s ease-in-out;
+  }
+  transition: transform 0.1s ease-in-out;
 `;
 
 const StyleSelectorContainer = styled.section`
