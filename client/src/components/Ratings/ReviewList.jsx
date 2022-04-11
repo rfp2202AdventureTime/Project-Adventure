@@ -80,7 +80,6 @@ export default function ReviewList({ filterStatus }) {
       .catch((err) => Console.log(err));
   };
 
-
   const filterReview = (reviews) => {
     let filteredReview = [];
     if (filterStatus.filterCount) {

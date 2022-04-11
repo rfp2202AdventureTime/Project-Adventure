@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useMeta } from '@Contexts/ReviewMeta';
+import { useMeta } from '../../../contexts/ReviewMeta';
 import Star from '../../../Star';
 
 export default function RatingOverview() {
