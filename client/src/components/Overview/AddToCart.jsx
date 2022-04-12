@@ -5,12 +5,15 @@ import axios from 'axios';
 
 import { FiAlertTriangle } from 'react-icons/fi';
 
+import useTracking from '@Contexts/ClickTracker';
+
 import Console from '../../Console';
 
 // - Actually make the POST request when adding to cart instead of console logging.
 // - Down arrow styling for the dropdowns.
 
 function AddToCart({ skus }) {
+  const { trackEvent } = useTracking({ widget: 'Add to Cart' });
   const [selectedSku, setSelectedSku] = useState();
   const [quantity, setQuantity] = useState();
   const [error, setError] = useState(false);
@@ -73,7 +76,7 @@ function AddToCart({ skus }) {
         ) : null}
       </SelectionError>
 
-      <SelectSize defaultValue="selectsize" onChange={handleChange}>
+      <SelectSize onClick={trackEvent({ element: 'Select Size' })} defaultValue="selectsize" onChange={handleChange}>
         {anyValidSkus
           ? (
             <>
