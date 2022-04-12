@@ -53,7 +53,7 @@ const CardImage = styled.div`
   background-size: cover;
 `;
 
-const CompareButton = styled.button`
+const CompareButton = styled.div`
   color: yellow;
   border: 2px, white;
   position: absolute;

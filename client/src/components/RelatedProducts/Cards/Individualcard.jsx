@@ -1,32 +1,20 @@
 /* eslint-disable react/prop-types */
-import { React, useState, useEffect } from 'react';
+import { React } from 'react';
 import styled from 'styled-components';
 import ProductImg from './ProductImg';
 import Star from '../../../Star';
-import { ProductIDContext, ProductProvider } from '../../../contexts/ProductIDContext';
+import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 
 // receives array [product information, thumbnail url]
 function Individualcard({ product }) {
-  const [productPicked, setProductPicked] = useState(ProductIDContext);
-  // const productPicked = product[0].id;
+  const { setCurrentProductId } = useCurrentProductId();
+
   const starRating = product[2].avgRating;
 
-  console.log(ProductIDContext, 'provider1');
-
-  useEffect(() => {
-    console.log(productPicked, 'this is product picked');
-    console.log(ProductIDContext, 'provider2');
-
-
-  }, [productPicked]);
-
-
   return (
-    <ProductProvider value={productPicked}>
     <div>
-      <IndCard onClick={() => setProductPicked(product[0].id)}>
+      <IndCard onClick={() => setCurrentProductId(product[0].id)}>
         <ProductImg image={product[1]} product={product[0].id} />
-
         <CardText>
           <CategoryText>
             <div>{product[0].category}</div>
@@ -43,7 +31,6 @@ function Individualcard({ product }) {
         </CardText>
       </IndCard>
     </div>
-    </ProductProvider>
   );
 }
 
@@ -74,3 +61,6 @@ export {
   Individualcard,
   IndCard,
 };
+
+
+{/* <IndCard onClick={() => setProductPicked(product[0].id)}></IndCard> */}

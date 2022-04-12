@@ -5,70 +5,60 @@ import { React } from 'react';
 import styled from 'styled-components';
 import { useCurrentStyles } from '../../../contexts/StylesProvider';
 import { useMeta } from '../../../contexts/ReviewMeta';
-import Star from '../../../Star';
+import { Individualcard } from '../Cards/Individualcard';
+
+// ({ product, setOutfitArray, outfitArray })
 
 function OutfitCard({ product, setOutfitArray, outfitArray }) {
   const thumbnail = useCurrentStyles()[0].photos[0].thumbnail_url;
 
-  const rating = useMeta().avgRating;
+  const rating = useMeta();
+  const testing = [product, thumbnail, rating];
 
   // use if add outfit array is more than 1
   const removeItem = (product) => {
     const remove = outfitArray.indexOf(product);
-    console.log(remove, 'this is 1');
+    // console.log(remove, 'this is 1');
 
     if (remove > -1) {
       setOutfitArray(((outfitArray) => outfitArray.filter((product, i) => i === remove)
       ));
 
-      console.log(outfitArray, 'this is array after removing');
+      // console.log(outfitArray, 'this is array after removing');
     }
   };
 
   return (
 
-    <IndCard>
+    <Outfit>
+
       <CloseButton onClick={outfitArray.length === 1 ? () => setOutfitArray([]) : removeItem(product)}>
         X
       </CloseButton>
-      <OutfitImg>
+      <Individualcard product={testing} />
+    </Outfit>
 
-        <img
-          src={thumbnail}
-          alt="Not found"
-        />
-      </OutfitImg>
-      <div>{product.category}</div>
-      <p>{product.name}</p>
-      <p>
-        $
-        {product.default_price}
-      </p>
-      <div><Star score={rating} /></div>
-
-    </IndCard>
   );
 }
 
 const IndCard = styled.div`
-  display: table-cell, relative;
-  position: relative;
-  border-style: solid;
-  border-width: 2px;
-  width: fit-content;
-  height: fit-content;
-  margin-top: 5px;
-  margin-right: 30px;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  padding: 0 15px 0 15px;
-  &:hover {
-    box-shadow: 0 8px 16px 0;
-  }
+display: table-cell, relative;
+position: relative;
+border: 1px solid ${(props) => props.theme.colors.secondary};
+width: 250px;
+height: fit-content;
+margin-right: 30px;
+margin-bottom: 5px;
+border-radius: 5px;
+// padding: 0 15px 0 15px;
+&:hover {
+  box-shadow: 0 0 6px rgba(90, 90, 90, 0.8);
+}
 `;
 
-const CloseButton = styled.button`
+const CloseButton = styled.div`
   display: flex;
+  z-index: 10;
   position: absolute;
   top: 5px;
   right: 15px;
@@ -79,4 +69,29 @@ const CloseButton = styled.button`
 const OutfitImg = styled.p`
   margin-top: 5px;
 `;
+
+const Outfit = styled.div`
+  margin-left: 15px;
+`;
 export default OutfitCard;
+
+// <IndCard>
+//       <CloseButton onClick={outfitArray.length === 1 ? () => setOutfitArray([]) : removeItem(product)}>
+//         X
+//       </CloseButton>
+//       <OutfitImg>
+
+//         <img
+//           src={thumbnail}
+//           alt="Not found"
+//         />
+//       </OutfitImg>
+//       <div>{product.category}</div>
+//       <p>{product.name}</p>
+//       <p>
+//         $
+//         {product.default_price}
+//       </p>
+//       <div><Star score={rating} /></div>
+
+//     </IndCard>

@@ -1,59 +1,91 @@
-import React from 'react';
+import { React, useState } from 'react';
 import styled from 'styled-components';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { Individualcard } from './Individualcard';
 
-function CarouselRelated(props) {
-  const { children } = props;
-  return (
-    <CarouselContainerR>
-      <LeftArrowR />
-      <CarouselWrapperR>
-        <CarouselContentWrapperR>
-          <CarouselContentR>
-            {children}
-          </CarouselContentR>
-        </CarouselContentWrapperR>
-      </CarouselWrapperR>
-    </CarouselContainerR>
-  );
+function CarouselRelated({ zippedArray }) {
+  const [viewIndex, setViewIndex] = useState(0);
+
+  const displayed = zippedArray.slice(viewIndex, (viewIndex + 4));
+
+  const maxDisplayed = zippedArray.length - 4;
+
+  const next = () => {
+    if (viewIndex === maxDisplayed) {
+      setViewIndex(0);
+    }
+    setViewIndex((viewIndex) => viewIndex + 1);
+  };
+
+  const prev = () => {
+    if (viewIndex === 0) {
+      setViewIndex(0);
+    } else {
+      setViewIndex((viewIndex) => viewIndex - 1);
+    }
+  };
+
+  if (displayed) {
+    return (
+      <CarouselContainerR>
+        {zippedArray > 4 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR></LeftArrowR>}
+
+        <CarouselWrapperR>
+
+          {displayed.map((item, key) => <Individualcard product={item} key={key}/>)}
+
+          {zippedArray > 4 ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR></RightArrowR>}
+        </CarouselWrapperR>
+      </CarouselContainerR>
+    );
+  }
 }
 
+// remove border line after
 const CarouselContainerR = styled.div`
-  width: 100%;
-  display: flex;
+  position: relative;
+  width: 1100px;
+  height: fit-content;
   flex-direction: column;
 `;
 
 const CarouselWrapperR = styled.div`
   display: flex;
   width: 100%;
-  position: relative;
-`;
-
-const CarouselContentWrapperR = styled.div`
   overflow: hidden;
-  width: 100%;
-  height: 100%;
 `;
 
-const CarouselContentR = styled.div`
-  display: flex;
-  transition all 250ms linear;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-`;
-
-const LeftArrowR = styled.button`
+const LeftArrowR = styled.div`
   position: absolute;
   z-index: 500;
-  top: 1070px;
-  transform: translateY(50%);
+  top: 35%;
+  left: 5;
   width: 48px;
   height: 48px;
-  border-radius: 24px;
-  background-color: white;
-  border: 1px solid #ddd;
 `;
 
-
+const RightArrowR = styled.div`
+  position: absolute;
+  z-index: 500;
+  top: 35%;
+  right: 0;
+  width: 48px;
+  height: 48px;
+`;
 
 export default CarouselRelated;
+
+// return (
+//   <CarouselContainerR size={CONFIG.size}>
+//     <LeftArrowR />
+//     <CarouselWrapperR>
+//       <CarouselContentWrapperR>
+//         <CarouselContentR>
+//           {/* <RightArrowR /> */}
+//           {children}
+//         </CarouselContentR>
+//       </CarouselContentWrapperR>
+//     </CarouselWrapperR>
+//   </CarouselContainerR>
+// );
+// }
