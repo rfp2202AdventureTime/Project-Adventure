@@ -5,8 +5,10 @@ import { FiCheck } from 'react-icons/fi';
 
 import { useCurrentProduct } from '@Contexts/ProductIDContext';
 import { useActiveStyle } from '@Contexts/StylesProvider';
+import { useMeta } from '@Contexts/ReviewMeta';
 
 import Price from '@Components/Shared/Price';
+import Star from '../../Star';
 
 import ImageGallery from './ImageGallery';
 import StyleSelector from './StyleSelector';
@@ -15,11 +17,17 @@ import AddToCart from './AddToCart';
 function Overview() {
   const { activeStyle } = useActiveStyle();
   const { currentProduct } = useCurrentProduct();
+  const currentMeta = useMeta();
   const photos = activeStyle ? activeStyle.photos : null;
 
   return (
     <>
       <ImageGallery photos={photos}>
+        <RatingInfo>
+          <StarWrapper>
+            <Star score={currentMeta ? currentMeta.avgRating : 0} />
+          </StarWrapper>
+        </RatingInfo>
         <Category>{currentProduct && currentProduct.category}</Category>
         <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
         {activeStyle
@@ -50,6 +58,13 @@ function Overview() {
     </>
   );
 }
+
+const RatingInfo = styled.div`
+`;
+
+const StarWrapper = styled.div`
+  display: inline-block;
+`;
 
 const FeatureItems = styled.ul`
   list-style-type: none;
