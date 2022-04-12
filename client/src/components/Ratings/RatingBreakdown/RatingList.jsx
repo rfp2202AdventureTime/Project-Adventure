@@ -26,9 +26,6 @@ export default function RatingList({ toggleFilter, filterStatus, clearFilter }) 
       }
     });
   }
-  const removeAllFilter = (() => {
-    clearFilter();
-  });
 
   useEffect(() => {
     const tags = [];
@@ -62,7 +59,7 @@ export default function RatingList({ toggleFilter, filterStatus, clearFilter }) 
         />
       ))}
       {activeTags.filterOn ? (
-        <ClearFilter onClick={removeAllFilter}>
+        <ClearFilter onClick={clearFilter}>
           Remove all filters
         </ClearFilter>
       ) : ''}

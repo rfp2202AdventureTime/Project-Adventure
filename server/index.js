@@ -15,10 +15,6 @@ app.use(express.json());
 // This might need to be refactored if we want to handle different destinations
 // in unique ways but good for the purpose of the current middle server
 
-// Get products use case:
-// Note: ******might not need to pre-pend localhost. Let us know.*******
-// axios.get('/products',(res, req) => {...})
-
 // REQUEST DOCUMENTATION
 // ------------------------------------------------------------------------------------------
 // To make request to middle server -->
@@ -40,7 +36,6 @@ app.all('/*', (req, res) => {
   })
     .then((result) => {
       const newData = result.data;
-      // console.log(newData);
       res.send(newData);
     })
     .catch((err) => {
