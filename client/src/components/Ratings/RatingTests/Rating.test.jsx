@@ -1,9 +1,12 @@
 /* eslint-disable no-undef */
 import React from 'react';
+// import Adapter from 'enzyme-adapter-react-16';
+// import Enzyme, { shallow } from 'enzyme';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import renderer from 'react-test-renderer';
 import FactorEntry from '../RatingBreakdown/FactorEntry';
+import HighlightText from '../Review/HighlightText';
 
 import RatingOverview from '../RatingBreakdown/RatingOverview';
 
@@ -40,15 +43,26 @@ it('renders with factorBar descriptions', () => {
   expect(container.textContent).toBe('PoorPerfect');
 });
 
-// Data Fetching
-it("renders user data", async () => {
-  const fakeUser = {
-    name: "Joni Baez",
-    age: "32",
-    address: "123, Charming Avenue"
-  };
-  jest.spyOn(global, "fetch").mockImplementation(() =>
-    Promise.resolve({
-      json: () => Promise.resolve(fakeUser)
-    })
-  );
+container = null;
+
+it('renders the same text with keyword highlighted', () => {
+  act(() => {
+    render(<HighlightText
+      text="Anventure Time is amazing"
+      highlight="time"
+    />, container);
+  });
+  expect(container.textContent).toBe('Anventure Time is amazing');
+});
+
+// Shallow Rendering using enzyme
+
+it('renders with keyword highlighted', () => {
+  const tree = renderer
+    .create(<HighlightText
+      text="Anventure Time is amazing"
+      highlight="time"
+    />, container)
+    .toJSON();
+  expect(tree).toMatchSnapshot();
+});

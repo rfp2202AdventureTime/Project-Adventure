@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1649737023292" clover="3.2.0">
-  <project timestamp="1649737023292" name="All files">
-    <metrics statements="92" coveredstatements="34" conditionals="12" coveredconditionals="2" methods="30" coveredmethods="5" elements="134" coveredelements="41" complexity="0" loc="92" ncloc="92" packages="5" files="10" classes="10"/>
+<coverage generated="1649745463758" clover="3.2.0">
+  <project timestamp="1649745463758" name="All files">
+    <metrics statements="99" coveredstatements="40" conditionals="16" coveredconditionals="5" methods="32" coveredmethods="7" elements="147" coveredelements="52" complexity="0" loc="99" ncloc="99" packages="6" files="11" classes="11"/>
     <package name="src">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="Star.jsx" path="/Users/ivyhu/Coding/HackReactor/Project-Adventure/client/src/Star.jsx">
@@ -17,9 +17,9 @@
       <metrics statements="18" coveredstatements="13" conditionals="4" coveredconditionals="2" methods="3" coveredmethods="3"/>
       <file name="FactorEntry.jsx" path="/Users/ivyhu/Coding/HackReactor/Project-Adventure/client/src/components/Ratings/RatingBreakdown/FactorEntry.jsx">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="5" count="3" type="stmt"/>
-        <line num="14" count="3" type="stmt"/>
-        <line num="16" count="9" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="16" count="6" type="stmt"/>
         <line num="23" count="1" type="stmt"/>
       </file>
       <file name="RatingOverview.jsx" path="/Users/ivyhu/Coding/HackReactor/Project-Adventure/client/src/components/Ratings/RatingBreakdown/RatingOverview.jsx">
@@ -38,6 +38,19 @@
         <line num="44" count="1" type="stmt"/>
         <line num="49" count="1" type="stmt"/>
         <line num="55" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components.Ratings.Review">
+      <metrics statements="7" coveredstatements="6" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
+      <file name="HighlightText.jsx" path="/Users/ivyhu/Coding/HackReactor/Project-Adventure/client/src/components/Ratings/Review/HighlightText.jsx">
+        <metrics statements="7" coveredstatements="6" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="5" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="13" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.components.RelatedProducts.Cards">

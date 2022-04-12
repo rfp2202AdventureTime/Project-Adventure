@@ -75,3 +75,17 @@ exports[`renders correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`renders with keyword highlighted 1`] = `
+<span>
+  <span>
+    Anventure 
+  </span>
+  <mark>
+    Time
+  </mark>
+  <span>
+     is amazing
+  </span>
+</span>
+`;
