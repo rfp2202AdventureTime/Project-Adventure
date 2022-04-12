@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import Comparison from './Comparison';
 import { FeatureProvider } from './FeatureContext';
 
-// link should take it to the product page (productID)
-// src should image of related products
+//*** FIX ON CLICK BUTTON SO IT DOESN'T CHANGE CURRENT PRODUCT ID FOR COMPARISON
+
 function ProductImg({ image, product }) {
   const [showModal, setShowModal] = useState(false);
   const [ID, setID] = useState();
@@ -53,7 +53,7 @@ const CardImage = styled.div`
   background-size: cover;
 `;
 
-const CompareButton = styled.div`
+const CompareButton = styled.button`
   color: yellow;
   border: 2px, white;
   position: absolute;

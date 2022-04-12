@@ -3,17 +3,17 @@ import React, {
   useState, useEffect, useContext, createContext,
 } from 'react';
 import axios from 'axios';
-import { ProductIDContext } from '../../../contexts/ProductIDContext';
+import { ProductIDContext, useCurrentProductId } from '../../../contexts/ProductIDContext';
 
 const FeatureContext = createContext();
 
 export function useFeature() {
   return useContext(FeatureContext);
 }
-
+// fix current productIDContext to use currentProductID
 export function FeatureProvider({ children, prodID }) {
   const [featuresInfo, setFeatures] = useState();
-
+  // const productId = useCurrentProductId().currentProductId;
   const productId = useContext(ProductIDContext);
   const twoProducts = [productId, prodID];
 

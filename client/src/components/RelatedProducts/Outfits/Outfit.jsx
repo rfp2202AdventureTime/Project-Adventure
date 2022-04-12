@@ -11,7 +11,7 @@ import OutfitCard from './OutfitCard';
 export default function Outfit() {
   const productToAdd = useCurrentProduct().currentProduct;
   const initialArray = [];
-  const [outfitArray, setOutfitArray] = useState(initialArray);
+  const [outfitArray, setOutfitArray] = useState([]);
 
   const AddToStorage = (product) => {
     // console.log(product)
@@ -39,7 +39,7 @@ export default function Outfit() {
 
       <CardImage
     url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
-    onClick={() => setOutfitArray((initialArray) => [...outfitArray, productToAdd])}
+    onClick={() => setOutfitArray(([]) => [...outfitArray, productToAdd])}
     />
 
         {/* <CardImage
@@ -65,7 +65,8 @@ export default function Outfit() {
 
 const CardImage = styled.div`
   width: 250px;
-  height: 200px;
+  height: 265px;
+
   background: url(${(props) => props.url});
   background-position: center;
   background-size: cover;
@@ -73,32 +74,19 @@ const CardImage = styled.div`
 const AddSection = styled.div`
   display: flex;
   width: fit-content;
-  height: fit-content;
+  height: 310px;
   flex-direction: row;
+
 `;
-const IndCard = styled.div`
-  display: table-cell, relative;
-  position: relative;
-  border: 1px solid ${(props) => props.theme.colors.secondary};
-  width: 250px;
-  height: fit-content;
-  margin-right: 30px;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  // padding: 0 15px 0 15px;
-  &:hover {
-    box-shadow: 0 0 6px rgba(90, 90, 90, 0.8);
-  }
-  object-fit: cover;
-`;
+
 const AddedOutfit = styled.div`
   margin-left: 15px;
+  height: fit-content;
 `;
 
 const AddButton = styled.div`
-  // border-style
+  border: 1px solid ${(props) => props.theme.colors.secondary};
   border-radius: 5px;
-  border-width: 2px;
   &:hover {
     box-shadow: 0 0 6px rgba(90, 90, 90, 0.8);
   }
@@ -107,23 +95,3 @@ const AddButton = styled.div`
 const OutfitText = styled.p`
   text-align: center;
 `;
-
-
-
-// <AddSection>
-// <AddButton>
-
-  // <CardImage
-  //   url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
-  //   onClick={() => setOutfitArray((initialArray) => [...outfitArray, productToAdd])}
-//   />
-
-//   <OutfitText>Add to Outfit</OutfitText>
-
-// </AddButton>
-// <AddedOutfit>
-
-
-//   {outfitArray.map((item, key) => <OutfitCard product={item} key={key} outfitArray={outfitArray} setOutfitArray={setOutfitArray} />)}
-// </AddedOutfit>
-// </AddSection>

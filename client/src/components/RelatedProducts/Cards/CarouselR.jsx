@@ -28,13 +28,13 @@ function CarouselRelated({ zippedArray }) {
   if (displayed) {
     return (
       <CarouselContainerR>
-        {zippedArray > 4 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR></LeftArrowR>}
+        {zippedArray.length > 3 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR></LeftArrowR>}
 
         <CarouselWrapperR>
 
           {displayed.map((item, key) => <Individualcard product={item} key={key}/>)}
 
-          {zippedArray > 4 ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR></RightArrowR>}
+          {zippedArray.length > 3 ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR></RightArrowR>}
         </CarouselWrapperR>
       </CarouselContainerR>
     );
@@ -59,7 +59,7 @@ const LeftArrowR = styled.div`
   position: absolute;
   z-index: 500;
   top: 35%;
-  left: 5;
+  left: 0;
   width: 48px;
   height: 48px;
 `;
