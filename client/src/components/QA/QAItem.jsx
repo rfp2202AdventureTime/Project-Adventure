@@ -138,7 +138,7 @@ export default function QAItem({ question, allAnswers }) {
             Yes
           </ClickableText>
           {` (${question.question_helpfulness}) | `}
-          <u value='add answer' onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
+          <u value="add answer" onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
         </QAItemQuestionRight>
       </QAItemFullQuestion>
       {totalAsToRender === undefined ? '' : totalAsToRender.map((answer) => (
