@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import axios from 'axios';
 import { useData } from './QAContext';
 import NewForm from '../../contexts/NewForm';
 import { ClickableText } from '../../contexts/Shared.styled';
 
-import QAPhoto from './QAPhoto';
+import QAAnswer from './QAAnswer';
 
 export default function QAItem({ question, allAnswers }) {
   const setGlobalAData = useData().setAData;
@@ -15,11 +14,8 @@ export default function QAItem({ question, allAnswers }) {
   const setGlobalQData = useData().setQData;
   const [numAsToRender, setNumAsToRender] = useState(2);
   const [moreAsClicked, setMoreAsClicked] = useState(true);
-  const [reported, setReported] = useState(false);
   const [disableHelpfulQuestion, setdisableHelpfulQuestion] = useState(false);
-  const [disableHelpfulAnswer, setdisableHelpfulAnswer] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [questionHelpfulLimiter, setvoteLimiter] = useState(true);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -70,64 +66,6 @@ export default function QAItem({ question, allAnswers }) {
       });
   };
 
-  const handleHelpfulAnswer = (category, ID) => {
-    axios({
-      method: 'PUT',
-      url: `http://localhost:3000/qa/answers/${ID}/${category}`,
-    })
-      .then((response) => {
-        console.log(response.status);
-        const copyAllAnswers = [...allAnswers];
-        for (let i = 0; i < copyAllAnswers.length; i += 1) {
-          if (copyAllAnswers[i].question === question.question_id.toString()) {
-            for (let j = 0; j < copyAllAnswers[i].results.length; j += 1) {
-              if (copyAllAnswers[i].results[j].answer_id === ID) {
-                copyAllAnswers[i].results[j].helpfulness += 1;
-                setGlobalAData(copyAllAnswers);
-              }
-            }
-          }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleReport = (category, ID) => {
-    axios({
-      method: 'PUT',
-      url: `http://localhost:3000/qa/answers/${ID}/${category}`,
-    })
-      .then((response) => {
-        console.log(response.status);
-        const copyAllQuestions = [...globalQData];
-        const copyAllAnswers = [...allAnswers];
-        for (let i = 0; i < copyAllAnswers.length; i += 1) {
-          if (copyAllAnswers[i].question === question.question_id.toString()) {
-            for (let j = 0; j < copyAllAnswers[i].results.length; j += 1) {
-              if (copyAllAnswers[i].results[j].answer_id === ID) {
-                if (category === 'helpful') {
-                  copyAllAnswers[i].results[j].helpfulness += 1;
-                  setGlobalAData(copyAllAnswers);
-                } else if (category === 'report') {
-                  for (let t = 0; t < copyAllQuestions.length; t += 1) {
-                    if (copyAllQuestions[t].question_id === question.question_id) {
-                      copyAllQuestions[t].reported = true;
-                      setReported(true);
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <QAItemSection>
       <QAItemFullQuestion>
@@ -161,54 +99,17 @@ export default function QAItem({ question, allAnswers }) {
           />
         </QAItemQuestionRight>
       </QAItemFullQuestion>
-      {totalAsToRender === undefined ? '' : totalAsToRender.map((answer) => (
-        <QAItemAnswer key={answer[0].answer_id}>
-          <span>
-            <strong>A: </strong>
-            {answer[0].body}
-          </span>
-          <span>
-            {'by '}
-            {answer[0].answerer_name === 'Seller'
-              ? (
-                <strong>
-                  {answer[0].answerer_name}
-                </strong>
-              )
-              : `${answer[0].answerer_name} `}
-            {`${moment(answer[0].date).format('MMMM DD, YYYY')} |
-            Helpful? `}
-            {(!disableHelpfulQuestion) ? (
-              <ClickableText
-                disabled={disableHelpfulAnswer}
-                onClick={() => {
-                  setdisableHelpfulAnswer(true);
-                  handleHelpfulAnswer('helpful', answer[0].answer_id);
-                }}
-              >
-                Yes
-              </ClickableText>
-            ) : (<span>Yes</span>)}
-            {` (${answer[0].helpfulness}) | `}
-            {!reported && (
-              <ClickableText
-                onClick={() => handleReport('report', answer[0].answer_id)}
-              >
-                Report
-              </ClickableText>
-            )}
-          </span>
-          <QAPhotoContainer>
-            { answer[1].map((photos) => (
-              <QAPhoto
-                test={photos}
-                url={photos.url}
-                key={photos.id}
-              />
-            ))}
-          </QAPhotoContainer>
-        </QAItemAnswer>
+
+      {totalAsToRender === undefined ? '' : totalAsToRender.map((answer, index) => (
+        <QAAnswer
+          answer={answer}
+          allAnswers={allAnswers}
+          setGlobalAData={setGlobalAData}
+          question={question}
+          key={index}
+        />
       ))}
+
       {(moreAsClicked && totalAsToRender[0] !== undefined) ? (
         <span>
           <strong
@@ -270,25 +171,6 @@ const QAItemQuestionRight = styled.span`
   padding-top: 10px;
   width: 20%;
   float: right;
-`;
-
-const QAItemAnswer = styled.div`
-  background-color: ${(props) => props.theme.colors.light};
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding-bottom: 10px;
-  padding-top: 10px;
-`;
-
-const QAPhotoContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: left;
-  gap: 20px;
-  max-width: 400px;
-  padding: 10px 0;
 `;
 
 QAItem.propTypes = {
