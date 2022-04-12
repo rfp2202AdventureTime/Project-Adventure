@@ -3,12 +3,14 @@ const express = require('express');
 const path = require('path');
 const axios = require('axios');
 const console = require('console');
+const cors = require('cors');
 
 const app = express();
 
 // Serves up all static and generated assets in ../client/dist.
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
+app.use(cors());
 
 // Set up get method and post method
 // route will handle all request and routes no matter destination
@@ -25,13 +27,13 @@ app.use(express.json());
 // Be sure that you have configured your .env file to contain your personal GihHub token
 
 app.all('/*', (req, res) => {
-  const { method, params, data } = req;
+  const { method, params, body } = req;
   const url = `https://app-hrsei-api.herokuapp.com/api/fec2/rfp${req.url}`;
   axios({
     url,
     method,
     params,
-    data,
+    data: body,
     headers: { Authorization: `${process.env.GITHUB_APIKEY}` },
   })
     .then((result) => {
