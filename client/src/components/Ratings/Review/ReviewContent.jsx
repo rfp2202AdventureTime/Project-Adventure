@@ -1,62 +1,60 @@
 import React, { useState, useEffect } from 'react';
-
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { MiniButton } from '../../../contexts/Shared.styled';
+import HighlightText from './HighlightText';
 
-export default function ReviewContent({ body }) {
+export default function ReviewContent({ body, keyword }) {
   const [showButton, setShowButton] = useState(false);
   const [modifiedBody, setModifiedBody] = useState(body);
+  const bodyCharLimit = 250;
+
   useEffect(() => {
-    if (body.length > 250) {
+    if (body.length > bodyCharLimit) {
       setShowButton(true);
-      setModifiedBody(body.slice(0, 251).concat(' ...'));
+      setModifiedBody(body.slice(0, bodyCharLimit).concat(' ...'));
     }
   }, [body]);
 
-  const toggleShowMore = () => {
+  const showMore = () => {
     setShowButton(!showButton);
     setModifiedBody(body);
   };
 
   return (
     <ReviewContainer>
-      {modifiedBody}
+      {keyword
+        ? (
+          <HighlightText
+            text={modifiedBody}
+            highlight={keyword}
+          />
+        )
+        : modifiedBody}
       {showButton
         ? (
-          <MiniBotton
-            showButton={showButton}
-            onClick={toggleShowMore}
+          <MiniButton
+            // showButton={showButton}
+            onClick={showMore}
           >
-            {' '}
             Show More
-          </MiniBotton>
+          </MiniButton>
         ) : ''}
     </ReviewContainer>
   );
 }
 
 // Style components
-
 const ReviewContainer = styled.div`
   overflow-wrap: break-word;
-    hyphens: manual;
-`;
-
-const MiniBotton = styled.button`
-  display: ${(props) => (props.showButton ? 'block' : 'none')};
-  text-align: center;
-  padding: 0.4rem 0.4rem 0.4rem 0.4rem;
-  font-size: small;
-  font-weight: 400;
-  border-radius: 0.5rem;
-  margin-top: 0.5rem;
-  &:hover {
-    background-color:${(props) => props.theme.colors.buttonHover}
-  }
-
-  }
+  hyphens: manual;
 `;
 
 ReviewContent.propTypes = {
   body: PropTypes.string.isRequired,
+  keyword: PropTypes.string,
+};
+
+ReviewContent.defaultProps = {
+  keyword: null,
 };

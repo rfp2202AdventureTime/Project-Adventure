@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import PhotoItem from './PhotoItem';
+import PhotoEntry from './PhotoEntry';
 
 function PhotoList({ photos, isSelected }) {
   return (
     <PhotoContainer>
       {photos.map((photo, index) => (
-        <PhotoItem
+        <PhotoEntry
           isSelected={isSelected}
           url={photo.url}
           index={index}

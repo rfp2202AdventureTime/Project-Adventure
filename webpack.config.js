@@ -18,12 +18,26 @@ module.exports = {
         use: { loader: 'babel-loader' },
       },
     ],
+    loaders: [
+      { exclude: ['node_modules'], loader: 'babel', test: /\.jsx?$/ },
+      { loader: 'style-loader!css-loader', test: /\.css$/ },
+      { loader: 'url-loader', test: /\.gif$/ },
+      { loader: 'file-loader', test: /\.(ttf|eot|svg)$/ },
+    ],
   },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
       '@Components': path.resolve(__dirname, 'client/src/components/'),
       '@Contexts': path.resolve(__dirname, 'client/src/contexts/'),
+      config$: './configs/app-config.js',
+      react: './vendor/react-master',
     },
+    modules: [
+      'node_modules',
+      'bower_components',
+      'shared',
+      '/shared/vendor/modules',
+    ],
   },
 };

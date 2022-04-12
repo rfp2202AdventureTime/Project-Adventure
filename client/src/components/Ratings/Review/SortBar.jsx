@@ -2,22 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-export default function SortBar({ handleSort, totalCT }) {
+export default function SortBar({ handleSort, totalCT, allCT }) {
   const sort = (e) => {
     handleSort(e.target.value);
   };
 
   return (
     <SortBarBlock>
-      <WhiteSpaceWrapper>
-        {totalCT}
-      </WhiteSpaceWrapper>
-      reviews, sorted by
-      <SortContainer name="sort" onChange={sort}>
+      {`Showing ${totalCT} reviews of ${allCT} reviews, sorted by`}
+      <DropDown name="sort" onChange={sort}>
         <option value="relevant">relevant</option>
         <option value="newest">newest</option>
         <option value="helpful">helpful</option>
-      </SortContainer>
+      </DropDown>
     </SortBarBlock>
   );
 }
@@ -27,22 +24,23 @@ export default function SortBar({ handleSort, totalCT }) {
 const SortBarBlock = styled.div`
   display: flex;
   flex-direction: row;
-  font: 500;
-  margin: 0.4rem 0.8rem 0.4rem 0.8rem;
+  margin: 0.1rem 0.8rem 0.2rem 0.8rem;
   padding: 0.25rem 1rem 0.25rem 1rem;
-  font-weight:bold;
   font-size: medium;
+  gap: 0.4rem;
 `;
 
-const SortContainer = styled.select`
-  margin-left: 0.4rem;
-`;
-
-const WhiteSpaceWrapper = styled.div`
-  margin-right: 0.4rem;
+const DropDown = styled.select`
+  font-weight:bold;
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 SortBar.propTypes = {
   handleSort: PropTypes.func.isRequired,
   totalCT: PropTypes.number.isRequired,
+  allCT: PropTypes.number,
+};
+
+SortBar.defaultProps = {
+  allCT: null,
 };

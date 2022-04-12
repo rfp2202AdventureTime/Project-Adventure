@@ -100,5 +100,9 @@ const ButtonBlock = styled.div`
 `;
 
 Feed.propTypes = {
-  searchQuesitonBody: PropTypes.string.isRequired,
+  searchQuesitonBody: PropTypes.string,
+};
+
+Feed.defaultProps = {
+  searchQuesitonBody: '',
 };

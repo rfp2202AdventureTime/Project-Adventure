@@ -1,64 +1,56 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import FactorType from './FactorType';
+import FactorEntry from './FactorEntry';
 
 export default function FactorBar({ factor, score }) {
-  // caculate the left space based on lenth of factorbar(15rem)
-  const distanceToLeft = Math.floor((15 * score) / 5).toString().concat('rem');
+  const barWidth = 15;
+  const width = `${barWidth}rem`;
+  const distanceToLeft = `${Math.floor((barWidth * score) / 5)}rem`;
 
   return (
-    <FactorBarBlock>
-      <FactorInfo>
+    <FactorBlock>
+      <div>
         {factor}
-      </FactorInfo>
+      </div>
       <BarContainer>
-        <GreyBar>
-          <Arrow left={distanceToLeft} />
-        </GreyBar>
+        <Bar width={width}>
+          <Pointer
+            left={distanceToLeft}
+          />
+        </Bar>
       </BarContainer>
-      <FactorSummary>
-        <FactorType
+      <FactorDescirption>
+        <FactorEntry
           factor={factor}
         />
-      </FactorSummary>
-    </FactorBarBlock>
+      </FactorDescirption>
+    </FactorBlock>
   );
 }
 
 // Style components
 
-const FactorBarBlock = styled.div`
+const FactorBlock = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 2.5rem 0 2rem;
 `;
-
-const FactorInfo = styled.div`
-`;
-const FactorSummary = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 0.8rem;
-`;
-
 const BarContainer = styled.div`
   position: relative;
   padding-bottom: 0.6rem;
 `;
-const GreyBar = styled.div`
+const Bar = styled.div`
   top: 0;
   left: 0;
   vertical-align: left;
   display: inline-block;
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.background};
   overflow: hidden;
-  width: 15rem;
+  width: ${({ width }) => width};
   height: 0.5rem;
 `;
-
-const Arrow = styled.div`
+const Pointer = styled.div`
   position: absolute;
   &:before {
     content: "▼";
@@ -68,7 +60,14 @@ const Arrow = styled.div`
   font-size: 0.87rem;
   margin-left:  ${(props) => props.left};
 `;
+const FactorDescirption = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 0.8rem;
+`;
 
 FactorBar.propTypes = {
   factor: PropTypes.string.isRequired,
+  score: PropTypes.string.isRequired,
 };
