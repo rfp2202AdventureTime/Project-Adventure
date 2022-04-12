@@ -28,11 +28,8 @@ function AddToCart({ skus }) {
   }
 
   useEffect(() => setSelectedSku(null), [skus]);
-
-  useEffect(() => {
-    setQuantity(1);
-    setError(false);
-  }, [selectedSku]);
+  useEffect(() => setQuantity(1), [selectedSku]);
+  useEffect(() => setError(false), [selectedSku, skus]);
 
   // If selected sku isn't actually a sku (IE- the default option), don't actually set it.
   const handleChange = (e) => {
@@ -40,19 +37,17 @@ function AddToCart({ skus }) {
     setSelectedSku(newSku);
   };
 
-  const handleQuantity = (e) => setQuantity(e.target.value);
-
   const addToCart = () => {
     axios({
       method: 'POST',
       url: '/cart',
       data: { sku_id: selectedSku },
     })
-      .then(({ data }) => {
-        Console.log(`Added to cart! SKU: ${selectedSku}, COUNT: ${quantity}`, data);
-      })
+      .then(({ data }) => Console.log(`Added to cart! SKU: ${selectedSku}, COUNT: ${quantity}`, data))
       .catch((err) => Console.log(err));
   };
+
+  const handleQuantity = (e) => setQuantity(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
