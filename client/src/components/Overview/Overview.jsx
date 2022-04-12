@@ -93,6 +93,7 @@ const AdditionalDetails = styled.section`
 const LongDescription = styled.div`
   display: inline-block;
   width: 65%;
+  padding-right: 20px;
   border-right: 1px solid ${(props) => props.theme.colors.secondary};
 `;
 
