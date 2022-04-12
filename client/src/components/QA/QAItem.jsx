@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import axios from 'axios';
 import { useData } from './QAContext';
+import NewForm from '../../contexts/NewForm';
+import { ClickableText } from '../../contexts/Shared.styled';
 
 import QAPhoto from './QAPhoto';
 
@@ -16,6 +18,12 @@ export default function QAItem({ question, allAnswers }) {
   const [reported, setReported] = useState(false);
   const [disableHelpfulQuestion, setdisableHelpfulQuestion] = useState(false);
   const [disableHelpfulAnswer, setdisableHelpfulAnswer] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [questionHelpfulLimiter, setvoteLimiter] = useState(true);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const filteredAnswers = allAnswers.filter(
     (answer) => answer.question === question.question_id.toString(),
@@ -128,17 +136,29 @@ export default function QAItem({ question, allAnswers }) {
         </QAItemQuestionLeft>
         <QAItemQuestionRight>
           {'Helpful? '}
-          <ClickableText
-            disabled={disableHelpfulQuestion}
-            onClick={() => {
-              setdisableHelpfulQuestion(true);
-              handleQuestionHelpful('helpful', question.question_id);
-            }}
-          >
-            Yes
-          </ClickableText>
+          {(!disableHelpfulQuestion) ? (
+            <ClickableText
+              disabled={disableHelpfulQuestion}
+              onClick={() => {
+                setdisableHelpfulQuestion(true);
+                handleQuestionHelpful('helpful', question.question_id);
+              }}
+            >
+              Yes
+            </ClickableText>
+          ) : (<span>Yes</span>)}
           {` (${question.question_helpfulness}) | `}
-          <u value="add answer" onClick={(e) => console.log('Clicked Add Answer')}>Add Answer</u>
+          <ClickableText
+            value="add answer"
+            onClick={toggleModal}
+          >
+            Add Answer
+          </ClickableText>
+          <NewForm
+            formtype="answer"
+            productName="leggings"
+            showModal={showModal}
+          />
         </QAItemQuestionRight>
       </QAItemFullQuestion>
       {totalAsToRender === undefined ? '' : totalAsToRender.map((answer) => (
@@ -158,15 +178,17 @@ export default function QAItem({ question, allAnswers }) {
               : `${answer[0].answerer_name} `}
             {`${moment(answer[0].date).format('MMMM DD, YYYY')} |
             Helpful? `}
-            <ClickableText
-              disabled={disableHelpfulAnswer}
-              onClick={() => {
-                setdisableHelpfulAnswer(true);
-                handleHelpfulAnswer('helpful', answer[0].answer_id);
-              }}
-            >
-              Yes
-            </ClickableText>
+            {(!disableHelpfulQuestion) ? (
+              <ClickableText
+                disabled={disableHelpfulAnswer}
+                onClick={() => {
+                  setdisableHelpfulAnswer(true);
+                  handleHelpfulAnswer('helpful', answer[0].answer_id);
+                }}
+              >
+                Yes
+              </ClickableText>
+            ) : (<span>Yes</span>)}
             {` (${answer[0].helpfulness}) | `}
             {!reported && (
               <ClickableText
@@ -267,18 +289,6 @@ const QAPhotoContainer = styled.div`
   gap: 20px;
   max-width: 400px;
   padding: 10px 0;
-`;
-
-const ClickableText = styled.button`
-  background: none!important;
-  border: none;
-  padding: 0!important;
-  /*optional*/
-  font-family: arial, sans-serif;
-  /*input has OS specific font-family*/
-  color: #069;
-  text-decoration: underline;
-  cursor: pointer;
 `;
 
 QAItem.propTypes = {

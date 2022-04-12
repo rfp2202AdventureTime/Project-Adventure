@@ -4,10 +4,17 @@ import PropTypes from 'prop-types';
 
 import { useData } from './QAContext';
 import QAItem from './QAItem';
+import { Button } from '../../contexts/Shared.styled';
+import NewForm from '../../contexts/NewForm';
 
 export default function Feed({ searchQuesitonBody }) {
   const [numQsToRender, setNumQsToRender] = useState(2);
   const [startQsToRender, setStartQsToRender] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const questionData = useData().qData;
   const answerData = useData().aData;
@@ -54,7 +61,7 @@ export default function Feed({ searchQuesitonBody }) {
       </FeedSection>
       <ButtonBlock>
         {(lengthOfFeed > numQsToRender) && (
-          <MoreAnswersButton
+          <Button
             type="submit"
             onClick={() => {
               setNumQsToRender(numQsToRender + 2);
@@ -62,13 +69,14 @@ export default function Feed({ searchQuesitonBody }) {
             }}
           >
             Load More Questions
-          </MoreAnswersButton>
+          </Button>
         )}
-        <MoreAnswersButton
-          onClick={() => { console.log('Nice ...'); }}
-        >
-          Ask a Question +
-        </MoreAnswersButton>
+        <Button onClick={toggleModal}> Ask a Question +</Button>
+        <NewForm
+          formtype="question"
+          productName="leggings"
+          showModal={showModal}
+        />
       </ButtonBlock>
     </>
   );
@@ -80,16 +88,6 @@ const FeedSection = styled.section`
   flex-direction: column;
   height: 400px;
   overflow: scroll;
-`;
-
-const MoreAnswersButton = styled.button`
-border: 2px solid;
-text-align: center;
-padding: 1.3rem 1rem 1.3rem 1rem;
-font-size: medium;
-font-weight: 700;
-&:hover {
-  background-color:${(props) => props.theme.colors.buttonHover}
 `;
 
 const ButtonBlock = styled.div`
