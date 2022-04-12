@@ -18,6 +18,16 @@ it('RatingOverview renders correctly', () => {
   expect(tree).toMatchSnapshot();
 });
 
+it('renders with keyword highlighted', () => {
+  const tree = renderer
+    .create(<HighlightText
+      text="Anventure Time is amazing"
+      highlight="time"
+    />)
+    .toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
 // Rendering
 let container = null;
 beforeEach(() => {
@@ -53,16 +63,4 @@ it('renders the same text with keyword highlighted', () => {
     />, container);
   });
   expect(container.textContent).toBe('Anventure Time is amazing');
-});
-
-// Shallow Rendering using enzyme
-
-it('renders with keyword highlighted', () => {
-  const tree = renderer
-    .create(<HighlightText
-      text="Anventure Time is amazing"
-      highlight="time"
-    />, container)
-    .toJSON();
-  expect(tree).toMatchSnapshot();
 });
