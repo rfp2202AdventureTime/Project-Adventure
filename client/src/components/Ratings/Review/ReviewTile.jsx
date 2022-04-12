@@ -108,7 +108,7 @@ const ReviewBlock = styled.div`
   padding: 0.25rem 1rem 0.25rem 1rem;
   background-color: ${({ theme }) => theme.colors.offWhite};
   &:hover {
-    box-shadow: 0.3rem 0.3rem 0.3rem ${({ theme }) => theme.colors.secondary}
+    box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
   };
 `;
 const UserRatingRow = styled.div`
@@ -128,7 +128,7 @@ const Response = styled.div`
   background-color: ${({ theme }) => theme.colors.tertiary};
   padding: 0.7rem;
   margin: 0.7rem;
-  box-shadow: 0.3rem 0.3rem 0.3rem ${({ theme }) => theme.colors.secondary};
+  box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
 `;
 const Recommend = styled.div`
   padding: 0.7rem 0.7rem 0 0.7rem;

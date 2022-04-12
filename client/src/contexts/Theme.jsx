@@ -11,6 +11,7 @@ const theme = {
     offWhite: '#FAF9F6',
     modalBackground: 'rgba(0,0,0,0.8)',
     tertiary: '#e6ebea',
+    hoverShadow: 'rgb(90 90 90 /20%)',
   },
   fonts: {
     title: {

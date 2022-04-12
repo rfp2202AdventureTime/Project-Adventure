@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RatingOverview renders correctly 1`] = `
+<div
+  className="RatingOverview__RatingOverviewContainer-fsINFe kkezbv"
+>
+  <h3>
+    RATINGS & REVIEWS
+  </h3>
+  <div
+    className="RatingOverview__StarContainer-kUGGq dFxlKN"
+  >
+    <div
+      className="RatingOverview__Score-iybahF iTAzDL"
+    >
+      0
+    </div>
+    <div
+      className="Star__StarBlock-cVYQNc lhMbYs"
+    >
+      <div
+        className="ratings"
+      >
+        <div
+          className="empty-stars"
+        />
+        <div
+          className="full-stars"
+          style={
+            Object {
+              "width": "0%",
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders correctly 1`] = `
+<div
+  className="RatingOverview__RatingOverviewContainer-fsINFe kkezbv"
+>
+  <h3>
+    RATINGS & REVIEWS
+  </h3>
+  <div
+    className="RatingOverview__StarContainer-kUGGq dFxlKN"
+  >
+    <div
+      className="RatingOverview__Score-iybahF iTAzDL"
+    >
+      0
+    </div>
+    <div
+      className="Star__StarBlock-cVYQNc lhMbYs"
+    >
+      <div
+        className="ratings"
+      >
+        <div
+          className="empty-stars"
+        />
+        <div
+          className="full-stars"
+          style={
+            Object {
+              "width": "0%",
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders with keyword highlighted 1`] = `
+<span>
+  <span>
+    Anventure 
+  </span>
+  <mark>
+    Time
+  </mark>
+  <span>
+     is amazing
+  </span>
+</span>
+`;

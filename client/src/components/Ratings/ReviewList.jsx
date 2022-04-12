@@ -9,6 +9,7 @@ import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
 import { ProductIDContext } from '../../contexts/ProductIDContext';
 import { Button } from '../../contexts/Shared.styled';
+import NewForm from '../../contexts/NewForm';
 
 export default function ReviewList({ filterStatus }) {
   const productId = useContext(ProductIDContext);
@@ -17,6 +18,7 @@ export default function ReviewList({ filterStatus }) {
   const [initialRender, setInitialRender] = useState(true);
   const [keyword, setKeyword] = useState(null);
   const [prevCount, setPrevCount] = useState(0);
+  const [showModal, setShowModal] = useState(false);
   const [reviewDetail, setReviewDetail] = useState({
     allReview: [],
     filteredReview: [],
@@ -31,12 +33,17 @@ export default function ReviewList({ filterStatus }) {
       url: '/reviews',
       params: {
         product_id: productId,
+        //here
         count: (reviewMeta?.totalCT || 999),
         sort,
       },
     })
       .catch((err) => Console.log(err))
   );
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const addHelpVote = (reviewId) => {
     axios({
@@ -158,7 +165,12 @@ export default function ReviewList({ filterStatus }) {
                 More Reviews
               </Button>
             ) : ''}
-          <Button> Add a Review +</Button>
+          <Button onClick={toggleModal}> Add a Review +</Button>
+          <NewForm
+            formtype={'review'}
+            productName={'legging'}
+            showModal={showModal}
+          />
         </ButtonBlock>
       </StickyBottom>
     </ReviewSection>
