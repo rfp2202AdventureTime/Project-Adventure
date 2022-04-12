@@ -36,7 +36,3 @@ export function FeatureProvider({ children, prodID }) {
     </FeatureContext.Provider>
   );
 }
-
-// RelatedProvider.propTypes = {
-//   children: PropTypes.node.isRequired,
-// };

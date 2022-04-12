@@ -1,5 +1,5 @@
 import { React } from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { useFeature } from './FeatureContext';
 
 // should get an array with two arrays of features from each item
