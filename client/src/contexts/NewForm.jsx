@@ -1,90 +1,111 @@
-import React, { useState } from 'React';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Modal, ModalParent, ModalClose } from './Shared.styled';
 // import Console from '../../Console';
 
 // formtype: review, question
-export default function NewForm(formtype, productName) {
-  const [showModal, setShowModal] = useState(false);
-  const review ={
-    summary:'Review summary',
-    body: 'Review body',
+export default function NewForm({ formtype, productName, showModal }) {
+  let type;
+  const [modalStatus, setModalStatus] = useState(true);
+  // const [data, setData] = useState({});
+  // const handFormChange = () =
+  const review = {
+    title: 'Write Your Review',
+    subtitle: `About the ${productName}`,
+    summary: 'Review summary:',
+    body: 'Review body:',
     photo: 'Upload your photos',
   };
+  if (formtype === 'review') {
+    type = review;
+  }
+
   const sharedQuestionInput = {
-    summary: 'Ask Your Question',
+    title: 'Ask Your Question',
+    subtitle: `About the ${productName}`,
     body: 'Your Question: ',
-    // username: 'What is your nickname',
-    // email: 'Your email',
   };
+
   const sharedAnswerInput = {
-    summary: 'Your Answer',
+    title: 'Submit Your Answer',
+    // subtitle: `${productName}:${questionBody}`,
     body: 'Your Question: ',
-    // username: 'What is your nickname',
-    // email: 'Your email',
-    photo: 'Upload your photos'
+    photo: 'Upload your photos',
   };
+
   const shared = {
-    username: 'What is your nickname',
-    email: 'Your email',
+    username: 'What is your nickname?',
+    email: 'Your email:',
   };
 
-  const addtionalReviewInput = {};
-
+  // const addtionalReviewInput = {};
 
   const clickExit = () => {
-    setShowModal(false);
+    setModalStatus(false);
   };
 
   return (
     <ModalParent
       className="ModalParent"
-      showModal={showModal}
+      showModal={showModal && modalStatus}
     >
       <Modal
         className="Modal"
-        showModal={showModal}
+        showModal={showModal && modalStatus}
       >
-        <div>{TitleOfPage}</div>
-        {addtionalReviewInput}
-        <div>Placeholder</div>
+        <div>{type.title}</div>
+        <div>{type.subtitle}</div>
+        {/* {addtionalReviewInput} */}
         <form>
-          <label htmlFor={formtype.summary}>
-            {formtype.summary}
-            <input type="text" name="summary" id={formtype.summary} required/>
-          </label>
-          <label htmlFor={formtype.body}>
-            {formtype.body}
-            <input type="text" name="body" id={formtype.body} required/>
-          </label>
-          <label htmlFor={shared.username}>
-            {formtype.username}
-            <input type="text" name={formtype.username} id={formtype.username} required />
-          </label>
-          <label htmlFor={shared.email}>
-            {shared.email}
-            <input type="text" name={shared.email} id={shared.email} required />
-          </label>
+          <FormContainer>
+            <label htmlFor={type.summary}>
+              <div>
+                {type.summary}
+              </div>
+              <input type="text" name="summary" id={type.summary} required />
+            </label>
+            <label htmlFor={type.body}>
+              <div>
+                {type.body}
+              </div>
+              <input type="text" name="body" id={type.body} required />
+            </label>
+            <label htmlFor={shared.username}>
+              <div>
+                {shared.username}
+              </div>
+              <input type="text" name={type.username} id={type.username} required />
+            </label>
+            <label htmlFor={shared.email}>
+              <div>
+                {shared.email}
+              </div>
+              <input type="text" name={shared.email} id={shared.email} required />
+            </label>
+          </FormContainer>
           <input type="submit" value="Submit" />
         </form>
-        <NewFormSection />
+
         <ModalClose
-          onClick={clickExit}
+          // onClick={clickExit}
         >
           &times;
         </ModalClose>
       </Modal>
     </ModalParent>
   );
-  // add new stuff
-  }
+}
 
-const NewFormSection = styled.div`
-
+const FormContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
 `;
 
 NewForm.propTypes = {
   formtype: PropTypes.string.isRequired,
   productName: PropTypes.string.isRequired,
+  showModal: PropTypes.bool.isRequired,
 };
