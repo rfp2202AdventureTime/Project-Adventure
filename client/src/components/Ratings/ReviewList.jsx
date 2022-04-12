@@ -167,7 +167,7 @@ export default function ReviewList({ filterStatus }) {
             ) : ''}
           <Button onClick={toggleModal}> Add a Review +</Button>
           <NewForm
-            formtype={'review'}
+            formtype={'reviews'}
             productName={'legging'}
             showModal={showModal}
           />
