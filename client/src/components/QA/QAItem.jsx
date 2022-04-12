@@ -17,7 +17,6 @@ export default function QAItem({ question, allAnswers }) {
   const [disableHelpfulQuestion, setdisableHelpfulQuestion] = useState(false);
   const [disableHelpfulAnswer, setdisableHelpfulAnswer] = useState(false);
 
-
   const filteredAnswers = allAnswers.filter(
     (answer) => answer.question === question.question_id.toString(),
   );
