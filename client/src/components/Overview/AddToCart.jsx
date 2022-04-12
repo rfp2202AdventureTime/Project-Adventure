@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
+import axios from 'axios';
 
 import { FiAlertTriangle } from 'react-icons/fi';
+
+import Console from '../../Console';
 
 // - Actually make the POST request when adding to cart instead of console logging.
 // - Down arrow styling for the dropdowns.
@@ -24,32 +27,43 @@ function AddToCart({ skus }) {
       : skus[selectedSku].quantity;
   }
 
+  useEffect(() => setSelectedSku(null), [skus]);
+
   useEffect(() => {
-    setQuantity(0);
+    setQuantity(1);
     setError(false);
   }, [selectedSku]);
 
+  // If selected sku isn't actually a sku (IE- the default option), don't actually set it.
   const handleChange = (e) => {
-    if (skus[e.target.value]) {
-      setSelectedSku(e.target.value);
-    } else {
-      setSelectedSku(null);
-    }
+    const newSku = (skus[e.target.value]) ? e.target.value : null;
+    setSelectedSku(newSku);
   };
 
   const handleQuantity = (e) => setQuantity(e.target.value);
+
+  const addToCart = () => {
+    axios({
+      method: 'POST',
+      url: '/cart',
+      data: { sku_id: selectedSku },
+    })
+      .then(({ data }) => {
+        Console.log(`Added to cart! SKU: ${selectedSku}, COUNT: ${quantity}`, data);
+      })
+      .catch((err) => Console.log(err));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selectedSku) {
       setError(true);
     } else {
-      // eslint-disable-next-line no-console
-      console.log(`Size: ${skus[selectedSku].size} - Quantity: ${quantity}`);
+      addToCart();
     }
   };
 
-  const anySkus = inStockSkus.length > 0;
+  const anyValidSkus = inStockSkus.length > 0;
 
   return (
     <>
@@ -65,7 +79,7 @@ function AddToCart({ skus }) {
       </SelectionError>
 
       <SelectSize defaultValue="selectsize" onChange={handleChange}>
-        {anySkus
+        {anyValidSkus
           ? (
             <>
               <option value="selectsize">SELECT SIZE</option>
@@ -73,10 +87,10 @@ function AddToCart({ skus }) {
                 <option value={sku.sku} key={sku.sku}>{sku.size}</option>)))}
             </>
           )
-          : <option value="selectsize">NO STOCK</option>}
+          : <option value="selectsize">OUT OF STOCK</option>}
       </SelectSize>
 
-      {anySkus
+      {anyValidSkus
         ? (
           <>
             <SelectQuantity defaultValue="selectQuantity" onChange={handleQuantity}>
