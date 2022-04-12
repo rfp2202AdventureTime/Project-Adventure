@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import React from 'react';
-import styled from 'styled-components';
 import { useProd } from './ProdContext';
 import { useThumbnail } from './thumbnailContext';
 import CarouselRelated from './CarouselR';

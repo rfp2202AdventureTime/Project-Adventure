@@ -9,38 +9,39 @@ import { Individualcard } from '../Cards/Individualcard';
 
 // ({ product, setOutfitArray, outfitArray })
 
-function OutfitCard({ product, setOutfitArray, outfitArray }) {
-  const thumbnail = useCurrentStyles()[0].photos[0].thumbnail_url;
+function OutfitCard({ product }) {
+  if (useCurrentStyles()) {
+    const thumbnail = useCurrentStyles()[0].photos[0].thumbnail_url;
+    const rating = useMeta();
+    const information = [product, thumbnail, rating];
 
-  const rating = useMeta();
-  const testing = [product, thumbnail, rating];
+    // use if add outfit array is more than 1
+    // const removeItem = (product) => {
+    //   const remove = outfitArray.indexOf(product);
+    //   // console.log(remove, 'this is 1');
 
-  // use if add outfit array is more than 1
-  const removeItem = (product) => {
-    const remove = outfitArray.indexOf(product);
-    // console.log(remove, 'this is 1');
+    //   if (remove > -1) {
+    //     setOutfitArray(((outfitArray) => outfitArray.filter((product, i) => i === remove)
+    //     ));
 
-    if (remove > -1) {
-      setOutfitArray(((outfitArray) => outfitArray.filter((product, i) => i === remove)
-      ));
+    //     // console.log(outfitArray, 'this is array after removing');
+    //   }
+    // };
 
-      // console.log(outfitArray, 'this is array after removing');
-    }
-  };
+    return (
 
-  return (
+      <Outfit>
 
-    <Outfit>
-
-      <CloseButton onClick={outfitArray.length === 1 ? () => setOutfitArray([]) : removeItem(product)}>
+        {/* <CloseButton onClick={outfitArray.length === 1 ? () => setOutfitArray([]) : removeItem(product)}>
         X
-      </CloseButton>
-      <Individualcard product={testing} />
-    </Outfit>
+      </CloseButton> */}
 
-  );
+        <Individualcard product={information} />
+      </Outfit>
+
+    );
+  }
 }
-
 const IndCard = styled.div`
 display: table-cell, relative;
 position: relative;
@@ -71,7 +72,11 @@ const OutfitImg = styled.p`
 `;
 
 const Outfit = styled.div`
-  margin-left: 15px;
+  margin-left: 5px;
+  display: flex;
+  float: right;
+  flex-direction: row;
+
 `;
 export default OutfitCard;
 

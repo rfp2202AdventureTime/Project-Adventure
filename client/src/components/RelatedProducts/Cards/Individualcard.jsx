@@ -10,7 +10,7 @@ function Individualcard({ product }) {
   const { setCurrentProductId } = useCurrentProductId();
 
   const starRating = product[2].avgRating;
-
+//*** FIX ON CLICK BUTTON SO IT DOESN'T CHANGE
   return (
     <div>
       <IndCard onClick={() => setCurrentProductId(product[0].id)}>
