@@ -12,7 +12,7 @@ export default function Outfit() {
   const productToAdd = useCurrentProduct().currentProduct;
   const [outfitArray, setOutfitArray] = useState([]);
   const AddToStorage = (product) => {
-    console.log(product, 'product');
+    // console.log(product, 'product');
     localStorage.setItem(product.id, JSON.stringify(product))
   };
 
@@ -20,12 +20,12 @@ export default function Outfit() {
   const itemsLocal = { ...localStorage };
 
   const keys = Object.keys(itemsLocal);
-  console.log(keys, 'this is keys')
+  // console.log(keys, 'this is keys')
 
   const testingArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
 
   // setOutfitArray(testingArray);
-  console.log(testingArray, 'this is testing array')
+  // console.log(testingArray, 'this is testing array')
   useEffect(() => {
     // localStorage.setItem(productToAdd.id, JSON.stringify(productToAdd));
 
