@@ -3,6 +3,7 @@ import React, {
   useState, useEffect, useContext, createContext,
 } from 'react';
 import axios from 'axios';
+import Console from '../../../Console';
 import { ProductIDContext, useCurrentProductId } from '../../../contexts/ProductIDContext';
 
 const FeatureContext = createContext();
@@ -26,7 +27,7 @@ export function FeatureProvider({ children, prodID }) {
         .then((data) => {
           setFeatures({ data });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => Console.log(err));
     }
   }, [prodID]);
 

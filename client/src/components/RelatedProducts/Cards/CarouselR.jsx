@@ -25,6 +25,7 @@ function CarouselRelated({ zippedArray }) {
     }
   };
 
+
   if (displayed) {
     return (
       <CarouselContainerR>

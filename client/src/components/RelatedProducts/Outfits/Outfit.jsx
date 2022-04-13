@@ -63,7 +63,6 @@ export default function Outfit() {
         </AddButton>
         <AddedOutfit>
 
-          {/* {outfitArray ? outfitArray.map((item, key) => <OutfitCard product={item[0]} image={item[1]} key={key} />) : null } */}
           {outfitArray.map((item, key) => <OutfitCard product={item[0]} image={item[1]} key={key} />)}
 
         </AddedOutfit>

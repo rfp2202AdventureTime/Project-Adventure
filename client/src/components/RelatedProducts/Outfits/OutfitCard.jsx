@@ -14,7 +14,7 @@ function OutfitCard({ product, image }) {
   // if (useCurrentStyles()) {
     const thumbnail = image;
     const rating = useMeta();
-    const information = [product, thumbnail, rating];
+    const information = [product, thumbnail, rating, false];
 
     // use if add outfit array is more than 1
     // const removeItem = (product) => {
@@ -25,7 +25,7 @@ function OutfitCard({ product, image }) {
     //     setOutfitArray(((outfitArray) => outfitArray.filter((product, i) => i === remove)
     //     ));
 
-    //     // console.log(outfitArray, 'this is array after removing');
+        // console.log(outfitArray, 'this is array after removing');
     //   }
     // };
 
@@ -33,7 +33,7 @@ function OutfitCard({ product, image }) {
 
       <Outfit>
 
-        {/* <CloseButton onClick={outfitArray.length === 1 ? () => setOutfitArray([]) : removeItem(product)}>
+        {/* <CloseButton onClick={console.log(product)}>
         X
       </CloseButton> */}
 
@@ -58,18 +58,14 @@ border-radius: 5px;
 }
 `;
 
-const CloseButton = styled.div`
-  display: flex;
-  z-index: 10;
+const CloseButton = styled.button`
+  display: relative;
   position: absolute;
   top: 5px;
   right: 15px;
   background: transparent;
   border-style: transparent;
-  font-color: yellow;
-`;
-const OutfitImg = styled.p`
-  margin-top: 5px;
+  font-color: red;
 `;
 
 const Outfit = styled.div`

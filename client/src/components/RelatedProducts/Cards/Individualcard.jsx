@@ -10,11 +10,13 @@ function Individualcard({ product }) {
   const { setCurrentProductId } = useCurrentProductId();
 
   const starRating = product[2]?.avgRating;
+
+  console.log(product[3], 'this is individual cards')
 //*** FIX ON CLICK BUTTON SO IT DOESN'T CHANGE
   return (
     <div>
-      <IndCard onClick={() => setCurrentProductId(product[0].id)}>
-        <ProductImg image={product[1]} product={product[0].id} />
+      <IndCard onClick={() => setCurrentProductId(product[0].id) }>
+        <ProductImg image={product[1]} product={product[0].id} star={product[3]}/>
         <CardText>
           <CategoryText>
             <div>{product[0].category}</div>

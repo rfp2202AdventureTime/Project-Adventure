@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import Console from '../../Console';
 import { useCurrentProductId, ProductIDContext } from '../../contexts/ProductIDContext';
 
 const RelatedContext = createContext();
@@ -24,7 +25,7 @@ export function RelatedProvider({ children }) {
       .then(({ data }) => {
         setRelatedInfo(data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => Console(err));
   }, [productId]);
 
   return (

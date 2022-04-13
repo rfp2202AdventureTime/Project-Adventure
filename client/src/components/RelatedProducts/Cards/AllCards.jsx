@@ -13,7 +13,7 @@ function AllCards() {
 
   if (thumbnail.data && relatedProds.data && ratings) {
     relatedProds.data.map((item, i) => {
-      zippedArray.push([item.data, thumbnail.data[i].data.results[0].photos[0].thumbnail_url, ratings.data[i].data]);
+      zippedArray.push([item.data, thumbnail.data[i].data.results[0].photos[0].thumbnail_url, ratings.data[i].data, true]);
     });
   }
 

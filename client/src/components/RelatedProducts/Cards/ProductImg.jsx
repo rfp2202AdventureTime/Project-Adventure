@@ -6,15 +6,16 @@ import { FeatureProvider } from './FeatureContext';
 
 //*** FIX ON CLICK BUTTON SO IT DOESN'T CHANGE CURRENT PRODUCT ID FOR COMPARISON
 
-function ProductImg({ image, product }) {
+function ProductImg({ image, product, star }) {
   const [showModal, setShowModal] = useState(false);
   const [ID, setID] = useState();
   const productThumbnail = image;
 
-  function handleClick() {
+  const handleClick = (e) => {
+    e.stopPropagation();
     setShowModal(!showModal);
     setID(product);
-  }
+  };
 
   // console.log(product, 'this is productimg product')
 
@@ -30,7 +31,7 @@ function ProductImg({ image, product }) {
 
   return (
     <CardImage url={productThumbnail}>
-      <FeatureProvider>
+      <FeatureProvider prodID={ID}>
 
         <ModalContainer show={showModal}>
 
@@ -41,7 +42,7 @@ function ProductImg({ image, product }) {
 
         </ModalContainer>
 
-        <CompareButton onClick={() => handleClick()}>&#9733;</CompareButton>
+        {star ? <CompareButton onClick={(e) => handleClick(e)}>&#9733;</CompareButton> : <CloseButton>X</CloseButton>}
 
       </FeatureProvider>
     </CardImage>
@@ -65,6 +66,7 @@ const CompareButton = styled.button`
   background-color: transparent;
   border: transparent;
   margin: 5px;
+  z-index: 10;
 `;
 
 const Modal = styled.div`
@@ -96,4 +98,13 @@ const ModalContainer = styled.a`
   transition: all 0.3s;
 `;
 
+const CloseButton = styled.div`
+  display: relative;
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  background-color: transparent;
+  border: none;
+  color: yellow;
+`;
 export default ProductImg;
