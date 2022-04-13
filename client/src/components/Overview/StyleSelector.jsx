@@ -54,8 +54,8 @@ const Thumbnails = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: left;
-  gap: 20px;
-  max-width: 400px;
+  gap: 15px;
+  max-width: 350px;
   padding: 10px 0;
 `;
 
@@ -76,8 +76,8 @@ const SelectedThumbnail = styled.span`
 `;
 
 const Thumbnail = styled.a`
-  height: 75px;
-  width: 75px;
+  height: 69px;
+  width: 69px;
   border-radius: 50%;
   background: ${(props) => (props.thumbnail ? `url(${props.thumbnail})` : props.theme.colors.background)};
   border: 1px solid ${(props) => props.theme.colors.secondary};

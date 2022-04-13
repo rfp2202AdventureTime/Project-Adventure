@@ -20,21 +20,33 @@ function Overview() {
   const currentMeta = useMeta();
   const photos = activeStyle ? activeStyle.photos : null;
 
+  const preheading = (
+    <RatingInfo>
+      <StarWrapper>
+        <Star score={currentMeta ? currentMeta.avgRating : 0} />
+      </StarWrapper>
+    </RatingInfo>
+  );
+
+  const heading = (
+    <>
+      <Category>{currentProduct && currentProduct.category}</Category>
+      <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
+    </>
+  );
+
+  const content = (
+    <>
+      {activeStyle
+        && <Price original={activeStyle.original_price} discount={activeStyle.sale_price} />}
+      {activeStyle && <StyleSelector />}
+      {activeStyle && <AddToCart skus={activeStyle.skus} />}
+    </>
+  );
+
   return (
     <>
-      <ImageGallery photos={photos}>
-        <RatingInfo>
-          <StarWrapper>
-            <Star score={currentMeta ? currentMeta.avgRating : 0} />
-          </StarWrapper>
-        </RatingInfo>
-        <Category>{currentProduct && currentProduct.category}</Category>
-        <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
-        {activeStyle
-        && <Price original={activeStyle.original_price} discount={activeStyle.sale_price} />}
-        {activeStyle && <StyleSelector />}
-        {activeStyle && <AddToCart skus={activeStyle.skus} />}
-      </ImageGallery>
+      <ImageGallery preheading={preheading} heading={heading} content={content} photos={photos} />
 
       <AdditionalDetails>
         <LongDescription>
@@ -84,7 +96,11 @@ const FeatureItem = styled.li`
 const AdditionalDetails = styled.section`
   color: ${(props) => props.theme.colors.secondary};
   display: flex;
+  flex-wrap: wrap;
   padding: 50px 100px;
+  @media (max-width: 767px) {
+    padding: 40px;
+  }
   & p {
     padding-top: 10px;
   }
@@ -95,11 +111,20 @@ const LongDescription = styled.div`
   width: 65%;
   padding-right: 20px;
   border-right: 1px solid ${(props) => props.theme.colors.secondary};
+  @media (max-width: 767px) {
+    width: 100%;
+    border-width: 0px;
+    padding-bottom: 20px;
+    padding-right: 0;
+  }
 `;
 
 const Features = styled.div`
   display: inline-block;
   width: 35%;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 const ProductName = styled.h1`
