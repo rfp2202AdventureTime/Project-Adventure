@@ -1,6 +1,6 @@
 import { React } from 'react';
 import styled from 'styled-components';
-import { useFeature } from './FeatureContext';
+import { useFeature } from '../contexts/FeatureContext';
 
 // should get an array with two arrays of features from each item
 function Comparison() {
@@ -33,7 +33,7 @@ function Comparison() {
 
               <Xfeature>{item1Array.map((item1) => (item1.feature === item.feature ? 'X' : ' '))}</Xfeature>
 
-              <td>{item.value ? `${item.feature}: ${item.value}` : `${item.feature}`}</td>
+              <Value>{item.value ? `${item.value}` : `${item.feature}`}</Value>
 
               <Xfeature>{item2Array.map((item2) => (item2.feature === item.feature ? 'X' : ' '))}</Xfeature>
             </tr>
@@ -49,4 +49,11 @@ const Xfeature = styled.td`
   position: flex;
   text-align: center;
 `;
+
+const Value = styled.td`
+  text-align: center;
+  `;
 export default Comparison;
+
+
+{/* <td>{item.value ? `${item.feature}: ${item.value}` : `${item.feature}`}</td> */}

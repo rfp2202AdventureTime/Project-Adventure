@@ -2,9 +2,8 @@
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Comparison from './Comparison';
-import { FeatureProvider } from './FeatureContext';
+import { FeatureProvider } from '../contexts/FeatureContext';
 
-//*** FIX ON CLICK BUTTON SO IT DOESN'T CHANGE CURRENT PRODUCT ID FOR COMPARISON
 
 function ProductImg({ image, product, star }) {
   const [showModal, setShowModal] = useState(false);

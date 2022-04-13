@@ -28,16 +28,11 @@ function CarouselRelated({ zippedArray }) {
     }
   };
 
-  const { currentProductId } = useCurrentProductId();
-
-  if (useCurrentStyles() && currentProductId) {
+    const { currentProductId } = useCurrentProductId();
     const currentThumbnail = useCurrentStyles()[0]?.photos[0].thumbnail_url
-    const [outfitThumbnail, setOutfitThumbnail] = useState(currentThumbnail);
-
-
 
     const AddToStorage = (product) => {
-      // console.log(product, 'product');
+
 
       axios({
         method: 'GET',
@@ -48,20 +43,6 @@ function CarouselRelated({ zippedArray }) {
           localStorage.setItem(data.id, JSON.stringify(dataTest));
         });
     };
-
-
-    const itemsLocal = { ...localStorage };
-    const keys = Object.keys(itemsLocal);
-    const testingArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
-    const [outfitArray, setOutfitArray] = useState([...testingArray]);
-
-    // used only for testing REMOVE
-    useEffect(() => {
-      console.log(outfitArray, 'local');
-      const itemsLocal = { ...localStorage };
-      const keys = Object.keys(itemsLocal);
-      const testingArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
-    }, [itemsLocal]);
 
   if (displayed) {
     return (
@@ -90,7 +71,7 @@ function CarouselRelated({ zippedArray }) {
     );
   }
 }
-}
+// }
 
 // remove border line after
 const CarouselContainerR = styled.div`

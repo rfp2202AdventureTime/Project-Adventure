@@ -1,9 +1,8 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
-import { React, useContext } from 'react';
+import { React } from 'react';
 import styled from 'styled-components';
-import { useCurrentStyles } from '../../../contexts/StylesProvider';
 import { useMeta } from '../../../contexts/ReviewMeta';
 import { Individualcard } from '../Cards/Individualcard';
 // import { useThumbnail } from '../Cards/thumbnailContext';
@@ -11,38 +10,25 @@ import { Individualcard } from '../Cards/Individualcard';
 // ({ product, setOutfitArray, outfitArray })
 
 function OutfitCard({ product, image }) {
-  // if (useCurrentStyles()) {
-    const thumbnail = image;
-    const rating = useMeta();
-    const information = [product, thumbnail, rating, false];
 
-    // use if add outfit array is more than 1
-    // const removeItem = (product) => {
-    //   const remove = outfitArray.indexOf(product);
-    //   // console.log(remove, 'this is 1');
+  const thumbnail = image;
+  const rating = useMeta();
+  const information = [product, thumbnail, rating, false];
 
-    //   if (remove > -1) {
-    //     setOutfitArray(((outfitArray) => outfitArray.filter((product, i) => i === remove)
-    //     ));
+  return (
 
-        // console.log(outfitArray, 'this is array after removing');
-    //   }
-    // };
-
-    return (
-
-      <Outfit>
+    <Outfit>
 
       {/* <CloseButton onClick={console.log(product)}>
       //   X
       // </CloseButton> */}
 
-        <Individualcard product={information} />
-      </Outfit>
+      <Individualcard product={information} />
+    </Outfit>
 
-    );
-  }
-// }
+  );
+}
+
 const IndCard = styled.div`
 display: table-cell, relative;
 position: relative;
@@ -76,24 +62,3 @@ const Outfit = styled.div`
 
 `;
 export default OutfitCard;
-
-// <IndCard>
-//       <CloseButton onClick={outfitArray.length === 1 ? () => setOutfitArray([]) : removeItem(product)}>
-//         X
-//       </CloseButton>
-//       <OutfitImg>
-
-//         <img
-//           src={thumbnail}
-//           alt="Not found"
-//         />
-//       </OutfitImg>
-//       <div>{product.category}</div>
-//       <p>{product.name}</p>
-//       <p>
-//         $
-//         {product.default_price}
-//       </p>
-//       <div><Star score={rating} /></div>
-
-//     </IndCard>

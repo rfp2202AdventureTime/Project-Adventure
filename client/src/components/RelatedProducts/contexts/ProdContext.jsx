@@ -2,9 +2,9 @@
 import {
   React, useContext, useState, useEffect, createContext,
 } from 'react';
-import Console from '../../../Console';
 import axios from 'axios';
-import { useRelated } from '../RelatedContext';
+import Console from '../../../Console';
+import { useRelated } from './RelatedContext';
 
 const ProdContext = createContext();
 
@@ -27,7 +27,7 @@ export function ProdProvider({ children }) {
         .then((data) => {
           setRelatedInformation({ data });
         })
-        .catch((err) => Console.log('there was an ERROR', err));
+        .catch((err) => Console.log('there was an ERROR in Prod', err));
     }
   }, [related]);
 

@@ -11,11 +11,10 @@ function Individualcard({ product }) {
 
   const starRating = product[2]?.avgRating;
 
-//*** FIX ON CLICK BUTTON SO IT DOESN'T CHANGE
   return (
     <div>
-      <IndCard onClick={() => setCurrentProductId(product[0].id) }>
-        <ProductImg image={product[1]} product={product[0].id} star={product[3]}/>
+      <IndCard onClick={() => setCurrentProductId(product[0].id)}>
+        <ProductImg image={product[1]} product={product[0].id} star={product[3]} />
         <CardText>
           <CategoryText>
             <div>{product[0].category}</div>
@@ -57,12 +56,7 @@ const CategoryText = styled.div`
 const CardText = styled.div`
   padding-left: 1px;
 `;
-
-
 export {
   Individualcard,
   IndCard,
 };
-
-
-{/* <IndCard onClick={() => setProductPicked(product[0].id)}></IndCard> */}

@@ -4,13 +4,11 @@ import {
 } from 'react';
 import axios from 'axios';
 import Console from '../../../Console';
-import { useRelated } from '../RelatedContext';
+import { useRelated } from './RelatedContext';
 
 const ThumbnailContext = createContext();
 
 export function useThumbnail() {
-  // const [thumbnailInformation, setThumbnailInformation] = useContext(ThumbnailContext);
-  // return { thumbnailInformation, setThumbnailInformation };
   return useContext(ThumbnailContext);
 }
 export function ThumbnailProvider({ children }) {
@@ -37,5 +35,6 @@ export function ThumbnailProvider({ children }) {
     </ThumbnailContext.Provider>
   );
 }
+
 
 export default ThumbnailContext;
