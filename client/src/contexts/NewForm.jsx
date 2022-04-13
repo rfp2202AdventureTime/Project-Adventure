@@ -59,6 +59,42 @@ export default function NewForm({
       newData.name = name;
       newData.recommend = (data.recommendation === 'true');
       newData.photos = [];
+      // if (rating === null || recommend === null) {
+      //   alert('Please fill out all required (*) fields');
+      //   e.preventDefault();
+      //   return false;
+      // }
+      // // body check
+      // if (body.length < 50 || body.length > 1000) {
+      //   alert('Review body must be at least 50 characters');
+      //   e.preventDefault();
+      //   return false;
+      // }
+      // // email check
+      // if (
+      //   !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) ||
+      //   email.length > 60 ||
+      //   email.length === 0
+      // ) {
+      //   alert('Please make sure email is in proper format ex. \'hello@hello.com');
+      //   e.preventDefault();
+      //   return false;
+      // }
+      // // summary check
+      // if (summary.length > 60) {
+      //   alert('Summary must be 60 characters or less');
+      //   e.preventDefault();
+      //   return false;
+      // }
+      // // name check
+      // if (name.length > 60 || name.length === 0) {
+      //   alert('Name must be filled in and 60 characters or less');
+      //   e.preventDefault();
+      //   return false;
+      // }
+
+      // alert('Your review has been submitted!');
+      // handleReviewData(this.state);
       axios({
         method: 'post',
         url: `/${formtype}`,
@@ -285,7 +321,7 @@ console.log(showPhotoModal);
                     {shared.email}
                   </b>
                   <div>
-                    <input type="text" name="email" required />
+                    <input type="text" name="email" required maxLength="60" />
                   </div>
                 </label>
               </QuestionBlock>
