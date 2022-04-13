@@ -4,6 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Console from '../Console';
+import ReviewInput from '../components/Ratings/Review/ReviewInput';
 import { Modal, ModalParent, ModalClose } from './Shared.styled';
 import { useMeta } from './ReviewMeta';
 import { ProductIDContext } from './ProductIDContext';
@@ -17,27 +18,9 @@ export default function NewForm({
   const factorList = (meta) ? meta.characteristics : {};
   // CONFIRM WITH ALEX this default won't imapct his section
   const [data, setData] = useState({ recommendation: 'true' });
-  const [photo, setPhoto] = useState([]);
-  const [showPhotoModal, setShowPhotoModal] = useState(false);
   const productId = useContext(ProductIDContext);
-  const factorSummary = {
-    Size: ['A size too small', 'half a size too small', 'Perfect', 'half a size too big', 'A size too wide'],
-    Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
-    Comfort: ['Uncomfortable', 'Slightly unconfortable', 'OK', 'Comfortable', 'Perfect'],
-    Quality: ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'],
-    Length: ['Runs short', 'Runs slightly short', 'Perfect', 'Runs slightly long', 'Runs long'],
-    Fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs big'],
-  };
-  const ratingSummary = {
-    1: 'Poor',
-    2: 'Fair',
-    3: 'Average',
-    4: 'Good',
-    5: 'Great',
-  };
   const handleChange = (e) => setData((prevState) => (
     { ...prevState, [e.target.name]: e.target.value }));
-  // console.log(data);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -64,11 +47,12 @@ export default function NewForm({
       newData.name = name;
       newData.recommend = (data.recommendation === 'true');
       newData.photos = [];
-
       axios({
         method: 'post',
         url: `/${formtype}`,
         data: newData,
+      }).then(() => {
+        alert('submitted');
       })
         .catch((err) => Console.log(err));
     } else {
@@ -80,7 +64,6 @@ export default function NewForm({
         .catch((err) => Console.log(err));
     }
   };
-
   const reviews = {
     title: 'Write Your Review',
     subtitle: `About the ${productName}`,
@@ -118,140 +101,6 @@ export default function NewForm({
     toggleModal();
   };
 
-  const togglePhotoModal = () => {
-    setShowPhotoModal(true);
-  };
-
-  const exitPhotoModal = () => {
-    setShowPhotoModal(false);
-  };
-  console.log(showPhotoModal);
-  const starRating = (
-    <div className="rating">
-      <input type="radio" name="rating" id="rating-5" value={5} />
-      <label htmlFor="rating-5" />
-      <input type="radio" name="rating" id="rating-4" value={4} />
-      <label htmlFor="rating-4" />
-      <input type="radio" name="rating" id="rating-3" value={3} />
-      <label htmlFor="rating-3" />
-      <input type="radio" name="rating" id="rating-2" value={4} />
-      <label htmlFor="rating-2" />
-      <input type="radio" name="rating" id="rating-1" value={1} />
-      <label htmlFor="rating-1" />
-    </div>
-  );
-
-  const factorSummaryInput = (
-    Object.keys(factorList).map((factor, i) => (
-      <div key={factor.concat(i)}>
-        <FactorLine>
-          {factor}
-        </FactorLine>
-        <RadioBar>
-          {factorSummary[factor].map((characteristic, index) => (
-            <RadioBlock key={characteristic.concat(index)}>
-              <div>
-                <input
-                  type="radio"
-                  name={factor}
-                  value={index + 1}
-                  required
-                />
-              </div>
-              <Characteristic>
-                <label
-                  htmlFor={characteristic.concat(index + 1)}
-                >
-                  {' '}
-                  {characteristic}
-                </label>
-              </Characteristic>
-            </RadioBlock>
-          ))}
-        </RadioBar>
-      </div>
-    ))
-  );
-
-  const addtionalReviewInput = (formtype === 'reviews') ? (
-    <>
-      <QuestionBlock>
-        <label htmlFor="rating">
-          <b>
-            Overall rating*
-          </b>
-          {starRating}
-          <Note>
-            {(data.rating) ? ratingSummary[data.rating] : ''}
-          </Note>
-        </label>
-      </QuestionBlock>
-      <QuestionBlock>
-        <label htmlFor="recommendation">
-          <b>
-            Do you recommendation this product*
-          </b>
-          <div>
-            <input type="radio" name="recommendation" value="true" defaultChecked onChange={handleChange} />
-            <label htmlFor="yes">{' Yes'}</label>
-          </div>
-          <div>
-            <input type="radio" name="recommendation" value="false" />
-            <label htmlFor="no">{' No'}</label>
-          </div>
-        </label>
-      </QuestionBlock>
-      <QuestionBlock>
-        <label htmlFor="characteristics">
-          <b>
-            Characteristics*
-          </b>
-          {factorSummaryInput}
-        </label>
-      </QuestionBlock>
-      <QuestionBlock>
-        <label htmlFor={type.phtot}>
-          <b>
-            { 'Add your photo[Not working yet] ' }
-          </b>
-          <button type="button" onClick={togglePhotoModal}>
-            Add
-          </button>
-          <ModalParent
-            showModal={showPhotoModal}
-          >
-            <PhotoModal
-              showModal={showPhotoModal}
-            >
-              test
-              <ModalClose
-                onClick={exitPhotoModal}
-              >
-                &times;
-              </ModalClose>
-            </PhotoModal>
-          </ModalParent>
-        </label>
-      </QuestionBlock>
-      <QuestionBlock>
-        <label htmlFor={type.summary}>
-          <b>
-            Review Summary*
-          </b>
-          <div>
-            <input
-              type="text"
-              name="summary"
-              placeholder="Example: Best purchase ever!"
-              required
-            />
-          </div>
-        </label>
-      </QuestionBlock>
-    </>
-
-  ) : '';
-
   // body note validation
   if (data.body && data.body.length > 50) {
     bodyNote = (
@@ -271,7 +120,6 @@ export default function NewForm({
     );
   }
 
-
   return (
     <ModalParent
       className="ModalParent"
@@ -280,6 +128,7 @@ export default function NewForm({
       <FormModal
         className="Modal"
         showModal={showModal}
+        type={type}
       >
         <FormContainer>
           <StickyTop>
@@ -287,7 +136,10 @@ export default function NewForm({
             <h3>{type.subtitle}</h3>
           </StickyTop>
           <form name="newForm" onChange={handleChange} onSubmit={handleOnSubmit}>
-            {addtionalReviewInput}
+            <ReviewInput
+              data={data}
+              handleChange={handleChange}
+            />
             <QuestionBlockBody>
               <label htmlFor={type.body}>
                 <b>
@@ -381,37 +233,11 @@ const StickyTop = styled.div`
 const FormModal = styled(Modal)`
   overflow:scroll;
 `;
-const PhotoModal = styled(Modal)`
-  width: 40%
-`;
-
-const RadioBar = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin: 1rem;
-  background-color: ${({ theme }) => theme.colors.tertiary};
-  &:hover {
-    box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
-  };
-`;
-const RadioBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 const Note = styled.div`
   font-size: 0.8rem;
   font-style: italic;
   padding: 0.5rem;
-`;
-const Characteristic = styled.div`
-  padding: 1rem;
-`;
-
-const FactorLine = styled.h5`
-  margin: 0.5rem;
-  font-style: italic;
 `;
 
 const QuestionBlock = styled.div`
