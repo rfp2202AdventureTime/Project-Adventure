@@ -25,7 +25,7 @@ export function RelatedProvider({ children }) {
       .then(({ data }) => {
         setRelatedInfo(data);
       })
-      .catch((err) => Console(err));
+      .catch((err) => Console.log(err));
   }, [productId]);
 
   return (

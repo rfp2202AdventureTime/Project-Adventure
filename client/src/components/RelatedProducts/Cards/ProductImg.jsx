@@ -17,7 +17,10 @@ function ProductImg({ image, product, star }) {
     setID(product);
   };
 
-  // console.log(product, 'this is productimg product')
+  const handleRemove = (e, product) => {
+    e.stopPropagation();
+    localStorage.removeItem(product);
+  };
 
   useEffect(() => {
     const close = (e) => {
@@ -42,7 +45,7 @@ function ProductImg({ image, product, star }) {
 
         </ModalContainer>
 
-        {star ? <CompareButton onClick={(e) => handleClick(e)}>&#9733;</CompareButton> : <CloseButton>X</CloseButton>}
+        {star ? <CompareButton onClick={(e) => handleClick(e)}>&#9733;</CompareButton> : <CloseButton onClick={(e) => handleRemove(e, product)}>X</CloseButton>}
 
       </FeatureProvider>
     </CardImage>

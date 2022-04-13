@@ -12,7 +12,6 @@ function Comparison() {
 
     const FeatArray = item1.features.concat(item2.features);
 
-
     const item1Array = [];
     item1.features.map((item) => item1Array.push(item));
 

@@ -14,7 +14,6 @@ export function useThumbnail() {
   return useContext(ThumbnailContext);
 }
 export function ThumbnailProvider({ children }) {
-
   const related = useRelated();
 
   const [thumbnailInformation, setThumbnailInformation] = useState([]);

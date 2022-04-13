@@ -33,9 +33,9 @@ function OutfitCard({ product, image }) {
 
       <Outfit>
 
-        {/* <CloseButton onClick={console.log(product)}>
-        X
-      </CloseButton> */}
+      {/* <CloseButton onClick={console.log(product)}>
+      //   X
+      // </CloseButton> */}
 
         <Individualcard product={information} />
       </Outfit>
@@ -69,7 +69,7 @@ const CloseButton = styled.button`
 `;
 
 const Outfit = styled.div`
-  margin-left: 5px;
+  // margin-left: 5px;
   display: flex;
   float: right;
   flex-direction: row;

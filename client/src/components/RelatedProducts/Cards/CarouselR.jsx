@@ -25,24 +25,22 @@ function CarouselRelated({ zippedArray }) {
     }
   };
 
-
   if (displayed) {
     return (
       <CarouselContainerR>
-        {zippedArray.length > 3 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR></LeftArrowR>}
+        {zippedArray.length > 3 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR />}
 
         <CarouselWrapperR>
 
-          {displayed.map((item, key) => <Individualcard product={item} key={key}/>)}
+          {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
-          {zippedArray.length > 3 ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR></RightArrowR>}
+          {zippedArray.length > 3 ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );
   }
 }
 
-// remove border line after
 const CarouselContainerR = styled.div`
   position: relative;
   width: 1100px;
@@ -75,4 +73,3 @@ const RightArrowR = styled.div`
 `;
 
 export default CarouselRelated;
-

@@ -11,7 +11,6 @@ function Individualcard({ product }) {
 
   const starRating = product[2]?.avgRating;
 
-  console.log(product[3], 'this is individual cards')
 //*** FIX ON CLICK BUTTON SO IT DOESN'T CHANGE
   return (
     <div>
@@ -58,6 +57,7 @@ const CategoryText = styled.div`
 const CardText = styled.div`
   padding-left: 1px;
 `;
+
 
 export {
   Individualcard,
