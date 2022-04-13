@@ -12,6 +12,7 @@ export default function NewForm({
   formtype, productName, showModal, toggleModal,
 }) {
   let type;
+  let bodyNote;
   const meta = useMeta();
   const factorList = (meta) ? meta.characteristics : {};
   // CONFIRM WITH ALEX this default won't imapct his section
@@ -32,7 +33,6 @@ export default function NewForm({
   const handleChange = (e) => setData((prevState) => (
     { ...prevState, [e.target.name]: e.target.value }));
   // console.log(data);
-
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -155,7 +155,7 @@ export default function NewForm({
   const exitPhotoModal = () => {
     setShowPhotoModal(false);
   };
-console.log(showPhotoModal);
+  console.log(showPhotoModal);
   const starRating = (
     <div className="rating">
       <input type="radio" name="rating" id="rating-5" value={5} />
@@ -277,6 +277,25 @@ console.log(showPhotoModal);
 
   ) : '';
 
+  // body note validation
+  if (data.body && data.body.length > 50) {
+    bodyNote = (
+      <Note>
+        Minimum reached
+      </Note>
+    );
+  } else {
+    bodyNote = (
+      <Note>
+        Minimum required characters left:
+        {' '}
+        {
+          (data.body) ? (50 - data.body.length) : 50
+        }
+      </Note>
+    );
+  }
+
   return (
     <ModalParent
       className="ModalParent"
@@ -300,32 +319,51 @@ console.log(showPhotoModal);
                   <textarea
                     name="body"
                     placeholder={type.bodyPlaceholder}
+                    maxLength="1000"
+                    minLength="50"
                   />
                 </div>
+                {bodyNote}
               </label>
             </QuestionBlockBody>
-            <RowBlock>
-              <QuestionBlock>
-                <label htmlFor={shared.username}>
-                  <b>
-                    {shared.username}
-                  </b>
-                  <div>
-                    <input type="text" name="name" required />
-                  </div>
-                </label>
-              </QuestionBlock>
-              <QuestionBlock>
-                <label htmlFor={shared.email}>
-                  <b>
-                    {shared.email}
-                  </b>
-                  <div>
-                    <input type="text" name="email" required maxLength="60" />
-                  </div>
-                </label>
-              </QuestionBlock>
-            </RowBlock>
+            <QuestionBlock>
+              <label htmlFor={shared.username}>
+                <b>
+                  {shared.username}
+                </b>
+                <div>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    maxLength="60"
+                    placeholder="Example: jackson11!"
+                  />
+                </div>
+                <Note>
+                  For privacy reasons, do not use your full name or email address
+                </Note>
+              </label>
+            </QuestionBlock>
+            <QuestionBlock>
+              <label htmlFor={shared.email}>
+                <b>
+                  {shared.email}
+                </b>
+                <div>
+                  <input
+                    type="text"
+                    name="email"
+                    required
+                    maxLength="60"
+                    placeholder="Example: jackson11@email.com"
+                  />
+                </div>
+                <Note>
+                  For authentication reasons, you will not be emailed
+                </Note>
+              </label>
+            </QuestionBlock>
 
             <input className="submitButton" type="submit" value="Submit" />
           </form>
@@ -368,14 +406,18 @@ const RadioBlock = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const RowBlock = styled(RadioBlock)`
-  flex-direction: row;
-  justify-content: space-evenly;
-`;
+// const RowBlock = styled(RadioBlock)`
+//   flex-direction: row;
+//   justify-content: space-evenly;
+// `;
 
+const Note = styled.div`
+  font-size: 0.8rem;
+  font-style: italic;
+  padding: 0.5rem;
+`;
 const Characteristic = styled.div`
   padding: 1rem;
-
 `;
 
 const QuestionBlock = styled.div`
