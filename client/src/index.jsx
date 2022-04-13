@@ -13,7 +13,7 @@ import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
-  const [defaultProductId, setDefaultProductId] = useState(65654);
+  const [defaultProductId, setDefaultProductId] = useState(65636);
   // tests: 65655, 65633, 65654
   return (
     <Theme>

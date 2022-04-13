@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import Comparison from './Comparison';
 import { FeatureProvider } from '../contexts/FeatureContext';
 
-
 function ProductImg({ image, product, star }) {
   const [showModal, setShowModal] = useState(false);
   const [ID, setID] = useState();
   const productThumbnail = image;
+  const imageNotFound = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -32,7 +32,7 @@ function ProductImg({ image, product, star }) {
   }, []);
 
   return (
-    <CardImage url={productThumbnail}>
+    <CardImage url={productThumbnail ? productThumbnail : imageNotFound}>
       <FeatureProvider prodID={ID}>
 
         <ModalContainer show={showModal}>
@@ -77,7 +77,6 @@ const Modal = styled.div`
   position: absolute;
   width: max-content;
   z-index: 500;
-
   top: 40%;
   left: 40%;
   background: grey;

@@ -11,6 +11,7 @@ const FeatureContext = createContext();
 export function useFeature() {
   return useContext(FeatureContext);
 }
+//********* REMOVE before Production ***************
 // fix current productIDContext to use currentProductID
 export function FeatureProvider({ children, prodID }) {
   const [featuresInfo, setFeatures] = useState();

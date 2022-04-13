@@ -31,8 +31,8 @@ function CarouselRelated({ zippedArray }) {
     const { currentProductId } = useCurrentProductId();
     const currentThumbnail = useCurrentStyles()[0]?.photos[0].thumbnail_url
 
-    const AddToStorage = (product) => {
-
+    const AddToStorage = (e, product) => {
+      e.stopPropagation();
 
       axios({
         method: 'GET',
@@ -54,17 +54,17 @@ function CarouselRelated({ zippedArray }) {
 
             <CardImage
               url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
-              onClick={() => AddToStorage(currentProductId)}
+              onClick={(e) => AddToStorage(e, currentProductId)}
             />
 
             <OutfitText>Add to Outfit</OutfitText>
 
           </AddButton>
-      {/* <AddedOutfit> */}
+      <AddedOutfit>
 
           {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
-      {/* </AddedOutfit> */}
+      </AddedOutfit>
           {zippedArray.length > 3 ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
@@ -74,6 +74,7 @@ function CarouselRelated({ zippedArray }) {
 
 
 const CarouselContainerR = styled.div`
+
   position: relative;
   width: 1100px;
   height: fit-content;
@@ -82,8 +83,10 @@ const CarouselContainerR = styled.div`
 
 const CarouselWrapperR = styled.div`
   display: flex;
+  height: fit-content;
   width: 100%;
   overflow: hidden;
+
 `;
 
 const LeftArrowR = styled.div`
@@ -105,12 +108,13 @@ const RightArrowR = styled.div`
 `;
 
 const CardImage = styled.div`
-  width: 250px;
+  display: relative;
+  width: 243px;
   height: 250px;
   background: url(${(props) => props.url});
   background-position: center;
   background-size: cover;
-  margin-right: 5px;
+  // margin-right: 15px;
 `;
 
 const AddButton = styled.div`
@@ -119,14 +123,14 @@ const AddButton = styled.div`
   &:hover {
     box-shadow: 0 0 6px rgba(90, 90, 90, 0.8);
   }
-  // margin-right: 5px;
 `;
 
 const AddedOutfit = styled.div`
-  display: relative;
-  margin-left: 15px;
-  height: fit-content;
+  display: flex;
+  position: relative;
+  margin-left: 25px;
   flex-direction: row;
+  width: fit-content;
 `;
 
 const OutfitText = styled.p`

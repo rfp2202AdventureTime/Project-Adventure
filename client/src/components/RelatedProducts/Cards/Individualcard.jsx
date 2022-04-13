@@ -5,14 +5,14 @@ import ProductImg from './ProductImg';
 import Star from '../../../Star';
 import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 
-// receives array [product information, thumbnail url]
+// receives array [product information, thumbnail url, (bool for star or no star on card)]
 function Individualcard({ product }) {
   const { setCurrentProductId } = useCurrentProductId();
 
   const starRating = product[2]?.avgRating;
 
   return (
-    <div>
+    // <div>
       <IndCard onClick={() => setCurrentProductId(product[0].id)}>
         <ProductImg image={product[1]} product={product[0].id} star={product[3]} />
         <CardText>
@@ -30,7 +30,7 @@ function Individualcard({ product }) {
           </div>
         </CardText>
       </IndCard>
-    </div>
+    // </div>
   );
 }
 
