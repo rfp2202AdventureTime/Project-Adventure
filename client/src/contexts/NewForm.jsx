@@ -3,8 +3,8 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Modal, ModalParent, ModalClose } from './Shared.styled';
 import Console from '../Console';
+import { Modal, ModalParent, ModalClose } from './Shared.styled';
 import { useMeta } from './ReviewMeta';
 import { ProductIDContext } from './ProductIDContext';
 
@@ -16,6 +16,9 @@ export default function NewForm({
   const factorList = (meta) ? meta.characteristics : {};
   // CONFIRM WITH ALEX this default won't imapct his section
   const [data, setData] = useState({ recommendation: 'true' });
+  const [photo, setPhoto] = useState([]);
+  const [showPhotoModal, setShowPhotoModal] = useState(false);
+
   const productId = useContext(ProductIDContext);
 
   const factorSummary = {
@@ -28,7 +31,8 @@ export default function NewForm({
   };
   const handleChange = (e) => setData((prevState) => (
     { ...prevState, [e.target.name]: e.target.value }));
-    console.log(data);
+  // console.log(data);
+
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -61,8 +65,6 @@ export default function NewForm({
         data: newData,
       })
         .catch((err) => Console.log(err));
-
-      // handleReviewData()
     } else {
       axios({
         method: 'post',
@@ -76,7 +78,7 @@ export default function NewForm({
   const reviews = {
     title: 'Write Your Review',
     subtitle: `About the ${productName}`,
-    body: 'Review body:',
+    body: 'Review body*',
     bodyPlaceholder: 'Why did you like the product or not?',
     photo: 'Upload your photos',
   };
@@ -95,8 +97,8 @@ export default function NewForm({
   };
 
   const shared = {
-    username: 'What is your nickname?',
-    email: 'Your email:',
+    username: 'What is your nickname*',
+    email: 'Your email*',
   };
 
   if (formtype === 'reviews') {
@@ -106,7 +108,18 @@ export default function NewForm({
   } else if (formtype === 'answer') {
     type = sharedAnswerInput;
   }
+  const clickExit = () => {
+    toggleModal();
+  };
 
+  const togglePhotoModal = () => {
+    setShowPhotoModal(true);
+  };
+
+  const exitPhotoModal = () => {
+    setShowPhotoModal(false);
+  };
+console.log(showPhotoModal);
   const starRating = (
     <div className="rating">
       <input type="radio" name="rating" id="rating-5" value={5} />
@@ -157,7 +170,7 @@ export default function NewForm({
       <QuestionBlock>
         <label htmlFor="rating">
           <b>
-            Overall rating?
+            Overall rating*
           </b>
           {starRating}
         </label>
@@ -165,7 +178,7 @@ export default function NewForm({
       <QuestionBlock>
         <label htmlFor="recommendation">
           <b>
-            Do you recommendation this product?
+            Do you recommendation this product*
           </b>
           <div>
             <input type="radio" name="recommendation" value="true" defaultChecked onChange={handleChange} />
@@ -180,15 +193,39 @@ export default function NewForm({
       <QuestionBlock>
         <label htmlFor="characteristics">
           <b>
-            Characteristics:
+            Characteristics*
           </b>
           {factorSummaryInput}
         </label>
       </QuestionBlock>
       <QuestionBlock>
+        <label htmlFor={type.phtot}>
+          <b>
+            { 'Add your photo ' }
+          </b>
+          <button type="button" onClick={togglePhotoModal}>
+            Add
+          </button>
+          <ModalParent
+            showModal={showPhotoModal}
+          >
+            <PhotoModal
+              showModal={showPhotoModal}
+            >
+              test
+              <ModalClose
+                onClick={exitPhotoModal}
+              >
+                &times;
+              </ModalClose>
+            </PhotoModal>
+          </ModalParent>
+        </label>
+      </QuestionBlock>
+      <QuestionBlock>
         <label htmlFor={type.summary}>
           <b>
-            Review Summary
+            Review Summary*
           </b>
           <div>
             <input
@@ -203,10 +240,6 @@ export default function NewForm({
     </>
 
   ) : '';
-
-  const clickExit = () => {
-    toggleModal();
-  };
 
   return (
     <ModalParent
@@ -283,6 +316,9 @@ const FormContainer = styled.div`
 
 const FormModal = styled(Modal)`
   overflow:scroll;
+`;
+const PhotoModal = styled(Modal)`
+  width: 40%
 `;
 
 const RadioBar = styled.div`
