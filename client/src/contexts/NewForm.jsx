@@ -8,15 +8,14 @@ import Console from '../Console';
 import { useMeta } from './ReviewMeta';
 import { ProductIDContext } from './ProductIDContext';
 
-// formtype: reviews, questions, answers
 export default function NewForm({
   formtype, productName, showModal, toggleModal,
 }) {
   let type;
   const meta = useMeta();
   const factorList = (meta) ? meta.characteristics : {};
-  // const [modalStatus, setModalStatus] = useState(true);
-  const [data, setData] = useState({});
+  // CONFIRM WITH ALEX this default won't imapct his section
+  const [data, setData] = useState({ recommendation: 'true' });
   const productId = useContext(ProductIDContext);
 
   const factorSummary = {
@@ -47,6 +46,7 @@ export default function NewForm({
           newData.rating = Number(data[key]);
         }
       });
+
       newData.characteristics = factorData;
       newData.product_id = productId;
       newData.body = body;
@@ -322,7 +322,11 @@ const QuestionBlockBody = styled(QuestionBlock)`
 
 NewForm.propTypes = {
   formtype: PropTypes.string.isRequired,
-  productName: PropTypes.string.isRequired,
+  productName: PropTypes.string,
   showModal: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
+};
+
+NewForm.defaultProps = {
+  productName: null,
 };

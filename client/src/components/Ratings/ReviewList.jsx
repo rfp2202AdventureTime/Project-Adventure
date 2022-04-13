@@ -7,12 +7,13 @@ import SortBar from './Review/SortBar';
 import SearchBar from './Review/SearchBar';
 import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
-import { ProductIDContext } from '../../contexts/ProductIDContext';
+import { ProductIDContext, useCurrentProduct } from '../../contexts/ProductIDContext';
 import { Button } from '../../contexts/Shared.styled';
 import NewForm from '../../contexts/NewForm';
 
 export default function ReviewList({ filterStatus }) {
   const productId = useContext(ProductIDContext);
+  const { currentProduct } = useCurrentProduct();
   const reviewMeta = useMeta();
   const [sort, setSort] = useState('relevant');
   const [initialRender, setInitialRender] = useState(true);
@@ -169,7 +170,7 @@ export default function ReviewList({ filterStatus }) {
           <Button onClick={toggleModal}> Add a Review +</Button>
           <NewForm
             formtype="reviews"
-            productName="legging"
+            productName={currentProduct?.name}
             showModal={showModal}
             toggleModal={toggleModal}
             // handleReviewData={handleReviewData}
