@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -30,31 +31,34 @@ export default function NewForm({ formtype, productName, showModal }) {
       .catch((err) => Console.log(err));
   };
 
-  // move summary to seperate
   const reviews = {
     title: 'Write Your Review',
     subtitle: `About the ${productName}`,
-    summary: 'Review summary:',
     body: 'Review body:',
+    bodyPlaceholder: 'Why did you like the product or not?',
     photo: 'Upload your photos',
   };
+
+  const sharedQuestionInput = {
+    title: 'Ask Your Question',
+    subtitle: `About the ${productName}`,
+    body: 'Your Question: ',
+  };
+
+  const sharedAnswerInput = {
+    title: 'Submit Your Answer',
+    // subtitle: `${productName}:${questionBody}`,
+    body: 'Your Question: ',
+    photo: 'Upload your photos',
+  };
+
   if (formtype === 'reviews') {
     type = reviews;
+  } else if (formtype === 'question') {
+    type = sharedQuestionInput;
+  } else if (formtype === 'answer') {
+    type = sharedAnswerInput;
   }
-
-  // TODO: make this dynapmic for all post
-  // const sharedQuestionInput = {
-  //   title: 'Ask Your Question',
-  //   subtitle: `About the ${productName}`,
-  //   body: 'Your Question: ',
-  // };
-
-  // const sharedAnswerInput = {
-  //   title: 'Submit Your Answer',
-  //   // subtitle: `${productName}:${questionBody}`,
-  //   body: 'Your Question: ',
-  //   photo: 'Upload your photos',
-  // };
 
   const shared = {
     username: 'What is your nickname?',
@@ -62,54 +66,89 @@ export default function NewForm({ formtype, productName, showModal }) {
   };
 
   const starRating = (
-    // <div className="container">
-      <div className="rating">
-        <input type="radio" name="rating" id="rating-5" />
-        <label htmlFor="rating-5" />
-        <input type="radio" name="rating" id="rating-4" />
-        <label htmlFor="rating-4" />
-        <input type="radio" name="rating" id="rating-3" />
-        <label htmlFor="rating-3" />
-        <input type="radio" name="rating" id="rating-2" />
-        <label htmlFor="rating-2" />
-        <input type="radio" name="rating" id="rating-1" />
-        <label htmlFor="rating-1" />
-      </div>
-    // </div>
+    <div className="rating">
+      <input type="radio" name="rating" id="rating-5" />
+      <label htmlFor="rating-5" />
+      <input type="radio" name="rating" id="rating-4" />
+      <label htmlFor="rating-4" />
+      <input type="radio" name="rating" id="rating-3" />
+      <label htmlFor="rating-3" />
+      <input type="radio" name="rating" id="rating-2" />
+      <label htmlFor="rating-2" />
+      <input type="radio" name="rating" id="rating-1" />
+      <label htmlFor="rating-1" />
+    </div>
+  );
 
+  const factorSummaryInput = (
+    Object.keys(factorSummary).map((factor, i) => (
+      <div key={factor.concat(i)}>
+        {factor}
+        <RadioBar>
+          {factorSummary[factor].map((characteristic, index) => (
+            <div key={characteristic.concat(index)}>
+              <input
+                type="radio"
+                name="characteristic"
+                value="index"
+              />
+              <label
+                htmlFor={characteristic.concat(index)}
+              >
+                {' '}
+                {index}
+              </label>
+            </div>
+          ))}
+        </RadioBar>
+      </div>
+    ))
   );
 
   const addtionalReviewInput = (formtype === 'reviews') ? (
     <>
-      <div>
+      <b>
         Overall rating?
-      </div>
+      </b>
       {starRating}
-      <label htmlFor="recommendation">
-        <div>
-          Do you recommendation this product?
-        </div>
-        <div>
-          <input type="radio" name="recommendation" value="yes" checked />
-          <label for="yes">{' Yes'}</label>
-        </div>
-        <div>
-          <input type="radio" name="recommendation" value="no" />
-          <label for="no">{' No'}</label>
-        </div>
-      </label>
-      <label htmlFor="characteristics">
-        <div>
-          Characteristics
-        </div>
-        <input type="text" name="recommendation" required />
-      </label>
-      <label htmlFor={type.summary}>
-        <div>
-          {type.summary}
-        </div>
-        <input type="text" name="summary" required />
-      </label>
+      <QuestionBlock>
+        <label htmlFor="recommendation">
+          <b>
+            Do you recommendation this product?
+          </b>
+          <div>
+            <input type="radio" name="recommendation" value="yes" checked onChange={handleChange} />
+            <label htmlFor="yes">{' Yes'}</label>
+          </div>
+          <div>
+            <input type="radio" name="recommendation" value="no" />
+            <label htmlFor="no">{' No'}</label>
+          </div>
+        </label>
+      </QuestionBlock>
+      <QuestionBlock>
+        <label htmlFor="characteristics">
+          <b>
+            Characteristics:
+          </b>
+          {factorSummaryInput}
+        </label>
+      </QuestionBlock>
+      <QuestionBlock>
+        <label htmlFor={type.summary}>
+          <b>
+            Review Summary
+          </b>
+          <div>
+            <input
+              type="text"
+              name="summary"
+              placeholder="Example: Best purchase ever!"
+              required
+            />
+          </div>
+        </label>
+      </QuestionBlock>
     </>
 
   ) : '';
@@ -123,43 +162,58 @@ export default function NewForm({ formtype, productName, showModal }) {
       className="ModalParent"
       showModal={showModal && modalStatus}
     >
-      <Modal
+      <FormModal
         className="Modal"
         showModal={showModal && modalStatus}
       >
-        <div>{type.title}</div>
-        <div>{type.subtitle}</div>
-        <form onChange={handleChange}>
-          <FormContainer>
+        <FormContainer>
+          <h2>{type.title}</h2>
+          <h3>{type.subtitle}</h3>
+          <form onChange={handleChange}>
             {addtionalReviewInput}
-            <label htmlFor={type.body}>
-              <div>
-                {type.body}
-              </div>
-              <input type="text" name="body" required />
-            </label>
-            <label htmlFor={shared.username}>
-              <div>
-                {shared.username}
-              </div>
-              <input type="text" name="username" required />
-            </label>
-            <label htmlFor={shared.email}>
-              <div>
-                {shared.email}
-              </div>
-              <input type="text" name="email" required />
-            </label>
-          </FormContainer>
+            <QuestionBlock>
+              <label htmlFor={type.body}>
+                <b>
+                  {type.body}
+                </b>
+                <div>
+                  <textarea
+                    name="body"
+                    placeholder={type.bodyPlaceholder}
+                  />
+                </div>
+              </label>
+            </QuestionBlock>
+            <QuestionBlock>
+              <label htmlFor={shared.username}>
+                <b>
+                  {shared.username}
+                </b>
+                <div>
+                  <input type="text" name="username" required />
+                </div>
+              </label>
+            </QuestionBlock>
+            <QuestionBlock>
+              <label htmlFor={shared.email}>
+                <b>
+                  {shared.email}
+                </b>
+                <div>
+                  <input type="text" name="email" required />
+                </div>
+              </label>
+            </QuestionBlock>
+          </form>
           <input type="submit" value="Submit" onSubmit={handleOnSubmit} />
-        </form>
+        </FormContainer>
 
         <ModalClose
           onClick={clickExit}
         >
           &times;
         </ModalClose>
-      </Modal>
+      </FormModal>
     </ModalParent>
   );
 }
@@ -170,7 +224,30 @@ const FormContainer = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   position: relative;
+  align-items: center;
 `;
+
+const FormModal = styled(Modal)`
+  overflow:scroll;
+`;
+
+const RadioBar = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+`;
+
+const QuestionBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+`;
+// const RadioBar = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   gap: 0.5rem;
+// `;
 
 NewForm.propTypes = {
   formtype: PropTypes.string.isRequired,
