@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import { Modal, ModalParent, ModalClose } from '../../../contexts/Shared.styled';
 import { useMeta } from '../../../contexts/ReviewMeta';
 
-
-export default function ReviewInput({ data, handleChange, type }) {
+export default function ReviewInput({ data, handleChange }) {
   const [showPhotoModal, setShowPhotoModal] = useState(false);
   const togglePhotoModal = () => {
     setShowPhotoModal(true);
@@ -17,7 +16,6 @@ export default function ReviewInput({ data, handleChange, type }) {
   };
   const meta = useMeta();
   const factorList = (meta) ? meta.characteristics : {};
-
 
   const starRating = (
     <div className="rating">
@@ -82,32 +80,40 @@ export default function ReviewInput({ data, handleChange, type }) {
 
   return (
     <>
-      <QuestionBlock>
-        <label htmlFor="rating">
-          <b>
-            Overall rating*
-          </b>
-          {starRating}
-          <Note>
-            {(data.rating) ? ratingSummary[data.rating] : ''}
-          </Note>
-        </label>
-      </QuestionBlock>
-      <QuestionBlock>
-        <label htmlFor="recommendation">
-          <b>
-            Do you recommendation this product*
-          </b>
-          <div>
-            <input type="radio" name="recommendation" value="true" defaultChecked onChange={handleChange} />
-            <label htmlFor="yes">{' Yes'}</label>
-          </div>
-          <div>
-            <input type="radio" name="recommendation" value="false" />
-            <label htmlFor="no">{' No'}</label>
-          </div>
-        </label>
-      </QuestionBlock>
+      <RowBlock>
+        <QuestionBlock>
+          <label htmlFor="rating">
+            <b>
+              Overall rating*
+            </b>
+            {starRating}
+            <Note>
+              {(data.rating) ? ratingSummary[data.rating] : ''}
+            </Note>
+          </label>
+        </QuestionBlock>
+        <QuestionBlock>
+          <label htmlFor="recommendation">
+            <b>
+              Do you recommendation this product*
+            </b>
+            <RadioBlock>
+              <div>
+                <input type="radio" name="recommendation" value="true" defaultChecked onChange={handleChange} />
+              </div>
+              <div>
+                <label htmlFor="yes">{' Yes'}</label>
+              </div>
+              <div>
+                <input type="radio" name="recommendation" value="false" />
+              </div>
+              <div>
+                <label htmlFor="no">{' No'}</label>
+              </div>
+            </RadioBlock>
+          </label>
+        </QuestionBlock>
+      </RowBlock>
       <QuestionBlock>
         <label htmlFor="characteristics">
           <b>
@@ -197,6 +203,14 @@ const RadioBar = styled.div`
 const RadioBlock = styled.div`
   display: flex;
   flex-direction: column;
+`;
+const RowBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 2rem;
+  background-color: ${({ theme }) => theme.colors.offWhite};
+
 `;
 
 const PhotoModal = styled(Modal)`

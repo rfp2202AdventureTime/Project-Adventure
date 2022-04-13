@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -10,7 +10,7 @@ import { useMeta } from './ReviewMeta';
 import { ProductIDContext } from './ProductIDContext';
 
 export default function NewForm({
-  formtype, productName, showModal, toggleModal,
+  formtype, productName, showModal, setShowModal,
 }) {
   let type;
   let bodyNote;
@@ -22,8 +22,19 @@ export default function NewForm({
   const handleChange = (e) => setData((prevState) => (
     { ...prevState, [e.target.name]: e.target.value }));
 
+  useEffect(() => {
+    const espExit = (e) => {
+      if (e.key === 'Escape') {
+        setShowModal(false);
+      }
+    };
+    window.addEventListener('keydown', espExit);
+    return () => window.removeEventListener('keydown', espExit);
+  }, []);
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    // customize data input if this is review submission
     if (formtype === 'reviews') {
       const newData = {};
       const {
@@ -38,7 +49,6 @@ export default function NewForm({
           newData.rating = Number(data[key]);
         }
       });
-
       newData.characteristics = factorData;
       newData.product_id = productId;
       newData.body = body;
@@ -47,12 +57,22 @@ export default function NewForm({
       newData.name = name;
       newData.recommend = (data.recommendation === 'true');
       newData.photos = [];
+      if (
+        !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+        || email.length > 60
+        || email.length === 0
+      ) {
+        alert('Please make sure email is in proper format ex. \'hello@hello.com');
+        return false;
+      }
       axios({
         method: 'post',
         url: `/${formtype}`,
         data: newData,
       }).then(() => {
         alert('submitted');
+        setShowModal(false);
+        return null;
       })
         .catch((err) => Console.log(err));
     } else {
@@ -98,7 +118,7 @@ export default function NewForm({
     type = sharedAnswerInput;
   }
   const clickExit = () => {
-    toggleModal();
+    setShowModal(false);
   };
 
   // body note validation
@@ -136,10 +156,12 @@ export default function NewForm({
             <h3>{type.subtitle}</h3>
           </StickyTop>
           <form name="newForm" onChange={handleChange} onSubmit={handleOnSubmit}>
-            <ReviewInput
-              data={data}
-              handleChange={handleChange}
-            />
+            {(formtype === 'reviews') ? (
+              <ReviewInput
+                data={data}
+                handleChange={handleChange}
+              />
+            ) : ''}
             <QuestionBlockBody>
               <label htmlFor={type.body}>
                 <b>
@@ -258,7 +280,7 @@ NewForm.propTypes = {
   formtype: PropTypes.string.isRequired,
   productName: PropTypes.string,
   showModal: PropTypes.bool.isRequired,
-  toggleModal: PropTypes.func.isRequired,
+  setShowModal: PropTypes.func.isRequired,
 };
 
 NewForm.defaultProps = {

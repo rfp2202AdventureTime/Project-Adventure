@@ -67,7 +67,7 @@ const Modal = styled.div`
 `;
 const ModalClose = styled.div`
   position: fixed;
-  color: #aaa;
+  color: white;
   line-height: 50px;
   font-size: 2rem;
   // position: absolute;

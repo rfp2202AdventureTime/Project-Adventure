@@ -172,7 +172,7 @@ export default function ReviewList({ filterStatus }) {
             formtype="reviews"
             productName={currentProduct?.name}
             showModal={showModal}
-            toggleModal={toggleModal}
+            setShowModal={setShowModal}
             // handleReviewData={handleReviewData}
           />
         </ButtonBlock>
