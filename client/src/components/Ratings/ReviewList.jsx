@@ -171,6 +171,7 @@ export default function ReviewList({ filterStatus }) {
             formtype="reviews"
             productName="legging"
             showModal={showModal}
+            toggleModal={toggleModal}
             // handleReviewData={handleReviewData}
           />
         </ButtonBlock>

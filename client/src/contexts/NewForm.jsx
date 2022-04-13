@@ -10,16 +10,15 @@ import { ProductIDContext } from './ProductIDContext';
 
 // formtype: reviews, questions, answers
 export default function NewForm({
-  formtype, productName, showModal, handleReviewData,
+  formtype, productName, showModal, toggleModal,
 }) {
   let type;
   const meta = useMeta();
   const factorList = (meta) ? meta.characteristics : {};
-  const [modalStatus, setModalStatus] = useState(true);
+  // const [modalStatus, setModalStatus] = useState(true);
   const [data, setData] = useState({});
   const productId = useContext(ProductIDContext);
 
-  // const [data, setData] = useState({});
   const factorSummary = {
     Size: ['A size too small', 'half a size too small', 'Perfect', 'half a size too big', 'A size too wide'],
     Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -30,6 +29,7 @@ export default function NewForm({
   };
   const handleChange = (e) => setData((prevState) => (
     { ...prevState, [e.target.name]: e.target.value }));
+    console.log(data);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -55,7 +55,6 @@ export default function NewForm({
       newData.name = name;
       newData.recommend = (data.recommendation === 'true');
       newData.photos = [];
-      console.log('update is ', newData);
       axios({
         method: 'post',
         url: `/${formtype}`,
@@ -169,7 +168,7 @@ export default function NewForm({
             Do you recommendation this product?
           </b>
           <div>
-            <input type="radio" name="recommendation" value="true" defaultChecked />
+            <input type="radio" name="recommendation" value="true" defaultChecked onChange={handleChange} />
             <label htmlFor="yes">{' Yes'}</label>
           </div>
           <div>
@@ -206,17 +205,17 @@ export default function NewForm({
   ) : '';
 
   const clickExit = () => {
-    setModalStatus(false);
+    toggleModal();
   };
 
   return (
     <ModalParent
       className="ModalParent"
-      showModal={showModal && modalStatus}
+      showModal={showModal}
     >
       <FormModal
         className="Modal"
-        showModal={showModal && modalStatus}
+        showModal={showModal}
       >
         <FormContainer>
           <h2>{type.title}</h2>
@@ -236,26 +235,29 @@ export default function NewForm({
                 </div>
               </label>
             </QuestionBlockBody>
-            <QuestionBlock>
-              <label htmlFor={shared.username}>
-                <b>
-                  {shared.username}
-                </b>
-                <div>
-                  <input type="text" name="name" required />
-                </div>
-              </label>
-            </QuestionBlock>
-            <QuestionBlock>
-              <label htmlFor={shared.email}>
-                <b>
-                  {shared.email}
-                </b>
-                <div>
-                  <input type="text" name="email" required />
-                </div>
-              </label>
-            </QuestionBlock>
+            <RowBlock>
+              <QuestionBlock>
+                <label htmlFor={shared.username}>
+                  <b>
+                    {shared.username}
+                  </b>
+                  <div>
+                    <input type="text" name="name" required />
+                  </div>
+                </label>
+              </QuestionBlock>
+              <QuestionBlock>
+                <label htmlFor={shared.email}>
+                  <b>
+                    {shared.email}
+                  </b>
+                  <div>
+                    <input type="text" name="email" required />
+                  </div>
+                </label>
+              </QuestionBlock>
+            </RowBlock>
+
             <input className="submitButton" type="submit" value="Submit" />
           </form>
         </FormContainer>
@@ -294,6 +296,10 @@ const RadioBlock = styled.div`
   display: flex;
   flex-direction: column;
 `;
+const RowBlock = styled(RadioBlock)`
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
 
 const Characteristic = styled.div`
   padding: 1rem;
@@ -318,4 +324,5 @@ NewForm.propTypes = {
   formtype: PropTypes.string.isRequired,
   productName: PropTypes.string.isRequired,
   showModal: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
