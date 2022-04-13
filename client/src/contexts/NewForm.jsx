@@ -19,9 +19,7 @@ export default function NewForm({
   const [data, setData] = useState({ recommendation: 'true' });
   const [photo, setPhoto] = useState([]);
   const [showPhotoModal, setShowPhotoModal] = useState(false);
-
   const productId = useContext(ProductIDContext);
-
   const factorSummary = {
     Size: ['A size too small', 'half a size too small', 'Perfect', 'half a size too big', 'A size too wide'],
     Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -29,6 +27,13 @@ export default function NewForm({
     Quality: ['Poor', 'Below average', 'What I expected', 'Pretty great', 'Perfect'],
     Length: ['Runs short', 'Runs slightly short', 'Perfect', 'Runs slightly long', 'Runs long'],
     Fit: ['Runs tight', 'Runs slightly tight', 'Perfect', 'Runs slightly long', 'Runs big'],
+  };
+  const ratingSummary = {
+    1: 'Poor',
+    2: 'Fair',
+    3: 'Average',
+    4: 'Good',
+    5: 'Great',
   };
   const handleChange = (e) => setData((prevState) => (
     { ...prevState, [e.target.name]: e.target.value }));
@@ -59,42 +64,7 @@ export default function NewForm({
       newData.name = name;
       newData.recommend = (data.recommendation === 'true');
       newData.photos = [];
-      // if (rating === null || recommend === null) {
-      //   alert('Please fill out all required (*) fields');
-      //   e.preventDefault();
-      //   return false;
-      // }
-      // // body check
-      // if (body.length < 50 || body.length > 1000) {
-      //   alert('Review body must be at least 50 characters');
-      //   e.preventDefault();
-      //   return false;
-      // }
-      // // email check
-      // if (
-      //   !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) ||
-      //   email.length > 60 ||
-      //   email.length === 0
-      // ) {
-      //   alert('Please make sure email is in proper format ex. \'hello@hello.com');
-      //   e.preventDefault();
-      //   return false;
-      // }
-      // // summary check
-      // if (summary.length > 60) {
-      //   alert('Summary must be 60 characters or less');
-      //   e.preventDefault();
-      //   return false;
-      // }
-      // // name check
-      // if (name.length > 60 || name.length === 0) {
-      //   alert('Name must be filled in and 60 characters or less');
-      //   e.preventDefault();
-      //   return false;
-      // }
 
-      // alert('Your review has been submitted!');
-      // handleReviewData(this.state);
       axios({
         method: 'post',
         url: `/${formtype}`,
@@ -174,7 +144,9 @@ export default function NewForm({
   const factorSummaryInput = (
     Object.keys(factorList).map((factor, i) => (
       <div key={factor.concat(i)}>
-        {factor}
+        <FactorLine>
+          {factor}
+        </FactorLine>
         <RadioBar>
           {factorSummary[factor].map((characteristic, index) => (
             <RadioBlock key={characteristic.concat(index)}>
@@ -209,6 +181,9 @@ export default function NewForm({
             Overall rating*
           </b>
           {starRating}
+          <Note>
+            {(data.rating) ? ratingSummary[data.rating] : ''}
+          </Note>
         </label>
       </QuestionBlock>
       <QuestionBlock>
@@ -237,7 +212,7 @@ export default function NewForm({
       <QuestionBlock>
         <label htmlFor={type.phtot}>
           <b>
-            { 'Add your photo ' }
+            { 'Add your photo[Not working yet] ' }
           </b>
           <button type="button" onClick={togglePhotoModal}>
             Add
@@ -296,6 +271,7 @@ export default function NewForm({
     );
   }
 
+
   return (
     <ModalParent
       className="ModalParent"
@@ -306,8 +282,10 @@ export default function NewForm({
         showModal={showModal}
       >
         <FormContainer>
-          <h2>{type.title}</h2>
-          <h3>{type.subtitle}</h3>
+          <StickyTop>
+            <h2>{type.title}</h2>
+            <h3>{type.subtitle}</h3>
+          </StickyTop>
           <form name="newForm" onChange={handleChange} onSubmit={handleOnSubmit}>
             {addtionalReviewInput}
             <QuestionBlockBody>
@@ -387,6 +365,18 @@ const FormContainer = styled.div`
   position: relative;
   align-items: center;
 `;
+const StickyTop = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  align-items: center;
+  justify-content: center;
+  top:0;
+  width:100%;
+  z-index:9997;
+  padding: 0.5rem;
+  background-color: ${({ theme }) => theme.colors.light}
+`;
 
 const FormModal = styled(Modal)`
   overflow:scroll;
@@ -399,17 +389,16 @@ const RadioBar = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  border-bottom: dotted 2px grey;
-  margin-bottom: 1rem;
+  margin: 1rem;
+  background-color: ${({ theme }) => theme.colors.tertiary};
+  &:hover {
+    box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
+  };
 `;
 const RadioBlock = styled.div`
   display: flex;
   flex-direction: column;
 `;
-// const RowBlock = styled(RadioBlock)`
-//   flex-direction: row;
-//   justify-content: space-evenly;
-// `;
 
 const Note = styled.div`
   font-size: 0.8rem;
@@ -418,6 +407,11 @@ const Note = styled.div`
 `;
 const Characteristic = styled.div`
   padding: 1rem;
+`;
+
+const FactorLine = styled.h5`
+  margin: 0.5rem;
+  font-style: italic;
 `;
 
 const QuestionBlock = styled.div`
