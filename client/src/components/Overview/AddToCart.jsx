@@ -9,7 +9,7 @@ import useTracking from '@Contexts/ClickTracker';
 
 import Console from '../../Console';
 
-// - Actually make the POST request when adding to cart instead of console logging.
+// - TODO
 // - Down arrow styling for the dropdowns.
 
 function AddToCart({ skus }) {
@@ -53,6 +53,7 @@ function AddToCart({ skus }) {
   const handleQuantity = (e) => setQuantity(e.target.value);
 
   const handleSubmit = (e) => {
+    trackEvent({ element: 'Add to Cart' });
     e.preventDefault();
     if (!selectedSku) {
       setError(true);
@@ -76,7 +77,7 @@ function AddToCart({ skus }) {
         ) : null}
       </SelectionError>
 
-      <SelectSize onClick={trackEvent({ element: 'Select Size' })} defaultValue="selectsize" onChange={handleChange}>
+      <SelectSize onClick={() => trackEvent({ element: 'Select Size' })} defaultValue="selectsize" onChange={handleChange}>
         {anyValidSkus
           ? (
             <>
@@ -91,7 +92,7 @@ function AddToCart({ skus }) {
       {anyValidSkus
         ? (
           <>
-            <SelectQuantity defaultValue="selectQuantity" onChange={handleQuantity}>
+            <SelectQuantity defaultValue="selectQuantity" onClick={() => trackEvent({ element: 'Select Quantity' })} onChange={handleQuantity}>
               {!currentStock
                 ? <option value="selectquantity">-</option>
                 : [...Array(currentStock).keys()].map((num) => (

@@ -5,14 +5,20 @@ import { FiCheck } from 'react-icons/fi';
 
 import { usePreviewStyle, useCurrentStyles, useActiveStyle } from '@Contexts/StylesProvider';
 
+import useTracking from '@Contexts/ClickTracker';
+
 function StyleSelector() {
   const currentStyles = useCurrentStyles();
   const { previewStyle } = usePreviewStyle();
+  const { trackEvent } = useTracking({ widget: 'Style Selector' });
 
   const { activeStyle, setActiveStyle } = useActiveStyle();
   const { setPreviewStyle } = usePreviewStyle();
 
-  const handleStyleThumbnailClick = (styleId) => setActiveStyle(styleId);
+  const handleStyleThumbnailClick = (styleId) => {
+    setActiveStyle(styleId);
+    trackEvent({ element: `Thumbnail ${styleId} Clicked` });
+  };
   const handleStyleThumbnailMouseOver = (styleId) => setPreviewStyle(styleId);
   const handleStyleThumbnailMouseOut = () => setPreviewStyle(activeStyle.style_id);
 
