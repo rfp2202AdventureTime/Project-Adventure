@@ -10,7 +10,7 @@ import { useMeta } from './ReviewMeta';
 import { ProductIDContext } from './ProductIDContext';
 
 export default function NewForm({
-  formtype, productName, showModal, setShowModal,
+  formtype, productName, showModal, setShowModal, ...args
 }) {
   let type;
   let bodyNote;
@@ -70,7 +70,10 @@ export default function NewForm({
         url: `/${formtype}`,
         data: newData,
       }).then(() => {
-        alert('submitted');
+        // alert('submitted');
+        const { setSort, changeSelected } = args;
+        setSort('newest');
+        changeSelected();
         setShowModal(false);
         return null;
       })

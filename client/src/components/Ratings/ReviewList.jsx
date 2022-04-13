@@ -17,6 +17,7 @@ export default function ReviewList({ filterStatus }) {
   const reviewMeta = useMeta();
   const [sort, setSort] = useState('relevant');
   const [initialRender, setInitialRender] = useState(true);
+  // const [reviewStatus, setReviewStatus] = useState(false);
   const [keyword, setKeyword] = useState(null);
   const [prevCount, setPrevCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -29,6 +30,7 @@ export default function ReviewList({ filterStatus }) {
 
   // totalCT get from reviewMeta isn't accurate due to reported reviews removal from
   // db but reflects the max possible review count
+
   const getReview = () => (
     axios({
       method: 'get',
@@ -57,6 +59,10 @@ export default function ReviewList({ filterStatus }) {
 
   const handleSort = (criteria) => {
     setSort(criteria);
+  };
+  const changeSelected = () => {
+    const $select = document.querySelector('#mySelect');
+    $select.value = 'newest';
   };
 
   const handleSearch = (keyword) => {
@@ -173,7 +179,8 @@ export default function ReviewList({ filterStatus }) {
             productName={currentProduct?.name}
             showModal={showModal}
             setShowModal={setShowModal}
-            // handleReviewData={handleReviewData}
+            changeSelected={changeSelected}
+            setSort={setSort}
           />
         </ButtonBlock>
       </StickyBottom>

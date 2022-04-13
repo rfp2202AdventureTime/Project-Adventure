@@ -10,7 +10,7 @@ export default function SortBar({ handleSort, totalCT, allCT }) {
   return (
     <SortBarBlock>
       {`Showing ${totalCT} reviews of ${allCT} reviews, sorted by`}
-      <DropDown name="sort" onChange={sort}>
+      <DropDown name="sort" onChange={sort} id="mySelect">
         <option value="relevant">relevant</option>
         <option value="newest">newest</option>
         <option value="helpful">helpful</option>
