@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { ProductIDContext } from '../../contexts/ProductIDContext';
+import { useCurrentProductId, ProductIDContext } from '../../contexts/ProductIDContext';
 
 const RelatedContext = createContext();
 
@@ -13,6 +13,7 @@ export function useRelated() {
 
 export function RelatedProvider({ children }) {
   const [related, setRelatedInfo] = useState();
+  // const productId = useCurrentProductId().currentProductId;
   const productId = useContext(ProductIDContext);
 
   useEffect(() => {

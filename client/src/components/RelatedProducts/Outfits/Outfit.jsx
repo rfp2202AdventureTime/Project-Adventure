@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useCurrentProduct } from '../../../contexts/ProductIDContext';
 
@@ -10,20 +10,41 @@ import OutfitCard from './OutfitCard';
 // change image to cover
 export default function Outfit() {
   const productToAdd = useCurrentProduct().currentProduct;
-  const initialArray = [];
-  const [outfitArray, setOutfitArray] = useState(initialArray);
+  const [outfitArray, setOutfitArray] = useState([]);
+  const AddToStorage = (product) => {
+    // console.log(product, 'product');
+    localStorage.setItem(product.id, JSON.stringify(product))
+  };
 
+
+  const itemsLocal = { ...localStorage };
+
+  const keys = Object.keys(itemsLocal);
+  // console.log(keys, 'this is keys')
+
+  const testingArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
+
+  // setOutfitArray(testingArray);
+  // console.log(testingArray, 'this is testing array')
+  useEffect(() => {
+    // localStorage.setItem(productToAdd.id, JSON.stringify(productToAdd));
+
+  }, [outfitArray]);
+
+  localStorage.clear();
   return (
 
     <AddSection>
       <AddButton>
 
-        <img
-          src="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
-          alt="plus sign"
-          width={175}
-          height={200}
-          onClick={() => setOutfitArray((initialArray) => [...outfitArray, productToAdd])}
+        {/* <CardImage
+    url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
+    onClick={() => setOutfitArray(([]) => [...outfitArray, productToAdd])}
+    /> */}
+
+        <CardImage
+          url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
+          onClick={() => AddToStorage(productToAdd)}
         />
 
         <OutfitText>Add to Outfit</OutfitText>
@@ -31,46 +52,49 @@ export default function Outfit() {
       </AddButton>
       <AddedOutfit>
 
-        {outfitArray.map((item, key) => <OutfitCard product={item} key={key} outfitArray={outfitArray} setOutfitArray={setOutfitArray} />)}
+        {localStorage.length > 1 ? testingArray.map((item, key) => <OutfitCard product={item} key={key} />) : null }
+
+
       </AddedOutfit>
     </AddSection>
 
   );
 }
 
+
+const CardImage = styled.div`
+  width: 250px;
+  height: 265px;
+  background: url(${(props) => props.url});
+  background-position: center;
+  background-size: cover;
+  // margin-right: 5px;
+`;
 const AddSection = styled.div`
   display: flex;
   width: fit-content;
-  height: max-content;
+  height: 310px;
   flex-direction: row;
+  margin-right: 10px;
+
 `;
 
 const AddedOutfit = styled.div`
-  display: flex;
-  float: left;
-  flex-direction: row;
-  // border-style: solid;
-  border-width: 2px;
-  width: fit-content;
-  height: fit-content;
-  margin-right: 30px;
+
+  display: relative;
   margin-left: 15px;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  justify-content: space-evenly;
-  // &:hover {
-  //   box-shadow: 0 8px 16px 0;
-  // }
+  height: fit-content;
+  flex-direction: row;
+
 `;
 
 const AddButton = styled.div`
+  border: 1px solid ${(props) => props.theme.colors.secondary};
   border-radius: 5px;
-  border-width: 2px;
-  border-style: solid;
   &:hover {
-    box-shadow: 0 8px 16px 0;
+    box-shadow: 0 0 6px rgba(90, 90, 90, 0.8);
   }
-
+  margin-right: 5px;
 `;
 const OutfitText = styled.p`
   text-align: center;
