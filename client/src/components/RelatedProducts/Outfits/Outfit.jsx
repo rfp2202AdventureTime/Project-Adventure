@@ -5,10 +5,7 @@ import { useCurrentProduct, useCurrentProductId } from '../../../contexts/Produc
 import { useCurrentStyles } from '../../../contexts/StylesProvider';
 import CarouselRelated from './CarouselOutfit';
 
-// to check functionality of 'add to outfit'
-// will need to add current product to 'Your Outfit' list
-
-// change image to cover
+// setsOutfitArray state to localStorage
 export default function Outfit() {
   const { currentProductId } = useCurrentProductId();
 
@@ -23,7 +20,6 @@ export default function Outfit() {
       setOutfitArray(([]) => [...testingArray]);
     }, [itemsLocal]);
 
-    // localStorage.clear();
     return (
 
       <CarouselRelated zippedArray={outfitArray} />

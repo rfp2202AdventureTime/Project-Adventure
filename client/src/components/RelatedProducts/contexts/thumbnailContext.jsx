@@ -25,7 +25,7 @@ export function ThumbnailProvider({ children }) {
         .then((data) => {
           setThumbnailInformation({ data });
         })
-        .catch((err) => Console.log('there was an ERROR', err));
+        .catch((err) => Console.log('there was an ERROR in Thumbnail', err));
     }
   }, [related]);
 
@@ -35,6 +35,5 @@ export function ThumbnailProvider({ children }) {
     </ThumbnailContext.Provider>
   );
 }
-
 
 export default ThumbnailContext;

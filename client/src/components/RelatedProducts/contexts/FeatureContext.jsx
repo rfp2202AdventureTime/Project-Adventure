@@ -14,12 +14,12 @@ export function useFeature() {
 // fix current productIDContext to use currentProductID
 export function FeatureProvider({ children, prodID }) {
   const [featuresInfo, setFeatures] = useState();
-  // const productId = useCurrentProductId().currentProductId;
-  const productId = useContext(ProductIDContext);
+  const productId = useCurrentProductId().currentProductId;
+  // const productId = useContext(ProductIDContext);
   const twoProducts = [productId, prodID];
 
   useEffect(() => {
-    if (prodID) {
+    if (prodID && productId) {
       Promise.all(twoProducts.map((number) => axios({
         method: 'get',
         url: `products/${number}`,
@@ -27,7 +27,7 @@ export function FeatureProvider({ children, prodID }) {
         .then((data) => {
           setFeatures({ data });
         })
-        .catch((err) => Console.log(err));
+        .catch((err) => Console.log('ERROR in FeatureContext', err));
     }
   }, [prodID]);
 

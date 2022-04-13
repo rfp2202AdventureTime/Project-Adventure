@@ -71,9 +71,8 @@ function CarouselRelated({ zippedArray }) {
     );
   }
 }
-// }
 
-// remove border line after
+
 const CarouselContainerR = styled.div`
   position: relative;
   width: 1100px;

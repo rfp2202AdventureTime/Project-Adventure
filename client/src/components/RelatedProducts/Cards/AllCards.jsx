@@ -6,9 +6,10 @@ import { useThumbnail } from '../contexts/thumbnailContext';
 import CarouselRelated from './CarouselR';
 
 function AllCards() {
+
   const relatedProds = useProd().relatedInformation;
   const thumbnail = useThumbnail();
-  const ratings = useProd()?.ratingsMeta;
+  const ratings = useProd().ratingsMeta;
 
   const zippedArray = [];
 

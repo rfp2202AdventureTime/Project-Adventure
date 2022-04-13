@@ -10,8 +10,28 @@ function Comparison() {
     const item1 = twoProductsArray.data[0].data;
     const item2 = twoProductsArray.data[1].data;
 
+    // creates an array with all the features
     const FeatArray = item1.features.concat(item2.features);
 
+    // create a set for stringified objects
+    const stagingSet = new Set();
+
+    for (let i = 0; i < FeatArray.length; i += 1) {
+      if (!stagingSet.has(JSON.stringify(FeatArray[i].feature))) {
+        stagingSet.add(JSON.stringify(FeatArray[i]));
+      }
+    }
+
+    // iterate through stringified set and push to FeatureSet array
+    const FeatureSet = [];
+
+    for (const item of stagingSet) {
+      FeatureSet.push(JSON.parse(item));
+    }
+
+
+    // ***********COMMENT THIS OUT BEFORE PRODUCTION***********
+    // create two arrays to check against FeatureSet array || probably better way to do this, but MVP
     const item1Array = [];
     item1.features.map((item) => item1Array.push(item));
 
@@ -28,14 +48,14 @@ function Comparison() {
           </tr>
         </thead>
         <tbody>
-          {FeatArray.map((item, key) => (
+          {FeatureSet.map((item, key) => (
             <tr key={key}>
 
-              <Xfeature>{item1Array.map((item1) => (item1.feature === item.feature ? 'X' : ' '))}</Xfeature>
+              <Xfeature>{item1Array.map((item1) => (item1.feature === item.feature ? '✓' : ' '))}</Xfeature>
 
               <Value>{item.value ? `${item.value}` : `${item.feature}`}</Value>
 
-              <Xfeature>{item2Array.map((item2) => (item2.feature === item.feature ? 'X' : ' '))}</Xfeature>
+              <Xfeature>{item2Array.map((item2) => (item2.feature === item.feature ? '✓' : ' '))}</Xfeature>
             </tr>
           ))}
 
@@ -53,7 +73,8 @@ const Xfeature = styled.td`
 const Value = styled.td`
   text-align: center;
   `;
+
+const RowL = styled.tr`
+  padding-left: 5px;
+`;
 export default Comparison;
-
-
-{/* <td>{item.value ? `${item.feature}: ${item.value}` : `${item.feature}`}</td> */}

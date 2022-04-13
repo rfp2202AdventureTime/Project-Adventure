@@ -19,14 +19,14 @@ export function RelatedProvider({ children }) {
 
   useEffect(() => {
     if (productId) {
-    axios({
-      method: 'get',
-      url: `products/${productId}/related`,
-    })
-      .then(({ data }) => {
-        setRelatedInfo(data);
+      axios({
+        method: 'get',
+        url: `products/${productId}/related`,
       })
-      .catch((err) => Console.log('ERROR in RelatedContext', err));
+        .then(({ data }) => {
+          setRelatedInfo(data);
+        })
+        .catch((err) => Console.log('ERROR in RelatedContext', err));
     }
   }, [productId]);
 
