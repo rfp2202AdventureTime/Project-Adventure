@@ -48,7 +48,7 @@ export function ProdProvider({ children }) {
   useEffect(() => {
     let newData;
     if (related) {
-      Promise.all(related.map((number) => axios({
+      Promise.all(related?.map((number) => axios({
         method: 'get',
         url: '/reviews/meta',
         params: {

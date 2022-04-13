@@ -8,6 +8,8 @@ import { useCurrentStyles } from '../../../contexts/StylesProvider';
 
 function CarouselRelated({ zippedArray }) {
   const [viewIndex, setViewIndex] = useState(0);
+  const currentStyles = useCurrentStyles();
+  const { currentProductId } = useCurrentProductId();
 
   const displayed = zippedArray.slice(viewIndex, (viewIndex + 4));
 
@@ -28,26 +30,24 @@ function CarouselRelated({ zippedArray }) {
     }
   };
 
-    const { currentProductId } = useCurrentProductId();
-    const currentThumbnail = useCurrentStyles()[0]?.photos[0].thumbnail_url
+  const AddToStorage = (e, product) => {
+    const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
+    e.stopPropagation();
 
-    const AddToStorage = (e, product) => {
-      e.stopPropagation();
-
-      axios({
-        method: 'GET',
-        url: `/products/${product}`,
-      })
-        .then(({ data }) => {
-          let dataTest = [data, currentThumbnail]
-          localStorage.setItem(data.id, JSON.stringify(dataTest));
-        });
-    };
+    axios({
+      method: 'GET',
+      url: `/products/${product}`,
+    })
+      .then(({ data }) => {
+        let dataTest = [data, currentThumbnail]
+        localStorage.setItem(data.id, JSON.stringify(dataTest));
+      });
+  };
 
   if (displayed) {
     return (
       <CarouselContainerR>
-        {zippedArray.length > 3 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR />}
+        {zippedArray.length > 3 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={60} /></LeftArrowR> : <LeftArrowR />}
 
         <CarouselWrapperR>
           <AddButton>
@@ -55,17 +55,17 @@ function CarouselRelated({ zippedArray }) {
             <CardImage
               url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
               onClick={(e) => AddToStorage(e, currentProductId)}
-            />
+              />
 
             <OutfitText>Add to Outfit</OutfitText>
 
           </AddButton>
-      <AddedOutfit>
 
+      <AddedOutfit>
           {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
       </AddedOutfit>
-          {zippedArray.length > 3 ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR />}
+          {zippedArray.length > 3 ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );
@@ -107,6 +107,7 @@ const RightArrowR = styled.div`
   height: 48px;
 `;
 
+// why does changing the margin write making the image bigger?
 const CardImage = styled.div`
   display: relative;
   width: 243px;
@@ -131,6 +132,7 @@ const AddedOutfit = styled.div`
   margin-left: 25px;
   flex-direction: row;
   width: fit-content;
+  height: fit-content;
 `;
 
 const OutfitText = styled.p`

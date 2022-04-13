@@ -44,7 +44,7 @@ function ZoomableImage({ url, disabled }) {
 }
 
 const Image = styled.figure`
-  background: url(${(props) => props.url});
+  background: url(${(props) => props.url || ''});
   height: 100%;
   width: 100%;
   background-size: auto 100%;
@@ -55,12 +55,13 @@ const Image = styled.figure`
 `;
 
 ZoomableImage.propTypes = {
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   disabled: PropTypes.bool,
 };
 
 ZoomableImage.defaultProps = {
   disabled: true,
+  url: '',
 };
 
 export default ZoomableImage;

@@ -11,14 +11,19 @@ function AllCards() {
   const thumbnail = useThumbnail();
   const ratings = useProd().ratingsMeta;
 
-  // const [zippedArray, setZippedArray] = useState([])
+
   const zippedArray = [];
 
   if (thumbnail?.data && relatedProds?.data && ratings) {
     relatedProds?.data.map((item, i) => {
-      zippedArray.push([item.data, thumbnail.data[i].data.results[0].photos[0].thumbnail_url, ratings.data[i].data, true]);
+      const currentRating = ratings.data[i]?.data ? ratings.data[i].data : 0;
+      const currentThumbnail = thumbnail.data[i]?.data.results[0].photos[0].thumbnail_url ? thumbnail.data[i].data.results[0].photos[0].thumbnail_url : '';
+      zippedArray.push([item.data, currentThumbnail, currentRating, true]);
     });
   }
+
+  // console.log(zippedArray, 'this is zipped array')
+
 
   // if (zippedArray) {
     return (

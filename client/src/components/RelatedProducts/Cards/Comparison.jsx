@@ -74,7 +74,7 @@ const Value = styled.td`
   text-align: center;
   `;
 
-const RowL = styled.tr`
-  padding-left: 5px;
-`;
+// const RowL = styled.tr`
+//   padding-left: 5px;
+// `;
 export default Comparison;

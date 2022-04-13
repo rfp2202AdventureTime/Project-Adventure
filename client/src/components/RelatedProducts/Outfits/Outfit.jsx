@@ -1,29 +1,22 @@
 import { React, useState, useEffect } from 'react';
 // import styled from 'styled-components';
-// import axios from 'axios';
-import { useCurrentProduct, useCurrentProductId } from '../../../contexts/ProductIDContext';
-import { useCurrentStyles } from '../../../contexts/StylesProvider';
 import CarouselRelated from './CarouselOutfit';
 
 // setsOutfitArray state to localStorage
 export default function Outfit() {
-  const { currentProductId } = useCurrentProductId();
+  const [outfitArray, setOutfitArray] = useState([]);
 
-  if (useCurrentStyles() && currentProductId) {
-    const [outfitArray, setOutfitArray] = useState([]);
+  const itemsLocal = { ...localStorage };
+  const keys = Object.keys(itemsLocal);
+  const testingArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
 
-    const itemsLocal = { ...localStorage };
-    const keys = Object.keys(itemsLocal);
-    const testingArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
+  useEffect(() => {
+    setOutfitArray(([]) => [...testingArray]);
+  }, [itemsLocal]);
 
-    useEffect(() => {
-      setOutfitArray(([]) => [...testingArray]);
-    }, [itemsLocal]);
+  return (
+    <CarouselRelated zippedArray={outfitArray} />
 
-    return (
-
-      <CarouselRelated zippedArray={outfitArray} />
-
-    );
-  }
+  );
+  // }
 }
