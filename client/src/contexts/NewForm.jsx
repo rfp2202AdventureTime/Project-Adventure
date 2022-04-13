@@ -1,16 +1,25 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Modal, ModalParent, ModalClose } from './Shared.styled';
 import Console from '../Console';
+import { useMeta } from './ReviewMeta';
+import { ProductIDContext } from './ProductIDContext';
 
 // formtype: reviews, questions, answers
-export default function NewForm({ formtype, productName, showModal }) {
+export default function NewForm({
+  formtype, productName, showModal, handleReviewData,
+}) {
   let type;
+  const meta = useMeta();
+  const factorList = (meta) ? meta.characteristics : {};
   const [modalStatus, setModalStatus] = useState(true);
   const [data, setData] = useState({});
+  const productId = useContext(ProductIDContext);
+
+  // const [data, setData] = useState({});
   const factorSummary = {
     Size: ['A size too small', 'half a size too small', 'Perfect', 'half a size too big', 'A size too wide'],
     Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -22,13 +31,47 @@ export default function NewForm({ formtype, productName, showModal }) {
   const handleChange = (e) => setData((prevState) => (
     { ...prevState, [e.target.name]: e.target.value }));
 
-  const handleOnSubmit = () => {
-    axios({
-      method: 'post',
-      url: `/${formtype}`,
-      data,
-    })
-      .catch((err) => Console.log(err));
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    if (formtype === 'reviews') {
+      const newData = {};
+      const {
+        body, email, summary, name,
+      } = data;
+      const factorData = {};
+      Object.keys(data).forEach((key) => {
+        if (factorList[key]) {
+          factorData[factorList[key].id] = Number(data[key]);
+        }
+        if (key === 'rating') {
+          newData.rating = Number(data[key]);
+        }
+      });
+      newData.characteristics = factorData;
+      newData.product_id = productId;
+      newData.body = body;
+      newData.email = email;
+      newData.summary = summary;
+      newData.name = name;
+      newData.recommend = (data.recommendation === 'true');
+      newData.photos = [];
+      console.log('update is ', newData);
+      axios({
+        method: 'post',
+        url: `/${formtype}`,
+        data: newData,
+      })
+        .catch((err) => Console.log(err));
+
+      // handleReviewData()
+    } else {
+      axios({
+        method: 'post',
+        url: `/${formtype}`,
+        data,
+      })
+        .catch((err) => Console.log(err));
+    }
   };
 
   const reviews = {
@@ -52,6 +95,11 @@ export default function NewForm({ formtype, productName, showModal }) {
     photo: 'Upload your photos',
   };
 
+  const shared = {
+    username: 'What is your nickname?',
+    email: 'Your email:',
+  };
+
   if (formtype === 'reviews') {
     type = reviews;
   } else if (formtype === 'question') {
@@ -60,45 +108,45 @@ export default function NewForm({ formtype, productName, showModal }) {
     type = sharedAnswerInput;
   }
 
-  const shared = {
-    username: 'What is your nickname?',
-    email: 'Your email:',
-  };
-
   const starRating = (
     <div className="rating">
-      <input type="radio" name="rating" id="rating-5" />
+      <input type="radio" name="rating" id="rating-5" value={5} />
       <label htmlFor="rating-5" />
-      <input type="radio" name="rating" id="rating-4" />
+      <input type="radio" name="rating" id="rating-4" value={4} />
       <label htmlFor="rating-4" />
-      <input type="radio" name="rating" id="rating-3" />
+      <input type="radio" name="rating" id="rating-3" value={3} />
       <label htmlFor="rating-3" />
-      <input type="radio" name="rating" id="rating-2" />
+      <input type="radio" name="rating" id="rating-2" value={4} />
       <label htmlFor="rating-2" />
-      <input type="radio" name="rating" id="rating-1" />
+      <input type="radio" name="rating" id="rating-1" value={1} />
       <label htmlFor="rating-1" />
     </div>
   );
 
   const factorSummaryInput = (
-    Object.keys(factorSummary).map((factor, i) => (
+    Object.keys(factorList).map((factor, i) => (
       <div key={factor.concat(i)}>
         {factor}
         <RadioBar>
           {factorSummary[factor].map((characteristic, index) => (
-            <div key={characteristic.concat(index)}>
-              <input
-                type="radio"
-                name="characteristic"
-                value="index"
-              />
-              <label
-                htmlFor={characteristic.concat(index)}
-              >
-                {' '}
-                {index}
-              </label>
-            </div>
+            <RadioBlock key={characteristic.concat(index)}>
+              <div>
+                <input
+                  type="radio"
+                  name={factor}
+                  value={index + 1}
+                  required
+                />
+              </div>
+              <Characteristic>
+                <label
+                  htmlFor={characteristic.concat(index + 1)}
+                >
+                  {' '}
+                  {characteristic}
+                </label>
+              </Characteristic>
+            </RadioBlock>
           ))}
         </RadioBar>
       </div>
@@ -107,21 +155,25 @@ export default function NewForm({ formtype, productName, showModal }) {
 
   const addtionalReviewInput = (formtype === 'reviews') ? (
     <>
-      <b>
-        Overall rating?
-      </b>
-      {starRating}
+      <QuestionBlock>
+        <label htmlFor="rating">
+          <b>
+            Overall rating?
+          </b>
+          {starRating}
+        </label>
+      </QuestionBlock>
       <QuestionBlock>
         <label htmlFor="recommendation">
           <b>
             Do you recommendation this product?
           </b>
           <div>
-            <input type="radio" name="recommendation" value="yes" checked onChange={handleChange} />
+            <input type="radio" name="recommendation" value="true" defaultChecked />
             <label htmlFor="yes">{' Yes'}</label>
           </div>
           <div>
-            <input type="radio" name="recommendation" value="no" />
+            <input type="radio" name="recommendation" value="false" />
             <label htmlFor="no">{' No'}</label>
           </div>
         </label>
@@ -169,9 +221,9 @@ export default function NewForm({ formtype, productName, showModal }) {
         <FormContainer>
           <h2>{type.title}</h2>
           <h3>{type.subtitle}</h3>
-          <form onChange={handleChange}>
+          <form name="newForm" onChange={handleChange} onSubmit={handleOnSubmit}>
             {addtionalReviewInput}
-            <QuestionBlock>
+            <QuestionBlockBody>
               <label htmlFor={type.body}>
                 <b>
                   {type.body}
@@ -183,14 +235,14 @@ export default function NewForm({ formtype, productName, showModal }) {
                   />
                 </div>
               </label>
-            </QuestionBlock>
+            </QuestionBlockBody>
             <QuestionBlock>
               <label htmlFor={shared.username}>
                 <b>
                   {shared.username}
                 </b>
                 <div>
-                  <input type="text" name="username" required />
+                  <input type="text" name="name" required />
                 </div>
               </label>
             </QuestionBlock>
@@ -204,8 +256,8 @@ export default function NewForm({ formtype, productName, showModal }) {
                 </div>
               </label>
             </QuestionBlock>
+            <input className="submitButton" type="submit" value="Submit" />
           </form>
-          <input type="submit" value="Submit" onSubmit={handleOnSubmit} />
         </FormContainer>
 
         <ModalClose
@@ -234,20 +286,33 @@ const FormModal = styled(Modal)`
 const RadioBar = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  justify-content: space-evenly;
+  border-bottom: dotted 2px grey;
+  margin-bottom: 1rem;
+`;
+const RadioBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Characteristic = styled.div`
+  padding: 1rem;
+
 `;
 
 const QuestionBlock = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: ${({ theme }) => theme.colors.offWhite};
+  &:hover {
+    box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
+  };
 `;
-// const RadioBar = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   gap: 0.5rem;
-// `;
+const QuestionBlockBody = styled(QuestionBlock)`
+  height: 10rem;
+`;
 
 NewForm.propTypes = {
   formtype: PropTypes.string.isRequired,

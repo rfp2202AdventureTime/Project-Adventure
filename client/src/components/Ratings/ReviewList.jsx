@@ -25,6 +25,7 @@ export default function ReviewList({ filterStatus }) {
     totalCT: 0,
   });
 
+
   // totalCT get from reviewMeta isn't accurate due to reported reviews removal from
   // db but reflects the max possible review count
   const getReview = () => (
@@ -33,7 +34,7 @@ export default function ReviewList({ filterStatus }) {
       url: '/reviews',
       params: {
         product_id: productId,
-        //here
+        // here
         count: (reviewMeta?.totalCT || 999),
         sort,
       },
@@ -70,7 +71,7 @@ export default function ReviewList({ filterStatus }) {
   };
 
   const resetSearch = () => {
-    const filteredData = filterReview(reviewDetail.allReview)
+    const filteredData = filterReview(reviewDetail.allReview);
     setReviewDetail({
       ...reviewDetail,
       prevCount: filteredData.length,
@@ -167,9 +168,10 @@ export default function ReviewList({ filterStatus }) {
             ) : ''}
           <Button onClick={toggleModal}> Add a Review +</Button>
           <NewForm
-            formtype={'reviews'}
-            productName={'legging'}
+            formtype="reviews"
+            productName="legging"
             showModal={showModal}
+            // handleReviewData={handleReviewData}
           />
         </ButtonBlock>
       </StickyBottom>
