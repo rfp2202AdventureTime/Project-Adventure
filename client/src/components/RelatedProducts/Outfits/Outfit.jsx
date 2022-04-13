@@ -1,6 +1,9 @@
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useCurrentProduct } from '../../../contexts/ProductIDContext';
+import axios from 'axios';
+import { useCurrentProduct, useCurrentProductId } from '../../../contexts/ProductIDContext';
+import { useCurrentStyles } from '../../../contexts/StylesProvider';
+
 
 import OutfitCard from './OutfitCard';
 
@@ -9,56 +12,65 @@ import OutfitCard from './OutfitCard';
 
 // change image to cover
 export default function Outfit() {
-  const productToAdd = useCurrentProduct().currentProduct;
-  const [outfitArray, setOutfitArray] = useState([]);
-  const AddToStorage = (product) => {
-    // console.log(product, 'product');
-    localStorage.setItem(product.id, JSON.stringify(product))
-  };
+  const { currentProductId } = useCurrentProductId();
+
+  if (useCurrentStyles() && currentProductId) {
+    const currentThumbnail = useCurrentStyles()[0]?.photos[0].thumbnail_url
+    const [outfitThumbnail, setOutfitThumbnail] = useState(currentThumbnail);
 
 
-  const itemsLocal = { ...localStorage };
 
-  const keys = Object.keys(itemsLocal);
-  // console.log(keys, 'this is keys')
+    const AddToStorage = (product) => {
+      // console.log(product, 'product');
 
-  const testingArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
-
-  // setOutfitArray(testingArray);
-  // console.log(testingArray, 'this is testing array')
-  useEffect(() => {
-    // localStorage.setItem(productToAdd.id, JSON.stringify(productToAdd));
-
-  }, [outfitArray]);
-
-  localStorage.clear();
-  return (
-
-    <AddSection>
-      <AddButton>
-
-        {/* <CardImage
-    url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
-    onClick={() => setOutfitArray(([]) => [...outfitArray, productToAdd])}
-    /> */}
-
-        <CardImage
-          url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
-          onClick={() => AddToStorage(productToAdd)}
-        />
-
-        <OutfitText>Add to Outfit</OutfitText>
-
-      </AddButton>
-      <AddedOutfit>
-
-        {localStorage.length > 1 ? testingArray.map((item, key) => <OutfitCard product={item} key={key} />) : null }
+      axios({
+        method: 'GET',
+        url: `/products/${product}`,
+      })
+        .then(({ data }) => {
+          let dataTest = [data, currentThumbnail]
+          localStorage.setItem(data.id, JSON.stringify(dataTest));
+        });
+    };
 
 
-      </AddedOutfit>
-    </AddSection>
+    const itemsLocal = { ...localStorage };
+    const keys = Object.keys(itemsLocal);
+    const testingArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
+    const [outfitArray, setOutfitArray] = useState((outfitArray) => [...testingArray]);
 
-  );
+    // used only for testing REMOVE
+    useEffect(() => {
+      console.log(outfitArray, 'local');
+      const itemsLocal = { ...localStorage };
+      const keys = Object.keys(itemsLocal);
+      const testingArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
+    }, [itemsLocal]);
+
+    // localStorage.clear();
+    return (
+
+      <AddSection>
+        <AddButton>
+
+          <CardImage
+            url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
+            onClick={() => AddToStorage(currentProductId)}
+          />
+
+          <OutfitText>Add to Outfit</OutfitText>
+
+        </AddButton>
+        <AddedOutfit>
+
+          {/* {outfitArray ? outfitArray.map((item, key) => <OutfitCard product={item[0]} image={item[1]} key={key} />) : null } */}
+          {outfitArray.map((item, key) => <OutfitCard product={item[0]} image={item[1]} key={key} />)}
+
+        </AddedOutfit>
+      </AddSection>
+
+    );
+  }
 }
 
 
@@ -99,3 +111,9 @@ const AddButton = styled.div`
 const OutfitText = styled.p`
   text-align: center;
 `;
+
+/* <CardImage
+    url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
+    onClick={() => setOutfitArray(([]) => [...outfitArray, productToAdd])}
+    /> */
+

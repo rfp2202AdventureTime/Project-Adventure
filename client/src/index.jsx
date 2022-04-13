@@ -14,7 +14,7 @@ import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
   const [defaultProductId, setDefaultProductId] = useState(65633);
-
+  // tests: 65655, 65633
   return (
     <Theme>
       <ProductProvider productId={defaultProductId}>

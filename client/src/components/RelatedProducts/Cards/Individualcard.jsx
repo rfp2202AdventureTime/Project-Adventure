@@ -9,7 +9,7 @@ import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 function Individualcard({ product }) {
   const { setCurrentProductId } = useCurrentProductId();
 
-  const starRating = product[2].avgRating;
+  const starRating = product[2]?.avgRating;
 //*** FIX ON CLICK BUTTON SO IT DOESN'T CHANGE
   return (
     <div>

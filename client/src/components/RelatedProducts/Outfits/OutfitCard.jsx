@@ -1,17 +1,18 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
-import { React } from 'react';
+import { React, useContext } from 'react';
 import styled from 'styled-components';
 import { useCurrentStyles } from '../../../contexts/StylesProvider';
 import { useMeta } from '../../../contexts/ReviewMeta';
 import { Individualcard } from '../Cards/Individualcard';
+// import { useThumbnail } from '../Cards/thumbnailContext';
 
 // ({ product, setOutfitArray, outfitArray })
 
-function OutfitCard({ product }) {
-  if (useCurrentStyles()) {
-    const thumbnail = useCurrentStyles()[0].photos[0].thumbnail_url;
+function OutfitCard({ product, image }) {
+  // if (useCurrentStyles()) {
+    const thumbnail = image;
     const rating = useMeta();
     const information = [product, thumbnail, rating];
 
@@ -41,7 +42,7 @@ function OutfitCard({ product }) {
 
     );
   }
-}
+// }
 const IndCard = styled.div`
 display: table-cell, relative;
 position: relative;

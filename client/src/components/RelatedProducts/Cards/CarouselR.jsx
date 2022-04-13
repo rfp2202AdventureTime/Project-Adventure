@@ -75,17 +75,3 @@ const RightArrowR = styled.div`
 
 export default CarouselRelated;
 
-// return (
-//   <CarouselContainerR size={CONFIG.size}>
-//     <LeftArrowR />
-//     <CarouselWrapperR>
-//       <CarouselContentWrapperR>
-//         <CarouselContentR>
-//           {/* <RightArrowR /> */}
-//           {children}
-//         </CarouselContentR>
-//       </CarouselContentWrapperR>
-//     </CarouselWrapperR>
-//   </CarouselContainerR>
-// );
-// }

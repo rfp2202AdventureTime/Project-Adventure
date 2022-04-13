@@ -16,6 +16,8 @@ function ProductImg({ image, product }) {
     setID(product);
   }
 
+  // console.log(product, 'this is productimg product')
+
   useEffect(() => {
     const close = (e) => {
       if (e.key === 'Escape') {
@@ -28,9 +30,10 @@ function ProductImg({ image, product }) {
 
   return (
     <CardImage url={productThumbnail}>
-      <FeatureProvider prodID={ID}>
+      <FeatureProvider>
 
         <ModalContainer show={showModal}>
+
           <Modal show={showModal}>
 
             <Comparison />
@@ -93,19 +96,4 @@ const ModalContainer = styled.a`
   transition: all 0.3s;
 `;
 
-// const Modal = styled.div`
-//   z-index: 9999;
-//   background-position: center;
-//   width: 60%;
-//   height: 60%;
-//   position: relative;
-//   margin: 10% auto;
-//   padding: 2rem;
-//   color: #444;
-//   display: ${(props) => (props.show ? 'relative' : 'none')}
-//   background-repeat: no-repeat;
-//   background-size: 100% auto%;
-//   visibility: ${(props) => (props.showModal ? 'visible' : 'hidden')};
-//   }
-// `;
 export default ProductImg;
