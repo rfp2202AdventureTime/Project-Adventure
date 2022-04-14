@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { MdOutlineThumbUp, MdThumbUp } from 'react-icons/md';
 import { ClickableText } from '../../../contexts/Shared.styled';
+
 
 export default function Helpfulness({
   addHelpVote, helpfulness, reportReview, reviewId,
@@ -31,9 +33,9 @@ export default function Helpfulness({
       {voteLimiter
         ? (
           <ClickableText onClick={vote}>
-            Yes
+            <MdOutlineThumbUp />
           </ClickableText>
-        ) : (<div>Yes</div>)}
+        ) : (<div><MdThumbUp /></div>)}
       (
       {helpCount}
       )
