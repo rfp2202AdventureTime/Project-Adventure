@@ -1,9 +1,11 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react/prop-types */
 import {
   React, useContext, useState, useEffect, createContext,
 } from 'react';
 import axios from 'axios';
-import { useRelated } from '../RelatedContext';
+import Console from '../../../Console';
+import { useRelated } from './RelatedContext';
 
 const ProdContext = createContext();
 
@@ -12,9 +14,7 @@ export function useProd() {
 }
 export function ProdProvider({ children }) {
   const related = useRelated();
-
   const [relatedInformation, setRelatedInformation] = useState([]);
-
   const [ratingsMeta, setRatingsMeta] = useState();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export function ProdProvider({ children }) {
         .then((data) => {
           setRelatedInformation({ data });
         })
-        .catch((err) => console.log('there was an ERROR', err));
+        .catch((err) => Console.log('there was an ERROR in Prod', err));
     }
   }, [related]);
 

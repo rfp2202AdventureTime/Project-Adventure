@@ -1,29 +1,41 @@
 /* eslint-disable max-len */
-import React from 'react';
-import { useProd } from './ProdContext';
-import { useThumbnail } from './thumbnailContext';
+import { React, useState } from 'react';
+import { useProd } from '../contexts/ProdContext';
+import { useThumbnail } from '../contexts/thumbnailContext';
 import CarouselRelated from './CarouselR';
 
 function AllCards() {
-  const relatedProds = useProd().relatedInformation;
+  const { relatedInformation } = useProd();
   const thumbnail = useThumbnail();
-  const ratings = useProd().ratingsMeta;
+  const { ratingsMeta } = useProd();
+  const information = [];
 
-  const zippedArray = [];
-
-  if (thumbnail.data && relatedProds.data && ratings) {
-    relatedProds.data.map((item, i) => {
-      zippedArray.push([item.data, thumbnail.data[i].data.results[0].photos[0].thumbnail_url, ratings.data[i].data]);
+  if (thumbnail?.data && relatedInformation?.data && ratingsMeta) {
+    relatedInformation?.data.map((item, i) => {
+      const currentRating = ratingsMeta.data[i]?.data ? ratingsMeta.data[i].data : 0;
+      const currentThumbnail = thumbnail.data[i]?.data.results[0].photos[0].thumbnail_url ? thumbnail.data[i].data.results[0].photos[0].thumbnail_url : '';
+      information.push([item.data, currentThumbnail, currentRating, true]);
     });
   }
 
-  if (zippedArray) {
+  const stagingSet = new Set();
+
+  for (let i = 0; i < information.length; i += 1) {
+    if (!stagingSet.has(JSON.stringify(information[i]))) {
+      stagingSet.add(JSON.stringify(information[i]));
+    }
+  }
+
+  const informationArray = [];
+  for (const item of stagingSet) {
+    informationArray.push(JSON.parse(item))
+  }
     return (
-
-      <CarouselRelated zippedArray={zippedArray} />
-
+      <>
+      {informationArray ? <CarouselRelated informationArray={informationArray} /> : <div>Related Products Loading</div>}
+      </>
     );
   }
-}
 
 export default AllCards;
+

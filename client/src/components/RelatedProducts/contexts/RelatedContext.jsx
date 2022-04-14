@@ -3,7 +3,8 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { useCurrentProductId, ProductIDContext } from '../../contexts/ProductIDContext';
+import Console from '../../../Console';
+import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 
 const RelatedContext = createContext();
 
@@ -13,19 +14,20 @@ export function useRelated() {
 
 export function RelatedProvider({ children }) {
   const [related, setRelatedInfo] = useState();
-  // const productId = useCurrentProductId().currentProductId;
-  const productId = useContext(ProductIDContext);
+  const { currentProductId } = useCurrentProductId();
 
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: `products/${productId}/related`,
-    })
-      .then(({ data }) => {
-        setRelatedInfo(data);
+    if (currentProductId) {
+      axios({
+        method: 'get',
+        url: `products/${currentProductId}/related`,
       })
-      .catch((err) => console.log(err));
-  }, [productId]);
+        .then(({ data }) => {
+          setRelatedInfo(data);
+        })
+        .catch((err) => Console.log('ERROR in RelatedContext', err));
+    }
+  }, [currentProductId]);
 
   return (
     <RelatedContext.Provider value={related}>
