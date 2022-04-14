@@ -4,15 +4,22 @@ import styled from 'styled-components';
 import ProductImg from './ProductImg';
 import Star from '../../../Star';
 import { useCurrentProductId } from '../../../contexts/ProductIDContext';
+import useTracking from '@Contexts/ClickTracker';
+
 
 // receives array [product information, thumbnail url, (bool for star or no star on card)]
 function Individualcard({ product }) {
+  const { trackEvent } = useTracking({ widget: 'clicked on related items card' });
   const { setCurrentProductId } = useCurrentProductId();
-
   const starRating = product[2]?.avgRating || 0;
 
+  const handleClick = () => {
+    trackEvent({ element: 'Individualcard' })
+    setCurrentProductId(product[0].id)
+  }
+
   return (
-      <IndCard onClick={() => setCurrentProductId(product[0].id)}>
+      <IndCard onClick={handleClick}>
         <ProductImg image={product[1]} product={product[0].id} star={product[3]} />
         <CardText>
           <CategoryText>

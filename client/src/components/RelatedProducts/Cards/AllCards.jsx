@@ -5,7 +5,6 @@ import { useThumbnail } from '../contexts/thumbnailContext';
 import CarouselRelated from './CarouselR';
 
 function AllCards() {
-
   const { relatedInformation } = useProd();
   const thumbnail = useThumbnail();
   const { ratingsMeta } = useProd();

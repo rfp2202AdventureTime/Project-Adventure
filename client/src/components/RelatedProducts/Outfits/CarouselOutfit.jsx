@@ -8,8 +8,10 @@ import { Individualcard } from '../Cards/Individualcard';
 import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 import { useMeta } from '../../../contexts/ReviewMeta';
 import { useCurrentStyles } from '../../../contexts/StylesProvider';
+import useTracking from '@Contexts/ClickTracker';
 
 function CarouselAddToOutfit({ informationArray }) {
+  const { trackEvent } = useTracking({ widget: 'Add to Outfit'});
   const [viewIndex, setViewIndex] = useState(0);
   const { currentProductId } = useCurrentProductId();
   const currentStyles = useCurrentStyles();
@@ -21,8 +23,9 @@ function CarouselAddToOutfit({ informationArray }) {
   const next = () => {
     if (viewIndex === maxDisplayed) {
       setViewIndex((viewIndex) => viewIndex - 1);
+    } else {
+      setViewIndex((viewIndex) => viewIndex + 1);
     }
-    setViewIndex((viewIndex) => viewIndex + 1);
   };
 
   const prev = () => {
@@ -36,6 +39,7 @@ function CarouselAddToOutfit({ informationArray }) {
   const AddToStorage = (e, product) => {
     const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
     e.stopPropagation();
+    trackEvent({ element: 'Button' });
 
     axios({
       method: 'GET',
@@ -62,13 +66,13 @@ function CarouselAddToOutfit({ informationArray }) {
 
             <OutfitText>Add to Outfit</OutfitText>
 
-          </AddButton>
+          </AddButton >
 
           <AddedOutfit>
             {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
           </AddedOutfit>
-          {(viewIndex !== maxDisplayed || displayed.length > 3) ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
+          {(viewIndex !== maxDisplayed || displayed.length < 3) ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );

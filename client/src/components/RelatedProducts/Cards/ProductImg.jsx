@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import { FiBookOpen, FiTrash } from 'react-icons/fi';
 import Comparison from './Comparison';
 import { FeatureProvider } from '../contexts/FeatureContext';
+import useTracking from '@Contexts/ClickTracker';
 
 function ProductImg({ image, product, star }) {
+  const { trackEvent } = useTracking({ widget: 'modal window'});
   const [showModal, setShowModal] = useState(false);
   const [ID, setID] = useState();
   const productThumbnail = image;
@@ -15,11 +17,13 @@ function ProductImg({ image, product, star }) {
     e.stopPropagation();
     setShowModal(!showModal);
     setID(product);
+    trackEvent({ element: 'Comparison window' });
   };
 
   const handleRemove = (e, product) => {
     e.stopPropagation();
     localStorage.removeItem(product);
+    trackEvent({ element: 'Remove item button' });
   };
 
   useEffect(() => {
