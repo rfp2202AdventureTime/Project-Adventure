@@ -159,11 +159,12 @@ export default function NewForm({
         type={type}
       >
         <FormContainer>
-          <StickyTop>
-            <h2>{type.title}</h2>
-            <h3>{type.subtitle}</h3>
-          </StickyTop>
           <form name="newForm" onChange={handleChange} onSubmit={handleOnSubmit}>
+            <StickyTop>
+              <h2>{type.title}</h2>
+              <h3>{type.subtitle}</h3>
+              <input className="submitButton" type="submit" value="Submit" />
+            </StickyTop>
             {(formtype === 'reviews') ? (
               <ReviewInput
                 data={data}
@@ -227,8 +228,6 @@ export default function NewForm({
                 </Note>
               </label>
             </QuestionBlock>
-
-            <input className="submitButton" type="submit" value="Submit" />
           </form>
         </FormContainer>
 
@@ -249,6 +248,7 @@ const FormContainer = styled.div`
   gap: 0.5rem;
   position: relative;
   align-items: center;
+  padding-bottom: 2rem;
 `;
 const StickyTop = styled.div`
   display: flex;
