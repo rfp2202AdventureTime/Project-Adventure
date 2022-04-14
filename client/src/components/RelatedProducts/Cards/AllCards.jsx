@@ -12,52 +12,39 @@ function AllCards() {
   const ratings = useProd().ratingsMeta;
 
 
-  const informationArray = [];
+  const information = [];
 
   if (thumbnail?.data && relatedProds?.data && ratings) {
     relatedProds?.data.map((item, i) => {
       const currentRating = ratings.data[i]?.data ? ratings.data[i].data : 0;
       const currentThumbnail = thumbnail.data[i]?.data.results[0].photos[0].thumbnail_url ? thumbnail.data[i].data.results[0].photos[0].thumbnail_url : '';
-      informationArray.push([item.data, currentThumbnail, currentRating, true]);
+      information.push([item.data, currentThumbnail, currentRating, true]);
     });
   }
 
-  // console.log(zippedArray, 'this is zipped array')
+  const stagingSet = new Set();
 
+  for (let i = 0; i < information.length; i += 1) {
+    if (!stagingSet.has(JSON.stringify(information[i]))) {
+      stagingSet.add(JSON.stringify(information[i]));
+    }
+  }
 
-  // if (zippedArray) {
+  const informationArray = [];
+  for (const item of stagingSet) {
+    informationArray.push(JSON.parse(item))
+  }
+
     return (
 
       <>
       {informationArray ? <CarouselRelated informationArray={informationArray} /> : <div>Related Products Loading</div>}
-        {/* <CarouselRelated zippedArray={zippedArray} /> */}
+
 
       </>
 
     );
   }
-// }
 
 export default AllCards;
-
-// const zippedArray = [];
-
-//   if (thumbnail?.data && relatedProds?.data && ratings) {
-//     relatedProds?.data.map((item, i) => {
-//       zippedArray.push([item.data, thumbnail.data[i].data.results[0].photos[0].thumbnail_url, ratings.data[i].data, true]);
-//     });
-//   }
-
-//   // if (zippedArray) {
-//     return (
-
-//       <>
-//       {zippedArray ? <CarouselRelated zippedArray={zippedArray} /> : <div>Related Products Loading</div>}
-//         {/* <CarouselRelated zippedArray={zippedArray} /> */}
-
-//       </>
-
-//     );
-//   }
-// // }
 

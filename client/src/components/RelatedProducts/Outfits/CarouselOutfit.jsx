@@ -19,7 +19,7 @@ function CarouselAddToOutfit({ informationArray }) {
 
   const next = () => {
     if (viewIndex === maxDisplayed) {
-      setViewIndex(0);
+      setViewIndex((viewIndex) => viewIndex - 1);
     }
     setViewIndex((viewIndex) => viewIndex + 1);
   };
@@ -47,10 +47,11 @@ function CarouselAddToOutfit({ informationArray }) {
       });
   };
 
+  //informationArray.length > 2 ||
   if (displayed) {
     return (
       <CarouselContainerR>
-        {informationArray.length > 2 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={60} /></LeftArrowR> : <LeftArrowR />}
+        {viewIndex !== 0 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={60} /></LeftArrowR> : <LeftArrowR />}
 
         <CarouselWrapperR>
           <AddButton>
@@ -68,7 +69,7 @@ function CarouselAddToOutfit({ informationArray }) {
           {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
       </AddedOutfit>
-          {informationArray.length > 2 ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
+          {viewIndex !== maxDisplayed ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );
@@ -135,7 +136,7 @@ const AddedOutfit = styled.div`
   margin-left: 25px;
   flex-direction: row;
   width: fit-content;
-  height: fit-content;
+  height: max-content;
 `;
 
 const OutfitText = styled.p`

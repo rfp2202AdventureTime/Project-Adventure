@@ -12,7 +12,7 @@ function CarouselRelated({ informationArray }) {
 
   const next = () => {
     if (viewIndex === maxDisplayed) {
-      setViewIndex((viewIndex) => viewIndex - 2);
+      setViewIndex((viewIndex) => viewIndex - 1);
     }
     setViewIndex((viewIndex) => viewIndex + 1);
   };
@@ -32,13 +32,13 @@ function CarouselRelated({ informationArray }) {
   if (displayed) {
     return (
       <CarouselContainerR>
-        {informationArray.length > 3 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR />}
+        {viewIndex !== 0 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR />}
 
         <CarouselWrapperR>
 
           {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
-          {informationArray.length > 3 ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR />}
+          {viewIndex !== maxDisplayed ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );
