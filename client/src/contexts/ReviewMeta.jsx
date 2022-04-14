@@ -13,7 +13,7 @@ export function useMeta() {
 
 // Context has reviewMeta received from API plus converted avgRating and total rating count
 export function RatingProvider({ children }) {
-  const productId = useCurrentProductId().currentProductId;
+  const { currentProductId } = useCurrentProductId();
   const [reviewMeta, setReviewMeta] = useState(null);
 
   function convertRating(data) {
@@ -36,7 +36,7 @@ export function RatingProvider({ children }) {
       method: 'get',
       url: '/reviews/meta',
       params: {
-        product_id: productId,
+        product_id: currentProductId,
       },
     })
       .then(({ data }) => {
@@ -47,7 +47,7 @@ export function RatingProvider({ children }) {
         setReviewMeta(newData);
       })
       .catch(() => setReviewMeta(null));
-  }, [productId]);
+  }, [currentProductId]);
 
   return (
     <RatingContext.Provider value={reviewMeta}>

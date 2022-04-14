@@ -7,15 +7,15 @@ import { useCurrentProduct, useCurrentProductId } from '../../../contexts/Produc
 import { useMeta } from '../../../contexts/ReviewMeta';
 import { useCurrentStyles } from '../../../contexts/StylesProvider';
 
-function CarouselAddToOutfit({ zippedArray }) {
+function CarouselAddToOutfit({ informationArray }) {
   const [viewIndex, setViewIndex] = useState(0);
   const currentStyles = useCurrentStyles();
   const { currentProductId } = useCurrentProductId();
   const starRating = useMeta();
 
-  const displayed = zippedArray.slice(viewIndex, (viewIndex + 4));
+  const displayed = informationArray.slice(viewIndex, (viewIndex + 3));
 
-  const maxDisplayed = zippedArray.length - 4;
+  const maxDisplayed = informationArray.length - 3;
 
   const next = () => {
     if (viewIndex === maxDisplayed) {
@@ -50,7 +50,7 @@ function CarouselAddToOutfit({ zippedArray }) {
   if (displayed) {
     return (
       <CarouselContainerR>
-        {zippedArray.length > 3 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={60} /></LeftArrowR> : <LeftArrowR />}
+        {informationArray.length > 2 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={60} /></LeftArrowR> : <LeftArrowR />}
 
         <CarouselWrapperR>
           <AddButton>
@@ -68,7 +68,7 @@ function CarouselAddToOutfit({ zippedArray }) {
           {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
       </AddedOutfit>
-          {zippedArray.length > 3 ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
+          {informationArray.length > 2 ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );

@@ -15,7 +15,7 @@ export default function Outfit() {
   }, [itemsLocal]);
 
   return (
-    <CarouselAddToOutfit zippedArray={outfitArray} />
+    <CarouselAddToOutfit informationArray={outfitArray} />
 
   );
   // }

@@ -12,13 +12,13 @@ function AllCards() {
   const ratings = useProd().ratingsMeta;
 
 
-  const zippedArray = [];
+  const informationArray = [];
 
   if (thumbnail?.data && relatedProds?.data && ratings) {
     relatedProds?.data.map((item, i) => {
       const currentRating = ratings.data[i]?.data ? ratings.data[i].data : 0;
       const currentThumbnail = thumbnail.data[i]?.data.results[0].photos[0].thumbnail_url ? thumbnail.data[i].data.results[0].photos[0].thumbnail_url : '';
-      zippedArray.push([item.data, currentThumbnail, currentRating, true]);
+      informationArray.push([item.data, currentThumbnail, currentRating, true]);
     });
   }
 
@@ -29,7 +29,7 @@ function AllCards() {
     return (
 
       <>
-      {zippedArray ? <CarouselRelated zippedArray={zippedArray} /> : <div>Related Products Loading</div>}
+      {informationArray ? <CarouselRelated informationArray={informationArray} /> : <div>Related Products Loading</div>}
         {/* <CarouselRelated zippedArray={zippedArray} /> */}
 
       </>
