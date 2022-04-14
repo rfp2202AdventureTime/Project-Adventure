@@ -9,7 +9,7 @@ import useTracking from '@Contexts/ClickTracker';
 
 // receives array [product information, thumbnail url, (bool for star or no star on card)]
 function Individualcard({ product }) {
-  const { trackEvent } = useTracking({ widget: 'clicked on related items card' });
+  const { trackEvent } = useTracking({ widget: 'clicked on related items' });
   const { setCurrentProductId } = useCurrentProductId();
   const starRating = product[2]?.avgRating || 0;
 

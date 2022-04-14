@@ -23,9 +23,8 @@ function CarouselAddToOutfit({ informationArray }) {
   const next = () => {
     if (viewIndex === maxDisplayed) {
       setViewIndex((viewIndex) => viewIndex - 1);
-    } else {
-      setViewIndex((viewIndex) => viewIndex + 1);
     }
+      setViewIndex((viewIndex) => viewIndex + 1);
   };
 
   const prev = () => {

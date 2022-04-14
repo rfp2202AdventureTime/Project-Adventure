@@ -50,16 +50,15 @@ function Comparison() {
         <tbody>
           {FeatureSet.map((item, key) => (
             <tr key={key}>
-              <Xfeature>{item1Array.map((item1) => (item1.feature === item.feature ? (item1.value) ? `${item1.value}` : 'True' : ' '))}</Xfeature>
+              <Xfeature>{item1Array.map((item1) => (item1.feature === item.feature ? (item1.value) ? `${item1.value}` : '✓' : ' '))}</Xfeature>
 
               {/* <Value>{item.value ? `${item.value}` : `${item.feature}`}</Value> */}
               <Value>{item.feature}</Value>
 
-              <Xfeature>{item2Array.map((item2) => ((item2.feature === item.feature) ? (item2.value) ? `${item2.value}` : 'True' : ' '))}</Xfeature>
+              <Xfeature>{item2Array.map((item2) => ((item2.feature === item.feature) ? (item2.value) ? `${item2.value}` : '✓' : ' '))}</Xfeature>
 
             </tr>
           ))}
-
         </tbody>
       </table>
     );
