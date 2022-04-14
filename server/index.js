@@ -41,6 +41,7 @@ app.all('/*', (req, res) => {
       res.send(newData);
     })
     .catch((err) => {
+      console.log(err);
       res.status(404);
       res.send(err);
     });
