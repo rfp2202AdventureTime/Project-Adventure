@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import { React } from 'react';
 import styled from 'styled-components';
 import { useFeature } from '../contexts/FeatureContext';
@@ -6,6 +7,7 @@ import { useFeature } from '../contexts/FeatureContext';
 function Comparison() {
   const twoProductsArray = useFeature();
 
+  // console.log(twoProductsArray, 'twoproductsarray')
   if (twoProductsArray) {
     const item1 = twoProductsArray.data[0].data;
     const item2 = twoProductsArray.data[1].data;
@@ -47,7 +49,6 @@ function Comparison() {
         <tbody>
           {FeatureSet.map((item, key) => (
             <tr key={key}>
-
               <Xfeature>{item1Array.map((item1) => (item1.feature === item.feature ? '✓' : ' '))}</Xfeature>
 
               <Value>{item.value ? `${item.value}` : `${item.feature}`}</Value>

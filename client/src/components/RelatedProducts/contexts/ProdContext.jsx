@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react/prop-types */
 import {
   React, useContext, useState, useEffect, createContext,
@@ -13,9 +14,7 @@ export function useProd() {
 }
 export function ProdProvider({ children }) {
   const related = useRelated();
-
   const [relatedInformation, setRelatedInformation] = useState([]);
-
   const [ratingsMeta, setRatingsMeta] = useState();
 
   useEffect(() => {
@@ -48,7 +47,7 @@ export function ProdProvider({ children }) {
   useEffect(() => {
     let newData;
     if (related) {
-      Promise.all(related?.map((number) => axios({
+      Promise.all(related.map((number) => axios({
         method: 'get',
         url: '/reviews/meta',
         params: {

@@ -8,9 +8,7 @@ import { Individualcard } from './Individualcard';
 
 function CarouselRelated({ informationArray }) {
   const [viewIndex, setViewIndex] = useState(0);
-
   const displayed = informationArray.slice(viewIndex, (viewIndex + 4));
-
   const maxDisplayed = informationArray.length - 4;
 
   const next = () => {

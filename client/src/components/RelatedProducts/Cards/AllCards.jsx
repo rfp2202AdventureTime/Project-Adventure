@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import { React, useState } from 'react';
-
 import { useProd } from '../contexts/ProdContext';
 import { useThumbnail } from '../contexts/thumbnailContext';
 import CarouselRelated from './CarouselR';
@@ -10,8 +9,6 @@ function AllCards() {
   const { relatedInformation } = useProd();
   const thumbnail = useThumbnail();
   const { ratingsMeta } = useProd();
-
-
   const information = [];
 
   if (thumbnail?.data && relatedInformation?.data && ratingsMeta) {
@@ -34,15 +31,10 @@ function AllCards() {
   for (const item of stagingSet) {
     informationArray.push(JSON.parse(item))
   }
-
     return (
-
       <>
       {informationArray ? <CarouselRelated informationArray={informationArray} /> : <div>Related Products Loading</div>}
-
-
       </>
-
     );
   }
 

@@ -5,7 +5,6 @@ import { FiBookOpen, FiTrash } from 'react-icons/fi';
 import Comparison from './Comparison';
 import { FeatureProvider } from '../contexts/FeatureContext';
 
-
 function ProductImg({ image, product, star }) {
   const [showModal, setShowModal] = useState(false);
   const [ID, setID] = useState();

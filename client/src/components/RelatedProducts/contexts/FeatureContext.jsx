@@ -4,23 +4,21 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import Console from '../../../Console';
-import { ProductIDContext, useCurrentProductId } from '../../../contexts/ProductIDContext';
+import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 
 const FeatureContext = createContext();
 
 export function useFeature() {
   return useContext(FeatureContext);
 }
-//********* REMOVE before Production ***************
-// fix current productIDContext to use currentProductID
+
 export function FeatureProvider({ children, prodID }) {
   const [featuresInfo, setFeatures] = useState();
-  const productId = useCurrentProductId().currentProductId;
-  // const productId = useContext(ProductIDContext);
-  const twoProducts = [productId, prodID];
+  const { currentProductId } = useCurrentProductId();
+  const twoProducts = [currentProductId, prodID];
 
   useEffect(() => {
-    if (prodID && productId) {
+    if (prodID && currentProductId) {
       Promise.all(twoProducts.map((number) => axios({
         method: 'get',
         url: `products/${number}`,

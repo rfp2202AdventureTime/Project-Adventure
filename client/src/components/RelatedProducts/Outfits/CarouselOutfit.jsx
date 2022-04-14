@@ -1,4 +1,6 @@
-import { React, useState, useEffect } from 'react';
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
+import { React, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
@@ -34,7 +36,6 @@ function CarouselAddToOutfit({ informationArray }) {
 
   const AddToStorage = (e, product) => {
     const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
-    // console.log(sure, 'ratings');
     e.stopPropagation();
 
     axios({
@@ -42,12 +43,11 @@ function CarouselAddToOutfit({ informationArray }) {
       url: `/products/${product}`,
     })
       .then(({ data }) => {
-        let dataTest = [data, currentThumbnail, starRating, false ];
+        const dataTest = [data, currentThumbnail, starRating, false];
         localStorage.setItem(data.id, JSON.stringify(dataTest));
       });
   };
 
-  //informationArray.length > 2 ||
   if (displayed) {
     return (
       <CarouselContainerR>
@@ -59,16 +59,16 @@ function CarouselAddToOutfit({ informationArray }) {
             <CardImage
               url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
               onClick={(e) => AddToStorage(e, currentProductId)}
-              />
+            />
 
             <OutfitText>Add to Outfit</OutfitText>
 
           </AddButton>
 
-      <AddedOutfit>
-          {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
+          <AddedOutfit>
+            {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
-      </AddedOutfit>
+          </AddedOutfit>
           {(viewIndex !== maxDisplayed || displayed.length > 3) ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>

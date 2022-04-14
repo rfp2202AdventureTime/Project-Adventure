@@ -14,21 +14,20 @@ export function useRelated() {
 
 export function RelatedProvider({ children }) {
   const [related, setRelatedInfo] = useState();
-  const productId = useCurrentProductId().currentProductId;
-  // const productId = useContext(ProductIDContext);
+  const { currentProductId } = useCurrentProductId();
 
   useEffect(() => {
-    if (productId) {
+    if (currentProductId) {
       axios({
         method: 'get',
-        url: `products/${productId}/related`,
+        url: `products/${currentProductId}/related`,
       })
         .then(({ data }) => {
           setRelatedInfo(data);
         })
         .catch((err) => Console.log('ERROR in RelatedContext', err));
     }
-  }, [productId]);
+  }, [currentProductId]);
 
   return (
     <RelatedContext.Provider value={related}>
