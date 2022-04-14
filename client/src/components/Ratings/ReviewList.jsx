@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, Suspense, lazy } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 // import PropTypes from 'prop-types';
-import ReviewTile from './Review/ReviewTile';
-import SortBar from './Review/SortBar';
-import SearchBar from './Review/SearchBar';
+const ReviewTile = lazy(() => import('./Review/ReviewTile'));
+const SortBar = lazy(() => import('./Review/SortBar')) ;
+const SearchBar = lazy(() => import('./Review/SearchBar')) ;
 import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
 import { useCurrentProductId, useCurrentProduct } from '../../contexts/ProductIDContext';
@@ -37,7 +37,6 @@ export default function ReviewList({ filterStatus }) {
       url: '/reviews',
       params: {
         product_id: currentProductId,
-        // here
         count: (reviewMeta?.totalCT || 999),
         sort,
       },
@@ -142,51 +141,55 @@ export default function ReviewList({ filterStatus }) {
     }
   }, [currentProductId, sort, filterStatus.filterCount, prevCount]);
 
+
   return (
-    <ReviewSection>
-      <StickyTop>
-        <SearchBar
-          resetSearch={resetSearch}
-          handleSearch={handleSearch}
-        />
-        <SortBar
-          totalCT={reviewDetail.filteredReview.length}
-          allCT={reviewDetail.allReview.length}
-          handleSort={handleSort}
-        />
-      </StickyTop>
-      {reviewDetail.filteredReview.map(
-        (review) => (
-          <ReviewTile
-            key={review.review_id.toString()}
-            addHelpVote={addHelpVote}
-            review={review}
-            keyword={keyword}
-            reportReview={reportReview}
+    <Suspense fallback={<div>Loading...</div>}>
+      <ReviewSection>
+        <StickyTop>
+          <SearchBar
+            resetSearch={resetSearch}
+            handleSearch={handleSearch}
           />
-        ),
-      )}
-      <StickyBottom>
-        <ButtonBlock>
-          { (!(filterStatus.filterCount)
-            && (prevCount < reviewDetail.allReview.length))
-            ? (
-              <Button onClick={fetchFeed}>
-                More Reviews
-              </Button>
-            ) : ''}
-          <Button onClick={toggleModal}> Add a Review +</Button>
-          <NewForm
-            formtype="reviews"
-            productName={currentProduct?.name}
-            showModal={showModal}
-            setShowModal={setShowModal}
-            changeSelected={changeSelected}
-            setSort={setSort}
+          <SortBar
+            totalCT={reviewDetail.filteredReview.length}
+            allCT={reviewDetail.allReview.length}
+            handleSort={handleSort}
           />
-        </ButtonBlock>
-      </StickyBottom>
-    </ReviewSection>
+        </StickyTop>
+        {reviewDetail.filteredReview.map(
+          (review) => (
+            <ReviewTile
+              key={review.review_id.toString()}
+              addHelpVote={addHelpVote}
+              review={review}
+              keyword={keyword}
+              reportReview={reportReview}
+            />
+          ),
+        )}
+        <StickyBottom>
+          <ButtonBlock>
+            { (!(filterStatus.filterCount)
+              && (prevCount < reviewDetail.allReview.length))
+              ? (
+                <Button onClick={fetchFeed}>
+                  More Reviews
+                </Button>
+              ) : ''}
+            <Button onClick={toggleModal}> Add a Review +</Button>
+            <NewForm
+              formtype="reviews"
+              productName={currentProduct?.name}
+              showModal={showModal}
+              setShowModal={setShowModal}
+              changeSelected={changeSelected}
+              setSort={setSort}
+            />
+          </ButtonBlock>
+        </StickyBottom>
+      </ReviewSection>
+    </Suspense>
+
   );
 }
 

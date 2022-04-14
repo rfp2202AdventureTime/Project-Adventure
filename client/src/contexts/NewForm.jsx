@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
@@ -18,6 +19,7 @@ export default function NewForm({
   const factorList = (meta) ? meta.characteristics : {};
   // CONFIRM WITH ALEX this default won't imapct his section
   const [data, setData] = useState({ recommendation: 'true' });
+  const [photos, setPhotos] = useState([]);
   const productId = useContext(ProductIDContext);
   const handleChange = (e) => setData((prevState) => (
     { ...prevState, [e.target.name]: e.target.value }));
@@ -56,7 +58,7 @@ export default function NewForm({
       newData.summary = summary;
       newData.name = name;
       newData.recommend = (data.recommendation === 'true');
-      newData.photos = [];
+      newData.photos = photos;
       if (
         !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
         || email.length > 60
@@ -74,6 +76,9 @@ export default function NewForm({
         const { setSort, changeSelected } = args;
         setSort('newest');
         changeSelected();
+        // reset modal and close
+        setData({ recommendation: 'true' });
+        setPhotos([]);
         setShowModal(false);
         return null;
       })
@@ -154,15 +159,18 @@ export default function NewForm({
         type={type}
       >
         <FormContainer>
-          <StickyTop>
-            <h2>{type.title}</h2>
-            <h3>{type.subtitle}</h3>
-          </StickyTop>
           <form name="newForm" onChange={handleChange} onSubmit={handleOnSubmit}>
+            <StickyTop>
+              <h2>{type.title}</h2>
+              <h3>{type.subtitle}</h3>
+              <input className="submitButton" type="submit" value="Submit" />
+            </StickyTop>
             {(formtype === 'reviews') ? (
               <ReviewInput
                 data={data}
                 handleChange={handleChange}
+                setPhotos={setPhotos}
+                photos={photos}
               />
             ) : ''}
             <QuestionBlockBody>
@@ -176,6 +184,7 @@ export default function NewForm({
                     placeholder={type.bodyPlaceholder}
                     maxLength="1000"
                     minLength="50"
+                    required
                   />
                 </div>
                 {bodyNote}
@@ -219,8 +228,6 @@ export default function NewForm({
                 </Note>
               </label>
             </QuestionBlock>
-
-            <input className="submitButton" type="submit" value="Submit" />
           </form>
         </FormContainer>
 
@@ -241,6 +248,7 @@ const FormContainer = styled.div`
   gap: 0.5rem;
   position: relative;
   align-items: center;
+  padding-bottom: 2rem;
 `;
 const StickyTop = styled.div`
   display: flex;
