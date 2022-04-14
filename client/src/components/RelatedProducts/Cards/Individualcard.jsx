@@ -40,6 +40,7 @@ function Individualcard({ product }) {
 }
 
 const IndCard = styled.div`
+  color: ${(props) => props.theme.colors.secondary};
   display: table-cell, relative;
   position: relative;
   border: 1px solid ${(props) => props.theme.colors.secondary};
