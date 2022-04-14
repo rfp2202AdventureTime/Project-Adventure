@@ -98,7 +98,7 @@ export default function QAItem({ question, allAnswers }) {
           </ClickableText>
           <NewForm
             // ${question.question_id}
-            formtype={`qa/questions/${currentProductId}/answers`}
+            formtype={`qa/questions/${question.question_id}/answers`}
             productName={currentProduct?.name}
             showModal={showModal}
             setShowModal={setShowModal}

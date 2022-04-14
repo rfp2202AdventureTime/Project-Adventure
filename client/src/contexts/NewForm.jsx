@@ -102,6 +102,8 @@ export default function NewForm({
         })
         .catch((err) => Console.log(err));
     } else {
+      console.log('in the answers')
+      console.log(formtype)
       const newData = {};
       const {
         body, email, name,
