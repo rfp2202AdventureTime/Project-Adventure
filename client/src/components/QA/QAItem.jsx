@@ -5,10 +5,13 @@ import axios from 'axios';
 import { useData } from './QAContext';
 import NewForm from '../../contexts/NewForm';
 import { ClickableText } from '../../contexts/Shared.styled';
+import { useCurrentProductId, useCurrentProduct } from '../../contexts/ProductIDContext';
 
 import QAAnswer from './QAAnswer';
 
 export default function QAItem({ question, allAnswers }) {
+  const { currentProduct } = useCurrentProduct();
+  const { currentProductId } = useCurrentProductId();
   const setGlobalAData = useData().setAData;
   const globalQData = useData().qData;
   const setGlobalQData = useData().setQData;
@@ -93,9 +96,11 @@ export default function QAItem({ question, allAnswers }) {
             Add Answer
           </ClickableText>
           <NewForm
-            formtype="answer"
-            productName="leggings"
+            // ${question.question_id}
+            formtype={`qa/questions/574061/answers`}
+            productName={currentProduct.name}
             showModal={showModal}
+            setShowModal={setShowModal}
           />
         </QAItemQuestionRight>
       </QAItemFullQuestion>

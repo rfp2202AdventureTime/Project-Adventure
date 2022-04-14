@@ -83,12 +83,42 @@ export default function NewForm({
         return null;
       })
         .catch((err) => Console.log(err));
-    } else {
+    } else if (formtype === 'qa/questions/') {
+      const newData = {};
+      const {
+        body, email, name,
+      } = data;
+      newData.body = body;
+      newData.name = name;
+      newData.email = email;
+      newData.product_id = productId;
+      console.log(newData);
       axios({
         method: 'post',
         url: `/${formtype}`,
-        data,
+        data: newData,
       })
+        .then((response) => {
+          Console.log('Question POST status: ', response.status);
+        })
+        .catch((err) => Console.log(err));
+    } else {
+      const newData = {};
+      const {
+        body, email, name,
+      } = data;
+      newData.body = body;
+      newData.name = name;
+      newData.email = email;
+      newData.photos = [];
+      axios({
+        method: 'post',
+        url: `/${formtype}`,
+        data: newData,
+      })
+        .then((response) => {
+          Console.log('Answer POST status: ', response.status);
+        })
         .catch((err) => Console.log(err));
     }
   };
@@ -122,9 +152,9 @@ export default function NewForm({
 
   if (formtype === 'reviews') {
     type = reviews;
-  } else if (formtype === 'question') {
+  } else if (formtype === 'qa/questions/') {
     type = sharedQuestionInput;
-  } else if (formtype === 'answer') {
+  } else {
     type = sharedAnswerInput;
   }
   const clickExit = () => {

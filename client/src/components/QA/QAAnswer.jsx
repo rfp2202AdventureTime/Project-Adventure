@@ -83,7 +83,6 @@ export default function QAAnswer({
         {answer[0].body}
       </span>
       <QAItemAnswerPostInfo>
-
         <span>
           {'by '}
           {answer[0].answerer_name === 'Seller'

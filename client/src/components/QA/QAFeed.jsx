@@ -76,6 +76,7 @@ export default function Feed({ searchQuesitonBody }) {
           formtype="qa/questions/"
           productName="leggings"
           showModal={showModal}
+          setShowModal={setShowModal}
         />
       </ButtonBlock>
     </>

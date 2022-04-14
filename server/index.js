@@ -29,7 +29,6 @@ app.use(cors());
 app.all('/*', (req, res) => {
   const { method, params, body } = req;
   const url = `https://app-hrsei-api.herokuapp.com/api/fec2/rfp${req.url}`;
-  console.log(url);
   axios({
     url,
     method,
