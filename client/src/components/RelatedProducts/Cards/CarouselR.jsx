@@ -39,7 +39,7 @@ function CarouselRelated({ informationArray }) {
 
           {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
-          {viewIndex !== maxDisplayed ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR />}
+          {(viewIndex !== maxDisplayed && displayed.length >= 4) ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );
