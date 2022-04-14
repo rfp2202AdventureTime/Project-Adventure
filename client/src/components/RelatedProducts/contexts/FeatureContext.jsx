@@ -3,22 +3,22 @@ import React, {
   useState, useEffect, useContext, createContext,
 } from 'react';
 import axios from 'axios';
-import { ProductIDContext, useCurrentProductId } from '../../../contexts/ProductIDContext';
+import Console from '../../../Console';
+import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 
 const FeatureContext = createContext();
 
 export function useFeature() {
   return useContext(FeatureContext);
 }
-// fix current productIDContext to use currentProductID
+
 export function FeatureProvider({ children, prodID }) {
   const [featuresInfo, setFeatures] = useState();
-  // const productId = useCurrentProductId().currentProductId;
-  const productId = useContext(ProductIDContext);
-  const twoProducts = [productId, prodID];
+  const { currentProductId } = useCurrentProductId();
+  const twoProducts = [currentProductId, prodID];
 
   useEffect(() => {
-    if (prodID) {
+    if (twoProducts) {
       Promise.all(twoProducts.map((number) => axios({
         method: 'get',
         url: `products/${number}`,
@@ -26,7 +26,7 @@ export function FeatureProvider({ children, prodID }) {
         .then((data) => {
           setFeatures({ data });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => Console.log('ERROR in FeatureContext', err));
     }
   }, [prodID]);
 

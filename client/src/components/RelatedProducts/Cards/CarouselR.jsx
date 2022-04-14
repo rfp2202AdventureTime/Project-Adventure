@@ -1,18 +1,19 @@
-import { React, useState } from 'react';
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
+/* eslint-disable no-shadow */
+import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Individualcard } from './Individualcard';
 
-function CarouselRelated({ zippedArray }) {
+function CarouselRelated({ informationArray }) {
   const [viewIndex, setViewIndex] = useState(0);
-
-  const displayed = zippedArray.slice(viewIndex, (viewIndex + 4));
-
-  const maxDisplayed = zippedArray.length - 4;
+  const displayed = informationArray.slice(viewIndex, (viewIndex + 4));
+  const maxDisplayed = informationArray.length - 4;
 
   const next = () => {
     if (viewIndex === maxDisplayed) {
-      setViewIndex(0);
+      setViewIndex((viewIndex) => viewIndex - 1);
     }
     setViewIndex((viewIndex) => viewIndex + 1);
   };
@@ -25,23 +26,26 @@ function CarouselRelated({ zippedArray }) {
     }
   };
 
+  useEffect(() => {
+    setViewIndex(0);
+  }, [informationArray]);
+
   if (displayed) {
     return (
       <CarouselContainerR>
-        {zippedArray.length > 3 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR></LeftArrowR>}
+        {viewIndex !== 0 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR />}
 
         <CarouselWrapperR>
 
-          {displayed.map((item, key) => <Individualcard product={item} key={key}/>)}
+          {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
-          {zippedArray.length > 3 ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR></RightArrowR>}
+          {(viewIndex !== maxDisplayed && displayed.length >= 4) ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );
   }
 }
 
-// remove border line after
 const CarouselContainerR = styled.div`
   position: relative;
   width: 1100px;
@@ -74,18 +78,3 @@ const RightArrowR = styled.div`
 `;
 
 export default CarouselRelated;
-
-// return (
-//   <CarouselContainerR size={CONFIG.size}>
-//     <LeftArrowR />
-//     <CarouselWrapperR>
-//       <CarouselContentWrapperR>
-//         <CarouselContentR>
-//           {/* <RightArrowR /> */}
-//           {children}
-//         </CarouselContentR>
-//       </CarouselContentWrapperR>
-//     </CarouselWrapperR>
-//   </CarouselContainerR>
-// );
-// }

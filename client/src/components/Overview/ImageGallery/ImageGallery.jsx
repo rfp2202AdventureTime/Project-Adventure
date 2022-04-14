@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -8,10 +8,16 @@ import { FiArrowLeft, FiArrowRight, FiX } from 'react-icons/fi';
 import ZoomableImage from './ZoomableImage';
 import Carousel from './Carousel';
 
-function ImageGallery({ children, photos }) {
+function ImageGallery({
+  heading,
+  preheading,
+  content,
+  photos,
+}) {
   // Views can be ['default', 'expanded']
   const [view, setView] = useState('default');
   const [imgIdx, setImgIdx] = useState(0);
+  const expandedImgBounds = useRef();
 
   const handleViewChange = (e, newView) => {
     if (e.currentTarget.firstChild === e.target || e.currentTarget === e.target) {
@@ -32,11 +38,11 @@ function ImageGallery({ children, photos }) {
 
   return (
 
-    <ExpandedViewport>
+    <ExpandedViewport ref={expandedImgBounds}>
       <DefaultViewport>
-        <Gallery className={view} onClick={(e) => handleViewChange(e, 'expanded')}>
+        <Gallery bounds={expandedImgBounds} className={view} onClick={(e) => handleViewChange(e, 'expanded')}>
 
-          {photos && (
+          {photos ? (
             <>
               <ZoomableImage url={photos[imgIdx].url} disabled={isZoomDisabled} />
 
@@ -61,19 +67,92 @@ function ImageGallery({ children, photos }) {
               </DotNavPresenter>
               )}
             </>
-          )}
+          )
+            : (<Loader alt="loading" src="spinner.gif" />)}
 
           <ExitButton className={view}>
             <FiX size={30} onClick={(e) => handleViewChange(e, 'default')} />
           </ExitButton>
         </Gallery>
       </DefaultViewport>
-      <GalleryAside>
-        {children}
-      </GalleryAside>
+      <AsideContent>
+        {preheading}
+      </AsideContent>
+      <AsideHeading>
+        {heading}
+      </AsideHeading>
+      <AsideContent>
+        {content}
+      </AsideContent>
     </ExpandedViewport>
   );
 }
+
+const Loader = styled.img`
+  height: 100px;
+  display: inline-block;
+  margin: 0 auto;
+`;
+
+const ExpandedViewport = styled.section`
+  background-color: ${(props) => props.theme.colors.light};
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  @media (min-width: 768px) { height: 630px; flex-wrap: wrap; }
+  @media (max-width: 768px) { width: 100%; }
+
+`;
+
+const DefaultViewport = styled.div`
+  @media (min-width: 1280px) {
+    width: 67.5%;
+    height: 630px;
+    transition: height 0.2s ease-in-out;
+  }
+  @media (max-width: 767px) {
+    height: 400px;
+    transition: height 0.2s ease-in-out;
+  }
+  @media (max-width: 1279px) and (min-width: 768px) {
+    width: 50%;
+    height: 630px;
+  }
+  overflow: visible;
+  z-index: 2;
+`;
+
+const AsideContent = styled.div`
+  width: 32.5%;
+  background-color:${(props) => props.theme.colors.light};
+  padding: 10px 30px;
+  color: ${(props) => props.theme.colors.secondary};
+  @media (max-width: 1279px) and (min-width: 768px) { width: 50%; }
+  @media (max-width: 768px) { width: 100%; }
+`;
+
+const AsideHeading = styled(AsideContent)`
+  @media (max-width: 768px) { order: -1; }
+`;
+
+const Gallery = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color:${(props) => props.theme.colors.background};
+  &.expanded {
+    width: ${(props) => (props.bounds.current ? props.bounds.current.offsetWidth : '')}px;
+    transition: width 1s ease-in-out;
+    :hover { cursor: crosshair; }
+  }
+  &.default {
+    width: 100%;
+    transition: width 1s ease-in-out;
+    &:hover { cursor: zoom-in; }
+  }
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
 
 const VisibleInExpanded = css`
   &.expanded, &.zoom {
@@ -115,41 +194,6 @@ const CarouselPresenter = styled.div`
   left: 30px;
   transform: translate(0, -50%);
   ${VisibleInDefault}
-`;
-
-const GalleryAside = styled.div`
-  background-color:${(props) => props.theme.colors.light};
-  width: 480px;
-  padding: 10px 30px;
-  color: ${(props) => props.theme.colors.secondary};
-`;
-
-const ExpandedViewport = styled.section`
-  background-color: ${(props) => props.theme.colors.light};
-  display: flex;
-  height: 630px;
-`;
-
-const DefaultViewport = styled.div`
-  width: 800px;
-  overflow: visible;
-  z-index: 2;
-`;
-
-const Gallery = styled.div`
-  background-color:${(props) => props.theme.colors.background};
-  height: 100%;
-  &.expanded {
-    width: ${() => document.getElementById('main').offsetWidth}px;
-    transition: width 1s ease-in-out;
-    :hover { cursor: crosshair; }
-  }
-  &.default {
-    width: 100%;
-    transition: width 1s ease-in-out;
-    &:hover { cursor: zoom-in; }
-  }
-  position: relative;
 `;
 
 const Arrow = styled.span`
@@ -210,7 +254,9 @@ const Dot = styled.span`
 `;
 
 ImageGallery.propTypes = {
-  children: PropTypes.node.isRequired,
+  preheading: PropTypes.node.isRequired,
+  heading: PropTypes.node.isRequired,
+  content: PropTypes.node.isRequired,
   photos: PropTypes.arrayOf(PropTypes.shape()),
 };
 

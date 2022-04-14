@@ -4,17 +4,23 @@ import styled from 'styled-components';
 import ProductImg from './ProductImg';
 import Star from '../../../Star';
 import { useCurrentProductId } from '../../../contexts/ProductIDContext';
+import useTracking from '@Contexts/ClickTracker';
 
-// receives array [product information, thumbnail url]
+
+// receives array [product information, thumbnail url, (bool for star or no star on card)]
 function Individualcard({ product }) {
+  const { trackEvent } = useTracking({ widget: 'clicked on related items' });
   const { setCurrentProductId } = useCurrentProductId();
+  const starRating = product[2]?.avgRating || 0;
 
-  const starRating = product[2].avgRating;
-//*** FIX ON CLICK BUTTON SO IT DOESN'T CHANGE
+  const handleClick = () => {
+    trackEvent({ element: 'Individualcard' })
+    setCurrentProductId(product[0].id)
+  }
+
   return (
-    <div>
-      <IndCard onClick={() => setCurrentProductId(product[0].id)}>
-        <ProductImg image={product[1]} product={product[0].id} />
+      <IndCard onClick={handleClick}>
+        <ProductImg image={product[1]} product={product[0].id} star={product[3]} />
         <CardText>
           <CategoryText>
             <div>{product[0].category}</div>
@@ -30,7 +36,6 @@ function Individualcard({ product }) {
           </div>
         </CardText>
       </IndCard>
-    </div>
   );
 }
 
@@ -43,7 +48,6 @@ const IndCard = styled.div`
   margin-right: 30px;
   margin-bottom: 5px;
   border-radius: 5px;
-  // padding: 0 15px 0 15px;
   &:hover {
     box-shadow: 0 0 6px rgba(90, 90, 90, 0.8);
   }
@@ -56,11 +60,7 @@ const CategoryText = styled.div`
 const CardText = styled.div`
   padding-left: 1px;
 `;
-
 export {
   Individualcard,
   IndCard,
 };
-
-
-{/* <IndCard onClick={() => setProductPicked(product[0].id)}></IndCard> */}

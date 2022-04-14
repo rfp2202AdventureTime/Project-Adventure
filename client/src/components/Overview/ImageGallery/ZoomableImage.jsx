@@ -2,7 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import useTracking from '@Contexts/ClickTracker';
+
 function ZoomableImage({ url, disabled }) {
+  const { trackEvent } = useTracking({ widget: 'Zoomable Image' });
   const [isZoomed, setIsZoomed] = useState(false);
   const zoomImg = useRef();
 
@@ -28,6 +31,7 @@ function ZoomableImage({ url, disabled }) {
     if (isZoomed) zoomOut();
     if (!isZoomed) zoomIn(e);
     setIsZoomed(!isZoomed);
+    trackEvent({ element: 'Zoom Image Toggle' });
   };
 
   useEffect(() => { if (disabled) zoomOut(); }, [disabled]);
@@ -44,7 +48,7 @@ function ZoomableImage({ url, disabled }) {
 }
 
 const Image = styled.figure`
-  background: url(${(props) => props.url});
+  background: url(${(props) => props.url || ''});
   height: 100%;
   width: 100%;
   background-size: auto 100%;
@@ -55,12 +59,13 @@ const Image = styled.figure`
 `;
 
 ZoomableImage.propTypes = {
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   disabled: PropTypes.bool,
 };
 
 ZoomableImage.defaultProps = {
   disabled: true,
+  url: '',
 };
 
 export default ZoomableImage;
