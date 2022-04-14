@@ -2,9 +2,9 @@
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FiBookOpen, FiTrash } from 'react-icons/fi';
+import useTracking from '@Contexts/ClickTracker';
 import Comparison from './Comparison';
 import { FeatureProvider } from '../contexts/FeatureContext';
-import useTracking from '@Contexts/ClickTracker';
 import { ModalClose } from '../../../contexts/Shared.styled';
 
 function ProductImg({ image, product, star }) {
@@ -27,7 +27,8 @@ function ProductImg({ image, product, star }) {
     trackEvent({ element: 'Remove item button' });
   };
 
-  const exitModal = () => {
+  const exitModal = (e) => {
+    e.stopPropagation();
     setShowModal(false);
   };
 
@@ -46,10 +47,10 @@ function ProductImg({ image, product, star }) {
     <CardImage url={productThumbnail ? productThumbnail : imageNotFound}>
       <FeatureProvider prodID={ID}>
 
-        <ModalContainer show={showModal} onClick={(e) => e.stopPropagation()}>
+        <ModalContainer show={showModal} onClick={(e) => exitModal(e)}>
 
           <Modal show={showModal}>
-            <ModalClose onClick={exitModal}> X </ModalClose>
+            <ModalClose onClick={exitModal}>&times;</ModalClose>
 
             <Comparison />
           </Modal>
