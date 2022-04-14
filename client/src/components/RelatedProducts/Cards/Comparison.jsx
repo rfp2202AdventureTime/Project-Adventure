@@ -7,7 +7,6 @@ import { useFeature } from '../contexts/FeatureContext';
 function Comparison() {
   const twoProductsArray = useFeature();
 
-  // console.log(twoProductsArray, 'twoproductsarray')
   if (twoProductsArray) {
     const item1 = twoProductsArray.data[0].data;
     const item2 = twoProductsArray.data[1].data;
@@ -26,7 +25,6 @@ function Comparison() {
 
     // iterate through stringified set and push to FeatureSet array
     const FeatureSet = [];
-
     for (const item of stagingSet) {
       FeatureSet.push(JSON.parse(item));
     }
@@ -52,7 +50,6 @@ function Comparison() {
             <tr key={key}>
               <Xfeature>{item1Array.map((item1) => ((item1.feature === item.feature) ? (item1.value) ? `${item1.value}` : '✓' : ' '))}</Xfeature>
 
-              {/* <Value>{item.value ? `${item.value}` : `${item.feature}`}</Value> */}
               <Value>{item.feature}</Value>
 
               <Xfeature>{item2Array.map((item2) => ((item2.feature === item.feature) ? (item2.value) ? `${item2.value}` : '✓' : ' '))}</Xfeature>
