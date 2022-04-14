@@ -2,9 +2,10 @@
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FiBookOpen, FiTrash } from 'react-icons/fi';
+import useTracking from '@Contexts/ClickTracker';
 import Comparison from './Comparison';
 import { FeatureProvider } from '../contexts/FeatureContext';
-import useTracking from '@Contexts/ClickTracker';
+import { ModalClose } from '../../../contexts/Shared.styled';
 
 function ProductImg({ image, product, star }) {
   const { trackEvent } = useTracking({ widget: 'modal window'});
@@ -26,6 +27,11 @@ function ProductImg({ image, product, star }) {
     trackEvent({ element: 'Remove item button' });
   };
 
+  const exitModal = (e) => {
+    e.stopPropagation();
+    setShowModal(false);
+  };
+
   useEffect(() => {
     const close = (e) => {
       e.stopPropagation();
@@ -41,9 +47,10 @@ function ProductImg({ image, product, star }) {
     <CardImage url={productThumbnail ? productThumbnail : imageNotFound}>
       <FeatureProvider prodID={ID}>
 
-        <ModalContainer show={showModal} onClick={(e) => e.stopPropagation()}>
+        <ModalContainer show={showModal} onClick={(e) => exitModal(e)}>
 
           <Modal show={showModal}>
+            <ModalClose onClick={exitModal}>&times;</ModalClose>
 
             <Comparison />
           </Modal>
@@ -115,4 +122,23 @@ const CloseButton = styled.div`
   border: none;
   color: grey;
 `;
+
+// const ModalClose = styled.div`
+//   position: fixed;
+//   color: white;
+//   line-height: 50px;
+//   font-size: 2rem;
+//   // position: absolute;
+//   right: 0;
+//   text-align: center;
+//   top: 0;
+//   width: 70px;
+//   text-decoration: none;
+//   z-index: 9998;
+//   cursor: pointer;
+//   &:hover {
+//     color: #000;
+//   }
+
+// `;
 export default ProductImg;
