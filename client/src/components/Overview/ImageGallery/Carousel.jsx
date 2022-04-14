@@ -55,6 +55,14 @@ const CarouselContainer = styled.nav`
   position: relative;
   width: ${CONFIG.width}px;
   height: ${(CONFIG.size * (CONFIG.itemHeight + CONFIG.spacing) - CONFIG.spacing)}px;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s linear;
+  @media (  max-width: 1280px) {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s 0.3s, opacity 0.3s linear;
+  }
 `;
 
 const CarouselViewport = styled.div`

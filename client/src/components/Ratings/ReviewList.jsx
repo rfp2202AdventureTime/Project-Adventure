@@ -7,15 +7,17 @@ import SortBar from './Review/SortBar';
 import SearchBar from './Review/SearchBar';
 import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
-import { ProductIDContext } from '../../contexts/ProductIDContext';
+import { useCurrentProductId, useCurrentProduct } from '../../contexts/ProductIDContext';
 import { Button } from '../../contexts/Shared.styled';
 import NewForm from '../../contexts/NewForm';
 
 export default function ReviewList({ filterStatus }) {
-  const productId = useContext(ProductIDContext);
+  const { currentProductId } = useCurrentProductId();
+  const { currentProduct } = useCurrentProduct();
   const reviewMeta = useMeta();
   const [sort, setSort] = useState('relevant');
   const [initialRender, setInitialRender] = useState(true);
+  // const [reviewStatus, setReviewStatus] = useState(false);
   const [keyword, setKeyword] = useState(null);
   const [prevCount, setPrevCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -25,15 +27,17 @@ export default function ReviewList({ filterStatus }) {
     totalCT: 0,
   });
 
+
   // totalCT get from reviewMeta isn't accurate due to reported reviews removal from
   // db but reflects the max possible review count
+
   const getReview = () => (
     axios({
       method: 'get',
       url: '/reviews',
       params: {
-        product_id: productId,
-        //here
+        product_id: currentProductId,
+        // here
         count: (reviewMeta?.totalCT || 999),
         sort,
       },
@@ -56,6 +60,10 @@ export default function ReviewList({ filterStatus }) {
   const handleSort = (criteria) => {
     setSort(criteria);
   };
+  const changeSelected = () => {
+    const $select = document.querySelector('#mySelect');
+    $select.value = 'newest';
+  };
 
   const handleSearch = (keyword) => {
     setKeyword(keyword);
@@ -70,7 +78,7 @@ export default function ReviewList({ filterStatus }) {
   };
 
   const resetSearch = () => {
-    const filteredData = filterReview(reviewDetail.allReview)
+    const filteredData = filterReview(reviewDetail.allReview);
     setReviewDetail({
       ...reviewDetail,
       prevCount: filteredData.length,
@@ -112,25 +120,27 @@ export default function ReviewList({ filterStatus }) {
 
   // TODO: check to see if there's memory leakage on unmounted components.
   useEffect(() => {
-    getReview()
-      .then(({ data }) => {
-        setInitialRender(initialRender && !initialRender);
-        setReviewDetail({
-          filteredReview: filterReview(data.results),
-          allReview: data.results,
-          totalCT: data.results.length,
-        });
-        (initialRender) && setPrevCount(Math.min(data.results.length, 2));
-        if (!filterStatus.filterCount) {
+    if (currentProductId) {
+      getReview()
+        .then(({ data }) => {
+          setInitialRender(initialRender && !initialRender);
           setReviewDetail({
+            filteredReview: filterReview(data.results),
             allReview: data.results,
             totalCT: data.results.length,
-            filteredReview: data.results.slice(0, prevCount),
           });
-        }
-      })
-      .catch((err) => Console.log(err));
-  }, [productId, sort, filterStatus.filterCount, prevCount]);
+          (initialRender) && setPrevCount(Math.min(data.results.length, 2));
+          if (!filterStatus.filterCount) {
+            setReviewDetail({
+              allReview: data.results,
+              totalCT: data.results.length,
+              filteredReview: data.results.slice(0, prevCount),
+            });
+          }
+        })
+        .catch((err) => Console.log(err));
+    }
+  }, [currentProductId, sort, filterStatus.filterCount, prevCount]);
 
   return (
     <ReviewSection>
@@ -167,9 +177,12 @@ export default function ReviewList({ filterStatus }) {
             ) : ''}
           <Button onClick={toggleModal}> Add a Review +</Button>
           <NewForm
-            formtype={'review'}
-            productName={'legging'}
+            formtype="reviews"
+            productName={currentProduct?.name}
             showModal={showModal}
+            setShowModal={setShowModal}
+            changeSelected={changeSelected}
+            setSort={setSort}
           />
         </ButtonBlock>
       </StickyBottom>

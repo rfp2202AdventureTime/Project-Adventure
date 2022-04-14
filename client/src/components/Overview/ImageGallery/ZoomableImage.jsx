@@ -2,7 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import useTracking from '@Contexts/ClickTracker';
+
 function ZoomableImage({ url, disabled }) {
+  const { trackEvent } = useTracking({ widget: 'Zoomable Image' });
   const [isZoomed, setIsZoomed] = useState(false);
   const zoomImg = useRef();
 
@@ -28,6 +31,7 @@ function ZoomableImage({ url, disabled }) {
     if (isZoomed) zoomOut();
     if (!isZoomed) zoomIn(e);
     setIsZoomed(!isZoomed);
+    trackEvent({ element: 'Zoom Image Toggle' });
   };
 
   useEffect(() => { if (disabled) zoomOut(); }, [disabled]);

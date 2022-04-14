@@ -13,7 +13,7 @@ import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
-  const [defaultProductId, setDefaultProductId] = useState(65636);
+  const [defaultProductId, setDefaultProductId] = useState(65655);
 
   return (
     <Theme>
@@ -61,6 +61,9 @@ const Banner = styled.div`
   font-size: 0.9em;
   text-align: center;
   padding: 10px 0;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 createRoot(document.getElementById('root')).render(<App />);

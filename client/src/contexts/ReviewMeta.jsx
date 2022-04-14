@@ -13,6 +13,7 @@ export function useMeta() {
 
 // Context has reviewMeta received from API plus converted avgRating and total rating count
 export function RatingProvider({ children }) {
+  // const productId = useContext(ProductIDContext);
   const { currentProductId } = useCurrentProductId();
   const [reviewMeta, setReviewMeta] = useState(null);
 
@@ -31,22 +32,24 @@ export function RatingProvider({ children }) {
   }
 
   useEffect(() => {
-    let newData;
-    axios({
-      method: 'get',
-      url: '/reviews/meta',
-      params: {
-        product_id: currentProductId,
-      },
-    })
-      .then(({ data }) => {
-        newData = data;
-        const RatingDetails = convertRating(data);
-        newData.avgRating = RatingDetails.avgRating;
-        newData.totalCT = RatingDetails.totalCT;
-        setReviewMeta(newData);
+    if (currentProductId) {
+      let newData;
+      axios({
+        method: 'get',
+        url: '/reviews/meta',
+        params: {
+          product_id: currentProductId,
+        },
       })
-      .catch(() => setReviewMeta(null));
+        .then(({ data }) => {
+          newData = data;
+          const RatingDetails = convertRating(data);
+          newData.avgRating = RatingDetails.avgRating;
+          newData.totalCT = RatingDetails.totalCT;
+          setReviewMeta(newData);
+        })
+        .catch(() => setReviewMeta(null));
+    }
   }, [currentProductId]);
 
   return (
