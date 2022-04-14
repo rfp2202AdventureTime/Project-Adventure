@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, Suspense, lazy } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 // import PropTypes from 'prop-types';
-import ReviewTile from './Review/ReviewTile';
-import SortBar from './Review/SortBar';
-import SearchBar from './Review/SearchBar';
+const ReviewTile = lazy(() => import('./Review/ReviewTile'));
+const SortBar = lazy(() => import('./Review/SortBar')) ;
+const SearchBar = lazy(() => import('./Review/SearchBar')) ;
 import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
 import { useCurrentProductId, useCurrentProduct } from '../../contexts/ProductIDContext';
@@ -37,7 +37,6 @@ export default function ReviewList({ filterStatus }) {
       url: '/reviews',
       params: {
         product_id: currentProductId,
-        // here
         count: (reviewMeta?.totalCT || 999),
         sort,
       },
@@ -143,6 +142,8 @@ export default function ReviewList({ filterStatus }) {
   }, [currentProductId, sort, filterStatus.filterCount, prevCount]);
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
+
     <ReviewSection>
       <StickyTop>
         <SearchBar
@@ -187,6 +188,8 @@ export default function ReviewList({ filterStatus }) {
         </ButtonBlock>
       </StickyBottom>
     </ReviewSection>
+    </Suspense>
+
   );
 }
 
