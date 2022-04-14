@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import useTracking from '@Contexts/ClickTracker';
 import { MdOutlineThumbUp, MdThumbUp } from 'react-icons/md';
 import { ClickableText } from '../../../contexts/Shared.styled';
-
 
 export default function Helpfulness({
   addHelpVote, helpfulness, reportReview, reviewId,
 }) {
+  const { trackEvent } = useTracking({ widget: 'User_Interaction_Review' });
   const [helpCount, setHelpCount] = useState(helpfulness);
   const [voteLimiter, setvoteLimiter] = useState(true);
   const [reportLimiter, setReportLimiter] = useState(true);
 
   const vote = () => {
     if (voteLimiter) {
+      trackEvent({ element: 'vote_for_helpful_review' });
       addHelpVote(reviewId);
       setHelpCount(helpCount + 1);
     }
@@ -22,6 +24,7 @@ export default function Helpfulness({
 
   const report = () => {
     if (reportLimiter) {
+      trackEvent({ element: 'report_a_review' });
       reportReview(reviewId);
     }
     setReportLimiter(reportLimiter && false);
