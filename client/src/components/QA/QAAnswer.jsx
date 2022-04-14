@@ -5,6 +5,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useData } from './QAContext';
 import { ClickableText } from '../../contexts/Shared.styled';
+import Console from '../../Console';
 
 import QAPhoto from './QAPhoto';
 
@@ -24,7 +25,7 @@ export default function QAAnswer({
       url: `http://localhost:3000/qa/answers/${ID}/${category}`,
     })
       .then((response) => {
-        console.log(response.status);
+        Console.log(response.status);
         const copyAllAnswers = [...allAnswers];
         for (let i = 0; i < copyAllAnswers.length; i += 1) {
           if (copyAllAnswers[i].question === question.question_id.toString()) {
@@ -38,7 +39,7 @@ export default function QAAnswer({
         }
       })
       .catch((err) => {
-        console.log(err);
+        Console.log(err);
       });
   };
 
@@ -48,7 +49,7 @@ export default function QAAnswer({
       url: `http://localhost:3000/qa/answers/${ID}/${category}`,
     })
       .then((response) => {
-        console.log(response.status);
+        Console.log(response.status);
         const copyAllQuestions = [...globalQData];
         const copyAllAnswers = [...allAnswers];
         for (let i = 0; i < copyAllAnswers.length; i += 1) {
@@ -72,7 +73,7 @@ export default function QAAnswer({
         }
       })
       .catch((err) => {
-        console.log(err);
+        Console.log(err);
       });
   };
 

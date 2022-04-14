@@ -92,7 +92,6 @@ export default function NewForm({
       newData.name = name;
       newData.email = email;
       newData.product_id = productId;
-      console.log(newData);
       axios({
         method: 'post',
         url: `/${formtype}`,

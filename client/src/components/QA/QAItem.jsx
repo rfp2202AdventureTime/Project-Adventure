@@ -6,6 +6,7 @@ import { useData } from './QAContext';
 import NewForm from '../../contexts/NewForm';
 import { ClickableText } from '../../contexts/Shared.styled';
 import { useCurrentProductId, useCurrentProduct } from '../../contexts/ProductIDContext';
+import Console from '../../Console';
 
 import QAAnswer from './QAAnswer';
 
@@ -55,7 +56,7 @@ export default function QAItem({ question, allAnswers }) {
       url: `http://localhost:3000/qa/questions/${ID}/${category}`,
     })
       .then((response) => {
-        console.log(response.status);
+        Console.log(response.status);
         const copyAllQuestions = [...globalQData];
         for (let i = 0; i < copyAllQuestions.length; i += 1) {
           if (copyAllQuestions[i].question_id === ID) {
@@ -65,7 +66,7 @@ export default function QAItem({ question, allAnswers }) {
         }
       })
       .catch((err) => {
-        console.log(err);
+        Console.log(err);
       });
   };
 
@@ -97,8 +98,8 @@ export default function QAItem({ question, allAnswers }) {
           </ClickableText>
           <NewForm
             // ${question.question_id}
-            formtype={`qa/questions/574061/answers`}
-            productName={currentProduct.name}
+            formtype={`qa/questions/${currentProductId}/answers`}
+            productName={currentProduct?.name}
             showModal={showModal}
             setShowModal={setShowModal}
           />
