@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useMeta } from '../../../contexts/ReviewMeta';
 import AddPhoto from './AddPhoto';
 
-export default function ReviewInput({ data, handleChange }) {
+export default function ReviewInput({ data, handleChange, photos, setPhotos }) {
   const meta = useMeta();
   const factorList = (meta) ? meta.characteristics : {};
 
@@ -116,7 +116,10 @@ export default function ReviewInput({ data, handleChange }) {
       </QuestionBlock>
       <QuestionBlock>
         <label htmlFor="photo">
-          <AddPhoto />
+          <AddPhoto
+            setPhotos={setPhotos}
+            photos={photos}
+          />
         </label>
       </QuestionBlock>
       <QuestionBlock>
@@ -185,5 +188,3 @@ const RowBlock = styled.div`
   background-color: ${({ theme }) => theme.colors.offWhite};
 
 `;
-
-

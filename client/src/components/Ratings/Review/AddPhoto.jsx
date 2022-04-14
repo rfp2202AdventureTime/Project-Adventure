@@ -1,16 +1,12 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+// import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Console from '../../../Console';
 
-export default function AddPhoto() {
+export default function AddPhoto({ photos, setPhotos }) {
   const [imageSrc, setImageSrc] = useState();
   const [uploadData, setUploadData] = useState();
-  const [imgList, setimgList] = useState([]);
-  let imageBlocks;
-  /**
-   * handleOnChange
-   * @description Triggers when the file input changes (ex: when a file is selected)
-   */
 
   function handleOnChange(e) {
     const reader = new FileReader();
@@ -22,11 +18,6 @@ export default function AddPhoto() {
 
     reader.readAsDataURL(e.target.files[0]);
   }
-
-  /**
-   * handleOnSubmit
-   * @description Triggers when the main form is submitted
-   */
 
   function handleOnSubmit(e) {
     e.preventDefault();
@@ -40,19 +31,17 @@ export default function AddPhoto() {
     })
       .then((response) => response.json())
       .then((res) => {
-        Console.log('Success:', res);
         // eslint-disable-next-line camelcase
         const { secure_url } = res;
         setImageSrc(secure_url);
-        const newData = imgList;
+        const newData = photos;
         newData.push(secure_url);
-        setimgList(newData);
+        setPhotos(newData);
       })
       .catch((error) => {
         Console.error('Error:', error);
       });
   }
-  console.log(imgList);
 
   return (
     <>
@@ -63,12 +52,19 @@ export default function AddPhoto() {
         <p>
           <input type="file" name="file" id="input" />
         </p>
-        {imageSrc && !uploadData && (
+        {imageSrc && !uploadData && (photos.length < 6) && (
         <button type="button" onClick={handleOnSubmit}>Upload Files</button>
         )}
       </div>
+      {(photos.length > 0) && (
+      <Note>
+        {photos.length}
+        {' '}
+        of 6 photos uploaded
+      </Note>
+      )}
       <PhotoContainer>
-        {(imgList.length) ? (imgList.map((url) => (
+        {(photos.length) ? (photos.map((url) => (
           <Thumbnail key={url} thumbnail={url} />))) : ''}
       </PhotoContainer>
     </>
@@ -90,4 +86,10 @@ const PhotoContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+`;
+
+const Note = styled.div`
+  font-size: 0.8rem;
+  font-style: italic;
+  padding: 0.5rem;
 `;
