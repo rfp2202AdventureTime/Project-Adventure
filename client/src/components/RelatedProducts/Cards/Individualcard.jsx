@@ -12,7 +12,6 @@ function Individualcard({ product }) {
   const starRating = product[2]?.avgRating || 0;
 
   return (
-    // <div>
       <IndCard onClick={() => setCurrentProductId(product[0].id)}>
         <ProductImg image={product[1]} product={product[0].id} star={product[3]} />
         <CardText>
@@ -30,7 +29,6 @@ function Individualcard({ product }) {
           </div>
         </CardText>
       </IndCard>
-    // </div>
   );
 }
 
@@ -43,7 +41,6 @@ const IndCard = styled.div`
   margin-right: 30px;
   margin-bottom: 5px;
   border-radius: 5px;
-  // padding: 0 15px 0 15px;
   &:hover {
     box-shadow: 0 0 6px rgba(90, 90, 90, 0.8);
   }

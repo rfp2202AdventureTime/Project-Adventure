@@ -11,13 +11,12 @@ import { useCurrentStyles } from '../../../contexts/StylesProvider';
 
 function CarouselAddToOutfit({ informationArray }) {
   const [viewIndex, setViewIndex] = useState(0);
-  const currentStyles = useCurrentStyles();
   const { currentProductId } = useCurrentProductId();
+  const currentStyles = useCurrentStyles();
   const starRating = useMeta();
-
   const displayed = informationArray.slice(viewIndex, (viewIndex + 3));
-
   const maxDisplayed = informationArray.length - 3;
+
 
   const next = () => {
     if (viewIndex === maxDisplayed) {

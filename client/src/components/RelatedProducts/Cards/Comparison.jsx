@@ -14,7 +14,7 @@ function Comparison() {
 
     // creates an array with all the features
     const FeatArray = item1.features.concat(item2.features);
-console.log(FeatArray, 'featarray')
+
     // create a set for stringified objects
     const stagingSet = new Set();
 
@@ -44,6 +44,7 @@ console.log(FeatArray, 'featarray')
             <th>{item1.name}</th>
             <th> </th>
             <th>{item2.name}</th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>

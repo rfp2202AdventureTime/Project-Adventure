@@ -82,6 +82,7 @@ const Modal = styled.div`
   left: 40%;
   background: grey;
   border-style: 10px solid;
+  border-radius: 5px;
 `;
 
 const ModalContainer = styled.a`
