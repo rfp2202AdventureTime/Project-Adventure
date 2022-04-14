@@ -5,12 +5,15 @@ import axios from 'axios';
 
 import { FiAlertTriangle } from 'react-icons/fi';
 
+import useTracking from '@Contexts/ClickTracker';
+
 import Console from '../../Console';
 
-// - Actually make the POST request when adding to cart instead of console logging.
+// - TODO
 // - Down arrow styling for the dropdowns.
 
 function AddToCart({ skus }) {
+  const { trackEvent } = useTracking({ widget: 'Add to Cart' });
   const [selectedSku, setSelectedSku] = useState();
   const [quantity, setQuantity] = useState();
   const [error, setError] = useState(false);
@@ -28,11 +31,8 @@ function AddToCart({ skus }) {
   }
 
   useEffect(() => setSelectedSku(null), [skus]);
-
-  useEffect(() => {
-    setQuantity(1);
-    setError(false);
-  }, [selectedSku]);
+  useEffect(() => setQuantity(1), [selectedSku]);
+  useEffect(() => setError(false), [selectedSku, skus]);
 
   // If selected sku isn't actually a sku (IE- the default option), don't actually set it.
   const handleChange = (e) => {
@@ -40,21 +40,20 @@ function AddToCart({ skus }) {
     setSelectedSku(newSku);
   };
 
-  const handleQuantity = (e) => setQuantity(e.target.value);
-
   const addToCart = () => {
     axios({
       method: 'POST',
       url: '/cart',
       data: { sku_id: selectedSku },
     })
-      .then(({ data }) => {
-        Console.log(`Added to cart! SKU: ${selectedSku}, COUNT: ${quantity}`, data);
-      })
+      .then(({ data }) => Console.log(`Added to cart! SKU: ${selectedSku}, COUNT: ${quantity}`, data))
       .catch((err) => Console.log(err));
   };
 
+  const handleQuantity = (e) => setQuantity(e.target.value);
+
   const handleSubmit = (e) => {
+    trackEvent({ element: 'Add to Cart' });
     e.preventDefault();
     if (!selectedSku) {
       setError(true);
@@ -78,7 +77,7 @@ function AddToCart({ skus }) {
         ) : null}
       </SelectionError>
 
-      <SelectSize defaultValue="selectsize" onChange={handleChange}>
+      <SelectSize onClick={() => trackEvent({ element: 'Select Size' })} defaultValue="selectsize" onChange={handleChange}>
         {anyValidSkus
           ? (
             <>
@@ -93,7 +92,7 @@ function AddToCart({ skus }) {
       {anyValidSkus
         ? (
           <>
-            <SelectQuantity defaultValue="selectQuantity" onChange={handleQuantity}>
+            <SelectQuantity defaultValue="selectQuantity" onClick={() => trackEvent({ element: 'Select Quantity' })} onChange={handleQuantity}>
               {!currentStock
                 ? <option value="selectquantity">-</option>
                 : [...Array(currentStock).keys()].map((num) => (

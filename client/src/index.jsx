@@ -61,6 +61,9 @@ const Banner = styled.div`
   font-size: 0.9em;
   text-align: center;
   padding: 10px 0;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 createRoot(document.getElementById('root')).render(<App />);
