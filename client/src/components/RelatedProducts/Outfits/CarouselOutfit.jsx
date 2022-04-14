@@ -4,11 +4,11 @@ import { React, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import useTracking from '@Contexts/ClickTracker';
 import { Individualcard } from '../Cards/Individualcard';
 import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 import { useMeta } from '../../../contexts/ReviewMeta';
 import { useCurrentStyles } from '../../../contexts/StylesProvider';
-import useTracking from '@Contexts/ClickTracker';
 
 function CarouselAddToOutfit({ informationArray }) {
   const { trackEvent } = useTracking({ widget: 'Add to Outfit'});
