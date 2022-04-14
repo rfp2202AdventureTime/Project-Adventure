@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { FiBookOpen, FiTrash } from 'react-icons/fi';
 import Comparison from './Comparison';
 import { FeatureProvider } from '../contexts/FeatureContext';
+
 
 function ProductImg({ image, product, star }) {
   const [showModal, setShowModal] = useState(false);
@@ -44,7 +46,7 @@ function ProductImg({ image, product, star }) {
 
         </ModalContainer>
 
-        {star ? <CompareButton onClick={(e) => handleClick(e)}>&#9733;</CompareButton> : <CloseButton onClick={(e) => handleRemove(e, product)}>X</CloseButton>}
+        {star ? <CompareButton onClick={(e) => handleClick(e)}><FiBookOpen size={30} /></CompareButton> : <CloseButton onClick={(e) => handleRemove(e, product)}><FiTrash size={30} /></CloseButton>}
 
       </FeatureProvider>
     </CardImage>
@@ -60,7 +62,7 @@ const CardImage = styled.div`
 `;
 
 const CompareButton = styled.button`
-  color: yellow;
+  color: grey;
   border: 2px, white;
   position: absolute;
   right: 8px;
@@ -106,6 +108,6 @@ const CloseButton = styled.div`
   right: 15px;
   background-color: transparent;
   border: none;
-  color: yellow;
+  color: grey;
 `;
 export default ProductImg;

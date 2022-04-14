@@ -1,15 +1,17 @@
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios'
+import axios from 'axios';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Individualcard } from '../Cards/Individualcard';
 import { useCurrentProduct, useCurrentProductId } from '../../../contexts/ProductIDContext';
+import { useMeta } from '../../../contexts/ReviewMeta';
 import { useCurrentStyles } from '../../../contexts/StylesProvider';
 
-function CarouselRelated({ zippedArray }) {
+function CarouselAddToOutfit({ zippedArray }) {
   const [viewIndex, setViewIndex] = useState(0);
   const currentStyles = useCurrentStyles();
   const { currentProductId } = useCurrentProductId();
+  const starRating = useMeta();
 
   const displayed = zippedArray.slice(viewIndex, (viewIndex + 4));
 
@@ -32,6 +34,7 @@ function CarouselRelated({ zippedArray }) {
 
   const AddToStorage = (e, product) => {
     const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
+    // console.log(sure, 'ratings');
     e.stopPropagation();
 
     axios({
@@ -39,7 +42,7 @@ function CarouselRelated({ zippedArray }) {
       url: `/products/${product}`,
     })
       .then(({ data }) => {
-        let dataTest = [data, currentThumbnail]
+        let dataTest = [data, currentThumbnail, starRating, false ];
         localStorage.setItem(data.id, JSON.stringify(dataTest));
       });
   };
@@ -138,4 +141,4 @@ const AddedOutfit = styled.div`
 const OutfitText = styled.p`
   text-align: center;
 `;
-export default CarouselRelated;
+export default CarouselAddToOutfit;

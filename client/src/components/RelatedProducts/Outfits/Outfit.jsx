@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react';
 // import styled from 'styled-components';
-import CarouselRelated from './CarouselOutfit';
+import CarouselAddToOutfit from './CarouselOutfit';
 
 // setsOutfitArray state to localStorage
 export default function Outfit() {
@@ -8,14 +8,14 @@ export default function Outfit() {
 
   const itemsLocal = { ...localStorage };
   const keys = Object.keys(itemsLocal);
-  const testingArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
+  const localArray = keys.map((item) => JSON.parse(localStorage.getItem(item)));
 
   useEffect(() => {
-    setOutfitArray(([]) => [...testingArray]);
+    setOutfitArray(([]) => [...localArray]);
   }, [itemsLocal]);
 
   return (
-    <CarouselRelated zippedArray={outfitArray} />
+    <CarouselAddToOutfit zippedArray={outfitArray} />
 
   );
   // }
