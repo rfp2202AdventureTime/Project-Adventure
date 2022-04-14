@@ -141,53 +141,53 @@ export default function ReviewList({ filterStatus }) {
     }
   }, [currentProductId, sort, filterStatus.filterCount, prevCount]);
 
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
-
-    <ReviewSection>
-      <StickyTop>
-        <SearchBar
-          resetSearch={resetSearch}
-          handleSearch={handleSearch}
-        />
-        <SortBar
-          totalCT={reviewDetail.filteredReview.length}
-          allCT={reviewDetail.allReview.length}
-          handleSort={handleSort}
-        />
-      </StickyTop>
-      {reviewDetail.filteredReview.map(
-        (review) => (
-          <ReviewTile
-            key={review.review_id.toString()}
-            addHelpVote={addHelpVote}
-            review={review}
-            keyword={keyword}
-            reportReview={reportReview}
+      <ReviewSection>
+        <StickyTop>
+          <SearchBar
+            resetSearch={resetSearch}
+            handleSearch={handleSearch}
           />
-        ),
-      )}
-      <StickyBottom>
-        <ButtonBlock>
-          { (!(filterStatus.filterCount)
-            && (prevCount < reviewDetail.allReview.length))
-            ? (
-              <Button onClick={fetchFeed}>
-                More Reviews
-              </Button>
-            ) : ''}
-          <Button onClick={toggleModal}> Add a Review +</Button>
-          <NewForm
-            formtype="reviews"
-            productName={currentProduct?.name}
-            showModal={showModal}
-            setShowModal={setShowModal}
-            changeSelected={changeSelected}
-            setSort={setSort}
+          <SortBar
+            totalCT={reviewDetail.filteredReview.length}
+            allCT={reviewDetail.allReview.length}
+            handleSort={handleSort}
           />
-        </ButtonBlock>
-      </StickyBottom>
-    </ReviewSection>
+        </StickyTop>
+        {reviewDetail.filteredReview.map(
+          (review) => (
+            <ReviewTile
+              key={review.review_id.toString()}
+              addHelpVote={addHelpVote}
+              review={review}
+              keyword={keyword}
+              reportReview={reportReview}
+            />
+          ),
+        )}
+        <StickyBottom>
+          <ButtonBlock>
+            { (!(filterStatus.filterCount)
+              && (prevCount < reviewDetail.allReview.length))
+              ? (
+                <Button onClick={fetchFeed}>
+                  More Reviews
+                </Button>
+              ) : ''}
+            <Button onClick={toggleModal}> Add a Review +</Button>
+            <NewForm
+              formtype="reviews"
+              productName={currentProduct?.name}
+              showModal={showModal}
+              setShowModal={setShowModal}
+              changeSelected={changeSelected}
+              setSort={setSort}
+            />
+          </ButtonBlock>
+        </StickyBottom>
+      </ReviewSection>
     </Suspense>
 
   );
