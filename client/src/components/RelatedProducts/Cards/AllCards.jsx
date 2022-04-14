@@ -2,7 +2,7 @@
 import { React, useState } from 'react';
 import { useProd } from '../contexts/ProdContext';
 import { useThumbnail } from '../contexts/thumbnailContext';
-import CarouselRelated from './CarouselR';
+import CarouselRelated from './CarouselRelated';
 
 function AllCards() {
   const { relatedInformation } = useProd();
