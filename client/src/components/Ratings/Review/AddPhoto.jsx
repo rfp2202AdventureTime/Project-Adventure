@@ -63,7 +63,6 @@ export default function AddPhoto() {
         <p>
           <input type="file" name="file" id="input" />
         </p>
-        {/* <img src={imageSrc} alt="uploaded User Img" /> */}
         {imageSrc && !uploadData && (
         <button type="button" onClick={handleOnSubmit}>Upload Files</button>
         )}

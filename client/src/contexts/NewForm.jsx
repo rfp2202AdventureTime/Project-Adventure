@@ -176,6 +176,7 @@ export default function NewForm({
                     placeholder={type.bodyPlaceholder}
                     maxLength="1000"
                     minLength="50"
+                    required
                   />
                 </div>
                 {bodyNote}
