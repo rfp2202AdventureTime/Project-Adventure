@@ -12,6 +12,7 @@ function Comparison() {
 
     const FeatArray = item1.features.concat(item2.features);
 
+
     const item1Array = [];
     item1.features.map((item) => item1Array.push(item));
 
@@ -31,11 +32,11 @@ function Comparison() {
           {FeatArray.map((item, key) => (
             <tr key={key}>
 
-              <td>{item1Array.map((item1) => (item1.feature === item.feature ? 'X' : ' '))}</td>
+              <Xfeature>{item1Array.map((item1) => (item1.feature === item.feature ? 'X' : ' '))}</Xfeature>
 
               <td>{item.value ? `${item.feature}: ${item.value}` : `${item.feature}`}</td>
 
-              <td>{item2Array.map((item2) => (item2.feature === item.feature ? 'X' : ' '))}</td>
+              <Xfeature>{item2Array.map((item2) => (item2.feature === item.feature ? 'X' : ' '))}</Xfeature>
             </tr>
           ))}
 
@@ -45,4 +46,8 @@ function Comparison() {
   }
 }
 
+const Xfeature = styled.td`
+  position: flex;
+  text-align: center;
+`;
 export default Comparison;
