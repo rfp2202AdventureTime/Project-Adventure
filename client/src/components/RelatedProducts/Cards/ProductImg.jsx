@@ -1,46 +1,72 @@
 /* eslint-disable react/prop-types */
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { FiBookOpen, FiTrash } from 'react-icons/fi';
 import Comparison from './Comparison';
-import { FeatureProvider } from './FeatureContext';
+import { FeatureProvider } from '../contexts/FeatureContext';
+import useTracking from '@Contexts/ClickTracker';
 
-// link should take it to the product page (productID)
-// src should image of related products
-function ProductImg({ image, product }) {
+function ProductImg({ image, product, star }) {
+  const { trackEvent } = useTracking({ widget: 'modal window'});
   const [showModal, setShowModal] = useState(false);
   const [ID, setID] = useState();
   const productThumbnail = image;
+  const imageNotFound = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
 
-  function handleClick() {
+  const handleClick = (e) => {
+    e.stopPropagation();
     setShowModal(!showModal);
     setID(product);
-  }
+    trackEvent({ element: 'Comparison window' });
+  };
+
+  const handleRemove = (e, product) => {
+    e.stopPropagation();
+    localStorage.removeItem(product);
+    trackEvent({ element: 'Remove item button' });
+  };
+
+  useEffect(() => {
+    const close = (e) => {
+      e.stopPropagation();
+      if (e.key === 'Escape') {
+        setShowModal(false);
+      }
+    };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
 
   return (
-
-    <div>
+    <CardImage url={productThumbnail ? productThumbnail : imageNotFound}>
       <FeatureProvider prodID={ID}>
-        <TestingModal show={showModal}>
-          <Comparison />
-        </TestingModal>
 
-        <CompareButton onClick={() => handleClick()}>&#9733;</CompareButton>
-        <a href="http://google.com">
-          <img
-            src={productThumbnail}
-            width={250}
-            height={150}
-            alt="If you can see this, thumbnail not found"
-          />
-        </a>
+        <ModalContainer show={showModal} onClick={(e) => e.stopPropagation()}>
+
+          <Modal show={showModal}>
+
+            <Comparison />
+          </Modal>
+
+        </ModalContainer>
+
+        {star ? <CompareButton onClick={(e) => handleClick(e)}><FiBookOpen size={30} /></CompareButton> : <CloseButton onClick={(e) => handleRemove(e, product)}><FiTrash size={30} /></CloseButton>}
 
       </FeatureProvider>
-    </div>
+    </CardImage>
   );
 }
 
+const CardImage = styled.div`
+  width: 100%;
+  height: 200px;
+  background: url(${(props) => props.url});
+  background-position: center;
+  background-size: cover;
+`;
+
 const CompareButton = styled.button`
-  color: yellow;
+  color: grey;
   border: 2px, white;
   position: absolute;
   right: 8px;
@@ -48,16 +74,45 @@ const CompareButton = styled.button`
   background-color: transparent;
   border: transparent;
   margin: 5px;
+  z-index: 10;
 `;
 
-const TestingModal = styled.div`
+const Modal = styled.div`
   display: ${(props) => (props.show ? 'relative' : 'none')};
+  background-poisition: center;
   position: absolute;
   width: max-content;
   z-index: 500;
-  top: 50%;
-  left: 50%;
+  top: 40%;
+  left: 40%;
   background: grey;
   border-style: 10px solid;
+  border-radius: 5px;
+`;
+
+const ModalContainer = styled.a`
+  position: fixed;
+  background-color: ${(props) => props.theme.colors.modalBackground};
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9998;
+  display: ${(props) => (props.show ? 'relative' : 'none')};
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  pointer-events: disabled;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+`;
+
+const CloseButton = styled.div`
+  display: relative;
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  background-color: transparent;
+  border: none;
+  color: grey;
 `;
 export default ProductImg;

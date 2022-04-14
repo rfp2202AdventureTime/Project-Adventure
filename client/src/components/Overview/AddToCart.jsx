@@ -1,93 +1,168 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import axios from 'axios';
 
-// This isn't fully done. Things left to do:
-// - Disable the style selector when no items are in stock
-// - Remove the Add to Cart and Quantity Selectors when out of stock
-// - Default options for Size and Quantity selectors aren't correct.
-// - Actually make the POST request when adding to cart instead of console logging.
+import { FiAlertTriangle } from 'react-icons/fi';
+
+import useTracking from '@Contexts/ClickTracker';
+
+import Console from '../../Console';
+
+// - TODO
 // - Down arrow styling for the dropdowns.
 
 function AddToCart({ skus }) {
-  const [currentSku, setCurrentSku] = useState();
+  const { trackEvent } = useTracking({ widget: 'Add to Cart' });
+  const [selectedSku, setSelectedSku] = useState();
   const [quantity, setQuantity] = useState();
-  const [stock, setStock] = useState();
   const [error, setError] = useState(false);
-  const [validSkus, setValidSkus] = useState([]);
 
-  useEffect(() => {
-    const valid = Object.keys(skus)
-      .filter((sku) => (skus[sku].quantity > 0))
-      .map((sku) => ({ ...skus[sku], sku }));
-    setValidSkus(valid);
-  }, [skus]);
+  const inStockSkus = Object.keys(skus)
+    .filter((sku) => (skus[sku].quantity > 0))
+    .map((sku) => ({ ...skus[sku], sku }));
 
-  useEffect(() => {
-    setQuantity(0);
-    setError(false);
-    if (skus[currentSku]) {
-      setStock(skus[currentSku].quantity > 15 ? 15 : skus[currentSku].quantity);
-    }
-  }, [currentSku]);
+  // Assume nothing is in stock. If it is, return that or 15, whichever is lower.
+  let currentStock = 0;
+  if (skus[selectedSku]) {
+    currentStock = (skus[selectedSku].quantity > 15)
+      ? 15
+      : skus[selectedSku].quantity;
+  }
 
+  useEffect(() => setSelectedSku(null), [skus]);
+  useEffect(() => setQuantity(1), [selectedSku]);
+  useEffect(() => setError(false), [selectedSku, skus]);
+
+  // If selected sku isn't actually a sku (IE- the default option), don't actually set it.
   const handleChange = (e) => {
-    setCurrentSku(e.target.value);
+    const newSku = (skus[e.target.value]) ? e.target.value : null;
+    setSelectedSku(newSku);
   };
 
-  const handleQuantity = (e) => {
-    setQuantity(e.target.value);
+  const addToCart = () => {
+    axios({
+      method: 'POST',
+      url: '/cart',
+      data: { sku_id: selectedSku },
+    })
+      .then(({ data }) => Console.log(`Added to cart! SKU: ${selectedSku}, COUNT: ${quantity}`, data))
+      .catch((err) => Console.log(err));
   };
+
+  const handleQuantity = (e) => setQuantity(e.target.value);
 
   const handleSubmit = (e) => {
+    trackEvent({ element: 'Add to Cart' });
     e.preventDefault();
-    if (!currentSku) {
-      setError(!error);
+    if (!selectedSku) {
+      setError(true);
     } else {
-      // eslint-disable-next-line no-console
-      console.log(`Size: ${skus[currentSku].size} - Quantity: ${quantity}`);
+      addToCart();
     }
   };
+
+  const anyValidSkus = inStockSkus.length > 0;
 
   return (
     <>
-      <SelectionError>{error ? 'Please select a size!' : null}</SelectionError>
-      <SelectSize onChange={handleChange}>
-        {validSkus.length > 0
-          ? (validSkus.map((sku) => (
-            <option
-              value={sku.sku}
-              key={sku.sku}
-            >
-              {sku.size}
-            </option>
-          )))
-          : <option disabled>NO STOCK</option>}
+      <SelectionError>
+        {error ? (
+          <Error>
+            <AlertWrapper>
+              <FiAlertTriangle />
+            </AlertWrapper>
+            Please select a size!
+          </Error>
+        ) : null}
+      </SelectionError>
+
+      <SelectSize onClick={() => trackEvent({ element: 'Select Size' })} defaultValue="selectsize" onChange={handleChange}>
+        {anyValidSkus
+          ? (
+            <>
+              <option value="selectsize">SELECT SIZE</option>
+              {(inStockSkus.map((sku) => (
+                <option value={sku.sku} key={sku.sku}>{sku.size}</option>)))}
+            </>
+          )
+          : <option value="selectsize">OUT OF STOCK</option>}
       </SelectSize>
 
-      <SelectQuantity onChange={handleQuantity}>
-        {!stock
-          ? <option>NO STOCK</option>
-          : [...Array(stock).keys()].map((num) => (
-            <option
-              value={num + 1}
-              key={num + 1}
-            >
-              {num + 1}
-            </option>
-          ))}
-      </SelectQuantity>
+      {anyValidSkus
+        ? (
+          <>
+            <SelectQuantity defaultValue="selectQuantity" onClick={() => trackEvent({ element: 'Select Quantity' })} onChange={handleQuantity}>
+              {!currentStock
+                ? <option value="selectquantity">-</option>
+                : [...Array(currentStock).keys()].map((num) => (
+                  <option value={num + 1} key={num + 1}>{num + 1}</option>
+                ))}
+            </SelectQuantity>
 
-      <AddToCartButton onClick={handleSubmit}>
-        Add to Cart
-      </AddToCartButton>
+            <AddToCartButton onClick={handleSubmit}>Add to Cart</AddToCartButton>
+          </>
+        )
+        : null}
     </>
   );
 }
 
+const ErrorAnimation = keyframes`
+  0% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+  37% {
+    transform: translateX(5px);
+    timing-function: ease-out;
+  }
+  55% {
+    transform: translateX(-5px);
+    timing-function: ease-in;
+  }
+  73% {
+    transform: translateX(4px);
+    timing-function: ease-out;
+  }
+  82% {
+    transform: translateX(-4px);
+    timing-function: ease-in;
+  }
+  91% {
+    transform: translateX(2px);
+    timing-function: ease-out;
+  }
+  96% {
+    transform: translateX(-2px);
+    timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+`;
+
 const SelectionError = styled.div`
   height: 40px;
   color: red;
+  animation-name: ${ErrorAnimation};
+  animation-duration: 0.5s;
+  display: flex;
+  align-content: flex-end;
+`;
+
+const Error = styled.span`
+  animation-name: ${ErrorAnimation};
+  animation-duration: 0.5s;
+  line-height: 50px;
+  font-size: 0.9em;
+  margin-left: 5px;
+`;
+
+const AlertWrapper = styled.div`
+  display: inline-block;
+  padding-right: 4px;
 `;
 
 const AddToCartButton = styled.button`
@@ -119,6 +194,7 @@ const CustomSelect = styled.select`
 
 const SelectSize = styled(CustomSelect)`
   width: 150px;
+  & > svg { display: inline-block; }
 `;
 
 const SelectQuantity = styled(CustomSelect)`

@@ -3,7 +3,8 @@ import {
   React, useContext, useState, useEffect, createContext,
 } from 'react';
 import axios from 'axios';
-import { useRelated } from '../RelatedContext';
+import Console from '../../../Console';
+import { useRelated } from './RelatedContext';
 
 const ThumbnailContext = createContext();
 
@@ -24,7 +25,7 @@ export function ThumbnailProvider({ children }) {
         .then((data) => {
           setThumbnailInformation({ data });
         })
-        .catch((err) => console.log('there was an ERROR', err));
+        .catch((err) => Console.log('there was an ERROR in Thumbnail', err));
     }
   }, [related]);
 

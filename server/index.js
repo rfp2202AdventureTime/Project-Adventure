@@ -25,13 +25,9 @@ app.use(express.json());
 // Be sure that you have configured your .env file to contain your personal GihHub token
 
 app.all('/*', (req, res) => {
-  const {
-    method, params, body,
-  } = req;
-  console.log(req.url)
-  console.log(req.body);
+  const { method, params, body } = req;
   const url = `https://app-hrsei-api.herokuapp.com/api/fec2/rfp${req.url}`;
-  console.log(url)
+  console.log(url);
   axios({
     url,
     method,
@@ -44,6 +40,7 @@ app.all('/*', (req, res) => {
       res.send(newData);
     })
     .catch((err) => {
+      console.log(err);
       res.status(404);
       res.send(err);
     });

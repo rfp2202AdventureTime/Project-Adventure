@@ -26,7 +26,7 @@ export default function RatingOverview() {
 
   return (
     <RatingOverviewContainer>
-      <h3>
+      <h3 id="ratings">
         RATINGS & REVIEWS
       </h3>
       <StarContainer>

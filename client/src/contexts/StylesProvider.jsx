@@ -45,7 +45,7 @@ function StylesProvider({ children }) {
   }, [currentProductId]);
 
   React.useEffect(() => {
-    if (currentStyles && currentStyles[0].style_id) {
+    if (currentStyles && currentStyles[0]?.style_id) {
       setActiveStyleId(currentStyles[0].style_id);
     }
   }, [currentStyles]);

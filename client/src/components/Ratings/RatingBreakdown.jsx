@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import RatingOverview from './RatingBreakdown/RatingOverview';
-import RatingList from './RatingBreakdown/RatingList';
-import FactorList from './RatingBreakdown/FactorList';
+const RatingOverview = lazy(() => import('./RatingBreakdown/RatingOverview')) ;
+const RatingList = lazy(() => import('./RatingBreakdown/RatingList')) ;
+const FactorList = lazy(() => import('./RatingBreakdown/FactorList')) ;
 
 // eslint-disable-next-line react/prop-types
 export default function RatingBreakdown({ toggleFilter, filterStatus, clearFilter }) {
   return (
-    <RatingContainer>
-      <RatingOverview />
-      <RatingList
-        filterStatus={filterStatus}
-        toggleFilter={toggleFilter}
-        clearFilter={clearFilter}
-      />
-      <FactorList />
-    </RatingContainer>
+    <Suspense fallback={<div>Loading...</div>}>
+      <RatingContainer>
+        <RatingOverview />
+        <RatingList
+          filterStatus={filterStatus}
+          toggleFilter={toggleFilter}
+          clearFilter={clearFilter}
+        />
+        <FactorList />
+      </RatingContainer>
+    </Suspense>
   );
 }
 

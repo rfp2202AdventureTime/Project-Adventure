@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import useTracking from '@Contexts/ClickTracker';
 import { ClickableText } from '../../../contexts/Shared.styled';
 
 export default function RatingBar({ scorePct, id, toggleFilter }) {
+  const { trackEvent } = useTracking({ widget: 'Rating_Bar_Sort' });
   const handleClick = (e) => {
+    trackEvent({ element: 'Sort_by_Star' });
     const selected = e.target.className.slice(-1);
     toggleFilter(selected);
   };
