@@ -25,13 +25,18 @@ app.use(express.json());
 // Be sure that you have configured your .env file to contain your personal GihHub token
 
 app.all('/*', (req, res) => {
-  const { method, params, data } = req;
+  const {
+    method, params, body,
+  } = req;
+  console.log(req.url)
+  console.log(req.body);
   const url = `https://app-hrsei-api.herokuapp.com/api/fec2/rfp${req.url}`;
+  console.log(url)
   axios({
     url,
     method,
     params,
-    data,
+    data: body,
     headers: { Authorization: `${process.env.GITHUB_APIKEY}` },
   })
     .then((result) => {

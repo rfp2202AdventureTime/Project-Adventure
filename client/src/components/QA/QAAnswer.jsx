@@ -82,57 +82,67 @@ export default function QAAnswer({
         <strong>A: </strong>
         {answer[0].body}
       </span>
-      <span>
-        {'by '}
-        {answer[0].answerer_name === 'Seller'
-          ? (
-            <strong>
-              {answer[0].answerer_name}
-            </strong>
-          )
-          : `${answer[0].answerer_name} `}
-        {`${moment(answer[0].date).format('MMMM DD, YYYY')} |
-      Helpful? `}
-        {(!disableHelpfulAnswer) ? (
-          <ClickableText
-            disabled={disableHelpfulAnswer}
-            onClick={() => {
-              setdisableHelpfulAnswer(true);
-              handleHelpfulAnswer('helpful', answer[0].answer_id);
-            }}
-          >
-            Yes
-          </ClickableText>
-        ) : (<span>Yes</span>)}
-        {` (${answer[0].helpfulness}) | `}
-        {(!reported) ? (
-          <ClickableText
-            onClick={() => handleReport('report', answer[0].answer_id)}
-          >
-            Report
-          </ClickableText>
-        ) : (<span>Report</span>)}
-      </span>
-      <QAPhotoContainer>
-        { answer[1].map((photos) => (
-          <QAPhoto
-            test={photos}
-            url={photos.url}
-            key={photos.id}
-          />
-        ))}
-      </QAPhotoContainer>
+      <QAItemAnswerPostInfo>
+
+        <span>
+          {'by '}
+          {answer[0].answerer_name === 'Seller'
+            ? (
+              <strong>
+                {answer[0].answerer_name}
+              </strong>
+            )
+            : `${answer[0].answerer_name} `}
+          {`${moment(answer[0].date).format('MMMM DD, YYYY')} |
+        Helpful? `}
+          {(!disableHelpfulAnswer) ? (
+            <ClickableText
+              disabled={disableHelpfulAnswer}
+              onClick={() => {
+                setdisableHelpfulAnswer(true);
+                handleHelpfulAnswer('helpful', answer[0].answer_id);
+              }}
+            >
+              Yes
+            </ClickableText>
+          ) : (<span>Yes</span>)}
+          {` (${answer[0].helpfulness}) | `}
+          {(!reported) ? (
+            <ClickableText
+              onClick={() => handleReport('report', answer[0].answer_id)}
+            >
+              Report
+            </ClickableText>
+          ) : (<span>Report</span>)}
+        </span>
+      </QAItemAnswerPostInfo>
+      {(answer[1][0] !== undefined) && (
+        <QAPhotoContainer>
+          { answer[1].map((photos) => (
+            <QAPhoto
+              test={photos}
+              url={photos.url}
+              key={photos.id}
+            />
+          ))}
+        </QAPhotoContainer>
+      )}
     </QAItemAnswer>
   );
 }
 
 const QAItemAnswer = styled.div`
-  background-color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.offWhite};
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding-bottom: 10px;
+  padding-bottom: 3px;
   padding-top: 10px;
+`;
+
+const QAItemAnswerPostInfo = styled.div`
+  font-size: small;
+  color: #5a5a5a;
 `;
 
 const QAPhotoContainer = styled.div`
@@ -141,7 +151,7 @@ const QAPhotoContainer = styled.div`
   flex-wrap: wrap;
   justify-content: left;
   gap: 20px;
-  max-width: 400px;
+  max-width: 550px;
   padding: 10px 0;
 `;
 

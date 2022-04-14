@@ -141,31 +141,34 @@ export default function QAItem({ question, allAnswers }) {
 }
 
 const QAItemSection = styled.div`
-  background-color: ${(props) => props.theme.colors.light};
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  border-bottom: 0.2rem dotted rgba(221, 235, 223);
-  `;
+display: flex;
+flex-direction: column;
+margin: 0.4rem 0.8rem 0.4rem 0.8rem;
+padding: 0.25rem 1rem 0.25rem 1rem;
+background-color: ${({ theme }) => theme.colors.offWhite};
+&:hover {
+  box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
+  };
+`;
 
 const QAItemFullQuestion = styled.div`
-  background-color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.offWhite};
   display: flex;
   flex-direction: row;
 `;
 
 const QAItemQuestionLeft = styled.span`
-  background-color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.offWhite};
   justify-content: space-around;
   padding-bottom: 10px;
   padding-top: 10px;
   font-weight:bold;
   width: 80%;
   float: right;
-  `;
+`;
 
 const QAItemQuestionRight = styled.span`
-  background-color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.offWhite};
   justify-content: space-around;
   padding-bottom: 10px;
   padding-top: 10px;

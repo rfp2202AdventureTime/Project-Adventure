@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Modal, ModalParent, ModalClose } from './Shared.styled';
 import Console from '../Console';
 import Star from '../Star';
+import { ProductIDContext } from './ProductIDContext';
 
 // formtype: reviews, questions, answers
 export default function NewForm({ formtype, productName, showModal }) {
   let type;
+  const productId = useContext(ProductIDContext);
   const [modalStatus, setModalStatus] = useState(true);
   const [data, setData] = useState({});
   const handleChange = (e) => setData((prevState) => (
     { ...prevState, [e.target.name]: e.target.value }));
 
   const handleOnSubmit = () => {
+    // if (formtype === 'qa/questions/') {
+    //   console.log('here')
+    //   setData((prevState) => (
+    //     { ...prevState, product_id: 3456234 }));
+    // }
+    console.log(formtype === 'qa/questions/')
+    data['product_id'] = productId
+    console.log(data)
     axios({
       method: 'post',
       url: `/${formtype}`,
@@ -23,7 +33,7 @@ export default function NewForm({ formtype, productName, showModal }) {
       .catch((err) => Console.log(err));
   };
 
-  //move summary to seperate
+  // move summary to seperate
   const reviews = {
     title: 'Write Your Review',
     subtitle: `About the ${productName}`,
@@ -37,6 +47,7 @@ export default function NewForm({ formtype, productName, showModal }) {
     title: 'Ask Your Question',
     subtitle: `About the ${productName}`,
     body: 'Your Question: ',
+    product_id: productId,
   };
 
   const sharedAnswerInput = {
@@ -47,13 +58,13 @@ export default function NewForm({ formtype, productName, showModal }) {
   };
 
   const shared = {
-    username: 'What is your nickname?',
+    name: 'What is your nickname?',
     email: 'Your email:',
   };
 
   if (formtype === 'review') {
     type = reviews;
-  } else if (formtype === 'question') {
+  } else if (formtype === 'qa/questions/') {
     type = sharedQuestionInput;
   } else if (formtype === 'answer') {
     type = sharedAnswerInput;
@@ -107,6 +118,7 @@ export default function NewForm({ formtype, productName, showModal }) {
     </>
   ) : '';
 
+
   const clickExit = () => {
     setModalStatus(false);
   };
@@ -122,7 +134,13 @@ export default function NewForm({ formtype, productName, showModal }) {
       >
         <div>{type.title}</div>
         <div>{type.subtitle}</div>
-        <form onChange={handleChange}>
+        <form
+          onChange={handleChange}
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleOnSubmit();
+          }}
+        >
           <FormContainer>
             {addtionalReviewInput}
             {(type.summary !== undefined) && (
@@ -139,11 +157,11 @@ export default function NewForm({ formtype, productName, showModal }) {
               </div>
               <textarea type="text" name="body" required />
             </label>
-            <label htmlFor={shared.username}>
+            <label htmlFor={shared.name}>
               <div>
-                {shared.username}
+                {shared.name}
               </div>
-              <input type="text" name="username" required />
+              <input type="text" name="name" required />
             </label>
             <label htmlFor={shared.email}>
               <div>
@@ -153,7 +171,10 @@ export default function NewForm({ formtype, productName, showModal }) {
             </label>
             {additionalAnswerInput}
           </FormContainer>
-          <input type="submit" value="Submit" onSubmit={handleOnSubmit} />
+          <input
+            type="submit"
+            value="Submit"
+          />
         </form>
 
         <ModalClose

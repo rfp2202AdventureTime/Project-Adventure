@@ -73,7 +73,7 @@ export default function Feed({ searchQuesitonBody }) {
         )}
         <Button onClick={toggleModal}> Ask a Question +</Button>
         <NewForm
-          formtype="question"
+          formtype="qa/questions/"
           productName="leggings"
           showModal={showModal}
         />
@@ -86,7 +86,7 @@ const FeedSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
   display: flex;
   flex-direction: column;
-  height: 400px;
+  height: 550px;
   overflow: scroll;
 `;
 
