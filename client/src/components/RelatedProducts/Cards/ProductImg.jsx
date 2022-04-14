@@ -8,7 +8,7 @@ import { FeatureProvider } from '../contexts/FeatureContext';
 import { ModalClose } from '../../../contexts/Shared.styled';
 
 function ProductImg({ image, product, star }) {
-  const { trackEvent } = useTracking({ widget: 'modal window'});
+  const { trackEvent } = useTracking({ widget: 'modal window' });
   const [showModal, setShowModal] = useState(false);
   const [ID, setID] = useState();
   const productThumbnail = image;
@@ -44,13 +44,13 @@ function ProductImg({ image, product, star }) {
   }, []);
 
   return (
-    <CardImage url={productThumbnail ? productThumbnail : imageNotFound}>
+    <CardImage url={productThumbnail || imageNotFound}>
       <FeatureProvider prodID={ID}>
 
         <ModalContainer show={showModal} onClick={(e) => exitModal(e)}>
 
+          <ModalClose onClick={(e) => exitModal(e)}>&times;</ModalClose>
           <Modal show={showModal}>
-            <ModalClose onClick={exitModal}>&times;</ModalClose>
 
             <Comparison />
           </Modal>
