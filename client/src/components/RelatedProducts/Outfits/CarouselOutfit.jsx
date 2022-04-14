@@ -71,7 +71,7 @@ function CarouselAddToOutfit({ informationArray }) {
             {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
           </AddedOutfit>
-          {(viewIndex !== maxDisplayed || displayed.length < 3) ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
+          {(viewIndex !== maxDisplayed && displayed.length >= 3) ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );
