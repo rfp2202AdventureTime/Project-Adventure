@@ -19,12 +19,11 @@ function CarouselAddToOutfit({ informationArray }) {
   const displayed = informationArray.slice(viewIndex, (viewIndex + 3));
   const maxDisplayed = informationArray.length - 3;
 
-
   const next = () => {
     if (viewIndex === maxDisplayed) {
       setViewIndex((viewIndex) => viewIndex - 1);
     }
-      setViewIndex((viewIndex) => viewIndex + 1);
+    setViewIndex((viewIndex) => viewIndex + 1);
   };
 
   const prev = () => {
@@ -35,7 +34,7 @@ function CarouselAddToOutfit({ informationArray }) {
     }
   };
 
-  const AddToStorage = (e, product) => {
+  const addToStorage = (e, product) => {
     const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
     e.stopPropagation();
     trackEvent({ element: 'Button' });
@@ -60,12 +59,12 @@ function CarouselAddToOutfit({ informationArray }) {
 
             <CardImage
               url="https://icon-library.com/images/plus-symbol-icon/plus-symbol-icon-5.jpg"
-              onClick={(e) => AddToStorage(e, currentProductId)}
+              onClick={(e) => addToStorage(e, currentProductId)}
             />
 
             <OutfitText>Add to Outfit</OutfitText>
 
-          </AddButton >
+          </AddButton>
 
           <AddedOutfit>
             {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
