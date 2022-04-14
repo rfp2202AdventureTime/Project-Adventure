@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -17,6 +17,7 @@ function ImageGallery({
   // Views can be ['default', 'expanded']
   const [view, setView] = useState('default');
   const [imgIdx, setImgIdx] = useState(0);
+  const expandedImgBounds = useRef();
 
   const handleViewChange = (e, newView) => {
     if (e.currentTarget.firstChild === e.target || e.currentTarget === e.target) {
@@ -37,11 +38,11 @@ function ImageGallery({
 
   return (
 
-    <ExpandedViewport>
+    <ExpandedViewport ref={expandedImgBounds}>
       <DefaultViewport>
-        <Gallery className={view} onClick={(e) => handleViewChange(e, 'expanded')}>
+        <Gallery bounds={expandedImgBounds} className={view} onClick={(e) => handleViewChange(e, 'expanded')}>
 
-          {photos && (
+          {photos ? (
             <>
               <ZoomableImage url={photos[imgIdx].url} disabled={isZoomDisabled} />
 
@@ -66,7 +67,8 @@ function ImageGallery({
               </DotNavPresenter>
               )}
             </>
-          )}
+          )
+            : (<Loader alt="loading" src="spinner.gif" />)}
 
           <ExitButton className={view}>
             <FiX size={30} onClick={(e) => handleViewChange(e, 'default')} />
@@ -85,6 +87,12 @@ function ImageGallery({
     </ExpandedViewport>
   );
 }
+
+const Loader = styled.img`
+  height: 100px;
+  display: inline-block;
+  margin: 0 auto;
+`;
 
 const ExpandedViewport = styled.section`
   background-color: ${(props) => props.theme.colors.light};
@@ -112,7 +120,6 @@ const DefaultViewport = styled.div`
   }
   overflow: visible;
   z-index: 2;
-
 `;
 
 const AsideContent = styled.div`
@@ -133,7 +140,7 @@ const Gallery = styled.div`
   height: 100%;
   background-color:${(props) => props.theme.colors.background};
   &.expanded {
-    width: ${() => document.getElementById('main').offsetWidth}px;
+    width: ${(props) => (props.bounds.current ? props.bounds.current.offsetWidth : '')}px;
     transition: width 1s ease-in-out;
     :hover { cursor: crosshair; }
   }
@@ -143,6 +150,8 @@ const Gallery = styled.div`
     &:hover { cursor: zoom-in; }
   }
   position: relative;
+  display: flex;
+  align-items: center;
 `;
 
 const VisibleInExpanded = css`

@@ -1,48 +1,64 @@
 import { React, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+
+import { FiSun, FiMoon } from 'react-icons/fi';
 
 import { StylesProvider } from '@Contexts/StylesProvider';
 import { ProductProvider } from '@Contexts/ProductIDContext';
 import { RatingProvider } from './contexts/ReviewMeta';
 
-import Theme from './contexts/Theme';
+import themes from './contexts/Theme';
 import Overview from './components/Overview';
 import QA from './components/QA/QA';
 import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
-  const [defaultProductId, setDefaultProductId] = useState(65655);
+  const defaultProductId = 65655;
+  const [currentTheme, setCurrentTheme] = useState('light');
+
+  const handleThemeChange = () => {
+    const newTheme = (currentTheme === 'light') ? 'dark' : 'light';
+    setCurrentTheme(newTheme);
+  };
 
   return (
-    <Theme>
+    <ThemeProvider theme={themes[currentTheme]}>
       <ProductProvider productId={defaultProductId}>
-        <SiteHeader>
-          Adventure Time
-          <SiteSearch>
-            ________
-          </SiteSearch>
-        </SiteHeader>
-
-        <Banner>
-          SITE-WIDE ANNOUNCEMENT MESSAGE - SALE / DISCOUNT OFFER - NEW PRODUCT HIGHLIGHT
-        </Banner>
-
-        <RatingProvider>
-          <StylesProvider>
-            <Overview />
-            <RelatedProducts />
-          </StylesProvider>
-          <QA />
-          <a id="ratings">
-            <Ratings />
-          </a>
-        </RatingProvider>
+        <Site>
+          <SiteHeader>
+            Adventure Time
+            <SiteSearch>
+              <ThemeChanger onClick={() => handleThemeChange()}>
+                {currentTheme === 'light' ? <FiMoon /> : <FiSun />}
+              </ThemeChanger>
+            </SiteSearch>
+          </SiteHeader>
+          <Banner>
+            SITE-WIDE ANNOUNCEMENT MESSAGE - SALE / DISCOUNT OFFER - NEW PRODUCT HIGHLIGHT
+          </Banner>
+          <SiteBody>
+            <RatingProvider>
+              <StylesProvider>
+                <Overview />
+                <RelatedProducts />
+              </StylesProvider>
+              <QA />
+              <Ratings />
+            </RatingProvider>
+          </SiteBody>
+        </Site>
       </ProductProvider>
-    </Theme>
+    </ThemeProvider>
   );
 }
+
+const Site = styled.div`
+  background-color: ${({ theme }) => theme.colors.light};
+  width: 100%;
+  height: 100%;
+`;
 
 const SiteHeader = styled.header`
   font-size: 2em;
@@ -51,6 +67,15 @@ const SiteHeader = styled.header`
   font-weight: bold;
   font-style: italic;
   padding: 20px 40px;
+`;
+
+const SiteBody = styled.section`
+  max-width: 1280px;
+  margin: 0 auto;
+`;
+
+const ThemeChanger = styled.span`
+  cursor: pointer;
 `;
 
 const SiteSearch = styled.span`

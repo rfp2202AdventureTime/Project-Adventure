@@ -32,7 +32,7 @@ function Overview() {
 
   const heading = (
     <>
-      <Category>{currentProduct && currentProduct.category}</Category>
+      <Category>{currentProduct ? currentProduct.category : 'CATEGORY'}</Category>
       <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
     </>
   );
