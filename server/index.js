@@ -3,12 +3,14 @@ const express = require('express');
 const path = require('path');
 const axios = require('axios');
 const console = require('console');
+const cors = require('cors');
 
 const app = express();
 
 // Serves up all static and generated assets in ../client/dist.
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
+app.use(cors());
 
 // Set up get method and post method
 // route will handle all request and routes no matter destination

@@ -289,10 +289,6 @@ const QuestionBlockBody = styled(QuestionBlock)`
   height: 10rem;
 `;
 
-const FormModal = styled(Modal)`
-  overflow:scroll;
-`;
-
 NewForm.propTypes = {
   formtype: PropTypes.string.isRequired,
   productName: PropTypes.string,
