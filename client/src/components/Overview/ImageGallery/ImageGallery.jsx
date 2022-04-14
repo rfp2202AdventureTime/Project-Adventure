@@ -41,7 +41,7 @@ function ImageGallery({
       <DefaultViewport>
         <Gallery className={view} onClick={(e) => handleViewChange(e, 'expanded')}>
 
-          {photos && (
+          {photos ? (
             <>
               <ZoomableImage url={photos[imgIdx].url} disabled={isZoomDisabled} />
 
@@ -66,7 +66,8 @@ function ImageGallery({
               </DotNavPresenter>
               )}
             </>
-          )}
+          )
+            : (<Loader alt="loading" src="spinner.gif" />)}
 
           <ExitButton className={view}>
             <FiX size={30} onClick={(e) => handleViewChange(e, 'default')} />
@@ -85,6 +86,12 @@ function ImageGallery({
     </ExpandedViewport>
   );
 }
+
+const Loader = styled.img`
+  height: 100px;
+  display: inline-block;
+  margin: 0 auto;
+`;
 
 const ExpandedViewport = styled.section`
   background-color: ${(props) => props.theme.colors.light};
@@ -112,7 +119,6 @@ const DefaultViewport = styled.div`
   }
   overflow: visible;
   z-index: 2;
-
 `;
 
 const AsideContent = styled.div`
@@ -143,6 +149,8 @@ const Gallery = styled.div`
     &:hover { cursor: zoom-in; }
   }
   position: relative;
+  display: flex;
+  align-items: center;
 `;
 
 const VisibleInExpanded = css`
