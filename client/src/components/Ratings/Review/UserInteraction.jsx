@@ -35,7 +35,7 @@ export default function Helpfulness({
           <ClickableText onClick={vote}>
             <MdOutlineThumbUp />
           </ClickableText>
-        ) : (<div><MdThumbUp /></div>)}
+        ) : (<ClickableText2><MdThumbUp /></ClickableText2>)}
       (
       {helpCount}
       )
@@ -56,6 +56,10 @@ const HelpfulnessContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.7rem;
+`;
+
+const ClickableText2 = styled(ClickableText)`
+  cursor: pointer;
 `;
 
 Helpfulness.propTypes = {
