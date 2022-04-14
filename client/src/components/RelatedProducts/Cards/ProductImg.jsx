@@ -28,6 +28,7 @@ function ProductImg({ image, product, star }) {
 
   useEffect(() => {
     const close = (e) => {
+      e.stopPropagation();
       if (e.key === 'Escape') {
         setShowModal(false);
       }
@@ -40,7 +41,7 @@ function ProductImg({ image, product, star }) {
     <CardImage url={productThumbnail ? productThumbnail : imageNotFound}>
       <FeatureProvider prodID={ID}>
 
-        <ModalContainer show={showModal}>
+        <ModalContainer show={showModal} onClick={(e) => e.stopPropagation()}>
 
           <Modal show={showModal}>
 

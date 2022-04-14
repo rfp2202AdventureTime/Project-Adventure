@@ -18,7 +18,7 @@ export function FeatureProvider({ children, prodID }) {
   const twoProducts = [currentProductId, prodID];
 
   useEffect(() => {
-    if (prodID && currentProductId) {
+    if (twoProducts) {
       Promise.all(twoProducts.map((number) => axios({
         method: 'get',
         url: `products/${number}`,
