@@ -22,9 +22,11 @@ function Overview() {
 
   const preheading = (
     <RatingInfo>
-      <StarWrapper>
-        <Star score={currentMeta ? currentMeta.avgRating : 0} />
-      </StarWrapper>
+      <a href="#ratings">
+        <StarWrapper>
+          <Star score={currentMeta ? currentMeta.avgRating : 0} />
+        </StarWrapper>
+      </a>
     </RatingInfo>
   );
 
@@ -76,6 +78,9 @@ const RatingInfo = styled.div`
 
 const StarWrapper = styled.div`
   display: inline-block;
+  &:hover {
+    box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
+  };
 `;
 
 const FeatureItems = styled.ul`

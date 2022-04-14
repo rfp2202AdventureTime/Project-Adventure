@@ -35,7 +35,9 @@ function App() {
             <RelatedProducts />
           </StylesProvider>
           <QA />
-          <Ratings />
+          <a id="ratings">
+            <Ratings />
+          </a>
         </RatingProvider>
       </ProductProvider>
     </Theme>
