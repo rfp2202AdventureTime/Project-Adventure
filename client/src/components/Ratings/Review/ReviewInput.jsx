@@ -1,19 +1,11 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Modal, ModalParent, ModalClose } from '../../../contexts/Shared.styled';
 import { useMeta } from '../../../contexts/ReviewMeta';
+import AddPhoto from './AddPhoto';
 
 export default function ReviewInput({ data, handleChange }) {
-  const [showPhotoModal, setShowPhotoModal] = useState(false);
-  const togglePhotoModal = () => {
-    setShowPhotoModal(true);
-  };
-
-  const exitPhotoModal = () => {
-    setShowPhotoModal(false);
-  };
   const meta = useMeta();
   const factorList = (meta) ? meta.characteristics : {};
 
@@ -124,26 +116,7 @@ export default function ReviewInput({ data, handleChange }) {
       </QuestionBlock>
       <QuestionBlock>
         <label htmlFor="photo">
-          <b>
-            { 'Add your photo[Not working yet] ' }
-          </b>
-          <button type="button" onClick={togglePhotoModal}>
-            Add
-          </button>
-          <ModalParent
-            showModal={showPhotoModal}
-          >
-            <PhotoModal
-              showModal={showPhotoModal}
-            >
-              test
-              <ModalClose
-                onClick={exitPhotoModal}
-              >
-                &times;
-              </ModalClose>
-            </PhotoModal>
-          </ModalParent>
+          <AddPhoto />
         </label>
       </QuestionBlock>
       <QuestionBlock>
@@ -213,6 +186,4 @@ const RowBlock = styled.div`
 
 `;
 
-const PhotoModal = styled(Modal)`
-  width: 40%
-`;
+
