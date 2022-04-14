@@ -7,16 +7,16 @@ import CarouselRelated from './CarouselR';
 
 function AllCards() {
 
-  const relatedProds = useProd().relatedInformation;
+  const { relatedInformation } = useProd();
   const thumbnail = useThumbnail();
-  const ratings = useProd().ratingsMeta;
+  const { ratingsMeta } = useProd();
 
 
   const information = [];
 
-  if (thumbnail?.data && relatedProds?.data && ratings) {
-    relatedProds?.data.map((item, i) => {
-      const currentRating = ratings.data[i]?.data ? ratings.data[i].data : 0;
+  if (thumbnail?.data && relatedInformation?.data && ratingsMeta) {
+    relatedInformation?.data.map((item, i) => {
+      const currentRating = ratingsMeta.data[i]?.data ? ratingsMeta.data[i].data : 0;
       const currentThumbnail = thumbnail.data[i]?.data.results[0].photos[0].thumbnail_url ? thumbnail.data[i].data.results[0].photos[0].thumbnail_url : '';
       information.push([item.data, currentThumbnail, currentRating, true]);
     });

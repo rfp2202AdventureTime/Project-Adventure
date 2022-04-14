@@ -1,3 +1,6 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
+/* eslint-disable no-shadow */
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';

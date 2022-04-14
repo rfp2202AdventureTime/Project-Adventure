@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Individualcard } from '../Cards/Individualcard';
-import { useCurrentProduct, useCurrentProductId } from '../../../contexts/ProductIDContext';
+import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 import { useMeta } from '../../../contexts/ReviewMeta';
 import { useCurrentStyles } from '../../../contexts/StylesProvider';
 
@@ -69,13 +69,12 @@ function CarouselAddToOutfit({ informationArray }) {
           {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
       </AddedOutfit>
-          {viewIndex !== maxDisplayed ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
+          {(viewIndex !== maxDisplayed || displayed.length > 3) ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );
   }
 }
-
 
 const CarouselContainerR = styled.div`
 
@@ -111,7 +110,6 @@ const RightArrowR = styled.div`
   height: 48px;
 `;
 
-// why does changing the margin write making the image bigger?
 const CardImage = styled.div`
   display: relative;
   width: 243px;
@@ -119,7 +117,6 @@ const CardImage = styled.div`
   background: url(${(props) => props.url});
   background-position: center;
   background-size: cover;
-  // margin-right: 15px;
 `;
 
 const AddButton = styled.div`

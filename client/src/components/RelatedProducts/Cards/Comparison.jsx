@@ -29,9 +29,6 @@ function Comparison() {
       FeatureSet.push(JSON.parse(item));
     }
 
-
-    // ***********COMMENT THIS OUT BEFORE PRODUCTION***********
-    // create two arrays to check against FeatureSet array || probably better way to do this, but MVP
     const item1Array = [];
     item1.features.map((item) => item1Array.push(item));
 
@@ -74,7 +71,4 @@ const Value = styled.td`
   text-align: center;
   `;
 
-// const RowL = styled.tr`
-//   padding-left: 5px;
-// `;
 export default Comparison;
