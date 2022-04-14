@@ -7,12 +7,12 @@ import SortBar from './Review/SortBar';
 import SearchBar from './Review/SearchBar';
 import Console from '../../Console';
 import { useMeta } from '../../contexts/ReviewMeta';
-import { ProductIDContext, useCurrentProduct } from '../../contexts/ProductIDContext';
+import { useCurrentProductId, useCurrentProduct } from '../../contexts/ProductIDContext';
 import { Button } from '../../contexts/Shared.styled';
 import NewForm from '../../contexts/NewForm';
 
 export default function ReviewList({ filterStatus }) {
-  const productId = useContext(ProductIDContext);
+  const { currentProductId } = useCurrentProductId();
   const { currentProduct } = useCurrentProduct();
   const reviewMeta = useMeta();
   const [sort, setSort] = useState('relevant');
@@ -36,7 +36,7 @@ export default function ReviewList({ filterStatus }) {
       method: 'get',
       url: '/reviews',
       params: {
-        product_id: productId,
+        product_id: currentProductId,
         // here
         count: (reviewMeta?.totalCT || 999),
         sort,
@@ -120,25 +120,27 @@ export default function ReviewList({ filterStatus }) {
 
   // TODO: check to see if there's memory leakage on unmounted components.
   useEffect(() => {
-    getReview()
-      .then(({ data }) => {
-        setInitialRender(initialRender && !initialRender);
-        setReviewDetail({
-          filteredReview: filterReview(data.results),
-          allReview: data.results,
-          totalCT: data.results.length,
-        });
-        (initialRender) && setPrevCount(Math.min(data.results.length, 2));
-        if (!filterStatus.filterCount) {
+    if (currentProductId) {
+      getReview()
+        .then(({ data }) => {
+          setInitialRender(initialRender && !initialRender);
           setReviewDetail({
+            filteredReview: filterReview(data.results),
             allReview: data.results,
             totalCT: data.results.length,
-            filteredReview: data.results.slice(0, prevCount),
           });
-        }
-      })
-      .catch((err) => Console.log(err));
-  }, [productId, sort, filterStatus.filterCount, prevCount]);
+          (initialRender) && setPrevCount(Math.min(data.results.length, 2));
+          if (!filterStatus.filterCount) {
+            setReviewDetail({
+              allReview: data.results,
+              totalCT: data.results.length,
+              filteredReview: data.results.slice(0, prevCount),
+            });
+          }
+        })
+        .catch((err) => Console.log(err));
+    }
+  }, [currentProductId, sort, filterStatus.filterCount, prevCount]);
 
   return (
     <ReviewSection>
