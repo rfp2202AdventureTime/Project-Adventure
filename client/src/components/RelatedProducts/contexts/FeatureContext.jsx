@@ -28,7 +28,7 @@ export function FeatureProvider({ children, prodID }) {
         })
         .catch((err) => Console.log('ERROR in FeatureContext', err));
     }
-  }, [twoProducts]);
+  }, [prodID]);
 
   return (
     <FeatureContext.Provider value={featuresInfo}>
