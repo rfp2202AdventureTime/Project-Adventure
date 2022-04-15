@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components'
 import { useProd } from '../contexts/ProdContext';
 import { useThumbnail } from '../contexts/thumbnailContext';
 import CarouselRelated from './CarouselRelated';
@@ -58,9 +59,15 @@ function AllCards() {
   }
     return (
       <>
-      {informationArray ? <CarouselRelated informationArray={informationArray} /> : <div>Related Products Loading...</div>}
+      {(thumbnail?.data && relatedInformation?.data && ratingsMeta && currentStyles && relatedStyles) ? <CarouselRelated informationArray={informationArray} /> : <Loader alt="loading" src="spinner.gif" />}
       </>
     );
   }
 
+
+  const Loader = styled.img`
+  height: 100px;
+  display: inline-block;
+  margin: 0 auto;
+`;
 export default AllCards;
