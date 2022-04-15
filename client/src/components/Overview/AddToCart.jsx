@@ -169,14 +169,14 @@ const AddToCartButton = styled.button`
   appearance: none;
   padding: 15px;
   border: 1px solid ${({ theme }) => theme.colors.primary};
-  background: ${({ theme }) => theme.colors.light};
+  background: ${({ theme }) => theme.colors.primary};
   font-size: 0.8em;
   text-transform: uppercase;
   text-align: left;
   font-weight: bold;
   margin: 5px;
   width: 280px;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.light};
   &:active {
     transform: scale(0.99);
     transition: transform 0.06s ease-in-out;
@@ -188,7 +188,7 @@ const AddToCartButton = styled.button`
 const CustomSelect = styled.select`
   appearance: none;
   padding: 15px;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
+  border: 1px solid ${({ theme }) => theme.colors.secondary};
   background: ${({ theme }) => theme.colors.light};
   font-size: 0.8em;
   text-transform: uppercase;
@@ -196,7 +196,7 @@ const CustomSelect = styled.select`
   font-weight: bold;
   margin: 5px;
   outline: none;
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const SelectSize = styled(CustomSelect)`

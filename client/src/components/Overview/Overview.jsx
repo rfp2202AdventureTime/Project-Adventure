@@ -77,6 +77,7 @@ const RatingInfo = styled.div`
 `;
 
 const StarWrapper = styled.div`
+  padding-top: 10px;
   display: inline-block;
 `;
 
@@ -119,6 +120,10 @@ const LongDescription = styled.div`
     padding-bottom: 20px;
     padding-right: 0;
   }
+  & > h3 {
+    font-family: ${({ theme }) => theme.fonts.title.family};
+    color: ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 const Features = styled.div`
@@ -130,8 +135,9 @@ const Features = styled.div`
 `;
 
 const ProductName = styled.h1`
-  font-weight: bold;
+  font-family: ${({ theme }) => theme.fonts.title.family};
   font-size: 2em;
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const Category = styled.h3`

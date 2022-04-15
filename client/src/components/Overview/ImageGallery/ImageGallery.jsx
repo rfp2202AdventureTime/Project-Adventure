@@ -28,7 +28,6 @@ function ImageGallery({
   };
 
   const handleResize = useCallback(() => {
-    console.log('triggering');
     imgGallery.current.style.setProperty('width', `${expandedImgBounds.current.offsetWidth}px`);
     imgGallery.current.classList.add('notransition');
   }, []);
@@ -157,7 +156,10 @@ const AsideContent = styled.div`
 `;
 
 const AsideHeading = styled(AsideContent)`
-  @media (max-width: 768px) { order: -1; }
+  @media (max-width: 768px) {
+    padding-top: 10px;
+    order: -1;
+  }
 `;
 
 const Gallery = styled.div`

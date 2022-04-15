@@ -98,7 +98,7 @@ const Thumbnail = styled.a`
 
 const StyleSelectorContainer = styled.section`
   padding: 10px 0;
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.secondary};
   font-size: 0.9em;
 `;
 
