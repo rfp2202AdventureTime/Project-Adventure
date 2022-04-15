@@ -15,6 +15,7 @@ export default function NewForm({
 }) {
   let type;
   let bodyNote;
+  let newData = {};
   const meta = useMeta();
   const factorList = (meta) ? meta.characteristics : {};
   const [data, setData] = useState({ recommendation: 'true' });
@@ -32,8 +33,8 @@ export default function NewForm({
     window.addEventListener('keydown', espExit);
     return () => window.removeEventListener('keydown', espExit);
   }, []);
+
   const handleReviewData = () => {
-    const newData = {};
     const {
       body, email, summary, name,
     } = data;
@@ -65,66 +66,54 @@ export default function NewForm({
     return newData;
   };
 
+  const handleQuestionData = () => {
+    const {
+      body, email, name,
+    } = data;
+    newData.body = body;
+    newData.name = name;
+    newData.email = email;
+    newData.product_id = productId;
+    return newData;
+  };
+
+  const handleAnswerData = () => {
+    const {
+      body, email, name,
+    } = data;
+    newData.body = body;
+    newData.name = name;
+    newData.email = email;
+    newData.photos = [];
+    return newData;
+  };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    // customize data input if this is review submission
     if (formtype === 'reviews') {
-      const newData = handleReviewData();
-      axios({
-        method: 'post',
-        url: `/${formtype}`,
-        data: newData,
-      }).then(() => {
-        // alert('submitted');
+      newData = handleReviewData();
+    } else if (formtype === 'qa/questions/') {
+      newData = handleQuestionData();
+    } else {
+      newData = handleAnswerData();
+    }
+    axios({
+      method: 'post',
+      url: `/${formtype}`,
+      data: newData,
+    }).then(() => {
+      if (formtype === 'reviews') {
         const { setSort, changeSelected } = args;
         setSort('newest');
         changeSelected();
-        // reset modal and close
-        setData({ recommendation: 'true' });
-        setPhotos([]);
-        setShowModal(false);
-        return null;
-      })
-        .catch((err) => Console.log(err));
-    } else if (formtype === 'qa/questions/') {
-      const newData = {};
-      const {
-        body, email, name,
-      } = data;
-      newData.body = body;
-      newData.name = name;
-      newData.email = email;
-      newData.product_id = productId;
-      axios({
-        method: 'post',
-        url: `/${formtype}`,
-        data: newData,
-      })
-        .then((response) => {
-          Console.log('Question POST status: ', response.status);
-        })
-        .catch((err) => Console.log(err));
-    } else {
-      const newData = {};
-      const {
-        body, email, name,
-      } = data;
-      newData.body = body;
-      newData.name = name;
-      newData.email = email;
-      newData.photos = [];
-      axios({
-        method: 'post',
-        url: `/${formtype}`,
-        data: newData,
-      })
-        .then((response) => {
-          Console.log('Answer POST status: ', response.status);
-        })
-        .catch((err) => Console.log(err));
-    }
+      }
+      setData({ recommendation: 'true' });
+      setPhotos([]);
+      setShowModal(false);
+    })
+      .catch((err) => Console.log(err));
   };
+
   const reviews = {
     title: 'Write Your Review',
     subtitle: `About the ${productName}`,
@@ -133,7 +122,6 @@ export default function NewForm({
     photo: 'Upload your photos',
   };
 
-  // TODO: make this dynapmic for all post
   const sharedQuestionInput = {
     title: 'Ask Your Question',
     subtitle: `About the ${productName}`,
