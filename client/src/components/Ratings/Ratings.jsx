@@ -55,7 +55,6 @@ const RatingSection = styled.section`
   display: flex;
   flex-direction: row;
   color: ${({ theme }) => theme.colors.secondary};
-  @media (min-width: 768px)
   @media (max-width: 768px) { width: 100%; flex-wrap: wrap;}
   padding: 2rem 0rem 4rem 1rem;
 `;
