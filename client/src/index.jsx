@@ -15,7 +15,7 @@ import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
-  const defaultProductId = 65655;
+  const defaultProductId = 65631;
   const [currentTheme, setCurrentTheme] = useState('light');
 
   const handleThemeChange = () => {
