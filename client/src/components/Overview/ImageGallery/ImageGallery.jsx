@@ -111,10 +111,10 @@ const DefaultViewport = styled.div`
     height: 630px;
     transition: height 0.2s ease-in-out;
   }
-  /* @media (max-width: 767px) {
+  @media (max-width: 767px) {
     height: 400px;
     transition: height 0.2s ease-in-out;
-  } */
+  }
   @media (max-width: 1279px) and (min-width: 768px) {
     width: 50%;
     height: 630px;
@@ -134,8 +134,8 @@ const Gallery = styled.div`
   &:hover { @media (max-width: 768px) { cursor: default; } }
   &.expanded:hover { cursor: crosshair; }
   &.default { transition: width 1s ease-in-out; }
-  &.expanded { transition: width 1s ease-in-out; }
   &.notransition { transition: none !important; }
+  &.expanded { transition: width 1s ease-in-out; }
 `;
 
 const DotNavPresenter = styled.div`
