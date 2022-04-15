@@ -33,6 +33,7 @@ function RelatedProducts() {
 
 const RelatedHeader = styled.h1`
   text-transform: uppercase;
+  padding-left: 10px;
 `;
 
 const RelatedProductsSection = styled.section`
