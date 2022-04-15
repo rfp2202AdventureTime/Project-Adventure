@@ -61,7 +61,7 @@ const Site = styled.div`
 `;
 
 const SiteHeader = styled.header`
-  font-size: 2em;
+  font-size: 1.5em;
   background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.light};
   padding: 20px 40px;

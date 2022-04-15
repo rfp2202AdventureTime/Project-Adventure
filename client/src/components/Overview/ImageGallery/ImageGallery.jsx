@@ -217,6 +217,11 @@ const DotNavPresenter = styled.div`
   bottom: 10px;
   left: 50%;
   transform: translate(-50%, 0);
+  background-color:${({ theme }) => theme.colors.background};
+  border: 2px solid ${({ theme }) => theme.colors.primary};
+  border-radius: 15px;
+  height: 35px;
+  padding: 3px;
   ${VisibleInExpanded}
 `;
 
@@ -275,14 +280,16 @@ const ExitButton = styled.span`
 `;
 
 const Dot = styled.span`
-  background-color: ${(props) => props.theme.colors.light};
+  background-color: #aaa;
   display: inline-block;
   height: 10px;
   width: 10px;
   margin: 7px;
   border-radius: 50%;
   &:hover { cursor: pointer; }
-  &.selected { background-color: ${(props) => props.theme.colors.primary}; }
+  &.selected {
+    background-color: ${(props) => props.theme.colors.primary};
+  }
 `;
 
 ImageGallery.propTypes = {
