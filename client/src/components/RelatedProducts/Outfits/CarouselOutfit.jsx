@@ -8,14 +8,17 @@ import useTracking from '@Contexts/ClickTracker';
 import { Individualcard } from '../Cards/Individualcard';
 import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 import { useMeta } from '../../../contexts/ReviewMeta';
-import { useCurrentStyles } from '../../../contexts/StylesProvider';
+import { useCurrentStyles, useActiveStyle } from '../../../contexts/StylesProvider';
 
 function CarouselAddToOutfit({ informationArray }) {
-  const { trackEvent } = useTracking({ widget: 'Add to Outfit'});
+  const { trackEvent } = useTracking({ widget: 'Add to Outfit' });
   const [viewIndex, setViewIndex] = useState(0);
   const { currentProductId } = useCurrentProductId();
   const currentStyles = useCurrentStyles();
   const starRating = useMeta();
+  const { activeStyle } = useActiveStyle();
+  const imageThumb = activeStyle?.photos[0].thumbnail_url
+
   const displayed = informationArray.slice(viewIndex, (viewIndex + 3));
   const maxDisplayed = informationArray.length - 3;
 
@@ -37,7 +40,7 @@ function CarouselAddToOutfit({ informationArray }) {
   const addToStorage = (e, product) => {
     e.preventDefault();
     e.stopPropagation();
-    const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
+    // const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
     trackEvent({ element: 'Button' });
 
     axios({
@@ -45,7 +48,7 @@ function CarouselAddToOutfit({ informationArray }) {
       url: `/products/${product}`,
     })
       .then(({ data }) => {
-        const dataTest = [data, currentThumbnail, starRating, false];
+        const dataTest = [data, imageThumb, starRating, false];
         localStorage.setItem(data.id, JSON.stringify(dataTest));
       });
   };

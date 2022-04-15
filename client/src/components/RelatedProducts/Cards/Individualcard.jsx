@@ -13,6 +13,7 @@ function Individualcard({ product }) {
   const { setCurrentProductId } = useCurrentProductId();
   const starRating = product[2]?.avgRating || 0;
 
+
   const handleClick = (e) => {
     e.preventDefault();
     trackEvent({ element: 'Individualcard' })

@@ -2,13 +2,13 @@
 import { React } from 'react';
 import styled from 'styled-components';
 
-// should get an array with two arrays of features from each item
+// Receives two product arrays
 function Comparison({ twoProducts }) {
   if (twoProducts) {
     const item1 = twoProducts[0];
     const item2 = twoProducts[1];
 
-    // creates an array with all the features
+    // Creates an array with all the features
     const FeatArray = item1.features.concat(item2.features);
 
     // Creates a unique set of features
@@ -19,6 +19,7 @@ function Comparison({ twoProducts }) {
       }
     }
 
+    // Creates two separate arrays with only the features
     const item1Array = [];
     item1.features.map((item) => item1Array.push(item));
 

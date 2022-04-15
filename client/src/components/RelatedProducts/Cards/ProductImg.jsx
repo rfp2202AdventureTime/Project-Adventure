@@ -9,19 +9,17 @@ import { useCurrentProduct } from '../../../contexts/ProductIDContext';
 import { ModalClose } from '../../../contexts/Shared.styled';
 
 function ProductImg({ image, product, star }) {
-  const imageNotFound = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
   const { trackEvent } = useTracking({ widget: 'modal window' });
   const [showModal, setShowModal] = useState(false);
-  // const [ID, setID] = useState(null);
+  const [twoProductsArray, setTwoProductsArray] = useState([]);
   const productThumbnail = image;
   const { currentProduct } = useCurrentProduct();
-  const [twoProductsArray, setTwoProductsArray] = useState([]);
   const twoProducts = [currentProduct];
+  const imageNotFound = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
 
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // setID(product);
     setShowModal(!showModal);
     trackEvent({ element: 'Comparison window' });
 

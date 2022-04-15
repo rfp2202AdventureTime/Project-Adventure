@@ -32,7 +32,7 @@ function AllCards() {
   }
     return (
       <>
-      {informationArray ? <CarouselRelated informationArray={informationArray} /> : <div>Related Products Loading</div>}
+      {informationArray ? <CarouselRelated informationArray={informationArray} /> : <div>Related Products Loading...</div>}
       </>
     );
   }
