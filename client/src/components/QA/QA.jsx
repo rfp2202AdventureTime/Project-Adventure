@@ -12,7 +12,7 @@ export default function QA() {
     <QASection>
       <QADataProvider>
         <>
-          <h2>Questions and Answers</h2>
+          <QAHeading>QUESTIONS AND ANSWERS</QAHeading>
           <Search
             searchQuesitonBody={searchQuesitonBody}
             setSearchQuestionBody={setSearchQuestionBody}
@@ -28,6 +28,12 @@ export default function QA() {
     </QASection>
   );
 }
+
+const QAHeading = styled.h3`
+  font-family: ${(props) => props.theme.fonts.title.family};
+  color: ${(props) => props.theme.colors.primary};
+  padding-bottom: 10px;
+`;
 
 const QASection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
