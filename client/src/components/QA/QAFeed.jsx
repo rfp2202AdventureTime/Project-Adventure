@@ -7,12 +7,14 @@ import { QAItem } from './QAItem';
 import { Button } from '../../contexts/Shared.styled';
 import NewForm from '../../contexts/NewForm';
 import { useCurrentProduct } from '../../contexts/ProductIDContext';
+import useTracking from '@Contexts/ClickTracker';
 
 export default function Feed({ searchQuesitonBody }) {
   const [numQsToRender, setNumQsToRender] = useState(2);
   const [startQsToRender, setStartQsToRender] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const { currentProduct } = useCurrentProduct();
+  const { trackEvent } = useTracking({widget: 'QAfeed'});
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -68,12 +70,16 @@ export default function Feed({ searchQuesitonBody }) {
             onClick={() => {
               setNumQsToRender(numQsToRender + 2);
               setStartQsToRender(startQsToRender + 2);
+              trackEvent({element: 'load_more_questions_button'})
             }}
           >
             Load More Questions
           </Button>
         )}
-        <Button onClick={toggleModal}> Ask a Question +</Button>
+        <Button onClick={() => {
+          toggleModal();
+          trackEvent({element: 'ask_questions_button'})
+          }}> Ask a Question +</Button>
         <NewForm
           formtype="qa/questions/"
           productName={currentProduct?.name}
