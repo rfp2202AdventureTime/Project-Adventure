@@ -22,7 +22,7 @@ export default function QAAnswer({
   const handleHelpfulAnswer = (category, ID) => {
     axios({
       method: 'PUT',
-      url: `http://localhost:3000/qa/answers/${ID}/${category}`,
+      url: `/qa/answers/${ID}/${category}`,
     })
       .then((response) => {
         Console.log(response.status);
@@ -46,7 +46,7 @@ export default function QAAnswer({
   const handleReport = (category, ID) => {
     axios({
       method: 'PUT',
-      url: `http://localhost:3000/qa/answers/${ID}/${category}`,
+      url: `/qa/answers/${ID}/${category}`,
     })
       .then((response) => {
         Console.log(response.status);
