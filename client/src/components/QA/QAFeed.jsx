@@ -3,14 +3,16 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { useData } from './QAContext';
-import QAItem from './QAItem';
+import { QAItem } from './QAItem';
 import { Button } from '../../contexts/Shared.styled';
 import NewForm from '../../contexts/NewForm';
+import { useCurrentProduct } from '../../contexts/ProductIDContext';
 
 export default function Feed({ searchQuesitonBody }) {
   const [numQsToRender, setNumQsToRender] = useState(2);
   const [startQsToRender, setStartQsToRender] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const { currentProduct } = useCurrentProduct();
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -74,7 +76,7 @@ export default function Feed({ searchQuesitonBody }) {
         <Button onClick={toggleModal}> Ask a Question +</Button>
         <NewForm
           formtype="qa/questions/"
-          productName="leggings"
+          productName={currentProduct?.name}
           showModal={showModal}
           setShowModal={setShowModal}
         />
