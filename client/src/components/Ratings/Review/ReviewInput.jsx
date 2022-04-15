@@ -5,21 +5,22 @@ import styled from 'styled-components';
 import { useMeta } from '../../../contexts/ReviewMeta';
 import AddPhoto from './AddPhoto';
 
-export default function ReviewInput({ data, handleChange, photos, setPhotos }) {
+export default function ReviewInput({
+  data, handleChange, photos, setPhotos, setData
+}) {
   const meta = useMeta();
   const factorList = (meta) ? meta.characteristics : {};
-
   const starRating = (
     <div className="rating">
-      <input type="radio" name="rating" id="rating-5" value={5} />
+      <input type="radio" name="rating" id="rating-5" value={5} checked={data.rating === '5' || false} onChange={handleChange} />
       <label htmlFor="rating-5" />
-      <input type="radio" name="rating" id="rating-4" value={4} />
+      <input type="radio" name="rating" id="rating-4" value={4} checked={data.rating === '4' || false} onChange={handleChange} />
       <label htmlFor="rating-4" />
-      <input type="radio" name="rating" id="rating-3" value={3} />
+      <input type="radio" name="rating" id="rating-3" value={3} checked={data.rating === '3' || false} onChange={handleChange} />
       <label htmlFor="rating-3" />
-      <input type="radio" name="rating" id="rating-2" value={4} />
+      <input type="radio" name="rating" id="rating-2" value={4} checked={data.rating === '2' || false} onChange={handleChange} />
       <label htmlFor="rating-2" />
-      <input type="radio" name="rating" id="rating-1" value={1} />
+      <input type="radio" name="rating" id="rating-1" value={1} checked={data.rating === '1' || false} onChange={handleChange} />
       <label htmlFor="rating-1" />
     </div>
   );
@@ -52,6 +53,8 @@ export default function ReviewInput({ data, handleChange, photos, setPhotos }) {
                   type="radio"
                   name={factor}
                   value={index + 1}
+                  onChange={handleChange}
+                  checked={(data[factor] === (index + 1).toString()) || false}
                   required
                 />
               </div>
@@ -91,13 +94,13 @@ export default function ReviewInput({ data, handleChange, photos, setPhotos }) {
             </b>
             <RadioBlock>
               <div>
-                <input type="radio" name="recommendation" value="true" defaultChecked onChange={handleChange} />
+                <input type="radio" name="recommendation" value="true" checked={data.recommendation === 'true' || true} onChange={handleChange} />
               </div>
               <div>
                 <label htmlFor="yes">{' Yes'}</label>
               </div>
               <div>
-                <input type="radio" name="recommendation" value="false" />
+                <input type="radio" name="recommendation" value="false" checked={data.recommendation === 'false' || false} onChange={handleChange} />
               </div>
               <div>
                 <label htmlFor="no">{' No'}</label>
@@ -119,6 +122,7 @@ export default function ReviewInput({ data, handleChange, photos, setPhotos }) {
           <AddPhoto
             setPhotos={setPhotos}
             photos={photos}
+            onChange={handleChange}
           />
         </label>
       </QuestionBlock>
@@ -133,6 +137,8 @@ export default function ReviewInput({ data, handleChange, photos, setPhotos }) {
               name="summary"
               placeholder="Example: Best purchase ever!"
               required
+              value={data.summary || ''}
+              onChange={handleChange}
             />
           </div>
         </label>
