@@ -118,11 +118,13 @@ const RightArrowR = styled.div`
 
 const CardImage = styled.div`
   display: relative;
-  width: 243px;
+  min-width: 243px;
   height: 250px;
   background: url(${(props) => props.url});
   background-position: center;
   background-size: cover;
+  margin-right: 5px;
+  padding-right: 5px;
 `;
 
 const AddButton = styled.div`
@@ -136,7 +138,7 @@ const AddButton = styled.div`
 const AddedOutfit = styled.div`
   display: flex;
   position: relative;
-  margin-left: 25px;
+  margin-left: 30px;
   flex-direction: row;
   width: fit-content;
   height: max-content;

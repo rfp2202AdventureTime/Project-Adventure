@@ -27,7 +27,10 @@ function Individualcard({ product }) {
           <CategoryText>
             <div>{product[0].category}</div>
           </CategoryText>
+          <ProductText>
           <p>{product[0].name}</p>
+
+          </ProductText>
           <Price original={product[0].default_price} discount={product[0].sale_price} />
           <div>
             <Star score={starRating} />
@@ -39,7 +42,7 @@ function Individualcard({ product }) {
 }
 
 const IndCard = styled.div`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.secondary};
   display: table-cell, relative;
   position: relative;
   border: 1px solid ${(props) => props.theme.colors.secondary};
@@ -55,11 +58,15 @@ const IndCard = styled.div`
 `;
 
 const CategoryText = styled.div`
-  font-style: italic;
+  // font-style: italic;
 `;
 const CardText = styled.div`
-  padding-left: 1px;
+  padding-left: 5px;
 `;
+
+const ProductText = styled.div`
+  font-weight: bold;
+  `;
 export {
   Individualcard,
   IndCard,

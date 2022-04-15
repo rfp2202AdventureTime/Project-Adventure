@@ -89,6 +89,7 @@ const XfeatureR = styled.td`
 
 const Value = styled.td`
   text-align: center;
+  color: ${(props) => props.theme.colors.secondary};
   `;
 
 const HeadL = styled.th`
