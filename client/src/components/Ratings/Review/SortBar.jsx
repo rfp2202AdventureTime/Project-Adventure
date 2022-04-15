@@ -33,6 +33,7 @@ const SortBarBlock = styled.div`
 const DropDown = styled.select`
   font-weight:bold;
   color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.light};
 `;
 
 SortBar.propTypes = {
