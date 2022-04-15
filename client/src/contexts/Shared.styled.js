@@ -71,12 +71,12 @@ const Modal = styled.div`
 `;
 const ModalClose = styled.div`
   position: fixed;
-  color: white;
+  color: ${({ modal, theme }) => (modal ? `url(${modal})` : theme.colors.primary)};
   line-height: 50px;
   font-size: 2rem;
-  right: 0;
+  right: 20rem;
   text-align: center;
-  top: 0;
+  top: 10rem;
   width: 70px;
   text-decoration: none;
   z-index: 9998;
