@@ -85,7 +85,7 @@ function CarouselAddToOutfit({ informationArray }) {
 const CarouselContainerR = styled.div`
 
   position: relative;
-  width: 1100px;
+  max-width: 1100px;
   height: fit-content;
   flex-direction: column;
 `;
