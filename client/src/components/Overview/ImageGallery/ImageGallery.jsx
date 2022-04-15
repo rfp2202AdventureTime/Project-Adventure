@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -18,18 +18,42 @@ function ImageGallery({
   const [view, setView] = useState('default');
   const [imgIdx, setImgIdx] = useState(0);
   const expandedImgBounds = useRef();
+  const imgGallery = useRef();
 
-  const handleViewChange = (e, newView) => {
-    if (e.currentTarget.firstChild === e.target || e.currentTarget === e.target) {
-      setView(newView);
-    }
-  };
   const handleImgIdxChange = (idx) => {
     let newIdx = idx;
     if (idx === 'prev') newIdx = imgIdx - 1;
     if (idx === 'next') newIdx = imgIdx + 1;
     if (photos[newIdx]) setImgIdx(newIdx);
   };
+
+  const handleResize = useCallback(() => {
+    console.log('triggering');
+    imgGallery.current.style.setProperty('width', `${expandedImgBounds.current.offsetWidth}px`);
+    imgGallery.current.classList.add('notransition');
+  }, []);
+
+  const handleViewChange = (e, newView) => {
+    if (e.currentTarget.firstChild === e.target || e.currentTarget === e.target) {
+      if (newView === 'default') {
+        setView(newView);
+      }
+      if (newView === 'expanded' && window.matchMedia('(min-width: 768px)').matches) {
+        setView(newView);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (view === 'expanded') {
+      imgGallery.current.style.setProperty('width', `${expandedImgBounds.current.offsetWidth}px`);
+      window.addEventListener('resize', handleResize);
+    } else {
+      imgGallery.current.style.setProperty('width', '100%');
+      imgGallery.current.classList.remove('notransition');
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [view]);
 
   const leftVisibility = imgIdx > 0;
   const rightVisibility = photos && imgIdx < (photos.length - 1);
@@ -40,7 +64,7 @@ function ImageGallery({
 
     <ExpandedViewport ref={expandedImgBounds}>
       <DefaultViewport>
-        <Gallery bounds={expandedImgBounds} className={view} onClick={(e) => handleViewChange(e, 'expanded')}>
+        <Gallery bounds={expandedImgBounds} ref={imgGallery} className={view} onClick={(e) => handleViewChange(e, 'expanded')}>
 
           {photos ? (
             <>
@@ -140,14 +164,19 @@ const Gallery = styled.div`
   height: 100%;
   background-color:${(props) => props.theme.colors.background};
   &.expanded {
-    width: ${(props) => (props.bounds.current ? props.bounds.current.offsetWidth : '')}px;
     transition: width 1s ease-in-out;
     :hover { cursor: crosshair; }
+    &.notransition {
+      transition: none !important;
+    }
   }
   &.default {
     width: 100%;
     transition: width 1s ease-in-out;
-    &:hover { cursor: zoom-in; }
+    &:hover {
+      cursor: zoom-in;
+      @media (max-width: 768px) { cursor: default; }
+    }
   }
   position: relative;
   display: flex;
