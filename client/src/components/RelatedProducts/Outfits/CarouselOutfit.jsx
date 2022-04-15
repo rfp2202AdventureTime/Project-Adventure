@@ -8,14 +8,18 @@ import useTracking from '@Contexts/ClickTracker';
 import { Individualcard } from '../Cards/Individualcard';
 import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 import { useMeta } from '../../../contexts/ReviewMeta';
-import { useCurrentStyles } from '../../../contexts/StylesProvider';
+import { useCurrentStyles, useActiveStyle } from '../../../contexts/StylesProvider';
 
 function CarouselAddToOutfit({ informationArray }) {
-  const { trackEvent } = useTracking({ widget: 'Add to Outfit'});
+  const { trackEvent } = useTracking({ widget: 'Add to Outfit' });
   const [viewIndex, setViewIndex] = useState(0);
   const { currentProductId } = useCurrentProductId();
   const currentStyles = useCurrentStyles();
   const starRating = useMeta();
+  const { activeStyle } = useActiveStyle();
+  const imageThumb = activeStyle?.photos[0].thumbnail_url
+  const activeSalePrice = activeStyle?.sale_price;
+
   const displayed = informationArray.slice(viewIndex, (viewIndex + 3));
   const maxDisplayed = informationArray.length - 3;
 
@@ -37,7 +41,6 @@ function CarouselAddToOutfit({ informationArray }) {
   const addToStorage = (e, product) => {
     e.preventDefault();
     e.stopPropagation();
-    const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
     trackEvent({ element: 'Button' });
 
     axios({
@@ -45,8 +48,9 @@ function CarouselAddToOutfit({ informationArray }) {
       url: `/products/${product}`,
     })
       .then(({ data }) => {
-        const dataTest = [data, currentThumbnail, starRating, false];
-        localStorage.setItem(data.id, JSON.stringify(dataTest));
+          data['sale_price'] = activeSalePrice;
+          const dataTest = [data, imageThumb, starRating, false];
+          localStorage.setItem(data.id, JSON.stringify(dataTest));
       });
   };
 
@@ -81,7 +85,7 @@ function CarouselAddToOutfit({ informationArray }) {
 const CarouselContainerR = styled.div`
 
   position: relative;
-  width: 1100px;
+  max-width: 1100px;
   height: fit-content;
   flex-direction: column;
 `;
@@ -114,11 +118,13 @@ const RightArrowR = styled.div`
 
 const CardImage = styled.div`
   display: relative;
-  width: 243px;
+  min-width: 243px;
   height: 250px;
   background: url(${(props) => props.url});
   background-position: center;
   background-size: cover;
+  margin-right: 5px;
+  padding-right: 5px;
 `;
 
 const AddButton = styled.div`
@@ -132,7 +138,7 @@ const AddButton = styled.div`
 const AddedOutfit = styled.div`
   display: flex;
   position: relative;
-  margin-left: 25px;
+  margin-left: 30px;
   flex-direction: row;
   width: fit-content;
   height: max-content;
@@ -140,5 +146,6 @@ const AddedOutfit = styled.div`
 
 const OutfitText = styled.p`
   text-align: center;
+  color: ${(props) => props.theme.colors.secondary};
 `;
 export default CarouselAddToOutfit;

@@ -5,6 +5,7 @@ import ProductImg from './ProductImg';
 import Star from '../../../Star';
 import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 import useTracking from '@Contexts/ClickTracker';
+import Price from '../../Shared/Price';
 
 
 // receives array [product information, thumbnail url, (bool for star or no star on card)]
@@ -26,11 +27,11 @@ function Individualcard({ product }) {
           <CategoryText>
             <div>{product[0].category}</div>
           </CategoryText>
+          <ProductText>
           <p>{product[0].name}</p>
-          <p>
-            $
-            {product[0].default_price}
-          </p>
+
+          </ProductText>
+          <Price original={product[0].default_price} discount={product[0].sale_price} />
           <div>
             <Star score={starRating} />
             {' '}
@@ -41,11 +42,11 @@ function Individualcard({ product }) {
 }
 
 const IndCard = styled.div`
-  // color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.secondary};
   display: table-cell, relative;
   position: relative;
   border: 1px solid ${(props) => props.theme.colors.secondary};
-  width: 250px;
+  min-width: 250px;
   height: fit-content;
   margin-right: 30px;
   margin-bottom: 5px;
@@ -57,11 +58,16 @@ const IndCard = styled.div`
 `;
 
 const CategoryText = styled.div`
-  font-style: italic;
+  text-transform: uppercase;
 `;
 const CardText = styled.div`
-  padding-left: 1px;
+  padding-left: 5px;
 `;
+
+const ProductText = styled.div`
+  font-weight: bold;
+  `;
+
 export {
   Individualcard,
   IndCard,

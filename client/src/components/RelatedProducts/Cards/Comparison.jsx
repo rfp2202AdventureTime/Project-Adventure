@@ -1,34 +1,25 @@
 /* eslint-disable no-restricted-syntax */
 import { React } from 'react';
 import styled from 'styled-components';
-import { useFeature } from '../contexts/FeatureContext';
 
-// should get an array with two arrays of features from each item
-function Comparison() {
-  const twoProductsArray = useFeature();
+// Receives two product arrays
+function Comparison({ twoProducts }) {
+  if (twoProducts) {
+    const item1 = twoProducts[0];
+    const item2 = twoProducts[1];
 
-  if (twoProductsArray) {
-    const item1 = twoProductsArray.data[0].data;
-    const item2 = twoProductsArray.data[1].data;
-
-    // creates an array with all the features
+    // Creates an array with all the features
     const FeatArray = item1.features.concat(item2.features);
 
-    // create a set for stringified objects
-    const stagingSet = new Set();
-
+    // Creates a unique set of features
+    const features = [];
     for (let i = 0; i < FeatArray.length; i += 1) {
-      if (!stagingSet.has(JSON.stringify(FeatArray[i].feature))) {
-        stagingSet.add(JSON.stringify(FeatArray[i]));
+      if (features.indexOf(FeatArray[i].feature) === -1) {
+        features.push(FeatArray[i].feature);
       }
     }
 
-    // iterate through stringified set and push to FeatureSet array
-    const FeatureSet = [];
-    for (const item of stagingSet) {
-      FeatureSet.push(JSON.parse(item));
-    }
-
+    // Creates two separate arrays with only the features
     const item1Array = [];
     item1.features.map((item) => item1Array.push(item));
 
@@ -39,29 +30,38 @@ function Comparison() {
       <table>
         <thead>
           <tr>
-            <th>{item1.name}</th>
+            <HeadL>{item1.name}</HeadL>
             <th> </th>
-            <th>{item2.name}</th>
+            <HeadR>{item2.name}</HeadR>
             <th> </th>
           </tr>
         </thead>
         <tbody>
 
-          {FeatureSet.map((item, key) => (
+          {features.map((item, key) => (
             <tr key={key}>
-              <Xfeature>
+              <XfeatureL>
                 {item1Array.map((item1) => (
-                  (item1.feature === item.feature)
+                  (item1.feature === item)
                     ? (item1.value)
                       ? `${item1.value}`
                       : '✓'
                     : ' '
                 ))}
-              </Xfeature>
+              </XfeatureL>
 
-              <Value>{item.feature}</Value>
+              <Value>{item}</Value>
 
-              <Xfeature>{item2Array.map((item2) => ((item2.feature === item.feature) ? (item2.value) ? `${item2.value}` : '✓' : ' '))}</Xfeature>
+              <XfeatureR>
+                {item2Array.map((item2) => (
+                  (item2.feature === item)
+                    ? (item2.value)
+                      ? `${item2.value}`
+                      : '✓'
+                    : ' '
+                ))}
+
+              </XfeatureR>
 
             </tr>
           ))}
@@ -71,13 +71,37 @@ function Comparison() {
   }
 }
 
-const Xfeature = styled.td`
+const XfeatureL = styled.td`
   position: flex;
   text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-style: italic;
+  color: ${(props) => props.theme.colors.primary};
+`;
+
+const XfeatureR = styled.td`
+  position: flex;
+  text-align: center;
+  padding-right: 20px;
+  padding-left: 20px;
+  font-style: italic;
+  color: ${(props) => props.theme.colors.primary};
 `;
 
 const Value = styled.td`
   text-align: center;
+  color: ${(props) => props.theme.colors.primary};
   `;
+
+const HeadL = styled.th`
+  padding-left: 20px;
+  color: ${(props) => props.theme.colors.primary};
+`;
+
+const HeadR = styled.th`
+  padding-right: 20px;
+  color: ${(props) => props.theme.colors.primary};
+`;
 
 export default Comparison;
