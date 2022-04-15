@@ -67,7 +67,7 @@ const Site = styled.div`
 
 const SiteHeader = styled.header`
   position: sticky; top: 0;
-  z-index:1000;
+  z-index:500;
   font-size: 1.5em;
   background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.light};
