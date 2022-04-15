@@ -10,7 +10,7 @@ import Console from '../../Console';
 
 import QAAnswer from './QAAnswer';
 
-export default function QAItem({ question, allAnswers }) {
+export function QAItem({ question, allAnswers }) {
   const { currentProduct } = useCurrentProduct();
   const { currentProductId } = useCurrentProductId();
   const setGlobalAData = useData().setAData;
@@ -53,7 +53,7 @@ export default function QAItem({ question, allAnswers }) {
   const handleQuestionHelpful = (category, ID) => {
     axios({
       method: 'PUT',
-      url: `http://localhost:3000/qa/questions/${ID}/${category}`,
+      url: `/qa/questions/${ID}/${category}`,
     })
       .then((response) => {
         Console.log(response.status);

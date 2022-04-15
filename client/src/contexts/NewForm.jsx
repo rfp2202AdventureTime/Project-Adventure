@@ -74,6 +74,14 @@ export default function NewForm({
     newData.name = name;
     newData.email = email;
     newData.product_id = productId;
+    if (
+      !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+      || email.length > 60
+      || email.length === 0
+    ) {
+      alert('Please make sure email is in proper format ex. \'hello@hello.com');
+      return false;
+    }
     return newData;
   };
 
@@ -85,6 +93,14 @@ export default function NewForm({
     newData.name = name;
     newData.email = email;
     newData.photos = [];
+    if (
+      !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+      || email.length > 60
+      || email.length === 0
+    ) {
+      alert('Please make sure email is in proper format ex. \'hello@hello.com');
+      return false;
+    }
     return newData;
   };
 

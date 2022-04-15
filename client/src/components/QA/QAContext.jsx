@@ -21,7 +21,7 @@ export function QADataProvider({ children }) {
     if (currentProductId) {
       axios({
         method: 'get',
-        url: 'http://localhost:3000/qa/questions',
+        url: '/qa/questions',
         params: {
           product_id: currentProductId,
           count: 100,
@@ -32,7 +32,7 @@ export function QADataProvider({ children }) {
           data.results.forEach((question) => {
             axios({
               method: 'get',
-              url: `http://localhost:3000/qa/questions/${question.question_id}/answers`,
+              url: `/qa/questions/${question.question_id}/answers`,
             })
               // eslint-disable-next-line no-shadow
               .then(({ data }) => {
@@ -49,7 +49,6 @@ export function QADataProvider({ children }) {
         });
     }
   }, [currentProductId]);
-  // const allQAData = useMemo(() => ({}))
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <QAContext.Provider value={{
