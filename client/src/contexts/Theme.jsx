@@ -1,9 +1,9 @@
 const themes = {
   light: {
     colors: {
-      primary: '#525252',
+      primary: '#1E2761',
       secondary: '#5a5a5a',
-      background: '#ebebeb',
+      background: '#FAF9F6',
       light: '#ffffff',
       offWhite: '#FAF9F6',
       modalBackground: 'rgba(0,0,0,0.8)',
@@ -12,6 +12,7 @@ const themes = {
     },
     fonts: {
       title: {
+        family: '"Montserrat", sans-serif',
         transform: 'none',
       },
       heading: {
@@ -23,7 +24,7 @@ const themes = {
     colors: {
       primary: '#FAF9F6',
       secondary: '#FAF9F6',
-      background: '#5a5a5a',
+      background: '#111',
       light: '#111',
       // review tiles and formsbackground
       offWhite: '#23222b',
@@ -35,6 +36,7 @@ const themes = {
     },
     fonts: {
       title: {
+        family: '"Montserrat", sans-serif',
         transform: 'none',
       },
       heading: {

@@ -15,7 +15,7 @@ import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
-  const defaultProductId = 65655;
+  const defaultProductId = 65631;
   const [currentTheme, setCurrentTheme] = useState('light');
 
   const handleThemeChange = () => {
@@ -28,7 +28,7 @@ function App() {
       <ProductProvider productId={defaultProductId}>
         <Site>
           <SiteHeader>
-            Adventure Time
+            Atelier.
             <SiteSearch>
               <ThemeChanger onClick={() => handleThemeChange()}>
                 {currentTheme === 'light' ? <FiMoon /> : <FiSun />}
@@ -61,12 +61,11 @@ const Site = styled.div`
 `;
 
 const SiteHeader = styled.header`
-  font-size: 2em;
+  font-size: 1.5em;
   background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.light};
-  font-weight: bold;
-  font-style: italic;
   padding: 20px 40px;
+  font-family: ${({ theme }) => theme.fonts.title.family};
 `;
 
 const SiteBody = styled.section`
@@ -84,7 +83,8 @@ const SiteSearch = styled.span`
 
 const Banner = styled.div`
   backgound-color: ${(props) => props.theme.colors.light};
-  color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.primary};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.primary};
   font-size: 0.9em;
   text-align: center;
   padding: 10px 0;

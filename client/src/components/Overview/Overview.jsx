@@ -20,35 +20,30 @@ function Overview() {
   const currentMeta = useMeta();
   const photos = activeStyle ? activeStyle.photos : null;
 
-  const preheading = (
-    <RatingInfo>
-      <a href="#ratings">
-        <StarWrapper>
-          <Star score={currentMeta ? currentMeta.avgRating : 0} />
-        </StarWrapper>
-      </a>
-    </RatingInfo>
-  );
-
-  const heading = (
-    <>
-      <Category>{currentProduct ? currentProduct.category : 'CATEGORY'}</Category>
-      <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
-    </>
-  );
-
-  const content = (
-    <>
-      {activeStyle
-        && <Price original={activeStyle.original_price} discount={activeStyle.sale_price} />}
-      {activeStyle && <StyleSelector />}
-      {activeStyle && <AddToCart skus={activeStyle.skus} />}
-    </>
-  );
-
   return (
     <>
-      <ImageGallery preheading={preheading} heading={heading} content={content} photos={photos} />
+      <ImageGallery photos={photos}>
+        <AsideContent>
+          <RatingInfo>
+            <StarWrapper>
+              <Star score={currentMeta ? currentMeta.avgRating : 0} />
+            </StarWrapper>
+            <ViewRatings href="#ratings">
+              View all reviews.
+            </ViewRatings>
+          </RatingInfo>
+        </AsideContent>
+        <AsideHeading>
+          <Category>{currentProduct ? currentProduct.category : 'CATEGORY'}</Category>
+          <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
+        </AsideHeading>
+        <AsideContent>
+          {activeStyle
+            && <Price original={activeStyle.original_price} discount={activeStyle.sale_price} />}
+          {activeStyle && <StyleSelector />}
+          {activeStyle && <AddToCart skus={activeStyle.skus} />}
+        </AsideContent>
+      </ImageGallery>
 
       <AdditionalDetails>
         <LongDescription>
@@ -62,7 +57,7 @@ function Overview() {
               // eslint-disable-next-line react/no-array-index-key
               <FeatureItem key={i}>
                 <FiCheck size={18} />
-                <strong>{`${f.feature} `}</strong>
+                <Feature>{`${f.feature} `}</Feature>
                 {f.value}
               </FeatureItem>
             ))}
@@ -73,14 +68,43 @@ function Overview() {
   );
 }
 
+const AsideContent = styled.div`
+  width: 32.5%;
+  max-height: 500px;
+  overflow: scroll;
+  background-color:${(props) => props.theme.colors.light};
+  padding: 5px 30px;
+  color: ${(props) => props.theme.colors.secondary};
+  @media (max-width: 1279px) and (min-width: 768px) { width: 50%; }
+  @media (max-width: 768px) { width: 100%; }
+`;
+
+const AsideHeading = styled(AsideContent)`
+  @media (max-width: 768px) {
+    padding-top: 10px;
+    order: -1;
+  }
+`;
+
+const Feature = styled.span`
+  font-weight: bold;
+  color: ${(props) => props.theme.colors.primary};
+  font-family: ${(props) => props.theme.fonts.title.family}
+`;
+
 const RatingInfo = styled.div`
 `;
 
+const ViewRatings = styled.a`
+  color: ${(props) => props.theme.colors.primary};
+  &:visited { ${(props) => props.theme.colors.secondary}; }
+  &:active {${(props) => props.theme.colors.secondary}; }
+`;
+
 const StarWrapper = styled.div`
+  padding-top: 10px;
   display: inline-block;
-  &:hover {
-    box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
-  };
+  margin-right: 5px;
 `;
 
 const FeatureItems = styled.ul`
@@ -90,7 +114,6 @@ const FeatureItems = styled.ul`
 `;
 
 const FeatureItem = styled.li`
-  font-size: 0.8em;
   & > * {
     display: inline-block;
     margin-right: 5px;
@@ -122,6 +145,10 @@ const LongDescription = styled.div`
     padding-bottom: 20px;
     padding-right: 0;
   }
+  & > h3 {
+    font-family: ${({ theme }) => theme.fonts.title.family};
+    color: ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 const Features = styled.div`
@@ -133,8 +160,9 @@ const Features = styled.div`
 `;
 
 const ProductName = styled.h1`
-  font-weight: bold;
+  font-family: ${({ theme }) => theme.fonts.title.family};
   font-size: 2em;
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const Category = styled.h3`
