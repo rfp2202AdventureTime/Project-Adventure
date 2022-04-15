@@ -1,26 +1,38 @@
 /* eslint-disable react/prop-types */
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { FiBookOpen, FiTrash } from 'react-icons/fi';
 import useTracking from '@Contexts/ClickTracker';
 import Comparison from './Comparison';
-import { FeatureProvider, useFeature } from '../contexts/FeatureContext';
+import { useCurrentProduct } from '../../../contexts/ProductIDContext';
 import { ModalClose } from '../../../contexts/Shared.styled';
 
 function ProductImg({ image, product, star }) {
+  const imageNotFound = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
   const { trackEvent } = useTracking({ widget: 'modal window' });
   const [showModal, setShowModal] = useState(false);
-  const [ID, setID] = useState(null);
+  // const [ID, setID] = useState(null);
   const productThumbnail = image;
-  const imageNotFound = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
+  const { currentProduct } = useCurrentProduct();
+  const [twoProductsArray, setTwoProductsArray] = useState([]);
+  const twoProducts = [currentProduct];
 
-  // console.log(useFeature)
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setID(product);
+    // setID(product);
     setShowModal(!showModal);
     trackEvent({ element: 'Comparison window' });
+
+    axios({
+      method: 'GET',
+      url: `products/${product}`,
+    })
+      .then(({ data }) => {
+        twoProducts.push(data);
+        setTwoProductsArray(([]) => [...twoProducts]);
+      });
   };
 
   const handleRemove = (e, product) => {
@@ -49,21 +61,19 @@ function ProductImg({ image, product, star }) {
 
   return (
     <CardImage url={productThumbnail || imageNotFound}>
-      <FeatureProvider prodID={ID}>
 
-        <ModalContainer show={showModal} onClick={(e) => exitModal(e)}>
+      <ModalContainer show={showModal} onClick={(e) => exitModal(e)}>
 
-          <ModalClose onClick={(e) => exitModal(e)}>&times;</ModalClose>
-          <Modal show={showModal}>
+        <ModalClose onClick={(e) => exitModal(e)}>&times;</ModalClose>
+        <Modal show={showModal}>
 
-            <Comparison />
-          </Modal>
+          {twoProductsArray.length > 1 ? <Comparison twoProducts={twoProductsArray} /> : <div>Loading...</div>}
+        </Modal>
 
-        </ModalContainer>
+      </ModalContainer>
 
-        {star ? <CompareButton onClick={(e) => handleClick(e)}><FiBookOpen size={30} /></CompareButton> : <CloseButton onClick={(e) => handleRemove(e, product)}><FiTrash size={30} /></CloseButton>}
+      {star ? <CompareButton onClick={(e) => handleClick(e)}><FiBookOpen size={30} /></CompareButton> : <CloseButton onClick={(e) => handleRemove(e, product)}><FiTrash size={30} /></CloseButton>}
 
-      </FeatureProvider>
     </CardImage>
   );
 }
@@ -127,22 +137,4 @@ const CloseButton = styled.div`
   color: grey;
 `;
 
-// const ModalClose = styled.div`
-//   position: fixed;
-//   color: white;
-//   line-height: 50px;
-//   font-size: 2rem;
-//   // position: absolute;
-//   right: 0;
-//   text-align: center;
-//   top: 0;
-//   width: 70px;
-//   text-decoration: none;
-//   z-index: 9998;
-//   cursor: pointer;
-//   &:hover {
-//     color: #000;
-//   }
-
-// `;
 export default ProductImg;

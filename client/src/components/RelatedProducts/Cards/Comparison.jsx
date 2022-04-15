@@ -1,19 +1,17 @@
 /* eslint-disable no-restricted-syntax */
 import { React } from 'react';
 import styled from 'styled-components';
-import { useFeature } from '../contexts/FeatureContext';
 
 // should get an array with two arrays of features from each item
-function Comparison() {
-  const twoProductsArray = useFeature();
-
-  if (twoProductsArray) {
-    const item1 = twoProductsArray.data[0].data;
-    const item2 = twoProductsArray.data[1].data;
+function Comparison({ twoProducts }) {
+  if (twoProducts) {
+    const item1 = twoProducts[0];
+    const item2 = twoProducts[1];
 
     // creates an array with all the features
     const FeatArray = item1.features.concat(item2.features);
 
+    // Creates a unique set of features
     const features = [];
     for (let i = 0; i < FeatArray.length; i += 1) {
       if (features.indexOf(FeatArray[i].feature) === -1) {
