@@ -31,14 +31,13 @@ function AllCards() {
     }
   }, [related]);
 
-
     if (thumbnail?.data && relatedInformation?.data && ratingsMeta && currentStyles && relatedStyles) {
       relatedInformation?.data.map((item, i) => {
         const currentRating = ratingsMeta.data[i]?.data ? ratingsMeta.data[i].data : 1;
 
         const currentThumbnail = thumbnail.data[i]?.data.results[0].photos[0].thumbnail_url ? thumbnail.data[i].data.results[0].photos[0].thumbnail_url : '';
 
-        const activeSalePrice = relatedStyles?.data[i].data.results[0].sale_price || null
+        const activeSalePrice = relatedStyles.data[i]?.data.results[0].sale_price || null
 
         item.data['sale_price'] = activeSalePrice;
         information.push([item.data, currentThumbnail, currentRating, true]);
