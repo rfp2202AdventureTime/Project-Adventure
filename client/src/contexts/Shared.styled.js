@@ -81,10 +81,6 @@ const ModalClose = styled.div`
   text-decoration: none;
   z-index: 9998;
   cursor: pointer;
-  &:hover {
-    color: #000;
-  }
-
 `;
 
 export {
