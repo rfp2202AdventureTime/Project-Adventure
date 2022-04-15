@@ -2,16 +2,19 @@ import styled from 'styled-components';
 
 // Shared by Rating and Q&A
 const Button = styled.button`
-  border: 2px solid;
+  appearance: none;
+  padding: 15px;
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.primary};
+  font-size: 0.8em;
+  text-transform: uppercase;
   text-align: center;
-  padding: 1.3rem 1rem 1.3rem 1rem;
-  font-size: medium;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.secondary};
-  background-color: ${({ theme }) => theme.colors.button};
+  font-weight: bold;
+  margin: 5px;
+  width: 200px;
+  color: ${({ theme }) => theme.colors.light};
   &:hover {
-    background-color:${({ theme }) => theme.colors.tertiary};
-    box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
+    cursor: pointer;
   }
 `;
 
@@ -21,14 +24,15 @@ const MiniButton = styled(Button)`
   font-weight: 400;
   border-radius: 0.5rem;
   margin-top: 0.5rem;
+  width: auto;
+  // color: ${({ theme }) => theme.colors.primary};
+  border-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.tertiary};
 `;
 const ClickableText = styled.button`
   background-color: transparent;
   border: none;
   padding: 0!important;
-  /*optional*/
-  font-family: arial, sans-serif;
-  /*input has OS specific font-family*/
   color: #069;
   text-decoration: underline;
   cursor: pointer;
@@ -57,7 +61,7 @@ const Modal = styled.div`
   height: 60%;
   position: relative;
   margin: 10% auto;
-  color: #444;
+  // color: #444;
   background-image: ${({ modal, theme }) => (modal ? `url(${modal})` : theme.colors.primary)};
   background-repeat: no-repeat;
   background-color: ${({ theme }) => theme.colors.light};
