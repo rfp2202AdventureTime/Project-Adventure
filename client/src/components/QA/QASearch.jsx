@@ -29,7 +29,7 @@ const SearchSection = styled.div`
   flex-direction: row;
   padding-left: 25%;
   padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-bottom:1rem;
 `;
 
 const SearchBox = styled.input`

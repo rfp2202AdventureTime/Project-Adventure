@@ -83,12 +83,43 @@ export default function NewForm({
         return null;
       })
         .catch((err) => Console.log(err));
-    } else {
+    } else if (formtype === 'qa/questions/') {
+      const newData = {};
+      const {
+        body, email, name,
+      } = data;
+      newData.body = body;
+      newData.name = name;
+      newData.email = email;
+      newData.product_id = productId;
       axios({
         method: 'post',
         url: `/${formtype}`,
-        data,
+        data: newData,
       })
+        .then((response) => {
+          Console.log('Question POST status: ', response.status);
+        })
+        .catch((err) => Console.log(err));
+    } else {
+      console.log('in the answers')
+      console.log(formtype)
+      const newData = {};
+      const {
+        body, email, name,
+      } = data;
+      newData.body = body;
+      newData.name = name;
+      newData.email = email;
+      newData.photos = [];
+      axios({
+        method: 'post',
+        url: `/${formtype}`,
+        data: newData,
+      })
+        .then((response) => {
+          Console.log('Answer POST status: ', response.status);
+        })
         .catch((err) => Console.log(err));
     }
   };
@@ -100,16 +131,18 @@ export default function NewForm({
     photo: 'Upload your photos',
   };
 
+  // TODO: make this dynapmic for all post
   const sharedQuestionInput = {
     title: 'Ask Your Question',
     subtitle: `About the ${productName}`,
     body: 'Your Question: ',
+    product_id: productId,
   };
 
   const sharedAnswerInput = {
     title: 'Submit Your Answer',
     // subtitle: `${productName}:${questionBody}`,
-    body: 'Your Question: ',
+    body: 'Your Answer: ',
     photo: 'Upload your photos',
   };
 
@@ -120,9 +153,9 @@ export default function NewForm({
 
   if (formtype === 'reviews') {
     type = reviews;
-  } else if (formtype === 'question') {
+  } else if (formtype === 'qa/questions/') {
     type = sharedQuestionInput;
-  } else if (formtype === 'answer') {
+  } else {
     type = sharedAnswerInput;
   }
   const clickExit = () => {
