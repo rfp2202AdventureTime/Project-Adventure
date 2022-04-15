@@ -78,9 +78,6 @@ const RatingInfo = styled.div`
 
 const StarWrapper = styled.div`
   display: inline-block;
-  &:hover {
-    box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
-  };
 `;
 
 const FeatureItems = styled.ul`

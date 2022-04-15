@@ -123,7 +123,7 @@ const ExpandedViewport = styled.section`
   display: flex;
   flex-direction: column;
   align-content: center;
-  @media (min-width: 768px) { height: 630px; flex-wrap: wrap; }
+  @media (min-width: 768px) { max-height: 630px; flex-wrap: wrap; }
   @media (max-width: 768px) { width: 100%; }
 `;
 
@@ -147,8 +147,10 @@ const DefaultViewport = styled.div`
 
 const AsideContent = styled.div`
   width: 32.5%;
+  max-height: 500px;
+  overflow: scroll;
   background-color:${(props) => props.theme.colors.light};
-  padding: 10px 30px;
+  padding: 5px 30px;
   color: ${(props) => props.theme.colors.secondary};
   @media (max-width: 1279px) and (min-width: 768px) { width: 50%; }
   @media (max-width: 768px) { width: 100%; }

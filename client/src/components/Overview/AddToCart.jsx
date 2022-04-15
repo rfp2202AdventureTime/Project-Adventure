@@ -144,7 +144,7 @@ const ErrorAnimation = keyframes`
 `;
 
 const SelectionError = styled.div`
-  height: 40px;
+  height: 30px;
   color: red;
   animation-name: ${ErrorAnimation};
   animation-duration: 0.5s;
@@ -155,7 +155,7 @@ const SelectionError = styled.div`
 const Error = styled.span`
   animation-name: ${ErrorAnimation};
   animation-duration: 0.5s;
-  line-height: 50px;
+  line-height: 30px;
   font-size: 0.9em;
   margin-left: 5px;
 `;
