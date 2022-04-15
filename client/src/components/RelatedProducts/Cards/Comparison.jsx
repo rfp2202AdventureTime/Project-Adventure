@@ -30,9 +30,9 @@ function Comparison({ twoProducts }) {
       <table>
         <thead>
           <tr>
-            <th>{item1.name}</th>
+            <HeadL>{item1.name}</HeadL>
             <th> </th>
-            <th>{item2.name}</th>
+            <HeadR>{item2.name}</HeadR>
             <th> </th>
           </tr>
         </thead>
@@ -90,5 +90,13 @@ const XfeatureR = styled.td`
 const Value = styled.td`
   text-align: center;
   `;
+
+const HeadL = styled.th`
+  padding-left: 20px;
+`;
+
+const HeadR = styled.th`
+  padding-right: 20px;
+`;
 
 export default Comparison;
