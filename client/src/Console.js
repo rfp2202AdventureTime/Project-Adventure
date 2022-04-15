@@ -1,5 +1,5 @@
 // function to handle production console log. Turn off when deploy
-const productionState = true;
+const productionState = false;
 
 const Console = {
   log: (...args) => {
