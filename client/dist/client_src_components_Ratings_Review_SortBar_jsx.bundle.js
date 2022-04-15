@@ -55,9 +55,12 @@ var SortBarBlock = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div
 })(["display:flex;flex-direction:row;margin:0.1rem 0.8rem 0.2rem 0.8rem;padding:0.25rem 1rem 0.25rem 1rem;font-size:medium;gap:0.4rem;"]);
 var DropDown = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].select.withConfig({
   displayName: "SortBar__DropDown"
-})(["font-weight:bold;color:", ";"], function (_ref2) {
+})(["font-weight:bold;color:", ";background-color:", ";"], function (_ref2) {
   var theme = _ref2.theme;
   return theme.colors.secondary;
+}, function (_ref3) {
+  var theme = _ref3.theme;
+  return theme.colors.light;
 });
 SortBar.propTypes = {
   handleSort: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().func.isRequired),

@@ -8,9 +8,10 @@ const Button = styled.button`
   font-size: medium;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.button};
   &:hover {
     background-color:${({ theme }) => theme.colors.tertiary};
-    box-shadow: 0.3rem 0.3rem 0.3rem ${({ theme }) => theme.colors.secondary}
+    box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
   }
 `;
 
@@ -47,7 +48,6 @@ const ModalParent = styled.div`
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
-  // cursor: pointer;
 `;
 
 const Modal = styled.div`
@@ -70,7 +70,6 @@ const ModalClose = styled.div`
   color: white;
   line-height: 50px;
   font-size: 2rem;
-  // position: absolute;
   right: 0;
   text-align: center;
   top: 0;
