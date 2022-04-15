@@ -33,13 +33,13 @@ function CarouselRelated({ informationArray }) {
   if (displayed) {
     return (
       <CarouselContainerR>
-        {viewIndex !== 0 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={40} /></LeftArrowR> : <LeftArrowR />}
+        {viewIndex !== 0 ? <LeftArrowR onClick={() => prev()}><FiChevronLeft size={60} /></LeftArrowR> : <LeftArrowR />}
 
         <CarouselWrapperR>
 
           {displayed.map((item, key) => <Individualcard product={item} key={key} />)}
 
-          {(viewIndex !== maxDisplayed && displayed.length >= 4) ? <RightArrowR onClick={() => next()}><FiChevronRight size={40} /></RightArrowR> : <RightArrowR />}
+          {(viewIndex !== maxDisplayed && displayed.length >= 4) ? <RightArrowR onClick={() => next()}><FiChevronRight size={60} /></RightArrowR> : <RightArrowR />}
         </CarouselWrapperR>
       </CarouselContainerR>
     );
