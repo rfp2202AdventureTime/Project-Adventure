@@ -43,6 +43,7 @@ function Individualcard({ product }) {
 
 const IndCard = styled.div`
   color: ${(props) => props.theme.colors.secondary};
+  background-color: ${(props) => props.theme.colors.offWhite};
   display: table-cell, relative;
   position: relative;
   border: 1px solid ${(props) => props.theme.colors.secondary};
