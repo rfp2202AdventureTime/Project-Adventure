@@ -7,10 +7,10 @@ import NewForm from '../../contexts/NewForm';
 import { ClickableText } from '../../contexts/Shared.styled';
 import { useCurrentProductId, useCurrentProduct } from '../../contexts/ProductIDContext';
 import Console from '../../Console';
-
 import QAAnswer from './QAAnswer';
+import useTracking from '@Contexts/ClickTracker';
 
-export default function QAItem({ question, allAnswers }) {
+export function QAItem({ question, allAnswers }) {
   const { currentProduct } = useCurrentProduct();
   const { currentProductId } = useCurrentProductId();
   const setGlobalAData = useData().setAData;
@@ -20,6 +20,7 @@ export default function QAItem({ question, allAnswers }) {
   const [moreAsClicked, setMoreAsClicked] = useState(true);
   const [disableHelpfulQuestion, setdisableHelpfulQuestion] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const { trackEvent } = useTracking({widget:'QAentry'});
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -53,7 +54,7 @@ export default function QAItem({ question, allAnswers }) {
   const handleQuestionHelpful = (category, ID) => {
     axios({
       method: 'PUT',
-      url: `http://localhost:3000/qa/questions/${ID}/${category}`,
+      url: `/qa/questions/${ID}/${category}`,
     })
       .then((response) => {
         Console.log(response.status);
@@ -84,6 +85,7 @@ export default function QAItem({ question, allAnswers }) {
               onClick={() => {
                 setdisableHelpfulQuestion(true);
                 handleQuestionHelpful('helpful', question.question_id);
+                trackEvent({element: 'question_helpfulness_text'})
               }}
             >
               Yes
@@ -92,7 +94,10 @@ export default function QAItem({ question, allAnswers }) {
           {` (${question.question_helpfulness}) | `}
           <ClickableText
             value="add answer"
-            onClick={toggleModal}
+            onClick={() => {
+              toggleModal();
+              trackEvent({element: 'add_answer_button'})
+            }}
           >
             Add Answer
           </ClickableText>
@@ -122,6 +127,7 @@ export default function QAItem({ question, allAnswers }) {
             onClick={() => {
               setNumAsToRender(arrayOfAnswers.length);
               setMoreAsClicked(false);
+              trackEvent({element: 'load_more_answers_button'})
             }}
           >
             Load More Answers
@@ -133,6 +139,7 @@ export default function QAItem({ question, allAnswers }) {
             onClick={() => {
               setNumAsToRender(2);
               setMoreAsClicked(true);
+              trackEvent({element: 'close_answers_for_question'})
             }}
           >
             Collapse Answers

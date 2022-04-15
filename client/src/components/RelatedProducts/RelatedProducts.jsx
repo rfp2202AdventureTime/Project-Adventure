@@ -31,14 +31,25 @@ function RelatedProducts() {
   );
 }
 
-const RelatedHeader = styled.h1`
+const RelatedHeader = styled.h3`
   text-transform: uppercase;
   padding-left: 10px;
+<<<<<<< HEAD
   color: ${(props) => props.theme.colors.secondary};
+=======
+  font-family: ${(props) => props.theme.fonts.title.family};
+  color: ${(props) => props.theme.colors.primary};
+  padding-bottom: 10px;
+
+>>>>>>> 3ed09ea (CSS Fixes)
 `;
 
 const RelatedProductsSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
+  display: inline-block;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
 `;
 
 export default RelatedProducts;

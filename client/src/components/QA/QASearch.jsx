@@ -24,22 +24,26 @@ export default function Search({
 }
 
 const SearchSection = styled.div`
-  background-color: ${(props) => props.theme.colors.light}
+  background-color: ${(props) => props.theme.colors.light};
+  color: ${(props) => props.theme.colors.secondary};
   display: flex;
   flex-direction: row;
-  padding-left: 25%;
+  margin: 0 auto;
   padding-top: 0.5rem;
   padding-bottom:1rem;
+  padding-right:0rem;
 `;
 
 const SearchBox = styled.input`
   background: ${(props) => props.theme.colors.background};
+  max-width: 600px;
+  max-height: 60px;
+  color: ${(props) => props.theme.colors.secondary};
   border-radius: 30px;
   border: 0px;
-  width: 600px;
-  height: 60px;
+  border: 2px solid ${(props) => props.theme.colors.primary};
   &::placeholder {
-    color: black;
+    color: ${(props) => props.theme.colors.secondary};
   }
   padding:15px;
 `;
