@@ -10,6 +10,7 @@ const themes = {
       tertiary: '#848484',
       hoverShadow: 'rgb(90 90 90 /20%)',
       emptyBar: '#E1E0DD',
+      pointer: '#1E2761',
     },
     fonts: {
       title: {
@@ -34,7 +35,7 @@ const themes = {
       tertiary: 'e6ebea',
       hoverShadow: '#FAF9F6',
       emptyBar: '#E1E0DD',
-
+      pointer: '#4CAF50',
     },
     fonts: {
       title: {

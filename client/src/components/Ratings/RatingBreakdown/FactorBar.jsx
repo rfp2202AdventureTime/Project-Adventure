@@ -58,6 +58,7 @@ const Pointer = styled.div`
   position: absolute;
   &:before {
     content: "▼";
+    color: ${({ theme }) => theme.colors.pointer};
   }
   z-index: 5;
   margin-top:-6px;
