@@ -18,8 +18,8 @@ function ProductImg({ image, product, star }) {
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setShowModal(!showModal);
     setID(product);
+    setShowModal(!showModal);
     trackEvent({ element: 'Comparison window' });
   };
 
