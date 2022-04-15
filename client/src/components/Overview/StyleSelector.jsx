@@ -67,7 +67,7 @@ const SelectedThumbnail = styled.span`
   top: -3px;
   background: #4CAF50;
   border-radius: 50%;
-  color: ${(props) => props.theme.colors.background};
+  color: ${({ theme }) => theme.colors.offWhite};;
   & > * {
     position: absolute;
     top: 3px;
@@ -98,7 +98,7 @@ const Thumbnail = styled.a`
 
 const StyleSelectorContainer = styled.section`
   padding: 10px 0;
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.secondary};
   font-size: 0.9em;
 `;
 

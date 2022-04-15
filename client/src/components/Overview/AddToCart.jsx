@@ -144,7 +144,7 @@ const ErrorAnimation = keyframes`
 `;
 
 const SelectionError = styled.div`
-  height: 40px;
+  height: 30px;
   color: red;
   animation-name: ${ErrorAnimation};
   animation-duration: 0.5s;
@@ -155,7 +155,7 @@ const SelectionError = styled.div`
 const Error = styled.span`
   animation-name: ${ErrorAnimation};
   animation-duration: 0.5s;
-  line-height: 50px;
+  line-height: 30px;
   font-size: 0.9em;
   margin-left: 5px;
 `;
@@ -169,20 +169,26 @@ const AddToCartButton = styled.button`
   appearance: none;
   padding: 15px;
   border: 1px solid ${({ theme }) => theme.colors.primary};
-  background: ${({ theme }) => theme.colors.light};
+  background: ${({ theme }) => theme.colors.primary};
   font-size: 0.8em;
   text-transform: uppercase;
   text-align: left;
   font-weight: bold;
   margin: 5px;
   width: 280px;
+  color: ${({ theme }) => theme.colors.light};
+  &:active {
+    transform: scale(0.99);
+    transition: transform 0.06s ease-in-out;
+  }
+  transition: transform 0.1s ease-in-out;
   cursor: pointer;
 `;
 
 const CustomSelect = styled.select`
   appearance: none;
   padding: 15px;
-  border: 1px solid ${({ theme }) => theme.colors.primary};
+  border: 1px solid ${({ theme }) => theme.colors.secondary};
   background: ${({ theme }) => theme.colors.light};
   font-size: 0.8em;
   text-transform: uppercase;
@@ -190,6 +196,7 @@ const CustomSelect = styled.select`
   font-weight: bold;
   margin: 5px;
   outline: none;
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const SelectSize = styled(CustomSelect)`

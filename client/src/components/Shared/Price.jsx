@@ -27,19 +27,16 @@ function Price({ original, discount }) {
 }
 
 const CurrentPrice = styled.span`
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: 0.9em;
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const DiscountPrice = styled.span`
   color: red;
-  font-size: 0.9em;
 `;
 
 const OldPrice = styled.span`
   text-decoration: line-through;
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: 0.9em;
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 Price.propTypes = {
