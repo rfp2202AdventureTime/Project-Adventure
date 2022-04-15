@@ -58,7 +58,7 @@ const IndCard = styled.div`
 `;
 
 const CategoryText = styled.div`
-  // font-style: italic;
+  text-transform: uppercase;
 `;
 const CardText = styled.div`
   padding-left: 5px;
@@ -67,6 +67,7 @@ const CardText = styled.div`
 const ProductText = styled.div`
   font-weight: bold;
   `;
+
 export {
   Individualcard,
   IndCard,
