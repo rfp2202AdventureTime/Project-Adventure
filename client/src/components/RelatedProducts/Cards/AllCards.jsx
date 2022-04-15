@@ -6,15 +6,16 @@ import { useThumbnail } from '../contexts/thumbnailContext';
 import CarouselRelated from './CarouselRelated';
 import { useCurrentStyles, useActiveStyle } from '../../../contexts/StylesProvider';
 import { useRelated } from '../contexts/RelatedContext';
+import Console from '../../../Console';
 
 
 function AllCards() {
   const { relatedInformation } = useProd();
-  const thumbnail = useThumbnail();
   const { ratingsMeta } = useProd();
+  const [relatedStyles, setRelatedStyles] = useState()
+  const thumbnail = useThumbnail();
   const information = [];
   const currentStyles = useCurrentStyles()
-  const [relatedStyles, setRelatedStyles] = useState()
   const related = useRelated()
 
   useEffect(() => {
@@ -26,7 +27,7 @@ function AllCards() {
         .then((data) => {
           setRelatedStyles({ data });
         })
-        .catch((err) => console.log('there was an ERROR in AllCards', err));
+        .catch((err) => Console.log('there was an ERROR in AllCards', err));
     }
   }, [related]);
 
@@ -64,24 +65,3 @@ function AllCards() {
   }
 
 export default AllCards;
-
-// ***for sale price, but it's a little buggy
-// const currentStyles = useCurrentStyles()
-
-//   if (thumbnail?.data && relatedInformation?.data && ratingsMeta && currentStyles) {
-//     relatedInformation?.data.map((item, i) => {
-//       const currentRating = ratingsMeta.data[i]?.data ? ratingsMeta.data[i].data : 0;
-//       const currentThumbnail = thumbnail.data[i]?.data.results[0].photos[0].thumbnail_url ? thumbnail.data[i].data.results[0].photos[0].thumbnail_url : '';
-//       item.data['sale_price'] = currentStyles[0]?.sale_price;
-//       information.push([item.data, currentThumbnail, currentRating, true]);
-//     });
-//   }
-
-//***** NORMAL WITHOUT SALE PRICE
-// if (thumbnail?.data && relatedInformation?.data && ratingsMeta) {
-//   relatedInformation?.data.map((item, i) => {
-//     const currentRating = ratingsMeta.data[i]?.data ? ratingsMeta.data[i].data : 0;
-//     const currentThumbnail = thumbnail.data[i]?.data.results[0].photos[0].thumbnail_url ? thumbnail.data[i].data.results[0].photos[0].thumbnail_url : '';
-//     information.push([item.data, currentThumbnail, currentRating, true]);
-//   });
-// }
