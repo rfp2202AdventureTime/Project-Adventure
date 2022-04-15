@@ -10,7 +10,7 @@ import { ModalClose } from '../../../contexts/Shared.styled';
 function ProductImg({ image, product, star }) {
   const { trackEvent } = useTracking({ widget: 'modal window' });
   const [showModal, setShowModal] = useState(false);
-  const [ID, setID] = useState();
+  const [ID, setID] = useState(null);
   const productThumbnail = image;
   const imageNotFound = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
 
