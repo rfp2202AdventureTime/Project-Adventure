@@ -119,8 +119,8 @@ const UserRatingRow = styled.div`
 `;
 
 const ReviewHeading = styled.p`
-  font-weight:bold;
-  font-size: medium;
+  font-family: ${({ theme }) => theme.fonts.title.family};
+  color: ${({ theme }) => theme.colors.primary};
   padding: 1rem 0 1rem 0;
 `;
 

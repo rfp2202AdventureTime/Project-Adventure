@@ -39,7 +39,6 @@ const RatingBarBlock = styled.div`
   height: 1.5rem;
   justify-content: flex-end;
   width: 15rem;
-  // gap: 1rem;
   overflow: hidden;
 `;
 
@@ -48,7 +47,7 @@ const GreyBar = styled.div`
   position: relative;
   vertical-align: middle;
   display: inline-block;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.emptyBar};
   overflow: hidden;
   width: 10rem;
   height: 0.5rem;

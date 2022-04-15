@@ -26,9 +26,10 @@ export default function RatingOverview() {
 
   return (
     <RatingOverviewContainer>
-      <h3 id="ratings">
+      <RatingHeading>
+
         RATINGS & REVIEWS
-      </h3>
+      </RatingHeading>
       <StarContainer>
         <Score>
           {score}
@@ -44,6 +45,11 @@ export default function RatingOverview() {
 const RatingOverviewContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const RatingHeading = styled.h3`
+  font-family: ${({ theme }) => theme.fonts.title.family};
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const StarContainer = styled.div`

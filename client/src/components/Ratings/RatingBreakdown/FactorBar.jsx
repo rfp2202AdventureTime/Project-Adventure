@@ -10,9 +10,9 @@ export default function FactorBar({ factor, score }) {
 
   return (
     <FactorBlock>
-      <div>
+      <FactorHeading>
         {factor}
-      </div>
+      </FactorHeading>
       <BarContainer>
         <Bar width={width}>
           <Pointer
@@ -40,12 +40,16 @@ const BarContainer = styled.div`
   position: relative;
   padding-bottom: 0.6rem;
 `;
+const FactorHeading = styled.div`
+  font-family: ${({ theme }) => theme.fonts.title.family};
+  color: ${({ theme }) => theme.colors.primary};
+`;
 const Bar = styled.div`
   top: 0;
   left: 0;
   vertical-align: left;
   display: inline-block;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.emptyBar};
   overflow: hidden;
   width: ${({ width }) => width};
   height: 0.5rem;
@@ -54,6 +58,7 @@ const Pointer = styled.div`
   position: absolute;
   &:before {
     content: "▼";
+    color: ${({ theme }) => theme.colors.pointer};
   }
   z-index: 5;
   margin-top:-6px;

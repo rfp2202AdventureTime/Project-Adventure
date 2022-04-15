@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { useMeta } from '../../../contexts/ReviewMeta';
+import { ClickableText } from '../../../contexts/Shared.styled';
 import RatingBar from './RatingBar';
 
 export default function RatingList({ toggleFilter, filterStatus, clearFilter }) {
@@ -59,9 +60,9 @@ export default function RatingList({ toggleFilter, filterStatus, clearFilter }) 
         />
       ))}
       {activeTags.filterOn ? (
-        <ClearFilter onClick={clearFilter}>
+        <ClickableText onClick={clearFilter}>
           Remove all filters
-        </ClearFilter>
+        </ClickableText>
       ) : ''}
       {activeTags.tags.length ? (
         <SortingTags>
@@ -80,14 +81,15 @@ const Ratings = styled.div`
   padding: 1rem;
   padding-right: 3rem;
 `;
-// TODO:make this pretty
+
 const SortingTags = styled.div`
 `;
-const ClearFilter = styled.button`
-  background-color: transparent;
-  border: none;
-  text-decoration: underline;
-`;
+// const ClearFilter = styled.button`
+//   background-color: transparent;
+//   border: none;
+//   text-decoration: underline;
+// `;
+
 // TODO: figure out nested proptype
 RatingList.propTypes = {
   toggleFilter: PropTypes.func.isRequired,
