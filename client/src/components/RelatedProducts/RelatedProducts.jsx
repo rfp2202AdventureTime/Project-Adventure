@@ -10,7 +10,8 @@ function RelatedProducts() {
   return (
     <RelatedProductsSection>
 
-      <h1>Related Products</h1>
+      <RelatedHeader>Related Products</RelatedHeader>
+      {/* <h1 id="ratings">Related Products</h1> */}
 
       <RelatedProvider>
         <ProdProvider>
@@ -22,13 +23,17 @@ function RelatedProducts() {
         </ProdProvider>
       </RelatedProvider>
 
-      <h1>Your Outfit</h1>
+      <RelatedHeader>Your Outfit</RelatedHeader>
 
       <Outfit />
 
     </RelatedProductsSection>
   );
 }
+
+const RelatedHeader = styled.h1`
+  text-transform: uppercase;
+`;
 
 const RelatedProductsSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};

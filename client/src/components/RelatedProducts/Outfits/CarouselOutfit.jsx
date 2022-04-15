@@ -146,5 +146,6 @@ const AddedOutfit = styled.div`
 
 const OutfitText = styled.p`
   text-align: center;
+  color: ${(props) => props.theme.colors.secondary};
 `;
 export default CarouselAddToOutfit;
