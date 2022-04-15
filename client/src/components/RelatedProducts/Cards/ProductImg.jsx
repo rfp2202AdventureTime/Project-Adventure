@@ -4,30 +4,34 @@ import styled from 'styled-components';
 import { FiBookOpen, FiTrash } from 'react-icons/fi';
 import useTracking from '@Contexts/ClickTracker';
 import Comparison from './Comparison';
-import { FeatureProvider } from '../contexts/FeatureContext';
+import { FeatureProvider, useFeature } from '../contexts/FeatureContext';
 import { ModalClose } from '../../../contexts/Shared.styled';
 
 function ProductImg({ image, product, star }) {
-  const { trackEvent } = useTracking({ widget: 'modal window'});
+  const { trackEvent } = useTracking({ widget: 'modal window' });
   const [showModal, setShowModal] = useState(false);
-  const [ID, setID] = useState();
+  const [ID, setID] = useState(null);
   const productThumbnail = image;
   const imageNotFound = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
 
+  // console.log(useFeature)
   const handleClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    setShowModal(!showModal);
     setID(product);
+    setShowModal(!showModal);
     trackEvent({ element: 'Comparison window' });
   };
 
   const handleRemove = (e, product) => {
+    e.preventDefault();
     e.stopPropagation();
     localStorage.removeItem(product);
     trackEvent({ element: 'Remove item button' });
   };
 
   const exitModal = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     setShowModal(false);
   };
@@ -44,13 +48,13 @@ function ProductImg({ image, product, star }) {
   }, []);
 
   return (
-    <CardImage url={productThumbnail ? productThumbnail : imageNotFound}>
+    <CardImage url={productThumbnail || imageNotFound}>
       <FeatureProvider prodID={ID}>
 
         <ModalContainer show={showModal} onClick={(e) => exitModal(e)}>
 
+          <ModalClose onClick={(e) => exitModal(e)}>&times;</ModalClose>
           <Modal show={showModal}>
-            <ModalClose onClick={exitModal}>&times;</ModalClose>
 
             <Comparison />
           </Modal>

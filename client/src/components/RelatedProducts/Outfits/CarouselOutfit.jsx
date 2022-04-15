@@ -35,8 +35,9 @@ function CarouselAddToOutfit({ informationArray }) {
   };
 
   const addToStorage = (e, product) => {
-    const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
+    e.preventDefault();
     e.stopPropagation();
+    const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
     trackEvent({ element: 'Button' });
 
     axios({

@@ -49,7 +49,15 @@ function Comparison() {
 
           {FeatureSet.map((item, key) => (
             <tr key={key}>
-              <Xfeature>{item1Array.map((item1) => ((item1.feature === item.feature) ? (item1.value) ? `${item1.value}` : '✓' : ' '))}</Xfeature>
+              <Xfeature>
+                {item1Array.map((item1) => (
+                  (item1.feature === item.feature)
+                    ? (item1.value)
+                      ? `${item1.value}`
+                      : '✓'
+                    : ' '
+                ))}
+              </Xfeature>
 
               <Value>{item.feature}</Value>
 
