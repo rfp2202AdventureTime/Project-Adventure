@@ -4,3 +4,4 @@ bundle.js
 bundle.js.map
 client/dist/js/
 .env
+coverage/
