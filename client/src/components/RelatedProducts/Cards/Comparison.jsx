@@ -77,6 +77,7 @@ const XfeatureL = styled.td`
   padding-left: 20px;
   padding-right: 20px;
   font-style: italic;
+  color: ${(props) => props.theme.colors.tertiary};
 `;
 
 const XfeatureR = styled.td`
@@ -85,19 +86,22 @@ const XfeatureR = styled.td`
   padding-right: 20px;
   padding-left: 20px;
   font-style: italic;
+  color: ${(props) => props.theme.colors.tertiary};
 `;
 
 const Value = styled.td`
   text-align: center;
-  color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.tertiary};
   `;
 
 const HeadL = styled.th`
   padding-left: 20px;
+  color: ${(props) => props.theme.colors.tertiary};
 `;
 
 const HeadR = styled.th`
   padding-right: 20px;
+  color: ${(props) => props.theme.colors.tertiary};
 `;
 
 export default Comparison;
