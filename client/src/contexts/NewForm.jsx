@@ -15,9 +15,9 @@ export default function NewForm({
 }) {
   let type;
   let bodyNote;
+  let newData = {};
   const meta = useMeta();
   const factorList = (meta) ? meta.characteristics : {};
-  // CONFIRM WITH ALEX this default won't imapct his section
   const [data, setData] = useState({ recommendation: 'true' });
   const [photos, setPhotos] = useState([]);
   const productId = useContext(ProductIDContext);
@@ -34,95 +34,86 @@ export default function NewForm({
     return () => window.removeEventListener('keydown', espExit);
   }, []);
 
+  const handleReviewData = () => {
+    const {
+      body, email, summary, name,
+    } = data;
+    const factorData = {};
+    Object.keys(data).forEach((key) => {
+      if (factorList[key]) {
+        factorData[factorList[key].id] = Number(data[key]);
+      }
+      if (key === 'rating') {
+        newData.rating = Number(data[key]);
+      }
+    });
+    newData.characteristics = factorData;
+    newData.product_id = productId;
+    newData.body = body;
+    newData.email = email;
+    newData.summary = summary;
+    newData.name = name;
+    newData.recommend = (data.recommendation === 'true');
+    newData.photos = photos;
+    if (
+      !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+      || email.length > 60
+      || email.length === 0
+    ) {
+      alert('Please make sure email is in proper format ex. \'hello@hello.com');
+      return false;
+    }
+    return newData;
+  };
+
+  const handleQuestionData = () => {
+    const {
+      body, email, name,
+    } = data;
+    newData.body = body;
+    newData.name = name;
+    newData.email = email;
+    newData.product_id = productId;
+    return newData;
+  };
+
+  const handleAnswerData = () => {
+    const {
+      body, email, name,
+    } = data;
+    newData.body = body;
+    newData.name = name;
+    newData.email = email;
+    newData.photos = [];
+    return newData;
+  };
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    // customize data input if this is review submission
     if (formtype === 'reviews') {
-      const newData = {};
-      const {
-        body, email, summary, name,
-      } = data;
-      const factorData = {};
-      Object.keys(data).forEach((key) => {
-        if (factorList[key]) {
-          factorData[factorList[key].id] = Number(data[key]);
-        }
-        if (key === 'rating') {
-          newData.rating = Number(data[key]);
-        }
-      });
-      newData.characteristics = factorData;
-      newData.product_id = productId;
-      newData.body = body;
-      newData.email = email;
-      newData.summary = summary;
-      newData.name = name;
-      newData.recommend = (data.recommendation === 'true');
-      newData.photos = photos;
-      if (
-        !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
-        || email.length > 60
-        || email.length === 0
-      ) {
-        alert('Please make sure email is in proper format ex. \'hello@hello.com');
-        return false;
-      }
-      axios({
-        method: 'post',
-        url: `/${formtype}`,
-        data: newData,
-      }).then(() => {
-        // alert('submitted');
+      newData = handleReviewData();
+    } else if (formtype === 'qa/questions/') {
+      newData = handleQuestionData();
+    } else {
+      newData = handleAnswerData();
+    }
+    axios({
+      method: 'post',
+      url: `/${formtype}`,
+      data: newData,
+    }).then(() => {
+      if (formtype === 'reviews') {
         const { setSort, changeSelected } = args;
         setSort('newest');
         changeSelected();
-        // reset modal and close
-        setData({ recommendation: 'true' });
-        setPhotos([]);
-        setShowModal(false);
-        return null;
-      })
-        .catch((err) => Console.log(err));
-    } else if (formtype === 'qa/questions/') {
-      const newData = {};
-      const {
-        body, email, name,
-      } = data;
-      newData.body = body;
-      newData.name = name;
-      newData.email = email;
-      newData.product_id = productId;
-      axios({
-        method: 'post',
-        url: `/${formtype}`,
-        data: newData,
-      })
-        .then((response) => {
-          Console.log('Question POST status: ', response.status);
-        })
-        .catch((err) => Console.log(err));
-    } else {
-      console.log('in the answers')
-      console.log(formtype)
-      const newData = {};
-      const {
-        body, email, name,
-      } = data;
-      newData.body = body;
-      newData.name = name;
-      newData.email = email;
-      newData.photos = [];
-      axios({
-        method: 'post',
-        url: `/${formtype}`,
-        data: newData,
-      })
-        .then((response) => {
-          Console.log('Answer POST status: ', response.status);
-        })
-        .catch((err) => Console.log(err));
-    }
+      }
+      setData({ recommendation: 'true' });
+      setPhotos([]);
+      setShowModal(false);
+    })
+      .catch((err) => Console.log(err));
   };
+
   const reviews = {
     title: 'Write Your Review',
     subtitle: `About the ${productName}`,
@@ -131,7 +122,6 @@ export default function NewForm({
     photo: 'Upload your photos',
   };
 
-  // TODO: make this dynapmic for all post
   const sharedQuestionInput = {
     title: 'Ask Your Question',
     subtitle: `About the ${productName}`,
@@ -204,6 +194,7 @@ export default function NewForm({
                 handleChange={handleChange}
                 setPhotos={setPhotos}
                 photos={photos}
+                setData={setData}
               />
             ) : ''}
             <QuestionBlockBody>
@@ -218,6 +209,8 @@ export default function NewForm({
                     maxLength="1000"
                     minLength="50"
                     required
+                    value={data.body || ''}
+                    onChange={handleChange}
                   />
                 </div>
                 {bodyNote}
@@ -235,6 +228,8 @@ export default function NewForm({
                     required
                     maxLength="60"
                     placeholder="Example: jackson11!"
+                    value={data.name || ''}
+                    onChange={handleChange}
                   />
                 </div>
                 <Note>
@@ -254,6 +249,8 @@ export default function NewForm({
                     required
                     maxLength="60"
                     placeholder="Example: jackson11@email.com"
+                    value={data.email || ''}
+                    onChange={handleChange}
                   />
                 </div>
                 <Note>
