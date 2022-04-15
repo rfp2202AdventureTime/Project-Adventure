@@ -20,36 +20,30 @@ function Overview() {
   const currentMeta = useMeta();
   const photos = activeStyle ? activeStyle.photos : null;
 
-  const preheading = (
-    <RatingInfo>
-      <StarWrapper>
-        <Star score={currentMeta ? currentMeta.avgRating : 0} />
-      </StarWrapper>
-      <ViewRatings href="#ratings">
-        View all reviews.
-      </ViewRatings>
-    </RatingInfo>
-  );
-
-  const heading = (
-    <>
-      <Category>{currentProduct ? currentProduct.category : 'CATEGORY'}</Category>
-      <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
-    </>
-  );
-
-  const content = (
-    <>
-      {activeStyle
-        && <Price original={activeStyle.original_price} discount={activeStyle.sale_price} />}
-      {activeStyle && <StyleSelector />}
-      {activeStyle && <AddToCart skus={activeStyle.skus} />}
-    </>
-  );
-
   return (
     <>
-      <ImageGallery preheading={preheading} heading={heading} content={content} photos={photos} />
+      <ImageGallery photos={photos}>
+        <AsideContent>
+          <RatingInfo>
+            <StarWrapper>
+              <Star score={currentMeta ? currentMeta.avgRating : 0} />
+            </StarWrapper>
+            <ViewRatings href="#ratings">
+              View all reviews.
+            </ViewRatings>
+          </RatingInfo>
+        </AsideContent>
+        <AsideHeading>
+          <Category>{currentProduct ? currentProduct.category : 'CATEGORY'}</Category>
+          <ProductName>{currentProduct ? currentProduct.name : 'Product Loading'}</ProductName>
+        </AsideHeading>
+        <AsideContent>
+          {activeStyle
+            && <Price original={activeStyle.original_price} discount={activeStyle.sale_price} />}
+          {activeStyle && <StyleSelector />}
+          {activeStyle && <AddToCart skus={activeStyle.skus} />}
+        </AsideContent>
+      </ImageGallery>
 
       <AdditionalDetails>
         <LongDescription>
@@ -73,6 +67,24 @@ function Overview() {
     </>
   );
 }
+
+const AsideContent = styled.div`
+  width: 32.5%;
+  max-height: 500px;
+  overflow: scroll;
+  background-color:${(props) => props.theme.colors.light};
+  padding: 5px 30px;
+  color: ${(props) => props.theme.colors.secondary};
+  @media (max-width: 1279px) and (min-width: 768px) { width: 50%; }
+  @media (max-width: 768px) { width: 100%; }
+`;
+
+const AsideHeading = styled(AsideContent)`
+  @media (max-width: 768px) {
+    padding-top: 10px;
+    order: -1;
+  }
+`;
 
 const Feature = styled.span`
   font-weight: bold;

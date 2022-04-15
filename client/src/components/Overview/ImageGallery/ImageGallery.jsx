@@ -1,21 +1,17 @@
 /* eslint-disable react/no-array-index-key */
+// eslint-disable-next-line object-curly-newline
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { FiArrowLeft, FiArrowRight, FiX } from 'react-icons/fi';
+import { Clickable, VisibleInDefault, VisibleInExpanded } from './Helpers.styles';
 
 import ZoomableImage from './ZoomableImage';
 import Carousel from './Carousel';
 
-function ImageGallery({
-  heading,
-  preheading,
-  content,
-  photos,
-}) {
-  // Views can be ['default', 'expanded']
-  const [view, setView] = useState('default');
+function ImageGallery({ children, photos }) {
+  const [view, setView] = useState('default'); // Views can be ['default', 'expanded']
   const [imgIdx, setImgIdx] = useState(0);
   const expandedImgBounds = useRef();
   const imgGallery = useRef();
@@ -34,12 +30,8 @@ function ImageGallery({
 
   const handleViewChange = (e, newView) => {
     if (e.currentTarget.firstChild === e.target || e.currentTarget === e.target) {
-      if (newView === 'default') {
-        setView(newView);
-      }
-      if (newView === 'expanded' && window.matchMedia('(min-width: 768px)').matches) {
-        setView(newView);
-      }
+      if (newView === 'default') setView(newView);
+      if (newView === 'expanded' && window.matchMedia('(min-width: 768px)').matches) setView(newView);
     }
   };
 
@@ -60,11 +52,9 @@ function ImageGallery({
   const isZoomDisabled = view === 'default';
 
   return (
-
     <ExpandedViewport ref={expandedImgBounds}>
       <DefaultViewport>
-        <Gallery bounds={expandedImgBounds} ref={imgGallery} className={view} onClick={(e) => handleViewChange(e, 'expanded')}>
-
+        <Gallery ref={imgGallery} className={view} onClick={(e) => handleViewChange(e, 'expanded')}>
           {photos ? (
             <>
               <ZoomableImage url={photos[imgIdx].url} disabled={isZoomDisabled} />
@@ -92,21 +82,10 @@ function ImageGallery({
             </>
           )
             : (<Loader alt="loading" src="spinner.gif" />)}
-
-          <ExitButton className={view}>
-            <FiX size={30} onClick={(e) => handleViewChange(e, 'default')} />
-          </ExitButton>
+          <ExitButton className={view}><FiX size={30} onClick={(e) => handleViewChange(e, 'default')} /></ExitButton>
         </Gallery>
       </DefaultViewport>
-      <AsideContent>
-        {preheading}
-      </AsideContent>
-      <AsideHeading>
-        {heading}
-      </AsideHeading>
-      <AsideContent>
-        {content}
-      </AsideContent>
+      {children}
     </ExpandedViewport>
   );
 }
@@ -118,10 +97,10 @@ const Loader = styled.img`
 `;
 
 const ExpandedViewport = styled.section`
-  background-color: ${(props) => props.theme.colors.light};
   display: flex;
   flex-direction: column;
   align-content: center;
+  background-color: ${(props) => props.theme.colors.light};
   @media (min-width: 768px) { max-height: 630px; flex-wrap: wrap; }
   @media (max-width: 768px) { width: 100%; }
 `;
@@ -132,10 +111,10 @@ const DefaultViewport = styled.div`
     height: 630px;
     transition: height 0.2s ease-in-out;
   }
-  @media (max-width: 767px) {
+  /* @media (max-width: 767px) {
     height: 400px;
     transition: height 0.2s ease-in-out;
-  }
+  } */
   @media (max-width: 1279px) and (min-width: 768px) {
     width: 50%;
     height: 630px;
@@ -144,72 +123,19 @@ const DefaultViewport = styled.div`
   z-index: 2;
 `;
 
-const AsideContent = styled.div`
-  width: 32.5%;
-  max-height: 500px;
-  overflow: scroll;
-  background-color:${(props) => props.theme.colors.light};
-  padding: 5px 30px;
-  color: ${(props) => props.theme.colors.secondary};
-  @media (max-width: 1279px) and (min-width: 768px) { width: 50%; }
-  @media (max-width: 768px) { width: 100%; }
-`;
-
-const AsideHeading = styled(AsideContent)`
-  @media (max-width: 768px) {
-    padding-top: 10px;
-    order: -1;
-  }
-`;
-
 const Gallery = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color:${(props) => props.theme.colors.background};
-  &.expanded {
-    transition: width 1s ease-in-out;
-    :hover { cursor: crosshair; }
-    &.notransition {
-      transition: none !important;
-    }
-  }
-  &.default {
-    width: 100%;
-    transition: width 1s ease-in-out;
-    &:hover {
-      cursor: zoom-in;
-      @media (max-width: 768px) { cursor: default; }
-    }
-  }
   position: relative;
   display: flex;
   align-items: center;
-`;
-
-const VisibleInExpanded = css`
-  &.expanded, &.zoom {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.5s linear;
-  }
-  &.default {
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s 0.3s, opacity 0.3s linear;
-  }
-`;
-
-const VisibleInDefault = css`
-  &.expanded, &.zoom {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 0.5s, opacity 0.5s linear;
-  }
-  &.default {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.5s linear;
-  }
+  width: 100%;
+  height: 100%;
+  background-color:${(props) => props.theme.colors.background};
+  &:hover { cursor: zoom-in; }
+  &:hover { @media (max-width: 768px) { cursor: default; } }
+  &.expanded:hover { cursor: crosshair; }
+  &.default { transition: width 1s ease-in-out; }
+  &.expanded { transition: width 1s ease-in-out; }
+  &.notransition { transition: none !important; }
 `;
 
 const DotNavPresenter = styled.div`
@@ -242,20 +168,10 @@ const Arrow = styled.span`
   &:hover { cursor: pointer; }
   color: ${({ theme }) => theme.colors.primary};
   ${(props) => (!props.visible && 'visibility: hidden;')}
-  & > *:hover {
-    transform: scale(1.2);
-    transition: transform 0.1s ease-in-out;
-  }
-  & > * { transition: transform 0.1s ease-in-out; }
+  ${Clickable}
 `;
-
-const LeftArrow = styled(Arrow)`
-  left: 5px;
-`;
-
-const RightArrow = styled(Arrow)`
-  right: 5px;
-`;
+const LeftArrow = styled(Arrow)`left: 5px;`;
+const RightArrow = styled(Arrow)`right: 5px;`;
 
 const ExitButton = styled.span`
   width: 30px;
@@ -263,20 +179,10 @@ const ExitButton = styled.span`
   position: absolute;
   top: 20px;
   right: 20px;
-  visibility: hidden;
-  opacity: 0;
   &:hover { cursor: pointer; }
   ${VisibleInExpanded}
   color: ${({ theme }) => theme.colors.primary};
-  & > *:hover {
-    transform: scale(1.1);
-    transition: transform 0.1s ease-in-out;
-  }
-  & > *:active {
-    transform: scale(0.95);
-    transition: transform 0.06s ease-in-out;
-  }
-  & > * { transition: transform 0.1s ease-in-out; }
+  ${Clickable}
 `;
 
 const Dot = styled.span`
@@ -287,15 +193,11 @@ const Dot = styled.span`
   margin: 7px;
   border-radius: 50%;
   &:hover { cursor: pointer; }
-  &.selected {
-    background-color: ${(props) => props.theme.colors.primary};
-  }
+  &.selected { background-color: ${(props) => props.theme.colors.primary}; }
 `;
 
 ImageGallery.propTypes = {
-  preheading: PropTypes.node.isRequired,
-  heading: PropTypes.node.isRequired,
-  content: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
   photos: PropTypes.arrayOf(PropTypes.shape()),
 };
 
