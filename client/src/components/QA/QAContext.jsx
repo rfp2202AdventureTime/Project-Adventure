@@ -3,7 +3,8 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { ProductIDContext } from '../../contexts/ProductIDContext';
+import { useCurrentProductId } from '../../contexts/ProductIDContext';
+import Console from '../../Console';
 
 const QAContext = React.createContext('Loading');
 
@@ -12,40 +13,42 @@ export function useData() {
 }
 
 export function QADataProvider({ children }) {
-  const productId = useContext(ProductIDContext);
   const [qData, setQData] = useState(null);
   const [aData, setAData] = useState([]);
+  const { currentProductId } = useCurrentProductId();
 
   useEffect(() => {
-    axios({
-      method: 'get',
-      url: 'http://localhost:3000/qa/questions',
-      params: {
-        product_id: productId,
-        count: 100,
-      },
-    })
-      .then(({ data }) => {
-        setQData(data.results);
-        data.results.forEach((question) => {
-          axios({
-            method: 'get',
-            url: `http://localhost:3000/qa/questions/${question.question_id}/answers`,
-          })
-            // eslint-disable-next-line no-shadow
-            .then(({ data }) => {
-              // eslint-disable-next-line no-shadow
-              setAData((aData) => [...aData, data]);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        });
+    if (currentProductId) {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/qa/questions',
+        params: {
+          product_id: currentProductId,
+          count: 100,
+        },
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [productId]);
+        .then(({ data }) => {
+          setQData(data.results);
+          data.results.forEach((question) => {
+            axios({
+              method: 'get',
+              url: `http://localhost:3000/qa/questions/${question.question_id}/answers`,
+            })
+              // eslint-disable-next-line no-shadow
+              .then(({ data }) => {
+                // eslint-disable-next-line no-shadow
+                setAData((aData) => [...aData, data]);
+              })
+              .catch((err) => {
+                Console.log(err);
+              });
+          });
+        })
+        .catch((err) => {
+          Console.log(err);
+        });
+    }
+  }, [currentProductId]);
   // const allQAData = useMemo(() => ({}))
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
