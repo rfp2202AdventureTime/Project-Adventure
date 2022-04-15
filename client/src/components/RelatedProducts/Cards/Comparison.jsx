@@ -75,7 +75,7 @@ const XfeatureL = styled.td`
   position: flex;
   text-align: center;
   padding-left: 20px;
-  padding-right: 5px;
+  padding-right: 20px;
   font-style: italic;
 `;
 
@@ -83,7 +83,7 @@ const XfeatureR = styled.td`
   position: flex;
   text-align: center;
   padding-right: 20px;
-  padding-left: 5px;
+  padding-left: 20px;
   font-style: italic;
 `;
 
