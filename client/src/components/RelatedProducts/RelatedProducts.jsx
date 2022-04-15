@@ -34,6 +34,7 @@ function RelatedProducts() {
 const RelatedHeader = styled.h1`
   text-transform: uppercase;
   padding-left: 10px;
+  color: ${(props) => props.theme.colors.secondary};
 `;
 
 const RelatedProductsSection = styled.section`
