@@ -308,7 +308,7 @@ const QuestionBlock = styled.div`
   flex-direction: column;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-  background-color: ${({ theme }) => theme.colors.offWhite};
+  background-color: ${({ theme }) => theme.colors.NewFormQuestion};
   &:hover {
     box-shadow: 0 0 6px ${({ theme }) => theme.colors.hoverShadow}
   };
