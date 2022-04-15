@@ -43,7 +43,7 @@ const IndCard = styled.div`
   display: table-cell, relative;
   position: relative;
   border: 1px solid ${(props) => props.theme.colors.secondary};
-  width: 250px;
+  min-width: 250px;
   height: fit-content;
   margin-right: 30px;
   margin-bottom: 5px;
@@ -64,9 +64,3 @@ export {
   Individualcard,
   IndCard,
 };
-
-
-{/* <p>
-            $
-            {product[0].default_price}
-          </p> */}
