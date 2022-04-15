@@ -72,8 +72,7 @@ const AsideContent = styled.div`
   width: 32.5%;
   max-height: 500px;
   overflow: scroll;
-  background-color:${(props) => props.theme.colors.light};
-  padding: 5px 30px;
+  padding: 0px 30px;
   color: ${(props) => props.theme.colors.secondary};
   @media (max-width: 1279px) and (min-width: 768px) { width: 50%; }
   @media (max-width: 768px) { width: 100%; }
