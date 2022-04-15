@@ -5,6 +5,7 @@ import ProductImg from './ProductImg';
 import Star from '../../../Star';
 import { useCurrentProductId } from '../../../contexts/ProductIDContext';
 import useTracking from '@Contexts/ClickTracker';
+import Price from '../../Shared/Price';
 
 
 // receives array [product information, thumbnail url, (bool for star or no star on card)]
@@ -12,7 +13,6 @@ function Individualcard({ product }) {
   const { trackEvent } = useTracking({ widget: 'clicked on related items' });
   const { setCurrentProductId } = useCurrentProductId();
   const starRating = product[2]?.avgRating || 0;
-
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -28,10 +28,7 @@ function Individualcard({ product }) {
             <div>{product[0].category}</div>
           </CategoryText>
           <p>{product[0].name}</p>
-          <p>
-            $
-            {product[0].default_price}
-          </p>
+          <Price original={product[0].default_price} discount={product[0].sale_price} />
           <div>
             <Star score={starRating} />
             {' '}
@@ -67,3 +64,9 @@ export {
   Individualcard,
   IndCard,
 };
+
+
+{/* <p>
+            $
+            {product[0].default_price}
+          </p> */}

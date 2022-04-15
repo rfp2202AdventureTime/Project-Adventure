@@ -18,6 +18,7 @@ function CarouselAddToOutfit({ informationArray }) {
   const starRating = useMeta();
   const { activeStyle } = useActiveStyle();
   const imageThumb = activeStyle?.photos[0].thumbnail_url
+  const activeSalePrice = activeStyle?.sale_price;
 
   const displayed = informationArray.slice(viewIndex, (viewIndex + 3));
   const maxDisplayed = informationArray.length - 3;
@@ -40,7 +41,6 @@ function CarouselAddToOutfit({ informationArray }) {
   const addToStorage = (e, product) => {
     e.preventDefault();
     e.stopPropagation();
-    // const currentThumbnail = currentStyles[0].photos[0].thumbnail_url;
     trackEvent({ element: 'Button' });
 
     axios({
@@ -48,8 +48,9 @@ function CarouselAddToOutfit({ informationArray }) {
       url: `/products/${product}`,
     })
       .then(({ data }) => {
-        const dataTest = [data, imageThumb, starRating, false];
-        localStorage.setItem(data.id, JSON.stringify(dataTest));
+          data['sale_price'] = activeSalePrice;
+          const dataTest = [data, imageThumb, starRating, false];
+          localStorage.setItem(data.id, JSON.stringify(dataTest));
       });
   };
 

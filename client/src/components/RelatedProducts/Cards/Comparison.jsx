@@ -40,7 +40,7 @@ function Comparison({ twoProducts }) {
 
           {features.map((item, key) => (
             <tr key={key}>
-              <Xfeature>
+              <XfeatureL>
                 {item1Array.map((item1) => (
                   (item1.feature === item)
                     ? (item1.value)
@@ -48,11 +48,11 @@ function Comparison({ twoProducts }) {
                       : '✓'
                     : ' '
                 ))}
-              </Xfeature>
+              </XfeatureL>
 
               <Value>{item}</Value>
 
-              <Xfeature>
+              <XfeatureR>
                 {item2Array.map((item2) => (
                   (item2.feature === item)
                     ? (item2.value)
@@ -61,7 +61,7 @@ function Comparison({ twoProducts }) {
                     : ' '
                 ))}
 
-              </Xfeature>
+              </XfeatureR>
 
             </tr>
           ))}
@@ -71,9 +71,20 @@ function Comparison({ twoProducts }) {
   }
 }
 
-const Xfeature = styled.td`
+const XfeatureL = styled.td`
   position: flex;
   text-align: center;
+  padding-left: 20px;
+  padding-right: 5px;
+  font-style: italic;
+`;
+
+const XfeatureR = styled.td`
+  position: flex;
+  text-align: center;
+  padding-right: 20px;
+  padding-left: 5px;
+  font-style: italic;
 `;
 
 const Value = styled.td`
