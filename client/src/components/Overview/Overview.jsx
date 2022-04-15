@@ -22,11 +22,12 @@ function Overview() {
 
   const preheading = (
     <RatingInfo>
-      <a href="#ratings">
-        <StarWrapper>
-          <Star score={currentMeta ? currentMeta.avgRating : 0} />
-        </StarWrapper>
-      </a>
+      <StarWrapper>
+        <Star score={currentMeta ? currentMeta.avgRating : 0} />
+      </StarWrapper>
+      <ViewRatings href="#ratings">
+        View all reviews.
+      </ViewRatings>
     </RatingInfo>
   );
 
@@ -62,7 +63,7 @@ function Overview() {
               // eslint-disable-next-line react/no-array-index-key
               <FeatureItem key={i}>
                 <FiCheck size={18} />
-                <strong>{`${f.feature} `}</strong>
+                <Feature>{`${f.feature} `}</Feature>
                 {f.value}
               </FeatureItem>
             ))}
@@ -73,12 +74,25 @@ function Overview() {
   );
 }
 
+const Feature = styled.span`
+  font-weight: bold;
+  color: ${(props) => props.theme.colors.primary};
+  font-family: ${(props) => props.theme.fonts.title.family}
+`;
+
 const RatingInfo = styled.div`
+`;
+
+const ViewRatings = styled.a`
+  color: ${(props) => props.theme.colors.primary};
+  &:visited { ${(props) => props.theme.colors.secondary}; }
+  &:active {${(props) => props.theme.colors.secondary}; }
 `;
 
 const StarWrapper = styled.div`
   padding-top: 10px;
   display: inline-block;
+  margin-right: 5px;
 `;
 
 const FeatureItems = styled.ul`
@@ -88,7 +102,6 @@ const FeatureItems = styled.ul`
 `;
 
 const FeatureItem = styled.li`
-  font-size: 0.8em;
   & > * {
     display: inline-block;
     margin-right: 5px;
