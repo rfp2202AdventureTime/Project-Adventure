@@ -17,7 +17,6 @@ export default function NewForm({
   let bodyNote;
   const meta = useMeta();
   const factorList = (meta) ? meta.characteristics : {};
-  // CONFIRM WITH ALEX this default won't imapct his section
   const [data, setData] = useState({ recommendation: 'true' });
   const [photos, setPhotos] = useState([]);
   const productId = useContext(ProductIDContext);
@@ -33,40 +32,45 @@ export default function NewForm({
     window.addEventListener('keydown', espExit);
     return () => window.removeEventListener('keydown', espExit);
   }, []);
+  const handleReviewData = () => {
+    const newData = {};
+    const {
+      body, email, summary, name,
+    } = data;
+    const factorData = {};
+    Object.keys(data).forEach((key) => {
+      if (factorList[key]) {
+        factorData[factorList[key].id] = Number(data[key]);
+      }
+      if (key === 'rating') {
+        newData.rating = Number(data[key]);
+      }
+    });
+    newData.characteristics = factorData;
+    newData.product_id = productId;
+    newData.body = body;
+    newData.email = email;
+    newData.summary = summary;
+    newData.name = name;
+    newData.recommend = (data.recommendation === 'true');
+    newData.photos = photos;
+    if (
+      !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+      || email.length > 60
+      || email.length === 0
+    ) {
+      alert('Please make sure email is in proper format ex. \'hello@hello.com');
+      return false;
+    }
+    return newData;
+  };
+
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
     // customize data input if this is review submission
     if (formtype === 'reviews') {
-      const newData = {};
-      const {
-        body, email, summary, name,
-      } = data;
-      const factorData = {};
-      Object.keys(data).forEach((key) => {
-        if (factorList[key]) {
-          factorData[factorList[key].id] = Number(data[key]);
-        }
-        if (key === 'rating') {
-          newData.rating = Number(data[key]);
-        }
-      });
-      newData.characteristics = factorData;
-      newData.product_id = productId;
-      newData.body = body;
-      newData.email = email;
-      newData.summary = summary;
-      newData.name = name;
-      newData.recommend = (data.recommendation === 'true');
-      newData.photos = photos;
-      if (
-        !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
-        || email.length > 60
-        || email.length === 0
-      ) {
-        alert('Please make sure email is in proper format ex. \'hello@hello.com');
-        return false;
-      }
+      const newData = handleReviewData();
       axios({
         method: 'post',
         url: `/${formtype}`,
@@ -102,8 +106,6 @@ export default function NewForm({
         })
         .catch((err) => Console.log(err));
     } else {
-      console.log('in the answers')
-      console.log(formtype)
       const newData = {};
       const {
         body, email, name,
@@ -204,6 +206,7 @@ export default function NewForm({
                 handleChange={handleChange}
                 setPhotos={setPhotos}
                 photos={photos}
+                setData={setData}
               />
             ) : ''}
             <QuestionBlockBody>
@@ -218,6 +221,8 @@ export default function NewForm({
                     maxLength="1000"
                     minLength="50"
                     required
+                    value={data.body || ''}
+                    onChange={handleChange}
                   />
                 </div>
                 {bodyNote}
@@ -235,6 +240,8 @@ export default function NewForm({
                     required
                     maxLength="60"
                     placeholder="Example: jackson11!"
+                    value={data.name || ''}
+                    onChange={handleChange}
                   />
                 </div>
                 <Note>
@@ -254,6 +261,8 @@ export default function NewForm({
                     required
                     maxLength="60"
                     placeholder="Example: jackson11@email.com"
+                    value={data.email || ''}
+                    onChange={handleChange}
                   />
                 </div>
                 <Note>
