@@ -13,13 +13,14 @@ function Individualcard({ product }) {
   const { setCurrentProductId } = useCurrentProductId();
   const starRating = product[2]?.avgRating || 0;
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     trackEvent({ element: 'Individualcard' })
     setCurrentProductId(product[0].id)
   }
 
   return (
-      <IndCard onClick={handleClick}>
+      <IndCard onClick={(e) => handleClick(e)}>
         <ProductImg image={product[1]} product={product[0].id} star={product[3]} />
         <CardText>
           <CategoryText>

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { FiBookOpen, FiTrash } from 'react-icons/fi';
 import useTracking from '@Contexts/ClickTracker';
 import Comparison from './Comparison';
-import { FeatureProvider } from '../contexts/FeatureContext';
+import { FeatureProvider, useFeature } from '../contexts/FeatureContext';
 import { ModalClose } from '../../../contexts/Shared.styled';
 
 function ProductImg({ image, product, star }) {
@@ -14,7 +14,9 @@ function ProductImg({ image, product, star }) {
   const productThumbnail = image;
   const imageNotFound = 'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg';
 
+  // console.log(useFeature)
   const handleClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     setShowModal(!showModal);
     setID(product);
@@ -22,12 +24,14 @@ function ProductImg({ image, product, star }) {
   };
 
   const handleRemove = (e, product) => {
+    e.preventDefault();
     e.stopPropagation();
     localStorage.removeItem(product);
     trackEvent({ element: 'Remove item button' });
   };
 
   const exitModal = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     setShowModal(false);
   };
