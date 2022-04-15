@@ -93,6 +93,7 @@ export default function Feed({ searchQuesitonBody }) {
 
 const FeedSection = styled.section`
   background-color: ${(props) => props.theme.colors.light};
+  color: ${(props) => props.theme.colors.secondary};
   display: flex;
   flex-direction: column;
   height: 550px;
