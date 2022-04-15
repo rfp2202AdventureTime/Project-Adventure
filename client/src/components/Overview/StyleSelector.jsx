@@ -67,7 +67,7 @@ const SelectedThumbnail = styled.span`
   top: -3px;
   background: #4CAF50;
   border-radius: 50%;
-  color: ${(props) => props.theme.colors.background};
+  color: ${({ theme }) => theme.colors.offWhite};;
   & > * {
     position: absolute;
     top: 3px;

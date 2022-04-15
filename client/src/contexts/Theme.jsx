@@ -23,7 +23,7 @@ const themes = {
     colors: {
       primary: '#FAF9F6',
       secondary: '#FAF9F6',
-      background: '#5a5a5a',
+      background: '#111',
       light: '#111',
       // review tiles and formsbackground
       offWhite: '#23222b',

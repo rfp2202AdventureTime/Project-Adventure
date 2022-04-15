@@ -176,6 +176,12 @@ const AddToCartButton = styled.button`
   font-weight: bold;
   margin: 5px;
   width: 280px;
+  color: ${({ theme }) => theme.colors.primary};
+  &:active {
+    transform: scale(0.99);
+    transition: transform 0.06s ease-in-out;
+  }
+  transition: transform 0.1s ease-in-out;
   cursor: pointer;
 `;
 
@@ -190,6 +196,7 @@ const CustomSelect = styled.select`
   font-weight: bold;
   margin: 5px;
   outline: none;
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const SelectSize = styled(CustomSelect)`
