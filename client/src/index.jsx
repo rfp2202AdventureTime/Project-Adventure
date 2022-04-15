@@ -15,11 +15,16 @@ import Ratings from './components/Ratings/Ratings';
 import RelatedProducts from './components/RelatedProducts/RelatedProducts';
 
 function App() {
+  const storedTheme = localStorage.getItem('theme');
+  if (!storedTheme) {
+    localStorage.setItem('theme', 'light');
+  }
   const defaultProductId = 65631;
-  const [currentTheme, setCurrentTheme] = useState('light');
+  const [currentTheme, setCurrentTheme] = useState(storedTheme || 'light');
 
   const handleThemeChange = () => {
     const newTheme = (currentTheme === 'light') ? 'dark' : 'light';
+    localStorage.setItem('theme', newTheme);
     setCurrentTheme(newTheme);
   };
 
