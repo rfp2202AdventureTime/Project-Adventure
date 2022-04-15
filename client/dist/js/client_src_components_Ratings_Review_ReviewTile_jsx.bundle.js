@@ -395,14 +395,20 @@ var UserRatingRow = styled_components__WEBPACK_IMPORTED_MODULE_9__["default"].di
 })(["display:flex;flex-direction:row;justify-content:space-between;font-size:small;"]);
 var ReviewHeading = styled_components__WEBPACK_IMPORTED_MODULE_9__["default"].p.withConfig({
   displayName: "ReviewTile__ReviewHeading"
-})(["font-weight:bold;font-size:medium;padding:1rem 0 1rem 0;"]);
-var Response = styled_components__WEBPACK_IMPORTED_MODULE_9__["default"].div.withConfig({
-  displayName: "ReviewTile__Response"
-})(["background-color:", ";padding:0.7rem;margin:0.7rem;box-shadow:0 0 6px ", ""], function (_ref4) {
+})(["font-family:", ";color:", ";padding:1rem 0 1rem 0;"], function (_ref4) {
   var theme = _ref4.theme;
-  return theme.colors.tertiary;
+  return theme.fonts.title.family;
 }, function (_ref5) {
   var theme = _ref5.theme;
+  return theme.colors.primary;
+});
+var Response = styled_components__WEBPACK_IMPORTED_MODULE_9__["default"].div.withConfig({
+  displayName: "ReviewTile__Response"
+})(["background-color:", ";padding:0.7rem;margin:0.7rem;box-shadow:0 0 6px ", ""], function (_ref6) {
+  var theme = _ref6.theme;
+  return theme.colors.tertiary;
+}, function (_ref7) {
+  var theme = _ref7.theme;
   return theme.colors.hoverShadow;
 });
 var Recommend = styled_components__WEBPACK_IMPORTED_MODULE_9__["default"].div.withConfig({

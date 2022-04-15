@@ -64,7 +64,7 @@ var GreyBar = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div.with
   displayName: "RatingBar__GreyBar"
 })(["left:1.3rem;position:relative;vertical-align:middle;display:inline-block;background-color:", ";overflow:hidden;width:10rem;height:0.5rem;"], function (_ref2) {
   var theme = _ref2.theme;
-  return theme.colors.background;
+  return theme.colors.emptyBar;
 });
 var GreenBar = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div.withConfig({
   displayName: "RatingBar__GreenBar"
@@ -92,12 +92,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _contexts_ReviewMeta__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../contexts/ReviewMeta */ "./client/src/contexts/ReviewMeta.jsx");
-/* harmony import */ var _RatingBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RatingBar */ "./client/src/components/Ratings/RatingBreakdown/RatingBar.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _contexts_Shared_styled__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../contexts/Shared.styled */ "./client/src/contexts/Shared.styled.js");
+/* harmony import */ var _RatingBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./RatingBar */ "./client/src/components/Ratings/RatingBreakdown/RatingBar.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -111,6 +112,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 /* eslint-disable react/prop-types */
+
 
 
 
@@ -176,35 +178,36 @@ function RatingList(_ref) {
       });
     }
   }, [filterStatus.filterCount]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(Ratings, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(Ratings, {
     children: [starList.map(function (item) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_RatingBar__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_RatingBar__WEBPACK_IMPORTED_MODULE_3__["default"], {
         scorePct: "".concat(Math.floor(item.score * 100), "%"),
         id: item.id.toString(),
         toggleFilter: toggleFilter
       }, item.id);
-    }), activeTags.filterOn ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(ClearFilter, {
+    }), activeTags.filterOn ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_contexts_Shared_styled__WEBPACK_IMPORTED_MODULE_2__.ClickableText, {
       onClick: clearFilter,
       children: "Remove all filters"
-    }) : '', activeTags.tags.length ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(SortingTags, {
+    }) : '', activeTags.tags.length ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(SortingTags, {
       children: ['Active Tags are : ', activeTags.tags.join(', ')]
     }) : '']
   });
 } // Style components
 
-var Ratings = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div.withConfig({
+var Ratings = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
   displayName: "RatingList__Ratings"
-})(["display:flex;flex-direction:column;padding:1rem;padding-right:3rem;"]); // TODO:make this pretty
-
-var SortingTags = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div.withConfig({
+})(["display:flex;flex-direction:column;padding:1rem;padding-right:3rem;"]);
+var SortingTags = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
   displayName: "RatingList__SortingTags"
-})([""]);
-var ClearFilter = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].button.withConfig({
-  displayName: "RatingList__ClearFilter"
-})(["background-color:transparent;border:none;text-decoration:underline;"]); // TODO: figure out nested proptype
+})([""]); // const ClearFilter = styled.button`
+//   background-color: transparent;
+//   border: none;
+//   text-decoration: underline;
+// `;
+// TODO: figure out nested proptype
 
 RatingList.propTypes = {
-  toggleFilter: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func.isRequired)
+  toggleFilter: (prop_types__WEBPACK_IMPORTED_MODULE_6___default().func.isRequired)
 };
 
 /***/ })

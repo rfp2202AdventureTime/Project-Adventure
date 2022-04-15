@@ -31,7 +31,7 @@ function FactorBar(_ref) {
   var width = "".concat(barWidth, "rem");
   var distanceToLeft = "".concat(Math.floor(barWidth * score / 5), "rem");
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(FactorBlock, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(FactorHeading, {
       children: factor
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(BarContainer, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Bar, {
@@ -54,18 +54,30 @@ var FactorBlock = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.
 var BarContainer = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({
   displayName: "FactorBar__BarContainer"
 })(["position:relative;padding-bottom:0.6rem;"]);
+var FactorHeading = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({
+  displayName: "FactorBar__FactorHeading"
+})(["font-family:", ";color:", ";"], function (_ref2) {
+  var theme = _ref2.theme;
+  return theme.fonts.title.family;
+}, function (_ref3) {
+  var theme = _ref3.theme;
+  return theme.colors.primary;
+});
 var Bar = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({
   displayName: "FactorBar__Bar"
-})(["top:0;left:0;vertical-align:left;display:inline-block;background-color:", ";overflow:hidden;width:", ";height:0.5rem;"], function (_ref2) {
-  var theme = _ref2.theme;
-  return theme.colors.background;
-}, function (_ref3) {
-  var width = _ref3.width;
+})(["top:0;left:0;vertical-align:left;display:inline-block;background-color:", ";overflow:hidden;width:", ";height:0.5rem;"], function (_ref4) {
+  var theme = _ref4.theme;
+  return theme.colors.emptyBar;
+}, function (_ref5) {
+  var width = _ref5.width;
   return width;
 });
 var Pointer = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({
   displayName: "FactorBar__Pointer"
-})(["position:absolute;&:before{content:\"\u25BC\";}z-index:5;margin-top:-6px;font-size:0.87rem;margin-left:", ";"], function (props) {
+})(["position:absolute;&:before{content:\"\u25BC\";color:", ";}z-index:5;margin-top:-6px;font-size:0.87rem;margin-left:", ";"], function (_ref6) {
+  var theme = _ref6.theme;
+  return theme.colors.pointer;
+}, function (props) {
   return props.left;
 });
 var FactorDescirption = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div.withConfig({

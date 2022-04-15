@@ -41,8 +41,7 @@ function RatingOverview() {
     children: [helpfulness, "% of reviews recommend this product"]
   }) : '';
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(RatingOverviewContainer, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h3", {
-      id: "ratings",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(RatingHeading, {
       children: "RATINGS & REVIEWS"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(StarContainer, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Score, {
@@ -57,6 +56,15 @@ function RatingOverview() {
 var RatingOverviewContainer = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div.withConfig({
   displayName: "RatingOverview__RatingOverviewContainer"
 })(["display:flex;flex-direction:column;"]);
+var RatingHeading = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].h3.withConfig({
+  displayName: "RatingOverview__RatingHeading"
+})(["font-family:", ";color:", ";"], function (_ref) {
+  var theme = _ref.theme;
+  return theme.fonts.title.family;
+}, function (_ref2) {
+  var theme = _ref2.theme;
+  return theme.colors.primary;
+});
 var StarContainer = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div.withConfig({
   displayName: "RatingOverview__StarContainer"
 })(["align-items:center;display:flex;flex-direction:row;"]);
