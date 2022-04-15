@@ -14,19 +14,11 @@ function Comparison() {
     // creates an array with all the features
     const FeatArray = item1.features.concat(item2.features);
 
-    // create a set for stringified objects
-    const stagingSet = new Set();
-
+    const features = [];
     for (let i = 0; i < FeatArray.length; i += 1) {
-      if (!stagingSet.has(JSON.stringify(FeatArray[i].feature))) {
-        stagingSet.add(JSON.stringify(FeatArray[i]));
+      if (features.indexOf(FeatArray[i].feature) === -1) {
+        features.push(FeatArray[i].feature);
       }
-    }
-
-    // iterate through stringified set and push to FeatureSet array
-    const FeatureSet = [];
-    for (const item of stagingSet) {
-      FeatureSet.push(JSON.parse(item));
     }
 
     const item1Array = [];
@@ -47,11 +39,11 @@ function Comparison() {
         </thead>
         <tbody>
 
-          {FeatureSet.map((item, key) => (
+          {features.map((item, key) => (
             <tr key={key}>
               <Xfeature>
                 {item1Array.map((item1) => (
-                  (item1.feature === item.feature)
+                  (item1.feature === item)
                     ? (item1.value)
                       ? `${item1.value}`
                       : '✓'
@@ -59,9 +51,18 @@ function Comparison() {
                 ))}
               </Xfeature>
 
-              <Value>{item.feature}</Value>
+              <Value>{item}</Value>
 
-              <Xfeature>{item2Array.map((item2) => ((item2.feature === item.feature) ? (item2.value) ? `${item2.value}` : '✓' : ' '))}</Xfeature>
+              <Xfeature>
+                {item2Array.map((item2) => (
+                  (item2.feature === item)
+                    ? (item2.value)
+                      ? `${item2.value}`
+                      : '✓'
+                    : ' '
+                ))}
+
+              </Xfeature>
 
             </tr>
           ))}
