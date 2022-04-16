@@ -22,7 +22,7 @@ function Individualcard({ product }) {
 
   return (
       <IndCard onClick={(e) => handleClick(e)}>
-        <ProductImg image={product[1]} product={product[0].id} star={product[3]} />
+        <ProductImg image={product[1]} product={product[0].id} star={product[2]} />
         <CardText>
           <CategoryText>
             <div>{product[0].category}</div>
