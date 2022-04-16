@@ -96,8 +96,8 @@ const FeedSection = styled.section`
   color: ${(props) => props.theme.colors.secondary};
   display: flex;
   flex-direction: column;
-  height: 550px;
-  overflow: scroll;
+  max-height: 550px;
+  overflow: auto;
 `;
 
 const ButtonBlock = styled.div`
