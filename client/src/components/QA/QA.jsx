@@ -1,31 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import styled from 'styled-components';
 
-import Search from './QASearch';
-import QAFeed from './QAFeed';
+const Search = lazy(() => import('./QASearch'));
+const QAFeed = lazy(() => import('./QAFeed'));
 import { QADataProvider } from './QAContext';
 
 export default function QA() {
   const [searchQuesitonBody, setSearchQuestionBody] = useState('');
   const [submitSearchQuestionBody, setsubmitSearchQuestionBody] = useState('');
   return (
-    <QASection>
-      <QADataProvider>
-        <>
-          <QAHeading>QUESTIONS AND ANSWERS</QAHeading>
-          <Search
-            searchQuesitonBody={searchQuesitonBody}
-            setSearchQuestionBody={setSearchQuestionBody}
-            submitSearchQuestionBody={submitSearchQuestionBody}
-            setsubmitSearchQuestionBody={setsubmitSearchQuestionBody}
-          />
-          <QAFeed
-            searchQuesitonBody={searchQuesitonBody}
-            submitSearchQuestionBody={submitSearchQuestionBody}
-          />
-        </>
-      </QADataProvider>
-    </QASection>
+    <Suspense fallback={<div>Loading...</div>}>
+      <QASection>
+        <QADataProvider>
+          <>
+            <QAHeading>QUESTIONS AND ANSWERS</QAHeading>
+            <Search
+              searchQuesitonBody={searchQuesitonBody}
+              setSearchQuestionBody={setSearchQuestionBody}
+              submitSearchQuestionBody={submitSearchQuestionBody}
+              setsubmitSearchQuestionBody={setsubmitSearchQuestionBody}
+            />
+            <QAFeed
+              searchQuesitonBody={searchQuesitonBody}
+              submitSearchQuestionBody={submitSearchQuestionBody}
+            />
+          </>
+        </QADataProvider>
+      </QASection>
+    </Suspense>
   );
 }
 
