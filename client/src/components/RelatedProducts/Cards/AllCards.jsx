@@ -13,35 +13,20 @@ import Console from '../../../Console';
 function AllCards() {
   const { relatedInformation } = useProd();
   const { ratingsMeta } = useProd();
-  const [relatedStyles, setRelatedStyles] = useState()
   const thumbnail = useThumbnail();
   const information = [];
-  const currentStyles = useCurrentStyles()
   const related = useRelated()
 
-  useEffect(() => {
-    if (related) {
-      Promise.all(related.map((number) => axios({
-        method: 'get',
-        url: `products/${number}/styles`,
-      })))
-        .then((data) => {
-          setRelatedStyles({ data });
-        })
-        .catch((err) => Console.log('there was an ERROR in AllCards', err));
-    }
-  }, [related]);
-
-    if (thumbnail?.data && relatedInformation?.data && ratingsMeta && currentStyles && relatedStyles) {
+    if (thumbnail?.data && relatedInformation?.data && ratingsMeta) {
       relatedInformation?.data.map((item, i) => {
-        const currentRating = ratingsMeta.data[i]?.data ? ratingsMeta.data[i].data : 1;
+
+        const activeSalePrice = thumbnail.data[i]?.data.results[0].sale_price ? thumbnail.data[i]?.data.results[0].sale_price : null;
 
         const currentThumbnail = thumbnail.data[i]?.data.results[0].photos[0].thumbnail_url ? thumbnail.data[i].data.results[0].photos[0].thumbnail_url : '';
 
-        const activeSalePrice = relatedStyles?.data[i]?.data.results[0].sale_price || null
-
         item.data['sale_price'] = activeSalePrice;
-        information.push([item.data, currentThumbnail, currentRating, true]);
+        item.data['avgRating'] = ratingsMeta[i]
+        information.push([item.data, currentThumbnail, true]);
       });
     }
 
@@ -57,9 +42,10 @@ function AllCards() {
   for (const item of stagingSet) {
     informationArray.push(JSON.parse(item))
   }
+
     return (
       <>
-      {(thumbnail?.data && relatedInformation?.data && ratingsMeta && currentStyles && relatedStyles) ? <CarouselRelated informationArray={informationArray} /> : <Loader alt="loading" src="spinner.gif" />}
+      {(thumbnail?.data && relatedInformation?.data && ratingsMeta) ? <CarouselRelated informationArray={informationArray} /> : <Loader alt="loading" src="spinner.gif" />}
       </>
     );
   }
