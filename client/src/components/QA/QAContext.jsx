@@ -24,7 +24,7 @@ export function QADataProvider({ children }) {
         url: '/qa/questions',
         params: {
           product_id: currentProductId,
-          count: 100,
+          count: 16,
         },
       })
         .then(({ data }) => {
