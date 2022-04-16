@@ -57,13 +57,15 @@ export function ProdProvider({ children }) {
         .then((data) => {
           const testArray = [];
           Promise.all(data.map((item) => {
-            newData = item.data;
-            const RatingDetails = convertRating(newData);
-            newData.avgRating = RatingDetails.avgRating;
-            newData.totalCT = RatingDetails.totalCT;
-            testArray.push(newData);
+            if (item) {
+              newData = item.data;
+              const RatingDetails = convertRating(newData);
+              newData.avgRating = RatingDetails.avgRating;
+              newData.totalCT = RatingDetails.totalCT;
+              testArray.push(newData.avgRating);
+              setRatingsMeta(testArray);
+            }
           }));
-          setRatingsMeta({ data });
         })
         .catch(() => setRatingsMeta(null));
     }

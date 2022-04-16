@@ -12,7 +12,7 @@ import Price from '../../Shared/Price';
 function Individualcard({ product }) {
   const { trackEvent } = useTracking({ widget: 'clicked on related items' });
   const { setCurrentProductId } = useCurrentProductId();
-  const starRating = product[2]?.avgRating || 0;
+  const starRating = product[0]?.avgRating || 0;
 
   const handleClick = (e) => {
     e.preventDefault();
