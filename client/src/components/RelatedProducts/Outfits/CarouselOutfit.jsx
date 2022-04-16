@@ -15,11 +15,11 @@ function CarouselAddToOutfit({ informationArray }) {
   const [viewIndex, setViewIndex] = useState(0);
   const { currentProductId } = useCurrentProductId();
   const currentStyles = useCurrentStyles();
-  const starRating = useMeta();
+  const starRating = useMeta()
   const { activeStyle } = useActiveStyle();
   const imageThumb = activeStyle?.photos[0].thumbnail_url
   const activeSalePrice = activeStyle?.sale_price;
-
+  const rating = starRating?.avgRating
   const displayed = informationArray.slice(viewIndex, (viewIndex + 3));
   const maxDisplayed = informationArray.length - 3;
 
@@ -49,7 +49,8 @@ function CarouselAddToOutfit({ informationArray }) {
     })
       .then(({ data }) => {
           data['sale_price'] = activeSalePrice;
-          const dataTest = [data, imageThumb, starRating, false];
+          data['avgRating'] = rating;
+          const dataTest = [data, imageThumb, false];
           localStorage.setItem(data.id, JSON.stringify(dataTest));
       });
   };
