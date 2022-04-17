@@ -68,9 +68,6 @@ the question and answer section. The average rating is displayed as a star ratin
 
    > `npm run server-dev`
 
-5. UNSURE WHETHER THIS IS NEEDED? Connect to domain matching serverURL in `client/src`
-
-
 
 ## Technologies used
 ### **Set-up and Workflow**
