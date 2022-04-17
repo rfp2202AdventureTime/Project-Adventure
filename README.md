@@ -56,41 +56,9 @@ the question and answer section. The average rating is displayed as a star ratin
 
    > `npm install`
 
-2. TOBEUPDATED Set up config file in `client/src` and `server/controllers`
+2.  Set up `.env` file using `/example.env`:
 
-   > `client/src` requires cloudinary API tokens and a URL export to endpoint
-   
-   ```export const serverURL = 'http://localhost:3000/api'; // Change localhost:3000 to appropriate domain and port. /api is required
-      export const cloudinaryInfo = {
-        CLOUDINARY_NAME: '',
-        CLOUDINARY_API_KEY: '',
-        CLOUDINARY_API_SECRET: '',
-        CLOUDINARY_IMAGE_UPLOAD_URL:
-          '',
-        CLOUDINARY_API_BASE_URL: '',
-        CLOUDINARY_SECURE_DELIVERY_URL: '',
-        CLOUDINARY_UPLOAD_PRESET: '',
-      };
-      
-   
-> `server/controllers` requires github Auth token and cloudinary API tokens too, following the following format
-     
-    const TOKEN = 'githubPATtokenHere';
-     const cloudinaryInfo = {
-        CLOUDINARY_NAME: '',
-        CLOUDINARY_API_KEY: '',
-        CLOUDINARY_API_SECRET: '',
-        CLOUDINARY_IMAGE_UPLOAD_URL:
-          '',
-        CLOUDINARY_API_BASE_URL: '',
-        CLOUDINARY_SECURE_DELIVERY_URL: '',
-        CLOUDINARY_UPLOAD_PRESET: '',
-     };
-    module.exports = {
-      TOKEN: TOKEN,
-      cloudinaryInfo: cloudinaryInfo
-    };
-    
+    > `.env` requires github API key and a local PORT
 
 3. Run webpack in development with:
 
