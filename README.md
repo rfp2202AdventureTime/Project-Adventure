@@ -20,10 +20,7 @@ for that specific item, so as to not require exiting the zoom view and selecting
 <!-- [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kenneth-bakke-543a39157/)
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kenneth-bakke) -->
 
-TOBEUPDATED A list of products related to the product currently being viewed. The default image for the product and a shorter summary of information
-are on each item card, as well as the option to compare the related product to the currently viewed product. This is achieved by the star icon on each
-item card. The outfit has the option to add the current product to a user specific outfit that persists as the current product changes. It is also
-possible to remove any product from an outfit.
+A list of products related to the currently viewed product appear under the overview page in a carousel. Each product card contains a brief item description of each related item. To indicate if there is a sale for the particular item,  the original price will be strike through and the sale price will appear with red text. On the corner of the Related Items card, an open book icon is visible and you are able to compare the features of the currently viewed item and the product clicked. Then a modal window will appear with features of each item. Clicking a related product will rerender the page and the related products will change. You are also able to add different outfit styles to the ‘Your Outfit’ section using the ‘Add to Outfit’ button. It will persist even after you leave and return to the page. You are able to remove the outfit from ‘Your Outfit’ section by pressing the trash icon located at the top right of the outfit card. 
 
 <!-- ![](https://media.giphy.com/media/LharojqjrGGwXIzDEE/giphy-downsized-large.gif) -->
 
