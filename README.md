@@ -9,7 +9,7 @@ of the page fitting the clients requirements as well as some optional additions:
 <!-- [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/elliemhunt/)
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Elliehunt8) -->
 
-TOBEUPDATED The main description for the product currently being viewed. It shows all the relative information including styles, pricing,
+The main description for the product currently being viewed. It shows all the relative information including styles, pricing,
 sizing, average customer rating, quantity in stock, and ability to add to cart. While our team was not tasked with the full Cart service we ensured it was connected properly. The main image can be clicked on for a more detailed view, as well as having access to the rest of the pictures
 for that specific item, so as to not require exiting the zoom view and selecting another thumbnail. This greatly improved user experience.
 <!-- 
@@ -29,7 +29,7 @@ A list of products related to the currently viewed product appear under the over
 <!-- [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yasin-khan-09245ba9/)
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yasinnkhann) -->
 
-TOBEUPDATED Showing the first four user submitted questions related to the current product, each question shows the top answer on click. If there are more questions, there is a button to show the next two questions. There is also a button inside each question to view more answers if they exist.
+Showing the first four user submitted questions related to the current product, each question shows the top answer on click. If there are more questions, there is a button to show the next two questions. There is also a button inside each question to view more answers if they exist.
 The ability to mark specific questions and/or answers as helpful is implemented as well as the ability to report a question or answer.
 There is also the option to add a question and answer, both with the functionality of adding images and required data for viewing.
 
