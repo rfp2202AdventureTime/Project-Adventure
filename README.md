@@ -42,7 +42,7 @@ There is also the option to add a question and answer, both with the functionali
 
 Every user is able to view all reviews for the current product, an average rating, search for a review and option to submit their own review. Each review displays the reviewer specific rating, the date submitted, and optional pictures. Reviews also have the option to be marked as helpful or to report just as with the question and answer section. The average rating is displayed as a star rating ranging from 1 to 5 stars. This average based on all the review scores and displays number of reviews for each of the star options. There is also a list of product characteristics that show the average rating for each characteristic. Finally there is also an option to add your own review complete with image handling, required characteristics, and text input.
 
-![](https://media.giphy.com/media/yeAuBPHxJzR9dBM7tq/giphy.mp4)
+![](https://media.giphy.com/media/yeAuBPHxJzR9dBM7tq/giphy.gif)
 
 
 ## Getting Started
