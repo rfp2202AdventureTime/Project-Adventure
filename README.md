@@ -24,6 +24,8 @@ A list of products related to the currently viewed product appear under the over
 
 <!-- ![](https://media.giphy.com/media/LharojqjrGGwXIzDEE/giphy-downsized-large.gif) -->
 
+![](https://i.imgur.com/r0t2Yw1.gif)
+
 # Questions and Answers
 ### **Contributor: Alexander Cannon**
 <!-- [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yasin-khan-09245ba9/)
